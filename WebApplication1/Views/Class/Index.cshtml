@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Playlist section -->
+<section class="playlist-section spad">
+	<div class="container-fluid">
+		<div class="section-title">
+			<h2>課程專區</h2>
+			<div class="container-fluid filter-row-container border-top border-bottom py-4 py-xl-2 px-4 px-lg-5">
+				<div class="filter-row">
+					<div class="my-2 d-none d-xl-inline-block me-2">
+						<select class="form-select" id="web-city-filter"><option value="default" selected="">選擇縣市</option><option value="1">基隆市</option><option value="2">臺北市</option><option value="3">新北市</option><option value="4">桃園市</option><option value="5">新竹市</option><option value="6">臺中市</option><option value="7">臺南市</option><option value="8">嘉義市</option><option value="9">高雄市</option><option value="10">新竹縣</option><option value="11">苗栗縣</option><option value="12">彰化縣</option><option value="13">南投縣</option><option value="14">雲林縣</option><option value="15">嘉義縣</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option></select>
+					</div>
+					<div class="my-2 d-none d-xl-inline-block me-2">
+						<select class="form-select" id="web-district-filter" disabled=""><option selected="">鄉鎮區</option></select>
+					</div>
+					<div class="my-2 d-none d-xl-inline-block me-2">
+						<select class="form-select" id="web-type-filter"><option value="default" selected="">場地類型</option><option value="1">會議</option><option value="2">派對</option><option value="3">聚會</option><option value="4">私人談話</option><option value="5">課程講座</option><option value="6">運動</option><option value="7">工作</option><option value="8">展覽</option><option value="9">音樂/表演</option><option value="10">拍照/攝影</option><option value="11">美容</option><option value="12">烹飪</option><option value="13">儲物</option><option value="14">發表會</option><option value="15">親子活動</option><option value="16">婚禮</option><option value="17">其他</option></select>
+					</div>
+					<div class="my-2 d-none d-xl-inline-block me-2">
+						<input class="date-filter" id="web-date-filter" placeholder="活動日期" type="hidden" value="2023-11-15"><input class="date-filter form-control input" placeholder="活動日期" tabindex="0" type="text" readonly="readonly">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row playlist-area">
+			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+				<a asp-area="" asp-controller="Class" asp-action="Viewclass">
+				<div class="playlist-item">
+						<img src="~/img/classimg/1.jpg" alt="">
+					<h5>輕鬆學配樂！</h5>
+                </div>
+				</a>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 artists">
+				<div class="playlist-item">
+					<img src="~/img/classimg/2.jpg" alt="">
+					<h5>《什麼？歌曲創作也可以很簡單！》</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+				<div class="playlist-item">
+					<img src="~/img/classimg/3.jpg" alt="">
+					<h5>基礎電影配樂課</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 labels">
+				<div class="playlist-item">
+					<img src="~/img/classimg/4.jpg" alt="">
+					<h5>影像與聲效間的組合就是要帥又有質感！</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+				<div class="playlist-item">
+					<img src="~/img/classimg/5.jpg" alt="">
+					<h5>合唱指揮</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 artists">
+				<div class="playlist-item">
+					<img src="~/img/classimg/6.jpg" alt="">
+					<h5>提高電腦樂譜製作效率</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+				<div class="playlist-item">
+					<img src="~/img/classimg/7.jpg" alt="">
+					<h5>從喜歡唱歌到駕馭歌唱：歌唱工作者的第一課</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 labels">
+				<div class="playlist-item">
+					<img src="~/img/classimg/8.jpg" alt="">
+					<h5>跟音癡說掰掰</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+				<div class="playlist-item">
+					<img src="~/img/classimg/9.jpg" alt="">
+					<h5>這會是你上過最有效最快速真正快樂的歌唱課</h5>
+				</div>
+			</div>
+			<div class="mix col-lg-3 col-md-4 col-sm-6 artists">
+				<div class="playlist-item">
+					<img src="~/img/classimg/10.jpg" alt="">
+					<h5>衝刺學音樂！國內外音樂相關升學考試課程</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Playlist section end -->
+<!-- Help section end -->
+<section class="help-section spad pt-0">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="section-title mb-0 pb-4">
+					<h2>找不到合適的課程嗎？ </h2>
+				</div>
+				<p>
+					想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
+					我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
+					線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
+				</p>
+			</div>
+			<div class="col-lg-6">
+				<div class="d-flex h-100 align-items-end">
+					<form class="search-form">
+						<input type="text" placeholder="Hit it">
+						<button>Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Help section end -->
