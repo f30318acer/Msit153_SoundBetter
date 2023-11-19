@@ -44,10 +44,10 @@
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
                                             transition: all 0.3s ease;width:70px;height:40px">登入</a>
                                             </div>
+
                                             <div class="col">
-                                                <a asp-area="" asp-controller="Home" asp-action="Index"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                            transition: all 0.3s ease;width:80px;height:40px">忘記密碼</a>
+                                                @* <a asp-area="" asp-controller="Home" asp-action="Index" *@
+                                                @Html.ActionLink("忘記密碼","ForgetPwd","Home")
                                             </div>
                                         </div>
                                     </div>
