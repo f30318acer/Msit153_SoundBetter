@@ -26,7 +26,13 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-		public ActionResult Register()
+        public ActionResult NoLogin()
+        {
+            return View();
+        }
+
+
+        public ActionResult Register()
 		{
 			return View();
 		}
