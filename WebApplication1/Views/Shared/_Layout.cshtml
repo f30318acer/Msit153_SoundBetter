@@ -33,11 +33,11 @@
         </a>
         <div class="header-right">
             <div class="user-panel">
-            <a href="#" class="hr-btn">Help</a>
-            <span>|</span>
-            @*登入功能*@
-                <a asp-area="" asp-controller="Home" asp-action="login">Login</a>
-                <a asp-area="" asp-controller="Home" asp-action="Register">Create an account</a>
+                <a href="#" class="hr-btn">Help</a>
+                <span>|</span>
+                @*登入功能*@
+                <a href="" class="login">Login</a>
+                <p><a href="" class="register">Create an account</a></p>
             </div>
         </div>
         @*搜尋列*@
@@ -68,19 +68,27 @@
                 </ul>
             </li>
             @*會員資訊*@
-            <li><a href="blog.html">會員資訊</a>
+            <li>
+                <a href="blog.html">會員資訊</a>
                 <ul class="sub-menu">
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="User" asp-action="Profile">會員簡介</a>
-                        <a asp-area="" asp-controller="User" asp-action="xxx">修改個人資訊</a>
+                        <a asp-area="" asp-controller="Members" asp-action="List">會員簡介</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Members" asp-action="List">修改個人資訊</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Members" asp-action="Memberclass">課程管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Members" asp-action="List">場地管理</a>
                     </li>
                 </ul>
-               
             </li>
         </ul>
     </header>
-    <!-- Header section end --> 
-            @RenderBody() 
+    <!-- Header section end -->
+    @RenderBody()
     <!-- Footer section -->
     <footer class="footer-section">
         <div class="container">
