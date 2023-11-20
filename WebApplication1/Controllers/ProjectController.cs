@@ -12,5 +12,9 @@ namespace prjMusicBetter.Controllers
 		{
 			return View();
 		}
+		public IActionResult ApplyConfirm()
+		{
+			return View();
+		}
 	}
 }
