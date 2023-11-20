@@ -45,11 +45,13 @@
         @*這裡是各大功能*@
         <ul class="main-menu">
             @*找製作*@
-            <li><a href="index.html">找製作</a></li>
+            @*<li><a href="index.html">找製作</a></li>*@
+            <li><a asp-area="" asp-controller="Project" asp-action="List">找製作</a></li>
             @*找人才*@
             <li><a href="blog.html">找人才</a></li>
             @*找課程*@
-            <li><a href="blog.html">找課程</a></li>
+           @* <li><a href="blog.html">找課程</a></li>*@
+            <li><a asp-area="" asp-controller="Class" asp-action="Index">找課程</a></li>
             @*找場地*@
             <li><a asp-area="" asp-controller="Place" asp-action="Place">找場地</a></li>
             @*音樂專區*@
