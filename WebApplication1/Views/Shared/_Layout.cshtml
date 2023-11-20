@@ -71,8 +71,10 @@
             <li><a href="blog.html">會員資訊</a>
                 <ul class="sub-menu">
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="User" asp-action="Profile">會員簡介</a>
-                        <a asp-area="" asp-controller="User" asp-action="xxx">修改個人資訊</a>
+                      
+                        <a href="@Url.Content("~/Members/Profile1")" class="btn btn-light">會員簡介</a>
+
+                        <a href="@Url.Content("~/Members/xxx")" class="btn btn-light">修改個人資料</a>
                     </li>
                 </ul>
                
