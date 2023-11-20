@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "_Layout2";
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>場地管理</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Users</li>
+                <li class="breadcrumb-item active">Place</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card">
+                    <img src="~/img/place1.jpg" alt="Profile">
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <div>
+                            <div id="profile-edit">
+                                <!-- Profile Edit Form -->
+                                <form>
+                                    <div class="row mb-3">
+                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">場地圖片</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="~/img/place1.jpg" alt="Profile" style="width:300px" id="img1">
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                                <button href="#" class="btn btn-danger btn-sm" title="Remove my profile image" id="btn2"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="placeId" class="col-md-4 col-lg-3 col-form-label">場地ID</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <label name="placeId" type="text" class="form-control" id="placeId">1</label>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">場地名稱</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="fullName" type="text" class="form-control" id="fullName" value="The Ball Music Studio 這球大安店">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="about" class="col-md-4 col-lg-3 col-form-label">場地擁有者</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="about" type="text" class="form-control" id="about" value="Kevin">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="city" class="col-md-4 col-lg-3 col-form-label">城市</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <select class="form-select form-control" aria-label="Default select example" name="city" id="city">
+                                                <option selected>台北市</option>
+                                                <option value="1">新北市</option>
+                                                <option value="2">桃園市</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="type" class="col-md-4 col-lg-3 col-form-label">場地類型</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <select class="form-select form-control" aria-label="Default select example" name="type" id="type">
+                                                <option selected>音樂學校</option>
+                                                <option value="1">錄音室</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="Country" class="col-md-4 col-lg-3 col-form-label">連絡電話</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="country" type="text" class="form-control" id="Country" value="0227001600">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="Address" class="col-md-4 col-lg-3 col-form-label">地址</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="address" type="text" class="form-control" id="Address" value="106台北市大安區復興南路一段390號十號六樓">
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form><!-- End Profile Edit Form -->
+                            </div>
+                        </div><!-- End Bordered Tabs -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+@section Scripts{
+    <script>
+        // const img1 = document.querySelector('#img1');
+        // const btn2 = document.querySelector('#btn2');
+        // btn2.addEventListener('click', async function () {
+        //     img1.
+        // })
+    </script>
+}

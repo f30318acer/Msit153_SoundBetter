@@ -1334,13 +1334,10 @@ Artest Page
 	margin-bottom: 35px;
 }
 
-/*Place更動*/
 .similar-song .ss-thumb {
 	border-radius: 41px;
 	margin-bottom: 22px;
 	min-width: 100%;
-	width: 250px;
-	height: 300px;
 }
 
 .similar-song h4 {
