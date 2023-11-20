@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Article}/{action=List}/{id?}");
+    pattern: "{controller=Place}/{action=BgPlaceManage}/{id?}");
 
 app.Run();
