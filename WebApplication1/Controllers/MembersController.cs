@@ -20,7 +20,7 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-        public IActionResult Membersclass()
+        public IActionResult Memberclass()
         {
             return View();
         }
