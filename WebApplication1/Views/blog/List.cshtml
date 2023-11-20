@@ -1,0 +1,173 @@
+﻿@{
+	ViewData["Title"] = "List";
+}
+<!-- Blog section -->
+<style>
+    .text-container {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .expanded {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+    }
+</style>
+
+<section class="blog-section spad">
+
+	<div class="container">
+		<div class="section-title">
+            <h2>好文分享</h2>
+		</div>
+		<!-- Blog post -->
+        <div class="row playlist-area">
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/7.jpg" alt="" >
+                    <h5 class="card-title">最爛都市傳說！Netflix《Fyre：國王的豪華音樂節》豪華音樂祭變身荒島惡夢</h5>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/8.jpg" alt="">
+                    <h5 class="card-title">【全台最大日式戶外露營音樂祭】Camp de Amigo就是這個週末，GQ X 解憂吧 打造戶外吧台</h5>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/9.jpg" alt="">
+                    <h5 class="card-title">全台跳起來！覺醒大暖祭百組藝人熱冬開唱</h5>
+                    <a href="" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/11.jpg" alt="">
+                    <h5 class="card-title">#最近在聽什麼歌；獨立音樂歌單再＋５，我在這些專輯裡找到了棲身之地</h5>
+                    @*<p class="card-text">音樂的奇幻力量，是儘管我們素味平生，卻能透過旋律、歌詞共鳴出生命中的心境與經歷。那些挖掘內心的創作者，歌唱著最深處的自己；每一句歌詞、每一個音符都代表著他們一路走來的生命。台灣獨立樂團，各個唱出屬於自己的旋律，在他們的創作中，一定能找到適合你的棲身之地。</p>*@
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/5.jpg" alt="">
+                    <h5 class="card-title">沒有音樂祭沒關係！台灣這些獨立音樂場景陪你Chill整個週末</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/33.jpg" alt="">
+                    <h5 class="card-title">你非去不可的「日本風」戶外風格音樂祭 Camp de Amigo！</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/4.jpg" alt="">
+                    <h5 class="card-title">亞洲最大 Showcase 音樂節《貴人散步》11月臺南開唱！集結 KIRINJI 、Numcha、ADOY 等各國夢幻音樂陣容一次公開</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <div class="playlist-item">
+                    <img src="~/img/blog/6.jpg" alt="">
+                    <h5 class="card-title">首次移師北海岸、36 組陣容不間斷演出，地球上最美好音樂祭「Organik Festival 」邀你逃離城市享受音樂</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+
+
+
+
+            </div>
+		</div>
+		<div class="site-pagination">
+			<a href="#" class="active">01.</a>
+			<a href="#">02.</a>
+			<a href="#">03.</a>
+			<a href="#">04.</a>
+		</div>
+	</div>
+    <script>
+        function toggleText(containerId) {
+            var textContainer = document.getElementById(containerId);
+            textContainer.classList.toggle('expanded');
+        }
+    </script>
+</section>
+@* @{
+    ViewData["Title"] = "List";
+}
+
+<style>
+    .text-container {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .expanded {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+    }
+</style>
+
+<!-- Blog section -->
+<section class="blog-section spad">
+    <div class="container">
+        <div class="section-title">
+            <h2>好文分享</h2>
+        </div>
+
+        <!-- Blog post 1 -->
+        <div class="blog-item">
+            <img src="~/img/blog/11.jpg" alt="">
+            <div class="blog-date">April 14, 2019</div>
+            <h3>#最近在聽什麼歌；獨立音樂歌單再＋５，我在這些專輯裡找到了棲身之地</h3>
+            <div class="blog-meta">by <a href="">Alan Smith</a> in <a href="">Music</a></div>
+            <div class="text-container" id="textContainer1">
+                音樂的奇幻力量，是儘管我們素味平生，卻能透過旋律、歌詞共鳴出生命中的心境與經歷。那些挖掘內心的創作者，歌唱著最深處的自己；每一句歌詞、每一個音符都代表著他們一路走來的生命。台灣獨立樂團，各個唱出屬於自己的旋律，在他們的創作中，一定能找到適合你的棲身之地。
+            </div>
+            <button onclick="toggleText('textContainer1')">閱讀全部</button>
+        </div>
+
+        <!-- Blog post 2 -->
+        <div class="blog-item">
+            <img src="~/img/blog/22.jpg" alt="">
+            <div class="blog-date">April 14, 2019</div>
+            <h3>玫瑰墓樂團 用生命來寫歌 用音樂來說故事</h3>
+            <div class="blog-meta">by <a href="">Alan Smith</a> in <a href="">Music</a></div>
+            <div class="text-container" id="textContainer2">
+                即使近三年疫情不斷的衝擊全國性的藝文團體，玫瑰墓近三年，不自辦演出，卻獲邀完成全國170多場的演出，創下台灣藝文團體的奇蹟，在各地造成旋風式的影響與震撼，好評破表! 因應新冠肺炎疫情襲擊全球，造成慘重傷亡暨各行業重大災損，留下無比沉重的心靈負荷及陰影，故由&#8203;``【oaicite:0】``&#8203;籌劃此公益音樂演講活動。用醫療上的真實故事，化成一串串音符，一首首曲目，來詮釋醫倫，歌頌生命，答謝所有醫療幕後英雄.
+            </div>
+            <button onclick="toggleText('textContainer2')">閱讀全部</button>
+        </div>
+
+        <!-- Add more blog posts as needed -->
+
+        <div class="site-pagination">
+            <a href="#" class="active">01.</a>
+            <a href="#">02.</a>
+            <a href="#">03.</a>
+            <a href="#">04.</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleText(containerId) {
+            var textContainer = document.getElementById(containerId);
+            textContainer.classList.toggle('expanded');
+        }
+    </script>
+</section> *@
