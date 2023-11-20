@@ -22,24 +22,11 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        // GET:登入頁面
-
         public ActionResult Login()
         {
             return View();
         }
-        // GET:登入失敗頁面
-        public ActionResult NoLogin()
-        {
-            return View();
-        }
-        // GET:忘記密碼頁面
-        public ActionResult ForgetPwd()
-        {
-            return View();
-        }
-        // GET:註冊頁面
-        public ActionResult Register()
+		public ActionResult Register()
 		{
 			return View();
 		}
