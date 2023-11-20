@@ -62,9 +62,11 @@
                         <a asp-area="" asp-controller="Customer" asp-action="List">客戶管理</a>
                     </li>    
                     <li><a href="playlist.html">專案專區</a></li>
-                    <li><a href="contact.html">社群討論</a></li>
+                    @*<li><a href="contact.html">社群討論</a></li>*@
+                    <li><a asp-area="" asp-controller="blog" asp-action="List">Blog</a></li>
+                   @* <li><a href="contact.html">音樂專區</a></li>*@
+                    <li><a asp-area="" asp-controller="MusicShare" asp-action="List">音樂專區</a></li>
 
-                    <li><a href="contact.html">音樂專區</a></li>
                 </ul>
             </li>
             @*會員資訊*@
