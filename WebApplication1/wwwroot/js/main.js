@@ -20,6 +20,7 @@ $(window).on('load', function() {
 		var mixer = mixitup(containerEl);
 	}
 
+	
 });
 
 (function($) {
@@ -43,7 +44,6 @@ $(window).on('load', function() {
 		var bg = $(this).data('setbg');
 		$(this).css('background-image', 'url(' + bg + ')');
 	});
-
 	
 	$('.hero-slider').owlCarousel({
 		loop: true,
@@ -56,5 +56,9 @@ $(window).on('load', function() {
 		autoplay: true
 	});
 
+	$("section").css('background', function () {
+		var bg = ('url(' + $(this).data("image-src") + ') no-repeat center center fixed');
+		return bg;
+	});
 })(jQuery);
 

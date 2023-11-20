@@ -2,27 +2,21 @@
 @{
     ViewData["Title"] = "Memberclass";
 }
-
-<h1>Memberclass</h1>
-
+<style>
+	.ddd {
+		border-bottom: 2px solid #fc0254;
+	}
+</style>
 <section class="playlist-section spad">
 	<div class="container-fluid">
 		<div class="section-title">
 			<h2>我的課程</h2>
-			<div class="container-fluid filter-row-container border-top border-bottom py-4 py-xl-2 px-4 px-lg-5">
+			<div class="container-fluid filter-row-container ddd py-4 py-xl-2 px-4 px-lg-5">
 				<div class="filter-row">
-					<div class="my-2 d-none d-xl-inline-block me-2">
-						<select class="form-select" id="web-city-filter"><option value="default" selected="">選擇縣市</option><option value="1">基隆市</option><option value="2">臺北市</option><option value="3">新北市</option><option value="4">桃園市</option><option value="5">新竹市</option><option value="6">臺中市</option><option value="7">臺南市</option><option value="8">嘉義市</option><option value="9">高雄市</option><option value="10">新竹縣</option><option value="11">苗栗縣</option><option value="12">彰化縣</option><option value="13">南投縣</option><option value="14">雲林縣</option><option value="15">嘉義縣</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option></select>
-					</div>
-					<div class="my-2 d-none d-xl-inline-block me-2">
-						<select class="form-select" id="web-district-filter" disabled=""><option selected="">鄉鎮區</option></select>
-					</div>
-					<div class="my-2 d-none d-xl-inline-block me-2">
-						<select class="form-select" id="web-type-filter"><option value="default" selected="">場地類型</option><option value="1">會議</option><option value="2">派對</option><option value="3">聚會</option><option value="4">私人談話</option><option value="5">課程講座</option><option value="6">運動</option><option value="7">工作</option><option value="8">展覽</option><option value="9">音樂/表演</option><option value="10">拍照/攝影</option><option value="11">美容</option><option value="12">烹飪</option><option value="13">儲物</option><option value="14">發表會</option><option value="15">親子活動</option><option value="16">婚禮</option><option value="17">其他</option></select>
-					</div>
-					<div class="my-2 d-none d-xl-inline-block me-2">
-						<input class="date-filter" id="web-date-filter" placeholder="活動日期" type="hidden" value="2023-11-15"><input class="date-filter form-control input" placeholder="活動日期" tabindex="0" type="text" readonly="readonly">
-					</div>
+					<form class="search-form">
+						<input type="text" placeholder="輸入課程名稱">
+						<button>找尋課程</button>
+					</form>
 				</div>
 			</div>
 		</div>
