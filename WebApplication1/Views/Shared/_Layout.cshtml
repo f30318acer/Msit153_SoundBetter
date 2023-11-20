@@ -29,23 +29,20 @@
     <!-- Header section -->
     <header class="header-section clearfix">
         <a href="index.html" class="site-logo">
-            @* <img src="img/logo.png" alt=""> *@
-<h2 style="color:red" >Sound</h2>
-<h3 style="color:white">Better</h3>
+            <img src="img/logo.png" alt="">
         </a>
         <div class="header-right">
             <div class="user-panel">
-                <a href="#" class="hr-btn">Help</a>
-                <span>|</span>
-                @*登入功能*@
-                <a href="" class="login">Login</a>
-                <p><a href="" class="register">Create an account</a></p>
+            <a href="#" class="hr-btn">Help</a>
+            <span>|</span>
+            @*登入功能*@
+                <a asp-area="" asp-controller="Home" asp-action="login">Login</a>
+                <a asp-area="" asp-controller="Home" asp-action="Register">Create an account</a>
             </div>
         </div>
         @*搜尋列*@
         <input type="text" name="keywords" placeholder="樂器、老師、課程" />
         @*這裡是各大功能*@
-
         <ul class="main-menu">
             @*找製作*@
             <li><a href="index.html">找製作</a></li>
@@ -54,7 +51,7 @@
             @*找課程*@
             <li><a href="blog.html">找課程</a></li>
             @*找場地*@
-            <li><a href="blog.html">找場地</a></li>
+            <li><a asp-area="" asp-controller="Place" asp-action="Place">找場地</a></li>
             @*音樂專區*@
             <li>
                 <a href="#">音樂專區</a>
@@ -71,28 +68,19 @@
                 </ul>
             </li>
             @*會員資訊*@
-            <li>
-                <a href="blog.html">會員資訊</a>
+            <li><a href="blog.html">會員資訊</a>
                 <ul class="sub-menu">
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="Members" asp-action="List">會員簡介</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Members" asp-action="List">修改個人資訊</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Members" asp-action="Memberclass">課程管理</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Members" asp-action="List">場地管理</a>
+                        <a asp-area="" asp-controller="User" asp-action="Profile">會員簡介</a>
+                        <a asp-area="" asp-controller="User" asp-action="xxx">修改個人資訊</a>
                     </li>
                 </ul>
+               
             </li>
         </ul>
-
     </header>
-    <!-- Header section end -->
-    @RenderBody()
+    <!-- Header section end --> 
+            @RenderBody() 
     <!-- Footer section -->
     <footer class="footer-section">
         <div class="container">
@@ -134,9 +122,7 @@
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-5 order-lg-1">
-                    @* <img src="img/logo.png" alt=""> *@
-<h2 style="color:red" >Sound</h2>
-<h3 style="color:white">Better</h3>
+                    <img src="img/logo.png" alt="">
                     <div class="copyright">
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
