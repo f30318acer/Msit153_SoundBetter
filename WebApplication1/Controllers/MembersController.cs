@@ -24,5 +24,9 @@ namespace prjMusicBetter.Controllers
 		{
 			return View();
 		}
-	}
+        public IActionResult MemberMykeep()
+        {
+            return View();
+        }
+    }
 }
