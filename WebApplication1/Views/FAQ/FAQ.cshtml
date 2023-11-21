@@ -2,16 +2,19 @@
     ViewData["Title"] = "FAQ";
 }
 
+
 <h1>FAQ</h1>
-<div id="tab-demo">
-    <ul class="tab-title">
-        <li>
-            <a href="#student" id="btn2" >學生常見問題</a>
+<div id="exTab2" class="service">
+    <ul class="nav nav-pills">
+        <li class="active">
+            <a href="#student" data-toggle="tab" class="btn btn-danger" aria-expanded="true">學生常見問題</a>
         </li>
-        <li>
-            <a href="#teacher" id="btn1" >老師常見問題</a>
+        
+        <li class="">
+            <a href="#teacher" data-toggle="tab" class="btn btn-danger" aria-expanded="false">老師常見問題</a>
     </ul>
-    <div id="student" class="tab-inner" >
+    <div class="tab-content">
+        <div id="#student" class="tab-pane active">
         <ul>
             <li>
                 <h5>
@@ -125,7 +128,7 @@
 
         </ul>
     </div>
-    <div id="teacher" class="tab-inner">
+    <div id="teacher" class="tab-pane">
         <ul>
             <li>
                 <h5>
@@ -219,30 +222,48 @@
 
 
         </ul>
-
+        </div>
     </div>
 </div>
 
 <script>
-    $(function () {
-        var $li = $('ul.tab-title li');
-        $($li.eq(0).addClass('active').find('a').attr('href')).siblings('.tab-inner').hide();
+    // $(function () {
+    //     var $li = $('ul.tab-title li');
+    //     $($li.eq(0).addClass('active').find('a').attr('href')).siblings('.tab-inner').hide();
 
-        $li.click(function () {
-            $($(this).find('a').attr('href')).show().siblings('.tab-inner').hide();
-            $(this).addClass('active').siblings('.active').removeClass('active');
+    //     $li.click(function () {
+    //         $($(this).find('a').attr('href')).show().siblings('.tab-inner').hide();
+    //         $(this).addClass('active').siblings('.active').removeClass('active');
+    //     });
+    // });
+
+
+    function onClick() {
+        get_path = location.pathname;
+        if (get_path == "/home/course") {
+            var d = document.getElementById("myNavbar");
+            if (d.className.indexOf("in") > 0) {
+                d.className -= "in";
+            }
+            else {
+                d.className += "in";
+            }
+        }
+    }
+    
+    function onClick_img() {
+        var dd = document.getElementById("show_own");
+    }
+    if($('a.apply-teacher').length>0)
+    {
+        $('a.apply-teacher').click(function () {
+            gatag('event', 'apply_teacher', {
+                'event_category': 'link',
+                'event_action': 'clikc_event',
+                'event_label': 'apply_teacher'
+            });
         });
-    });
-
-
-    $(#btn1).click(function () {
-        $('#student').hide();
-        // $(#teacher).show();
-    });
-    $(#btn2).click(function () {
-        $('#teacher').hide();
-        // $(#student).show();
-    });
+    }
 
 </script>
 
