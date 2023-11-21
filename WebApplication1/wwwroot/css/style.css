@@ -226,6 +226,16 @@ Header section
 	background: #08192d;
 }
 
+.search {
+	margin: auto 10px;
+	text-align: left;
+	border-radius: 3px;
+	border: rgba(30,30,30,0.2) solid 2px;
+	padding: 10px 50px 10px 10px;
+	height: 35px;
+	width: 20%;
+}
+
 .site-logo {
 	display: inline-block;
 	padding: 0;
@@ -1400,6 +1410,9 @@ Responsive
 		padding-left: 15px;
 		padding-right: 20px;
 	}
+	.search {
+		display: none;
+	}
 	.header-right {
 		margin-left: 20px;
 	}
@@ -1725,6 +1738,9 @@ Responsive
 	.header-section {
 		padding: 0 15px;
 	}
+	.search {
+		display: none;
+	}
 	.category-item {
 		margin: 0 0 30px;
 	}
@@ -1759,6 +1775,9 @@ Responsive
 	}
 	.header-section {
 		padding: 0;
+	}
+	.search {
+		display: none;
 	}
 	.player-box {
 		padding: 40px;

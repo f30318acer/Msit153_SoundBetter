@@ -6,12 +6,50 @@
 	.ddd {
 		border-bottom: 2px solid #fc0254;
 	}
+
+	.btm{
+		height: 60px;
+		min-width: 167px;
+		right: 0;
+		top: 0;
+		border: none;
+		border-radius: 80px;
+		color: #fff;
+		font-size: 15px;
+		background: #fc0254;
+		float: right;
+	}
+
+	.title {
+		display: inline-block;
+		margin: 10px;
+		vertical-align: middle;
+	}
+
+	.form-container {
+		float: right;
+		margin: 10px;
+	}
+
+	.title-container {
+		display: flex;
+	}
+
+	.section-title {
+		min-width: 100%; /* 或者您認為適合的最小寬度值 */
+	}
+
 </style>
 <section class="playlist-section spad">
 	<div class="container-fluid">
 		<div class="section-title">
-			<h2>我的課程</h2>
-			<div class="container-fluid filter-row-container ddd py-4 py-xl-2 px-4 px-lg-5">
+			<div class="section-title">
+				<h2 class="title">我的課程</h2>
+				<form asp-controller="Class" asp-action="Createclass" method="get" class="form-container">
+					<button name="createClass" class="btm">新建課程</button>
+				</form>
+			</div>
+			<div class="container-fluid filter-row-container d-flex align-items-center ddd py-4 py-xl-2 px-4 px-lg-5">
 				<div class="filter-row">
 					<form class="search-form">
 						<input type="text" placeholder="輸入課程名稱">

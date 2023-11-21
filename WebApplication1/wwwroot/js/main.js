@@ -55,10 +55,5 @@ $(window).on('load', function() {
 		items: 1,
 		autoplay: true
 	});
-
-	$("section").css('background', function () {
-		var bg = ('url(' + $(this).data("image-src") + ') no-repeat center center fixed');
-		return bg;
-	});
 })(jQuery);
 
