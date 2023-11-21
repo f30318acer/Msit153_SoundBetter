@@ -1,0 +1,65 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TSite>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FSiteName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSiteType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FMember)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSiteName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSiteType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FCity.FCityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FMember.FMemberId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FSiteId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FSiteId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FSiteId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
