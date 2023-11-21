@@ -36,22 +36,25 @@
                                             <div class="col">
                                                 <a asp-area="" asp-controller="Home" asp-action="Register"
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                            transition: all 0.3s ease;width:70px;height:40px" >註冊</a>
+                                            transition: all 0.3s ease;">註冊</a>
                                             </div>
                                             <!-- Second Column for the Login Button -->
                                             <div class="col">
                                                 <a asp-area="" asp-controller="Home" asp-action="Index"
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                            transition: all 0.3s ease;width:70px;height:40px">登入</a>
+                                                transition: all 0.3s ease;">登入</a>
                                             </div>
                                             @*後台登入平台*@
                                             <div class="col">
-                                                <a asp-area="" asp-controller="Home" asp-action="Index"
+                                                <a asp-area="" asp-controller="BgHome" asp-action="Index"
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                            transition: all 0.3s ease;width:70px;height:40px">後台登入</a>
+                                                transition: all 0.3s ease;">後台</a>
                                             </div>
                                             <div class="col">
-                                                @Html.ActionLink("忘記密碼","ForgetPwd","Home")
+                                                <a asp-area="" asp-controller="Home" asp-action="ForgetPwd"
+                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
+                                                transition: all 0.3s ease;">忘記密碼</a>
+                                               @* @Html.ActionLink("忘記密碼","ForgetPwd","Home")*@
                                             </div>
                                         </div>
                                     </div>
