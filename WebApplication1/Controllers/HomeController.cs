@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using prjMusicBetter.Models;
 using System.Diagnostics;
 using WebApplication1.Models;
 
@@ -7,10 +9,12 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly dbSoundBetterContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -28,7 +32,9 @@ namespace WebApplication1.Controllers
         }
 		public ActionResult Register()
 		{
-			return View();
+
+            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
+            return View();         
 		}
         public IActionResult test()
         {

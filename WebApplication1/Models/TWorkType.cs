@@ -5,13 +5,11 @@ using System.Collections.Generic;
 
 namespace prjMusicBetter.Models;
 
-public partial class Address
+public partial class TWorkType
 {
-    public int Id { get; set; }
+    public int FWorkTypeId { get; set; }
 
-    public string City { get; set; }
+    public string FWorkType { get; set; }
 
-    public string SiteId { get; set; }
-
-    public string Road { get; set; }
+    public virtual ICollection<TWork> TWorks { get; set; } = new List<TWork>();
 }
