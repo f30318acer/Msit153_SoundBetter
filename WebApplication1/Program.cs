@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Place}/{action=PlaceManage}/{id?}");
+    pattern: "{controller=Rate}/{action=Rate}/{id?}");
 
 app.Run();
