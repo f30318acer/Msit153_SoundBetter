@@ -2,80 +2,108 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "_Layout2";
 }
 
 <h1>Create</h1>
 
 <h4>TMember</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FUserame" class="control-label"></label>
-                <input asp-for="FUserame" class="form-control" />
-                <span asp-validation-for="FUserame" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FName" class="control-label"></label>
-                <input asp-for="FName" class="form-control" />
-                <span asp-validation-for="FName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPasswod" class="control-label"></label>
-                <input asp-for="FPasswod" class="form-control" />
-                <span asp-validation-for="FPasswod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPhone" class="control-label"></label>
-                <input asp-for="FPhone" class="form-control" />
-                <span asp-validation-for="FPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FEmail" class="control-label"></label>
-                <input asp-for="FEmail" class="form-control" />
-                <span asp-validation-for="FEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FGender" class="control-label"></label>
-                <input asp-for="FGender" class="form-control" />
-                <span asp-validation-for="FGender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FBirthday" class="control-label"></label>
-                <input asp-for="FBirthday" class="form-control" />
-                <span asp-validation-for="FBirthday" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FCreationTime" class="control-label"></label>
-                <input asp-for="FCreationTime" class="form-control" />
-                <span asp-validation-for="FCreationTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FIntroduction" class="control-label"></label>
-                <input asp-for="FIntroduction" class="form-control" />
-                <span asp-validation-for="FIntroduction" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPermissionId" class="control-label"></label>
-                <select asp-for="FPermissionId" class ="form-control" asp-items="ViewBag.FPermissionId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPhotoPath" class="control-label"></label>
-                <input asp-for="FPhotoPath" class="form-control" />
-                <span asp-validation-for="FPhotoPath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<main id="main" class="main">
+    <!-- 其他內容... -->
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">會員清單</h5>
+
+                        <div class="datatable-container">
+                            <table class="table">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form asp-action="Create">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-group">
+                                                <label asp-for="FUserame" class="control-label"></label>
+                                                <input asp-for="FUserame" class="form-control" />
+                                                <span asp-validation-for="FUserame" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FName" class="control-label"></label>
+                                                <input asp-for="FName" class="form-control" />
+                                                <span asp-validation-for="FName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPasswod" class="control-label"></label>
+                                                <input asp-for="FPasswod" class="form-control" />
+                                                <span asp-validation-for="FPasswod" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPhone" class="control-label"></label>
+                                                <input asp-for="FPhone" class="form-control" />
+                                                <span asp-validation-for="FPhone" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FEmail" class="control-label"></label>
+                                                <input asp-for="FEmail" class="form-control" />
+                                                <span asp-validation-for="FEmail" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FGender" class="control-label"></label>
+                                                <input asp-for="FGender" class="form-control" />
+                                                <span asp-validation-for="FGender" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FBirthday" class="control-label"></label>
+                                                <input asp-for="FBirthday" class="form-control" />
+                                                <span asp-validation-for="FBirthday" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FCreationTime" class="control-label"></label>
+                                                <input asp-for="FCreationTime" class="form-control" />
+                                                <span asp-validation-for="FCreationTime" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FIntroduction" class="control-label"></label>
+                                                <input asp-for="FIntroduction" class="form-control" />
+                                                <span asp-validation-for="FIntroduction" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPermissionId" class="control-label"></label>
+                                                <select asp-for="FPermissionId" class="form-control" asp-items="ViewBag.FPermissionId"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPhotoPath" class="control-label"></label>
+                                                <input asp-for="FPhotoPath" class="form-control" />
+                                                <span asp-validation-for="FPhotoPath" class="text-danger"></span>
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <input type="submit" value="確定新增" class="btn btn-primary" onclick="return confirmCreate();" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                        <div>
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    function confirmCreate() {
+        return confirm('確定要新增嗎？');
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
