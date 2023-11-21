@@ -20,6 +20,7 @@
     <!-- Main Stylesheets -->
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
+
 <body>
     <!-- Page Preloder -->
     <div id="preloder">
@@ -50,7 +51,7 @@
             @*<li><a href="index.html">找製作</a></li>*@
             <li><a asp-area="" asp-controller="Project" asp-action="List">找製作</a></li>
             @*找人才*@
-            <li><a href="blog.html">找人才</a></li>
+            @*<li><a href="blog.html">找人才</a></li>*@
             @*找課程*@
            @* <li><a href="blog.html">找課程</a></li>*@
             <li><a asp-area="" asp-controller="Class" asp-action="Index">找課程</a></li>
@@ -82,6 +83,9 @@
                 </ul>
                
             </li>
+            <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
+                <img src="~/img/header/shopping-cart.png" width="50px" class="shopping-cart-icon"/>
+            </a>
         </ul>
     </header>
     <!-- Header section end --> 
