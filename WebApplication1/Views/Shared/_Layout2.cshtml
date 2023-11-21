@@ -385,7 +385,21 @@
                     </li>
                 </ul>
             </li><!-- End Forms Nav -->
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>課程管理</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="@Url.Content("~/BgMember/Index")">
+                            <i class="bi bi-circle"></i><span>會員管理</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+            <div>
+                <img src="~/assets/img/background/employee.png" width="50px">
+            </div>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>權限管理</span><i class="bi bi-chevron-down ms-auto"></i>
