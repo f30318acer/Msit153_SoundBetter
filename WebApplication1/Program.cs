@@ -30,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=TMembers}/{action=Edit}/{id?}");
+    pattern: "{controller=TSites}/{action=Index}/{id?}");
 
 app.Run();
