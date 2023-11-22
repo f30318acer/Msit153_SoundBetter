@@ -36,15 +36,15 @@
         </a>
         <div class="header-right">
             <div class="user-panel">
-            <a href="#" class="hr-btn">Help</a>
-            <span>|</span>
-            @*登入功能*@
+                <a href="#" class="hr-btn">Help</a>
+                <span>|</span>
+                @*登入功能*@
                 <a asp-area="" asp-controller="Home" asp-action="login">Login</a>
                 <a asp-area="" asp-controller="Home" asp-action="Register">Create an account</a>
             </div>
         </div>
         @*搜尋列*@
-        <input type="text" name="keywords" placeholder="樂器、老師、課程" />
+        <input class="search" type="text" name="keywords" placeholder="樂器、老師、課程" />
         @*這裡是各大功能*@
         <ul class="main-menu">
             @*找製作*@
@@ -72,7 +72,8 @@
                 </ul>
             </li>
             @*會員資訊*@
-            <li><a href="blog.html">會員資訊</a>
+            <li>
+                <a href="blog.html">會員資訊</a>
                 <ul class="sub-menu">
                     <li class="nav-item">
                       
@@ -89,7 +90,7 @@
         </ul>
     </header>
     <!-- Header section end --> 
-            @RenderBody() 
+    @RenderBody() 
     <!-- Footer section -->
     <footer class="footer-section">
         <div class="container">
