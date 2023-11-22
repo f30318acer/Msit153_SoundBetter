@@ -22,8 +22,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">優惠券</h5>
-
+                      
                         <div class="datatable-container">
                             <table class="table">
                                 <!-- 表格標題和內容... -->
@@ -70,7 +69,7 @@
                                     <form asp-action="Delete">
                                         <input type="hidden" asp-for="FCouponId" />
                                         <input type="submit" value="Delete" class="btn btn-danger" onclick="confirmDelete"/> |
-                                        <a asp-action="Index">Back to List</a>
+                                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
                                     </form>
                                 </div>
                             </table>
