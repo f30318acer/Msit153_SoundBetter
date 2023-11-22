@@ -78,16 +78,15 @@
                                                 <input asp-for="FPhotoPath" class="form-control" />
                                                 <span asp-validation-for="FPhotoPath" class="text-danger"></span>
                                             </div>
-                                           <hr />
-                                            <div class="form-group">
-                                                <input type="submit" value="Save" class="btn btn-primary" onclick="confirmEdit()"/>
-                                            </div>
+                                            <hr />
+                                            <form asp-action="Edit">
+                                                <input type="hidden" asp-for="FMemberId" />
+                                                <input type="submit" value="Save" class="btn btn-primary" onclick="return confirmEdit();" /> |
+                                                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                            </form>
                                         </form>
                                     </div>
-                                </div>
-                                <div>
-                                    <a asp-action="Index">首頁</a>
-                                </div>
+                                </div>  
                             </table>
                         </div>
                     </div>

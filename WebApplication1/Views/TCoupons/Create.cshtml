@@ -2,56 +2,84 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "_Layout2";
 }
 
 <h1>Create</h1>
 
 <h4>TCoupon</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FCouponContent" class="control-label"></label>
-                <input asp-for="FCouponContent" class="form-control" />
-                <span asp-validation-for="FCouponContent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FCouponCode" class="control-label"></label>
-                <input asp-for="FCouponCode" class="form-control" />
-                <span asp-validation-for="FCouponCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FDescription" class="control-label"></label>
-                <input asp-for="FDescription" class="form-control" />
-                <span asp-validation-for="FDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FStartdate" class="control-label"></label>
-                <input asp-for="FStartdate" class="form-control" />
-                <span asp-validation-for="FStartdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FEnddate" class="control-label"></label>
-                <input asp-for="FEnddate" class="form-control" />
-                <span asp-validation-for="FEnddate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPicture" class="control-label"></label>
-                <input asp-for="FPicture" class="form-control" />
-                <span asp-validation-for="FPicture" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@* ================================================= *@
+
+<main id="main" class="main">
+    <!-- 其他內容... -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">優惠券清單</h5>
+
+                        <div class="datatable-container">
+                            <table class="table">
+                                <!-- 表格標題和內容... -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form asp-action="Create">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-group">
+                                                <label asp-for="FCouponContent" class="control-label"></label>
+                                                <input asp-for="FCouponContent" class="form-control" />
+                                                <span asp-validation-for="FCouponContent" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FCouponCode" class="control-label"></label>
+                                                <input asp-for="FCouponCode" class="form-control" />
+                                                <span asp-validation-for="FCouponCode" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FDescription" class="control-label"></label>
+                                                <input asp-for="FDescription" class="form-control" />
+                                                <span asp-validation-for="FDescription" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FStartdate" class="control-label"></label>
+                                                <input asp-for="FStartdate" class="form-control" />
+                                                <span asp-validation-for="FStartdate" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FEnddate" class="control-label"></label>
+                                                <input asp-for="FEnddate" class="form-control" />
+                                                <span asp-validation-for="FEnddate" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPicture" class="control-label"></label>
+                                                <input asp-for="FPicture" class="form-control" />
+                                                <span asp-validation-for="FPicture" class="text-danger"></span>
+                                            </div>
+                                            <hr />
+                                            <div class="form-group">
+                                                <input type="submit" value="Create" class="btn btn-primary" onclick="confirmCreate()"/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+@* ================================================= *@
+<script>
+    function confirmCreate() {
+        return confirm('確定要新增嗎？');
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
