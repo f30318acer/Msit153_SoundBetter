@@ -1,0 +1,66 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TCoupon>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout2";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FCouponContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCouponCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStartdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEnddate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPicture)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FCouponContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FCouponCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FStartdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEnddate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPicture)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FCouponId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FCouponId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FCouponId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
