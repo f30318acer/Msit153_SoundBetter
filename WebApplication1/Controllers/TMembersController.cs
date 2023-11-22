@@ -19,12 +19,31 @@ namespace prjMusicBetter.Controllers
         }
 
         // GET: TMembers
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var dbSoundBetterContext = _context.TMembers.Include(t => t.FPermission);
+        //    return View(await dbSoundBetterContext.ToListAsync());
+        //}
+
+        // GET: TMembers
+        //===========================================================================
+        public async Task<IActionResult> Index(string search)
         {
-            var dbSoundBetterContext = _context.TMembers.Include(t => t.FPermission);
-            return View(await dbSoundBetterContext.ToListAsync());
+            ViewData["CurrentFilter"] = search;
+
+            var members = from m in _context.TMembers
+                          select m;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                members = members.Where(s => s.FName.Contains(search));
+            }
+
+            return View(await members.ToListAsync());
         }
 
+
+        //===========================================================================
         // GET: TMembers/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -19,13 +19,35 @@ namespace prjMusicBetter.Controllers
         }
 
         // GET: TCoupons
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //      return _context.TCoupons != null ? 
+        //                  View(await _context.TCoupons.ToListAsync()) :
+        //                  Problem("Entity set 'dbSoundBetterContext.TCoupons'  is null.");
+        //}
+        // GET: TCoupons
+        //====================================================================================
+        public async Task<IActionResult> Index(string search)
         {
-              return _context.TCoupons != null ? 
-                          View(await _context.TCoupons.ToListAsync()) :
-                          Problem("Entity set 'dbSoundBetterContext.TCoupons'  is null.");
-        }
+            ViewData["CurrentFilter"] = search;
 
+            var coupons = from c in _context.TCoupons
+                          select c;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                if (int.TryParse(search, out int searchNumber))
+                {
+                    coupons = coupons.Where(c => c.FCouponId == searchNumber);
+                }
+                else
+                {
+                    // 可選：如果輸入不是數字，處理其他邏輯，或返回全部數據
+                }
+            }
+            return View(await coupons.ToListAsync());
+        }
+//====================================================================================
         // GET: TCoupons/Details/5
         public async Task<IActionResult> Details(int? id)
         {

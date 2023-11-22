@@ -12,6 +12,14 @@
             <button onclick="location.href='@Url.Action("Create", "TCoupons")'" class="btn btn-primary">新增優惠券</button>
         </p>
 
+        <form asp-action="Index" method="get">
+            <div class="form-group">
+                <label for="search">搜尋關鍵字:</label>
+                <input type="text" class="form-control" id="search" name="search" value="@ViewData["CurrentFilter"]" />
+            </div>
+            <button type="submit" class="btn btn-secondary">搜尋</button>
+        </form>
+
         <h1>優惠券清單</h1>
         <nav>
             <ol class="breadcrumb">
@@ -77,9 +85,10 @@
                                                     @Html.DisplayFor(modelItem => item.FPicture)
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Edit" asp-route-id="@item.FCouponId">Edit</a> |
-                                                    <a asp-action="Details" asp-route-id="@item.FCouponId">Details</a> |
-                                                    <a asp-action="Delete" asp-route-id="@item.FCouponId">Delete</a>
+                                                    <a asp-action="Edit" asp-route-id="@item.FCouponId" class="btn btn-outline-success">修改</a> 
+                                                    <a asp-action="Delete" asp-route-id="@item.FCouponId" class="btn btn-outline-danger">刪除</a>
+                                                   @*  <a asp-action="Details" asp-route-id="@item.FCouponId">Details</a> | *@
+                                                   
                                                 </td>
                                             </tr>
                                         }
