@@ -30,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=TCoupons}/{action=Index}/{id?}");
+    pattern: "{controller=BgHome}/{action=Index}/{id?}");
 
 app.Run();
