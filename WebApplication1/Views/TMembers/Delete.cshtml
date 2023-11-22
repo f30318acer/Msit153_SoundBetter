@@ -5,22 +5,25 @@
     Layout = "_Layout2";
 }
 }
-
-<h1>Delete</h1>
-
-
-
 @* ======================================================================== *@
 
 <main id="main" class="main">
     <!-- 其他內容... -->
+    <div class="pagetitle">
+        <h1>刪除會員資料</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Tables</li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">會員清單</h5>
-
+                    <div class="card-body">   
                         <div class="datatable-container">
                             <table class="table">
                                 <!-- 表格標題和內容... -->
@@ -102,7 +105,6 @@
                                         <a asp-action="Index" class="btn btn-primary">Back to List</a>
                                     </form>
                                 </div>
-
                             </table>
                         </div>               
                     </div>
