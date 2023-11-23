@@ -175,6 +175,25 @@ namespace prjMusicBetter.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        //==========================================================20231123新增
+        [HttpGet]
+        public async Task<IActionResult> GetCoupons(string search)
+        {
+            var couponsQuery = _context.TCoupons.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                if (int.TryParse(search, out int searchNumber))
+                {
+                    couponsQuery = couponsQuery.Where(c => c.FCouponId == searchNumber);
+                }
+                // 可選的額外處理
+            }
+
+            var coupons = await couponsQuery.ToListAsync();
+            return Json(coupons);
+        }
+//========================================================================
 
         private bool TCouponExists(int id)
         {
