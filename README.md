@@ -10,4 +10,16 @@ https://github.com/robotze/GithubDesktopZhTool/releases
 廖哲宇(組長) 、陳品諺、鄭琮穎、姚宇謙、蔡亞哲、洪培庭、林群力
 
 分工介紹
+廖哲宇(組長)
 
+陳品諺
+
+鄭琮穎
+
+姚宇謙
+
+蔡亞哲
+
+洪培庭
+
+林群力
