@@ -2,84 +2,113 @@
 
 @{
     ViewData["Title"] = "Edit";   
-   
+    Layout = "_Layout2";
 }
+@* =================================================================================== *@
+<main id="main" class="main">
+    <!-- 其他內容... -->
+    <div class="pagetitle">
+        <h1>修改會員資料</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Tables</li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="datatable-container">
+                            <table class="table">
+                                <!-- 表格標題和內容... -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form asp-action="Edit">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input type="hidden" asp-for="FMemberId" />
+                                            <div class="form-group">
+                                                <label asp-for="FUserame" class="control-label"></label>
+                                                <input asp-for="FUserame" class="form-control" />
+                                                <span asp-validation-for="FUserame" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FName" class="control-label"></label>
+                                                <input asp-for="FName" class="form-control" />
+                                                <span asp-validation-for="FName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPasswod" class="control-label"></label>
+                                                <input asp-for="FPasswod" class="form-control" />
+                                                <span asp-validation-for="FPasswod" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPhone" class="control-label"></label>
+                                                <input asp-for="FPhone" class="form-control" />
+                                                <span asp-validation-for="FPhone" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FEmail" class="control-label"></label>
+                                                <input asp-for="FEmail" class="form-control" />
+                                                <span asp-validation-for="FEmail" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FGender" class="control-label"></label>
+                                                <input asp-for="FGender" class="form-control" />
+                                                <span asp-validation-for="FGender" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FBirthday" class="control-label"></label>
+                                                <input asp-for="FBirthday" class="form-control" />
+                                                <span asp-validation-for="FBirthday" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FCreationTime" class="control-label"></label>
+                                                <input asp-for="FCreationTime" class="form-control" />
+                                                <span asp-validation-for="FCreationTime" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FIntroduction" class="control-label"></label>
+                                                <input asp-for="FIntroduction" class="form-control" />
+                                                <span asp-validation-for="FIntroduction" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPermissionId" class="control-label"></label>
+                                                <select asp-for="FPermissionId" class="form-control" asp-items="ViewBag.FPermissionId"></select>
+                                                <span asp-validation-for="FPermissionId" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPhotoPath" class="control-label"></label>
+                                                <input asp-for="FPhotoPath" class="form-control" />
+                                                <span asp-validation-for="FPhotoPath" class="text-danger"></span>
+                                            </div>
+                                           
+                                            <form asp-action="Edit">
+                                                <input type="hidden" asp-for="FMemberId" />
+                                                <input type="submit" value="Save" class="btn btn-primary" onclick="return confirmEdit();" /> |
+                                                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                            </form>
+                                        </form>
+                                    </div>
+                                </div>  
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 
-<h1>Edit</h1>
-
-<h4>TMember</h4>
-<hr />
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="FMemberId" />
-            <div class="form-group">
-                <label asp-for="FUserame" class="control-label"></label>
-                <input asp-for="FUserame" class="form-control" />
-                <span asp-validation-for="FUserame" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FName" class="control-label"></label>
-                <input asp-for="FName" class="form-control" />
-                <span asp-validation-for="FName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPasswod" class="control-label"></label>
-                <input asp-for="FPasswod" class="form-control" />
-                <span asp-validation-for="FPasswod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPhone" class="control-label"></label>
-                <input asp-for="FPhone" class="form-control" />
-                <span asp-validation-for="FPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FEmail" class="control-label"></label>
-                <input asp-for="FEmail" class="form-control" />
-                <span asp-validation-for="FEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FGender" class="control-label"></label>
-                <input asp-for="FGender" class="form-control" />
-                <span asp-validation-for="FGender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FBirthday" class="control-label"></label>
-                <input asp-for="FBirthday" class="form-control" />
-                <span asp-validation-for="FBirthday" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FCreationTime" class="control-label"></label>
-                <input asp-for="FCreationTime" class="form-control" />
-                <span asp-validation-for="FCreationTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FIntroduction" class="control-label"></label>
-                <input asp-for="FIntroduction" class="form-control" />
-                <span asp-validation-for="FIntroduction" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPermissionId" class="control-label"></label>
-                <select asp-for="FPermissionId" class="form-control" asp-items="ViewBag.FPermissionId"></select>
-                <span asp-validation-for="FPermissionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPhotoPath" class="control-label"></label>
-                <input asp-for="FPhotoPath" class="form-control" />
-                <span asp-validation-for="FPhotoPath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@* =================================================================================== *@
+<script>
+    function confirmEdit() {
+        return confirm('確定要更新嗎？');
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

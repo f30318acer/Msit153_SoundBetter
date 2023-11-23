@@ -2,57 +2,90 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_Layout2";
 }
 
-<h1>Edit</h1>
+@* =================================================================================== *@
+<main id="main" class="main">
+    <!-- 其他內容... -->
+    <div class="pagetitle">
+        <h1>修改優惠券</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Tables</li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                       
+                        <div class="datatable-container">
+                            <table class="table">
+                                <!-- 表格標題和內容... -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form asp-action="Edit">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input type="hidden" asp-for="FCouponId" />
+                                            <div class="form-group">
+                                                <label asp-for="FCouponContent" class="control-label"></label>
+                                                <input asp-for="FCouponContent" class="form-control" />
+                                                <span asp-validation-for="FCouponContent" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FCouponCode" class="control-label"></label>
+                                                <input asp-for="FCouponCode" class="form-control" />
+                                                <span asp-validation-for="FCouponCode" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FDescription" class="control-label"></label>
+                                                <input asp-for="FDescription" class="form-control" />
+                                                <span asp-validation-for="FDescription" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FStartdate" class="control-label"></label>
+                                                <input asp-for="FStartdate" class="form-control" />
+                                                <span asp-validation-for="FStartdate" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FEnddate" class="control-label"></label>
+                                                <input asp-for="FEnddate" class="form-control" />
+                                                <span asp-validation-for="FEnddate" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPicture" class="control-label"></label>
+                                                <input asp-for="FPicture" class="form-control" />
+                                                <span asp-validation-for="FPicture" class="text-danger"></span>
+                                            </div>
+                                            <hr />
+                                            <form asp-action="Edit">
+                                                <input type="hidden" asp-for="FCouponId" />
+                                                <input type="submit" value="Save" class="btn btn-primary" onclick="return confirmEdit();" /> |
+                                                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                            </form>   
+                                        </form>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+@* =================================================================================== *@
 
-<h4>TCoupon</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="FCouponId" />
-            <div class="form-group">
-                <label asp-for="FCouponContent" class="control-label"></label>
-                <input asp-for="FCouponContent" class="form-control" />
-                <span asp-validation-for="FCouponContent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FCouponCode" class="control-label"></label>
-                <input asp-for="FCouponCode" class="form-control" />
-                <span asp-validation-for="FCouponCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FDescription" class="control-label"></label>
-                <input asp-for="FDescription" class="form-control" />
-                <span asp-validation-for="FDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FStartdate" class="control-label"></label>
-                <input asp-for="FStartdate" class="form-control" />
-                <span asp-validation-for="FStartdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FEnddate" class="control-label"></label>
-                <input asp-for="FEnddate" class="form-control" />
-                <span asp-validation-for="FEnddate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FPicture" class="control-label"></label>
-                <input asp-for="FPicture" class="form-control" />
-                <span asp-validation-for="FPicture" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script>
+    function confirmEdit() {
+        return confirm('確定要更新嗎？');
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

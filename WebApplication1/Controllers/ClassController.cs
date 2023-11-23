@@ -17,5 +17,15 @@ namespace prjMusicBetter.Controllers
 		{
 			return View();
 		}
-	}
+
+
+
+
+        /*=======課程內頁===============*/
+
+        public IActionResult Createclass()
+        {
+            return View();
+        }
+    }
 }

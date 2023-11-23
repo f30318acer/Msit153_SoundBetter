@@ -3,33 +3,43 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout2";
+
 }
+<style>
+    .table > thead > * > * {
+        background-color: lightskyblue;
+    }
+    .btn {
+        border-radius: 10px;
+        background-color: lightgreen;
+    }
+</style>
 <main id="main" class="main">
 <h1>場地管理</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn">新增場地</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FSiteName)
+                場地名稱
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FPhone)
+                場地類型
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FSiteType)
+                連絡電話
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FAddress)
+                城市
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FCity)
+                地址
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FMember)
+                會員
             </th>
             <th></th>
         </tr>
@@ -41,24 +51,23 @@
                 @Html.DisplayFor(modelItem => item.FSiteName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FPhone)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.FSiteType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FAddress)
+                @Html.DisplayFor(modelItem => item.FPhone)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FCity.FCityId)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.FAddress)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FMember.FMemberId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FSiteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FSiteId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FSiteId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.FSiteId" class="btn">修改</a> 
+                <a asp-action="Delete" asp-route-id="@item.FSiteId" class="btn">刪除</a>
             </td>
         </tr>
 }
