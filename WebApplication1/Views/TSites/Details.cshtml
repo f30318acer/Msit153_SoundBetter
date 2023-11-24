@@ -1,0 +1,56 @@
+﻿@model prjMusicBetter.Models.TSite
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout2";
+}
+<main id="main" class="main">
+<h1>Details</h1>
+
+<div>
+    <h4>TSite</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FSiteName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FSiteName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPhone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPhone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FSiteType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FSiteType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FAddress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FAddress)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FCity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FCity.FCity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FMember)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FMember.FName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</main>

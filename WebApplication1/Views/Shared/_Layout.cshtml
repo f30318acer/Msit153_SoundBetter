@@ -20,6 +20,7 @@
     <!-- Main Stylesheets -->
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
+
 <body>
     <!-- Page Preloder -->
     <div id="preloder">
@@ -35,22 +36,23 @@
         </a>
         <div class="header-right">
             <div class="user-panel">
-            <a href="#" class="hr-btn">Help</a>
-            <span>|</span>
-            @*登入功能*@
+                <a href="#" class="hr-btn">Help</a>
+                <span>|</span>
+                @*登入功能*@
                 <a asp-area="" asp-controller="Home" asp-action="login">Login</a>
                 <a asp-area="" asp-controller="Home" asp-action="Register">Create an account</a>
             </div>
         </div>
         @*搜尋列*@
-        <input type="text" name="keywords" placeholder="樂器、老師、課程" />
+        <input class="search" type="text" name="keywords" placeholder="樂器、老師、課程" />
         @*這裡是各大功能*@
         <ul class="main-menu">
             @*找製作*@
             @*<li><a href="index.html">找製作</a></li>*@
             <li><a asp-area="" asp-controller="Project" asp-action="List">找製作</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Vision">視覺效果</a></li>
             @*找人才*@
-            <li><a href="blog.html">找人才</a></li>
+            @*<li><a href="blog.html">找人才</a></li>*@
             @*找課程*@
            @* <li><a href="blog.html">找課程</a></li>*@
             <li><a asp-area="" asp-controller="Class" asp-action="Index">找課程</a></li>
@@ -71,21 +73,25 @@
                 </ul>
             </li>
             @*會員資訊*@
-            <li><a href="blog.html">會員資訊</a>
+            <li>
+                <a href="blog.html">會員資訊</a>
                 <ul class="sub-menu">
                     <li class="nav-item">
                       
                         <a href="@Url.Content("~/Members/Profile1")" class="btn btn-light">會員簡介</a>
 
-                        <a href="@Url.Content("~/Members/xxx")" class="btn btn-light">修改個人資料</a>
+                        <a href="@Url.Content("~/Members/ProfileEdit")" class="btn btn-light">修改個人資料</a>
                     </li>
                 </ul>
                
             </li>
+            <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
+                <img src="~/img/header/shopping-cart.png" width="50px" class="shopping-cart-icon"/>
+            </a>
         </ul>
     </header>
     <!-- Header section end --> 
-            @RenderBody() 
+    @RenderBody() 
     <!-- Footer section -->
     <footer class="footer-section">
         <div class="container">

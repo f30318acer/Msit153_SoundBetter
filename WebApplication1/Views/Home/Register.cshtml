@@ -1,4 +1,5 @@
-﻿@{
+﻿@model prjMusicBetter.Models.TMember
+@{
     ViewData["Title"] = "Login";
 }
 
@@ -13,7 +14,7 @@
                                 <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">Register</p>
 
 
-                                <form class="mx-1 mx-md-4">
+                                <form class="mx-1 mx-md-4" asp-action="Create">
                                    
                                     <div class="photo-button mb-3"><div class="photo-card mb-2 d-flex justify-content-center">
                                         <div class="photo"><img src="~/img/artist.jpg" style="border-radius:10px"> 
@@ -22,11 +23,18 @@
                                             <input type="button" value="上傳大頭照" class="btn btn-light"> <input type="button" value="移除大頭照" class="btn btn-light">
                                         </div>
                                     </div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="form3Example4c" class="form-control" asp-for="FUserame" />
+                                            <label class="form-label" for="form3Example4c">UserName</label>
+                                        </div>
+                                    </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control" />
+                                            <input type="text" id="form3Example4c" class="form-control" asp-for="FName" />
                                             <label class="form-label" for="form3Example4c">Name</label>
                                         </div>
                                     </div>
@@ -34,7 +42,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="form3Example3c" class="form-control" />
+                                            <input type="email" id="form3Example3c" class="form-control" asp-for="FEmail" />
                                             <label class="form-label" for="form3Example3c">Your Email</label>
                                         </div>
                                     </div>
@@ -42,7 +50,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control"/>
+                                            <input type="password" id="form3Example4c" class="form-control" asp-for="FPasswod" />
                                             <label class="form-label" for="form3Example4c">Password</label>
                                         </div>
                                     </div>
@@ -50,7 +58,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control" />
+                                            <input type="text" id="form3Example4c" class="form-control" asp-for="FPhone" />
                                             <label class="form-label" for="form3Example4c">Contact No.</label>
                                         </div>
                                     </div>
@@ -59,9 +67,12 @@
                                     <div class="container">
                                         <div class="row">
                                             <div class="col">
-                                                <a asp-area="" asp-controller="Home" asp-action="Register"
+                                                <a  asp-area="" asp-controller="Home" asp-action="Register"
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
                                                 transition: all 0.3s ease;">Register </a>
+                                                <a asp-area="" asp-controller="Home" asp-action="index"
+                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
+                                                transition: all 0.3s ease;">回首頁 </a>
                                             </div>
                                         </div>
                                     </div>

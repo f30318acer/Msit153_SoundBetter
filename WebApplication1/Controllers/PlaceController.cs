@@ -12,7 +12,7 @@ namespace Music_matchmaking_platform.Controllers
         {
             return View();
         }
-        public IActionResult PlaceManage()
+        public IActionResult BgPlaceManage()
         {
             return View();
         }

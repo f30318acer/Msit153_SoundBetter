@@ -74,14 +74,14 @@
             <div class="m-3 justify-content-center">
                 <div class=" border-bottom align-items-center d-flex">
                     <div class="btnOptions d-flex p-2 gap-3" id="info">  
-                        <img class="d-flex w-25-h-25" src="/images/memberphoto/user.png" alt="">
+                        <img class="d-flex w-25-h-25" src="~/" alt="">
                         個人資料
                     </div>
                 </div>
                 <div class=" border-bottom align-items-center d-flex">
                     <div class="btnOptions d-flex p-2 gap-3" id="order">
-                        <img class="d-flex w-25-h-25" src="/images/memberphoto/myorder.png" alt="">
-                        <a href="@Url.Content("~/Members/Membersclass")" class="btn btn-dark">課程查詢</a>
+                        <img class="d-flex w-25-h-25" src="" alt="">
+                        <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-dark">課程查詢</a>
                         
                     </div>
                 </div>
@@ -97,12 +97,12 @@
                         <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark">我的優惠券</a>
                     </div>
                 </div>
-                <div class=" border-bottom align-items-center d-flex">
+              @*  <div class=" border-bottom align-items-center d-flex">
                     <div class="btnOptions d-flex p-2 gap-3" id="password">
                         <img class="d-flex w-25-h-25" src="/images/memberphoto/exchange.png" alt="">
                         修改密碼
                     </div>
-                </div>
+                </div>*@
 
             </div>
         </div>
@@ -163,7 +163,8 @@
                     </div>
                     <div class="justify-content-around p-5">
                         <div class="text-center">
-                            <input type="submit" value="修改個人資料" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">
+                            <a href="@Url.Action("ProfileEdit", "Member")" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">修改個人資料</a>
+                            @*<input type="submit" value="修改個人資料" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">*@
                             <a href="@Url.Content("~/Home/Index")" class="btn btn-dark">回首頁</a>
                         </div>
                     </div>

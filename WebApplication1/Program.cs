@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using prjMusicBetter.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<dbSoundBetterContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("dbSoundBetterConnection")
+));
 
 var app = builder.Build();
 
@@ -22,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=BgMember}/{action=Index}/{id?}");
+    pattern: "{controller=TSites}/{action=Index}/{id?}");
 
 app.Run();

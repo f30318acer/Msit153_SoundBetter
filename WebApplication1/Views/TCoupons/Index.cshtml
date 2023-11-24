@@ -1,0 +1,129 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TCoupon>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout2";
+}
+<main id="main" class="main">
+    <!-- 其他內容... -->
+    <div class="pagetitle">
+       
+        <p>
+            <button onclick="location.href='@Url.Action("Create", "TCoupons")'" class="btn btn-primary">新增優惠券</button>
+        </p>
+
+        <form asp-action="Index" method="get">
+            <div class="form-group">
+                <label for="search">搜尋關鍵字:</label>
+                <input type="text" class="form-control" id="search" name="search" value="@ViewData["CurrentFilter"]" />
+            </div>
+            <button type="submit" class="btn btn-secondary">搜尋</button>
+        </form>
+
+        <h1>優惠券清單</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Tables</li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                     
+                        <div class="datatable-container">
+                            <table class="table">
+                                <!-- 表格標題和內容... -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FCouponContent)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FCouponCode)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FDescription)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FStartdate)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FEnddate)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FPicture)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FCouponContent)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FCouponCode)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FDescription)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FStartdate)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FEnddate)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FPicture)
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Edit" asp-route-id="@item.FCouponId" class="btn btn-outline-success">修改</a> 
+                                                    <a asp-action="Delete" asp-route-id="@item.FCouponId" class="btn btn-outline-danger">刪除</a>
+                                                   @*  <a asp-action="Details" asp-route-id="@item.FCouponId">Details</a> | *@
+                                                   
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    $(document).ready(function () {
+        $("#searchButton").click(function () {
+            var searchText = $("#searchText").val();
+            $.ajax({
+                url: '@Url.Action("GetCoupons", "TCoupons")',
+                type: 'GET',
+                data: { search: searchText },
+                success: function (data) {
+                    // 處理返回的數據
+                    console.log(data);
+                    // 例如，更新表格
+                },
+                error: function (error) {
+                    // 處理錯誤
+                    console.error("錯誤: ", error);
+                }
+            });
+        });
+    });
+</script>
+
+<input type="text" id="searchText" />
+<button id="searchButton">搜尋</button>

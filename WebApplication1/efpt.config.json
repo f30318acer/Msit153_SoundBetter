@@ -1,0 +1,165 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "dbSoundBetterContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "prjMusicBetter",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[tApplicationRecord]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tApplicationStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tArticle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tArticlePicture]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCity]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tClass]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tCoupon]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tDealClass]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tDealProject]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tDealSiteLoan]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tEvaluate]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tEvaluateStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMember]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberCoupon]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberPromission]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberRelation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberRelationStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberSite]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tMemberSkill]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tProject]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tProjectSkillRequire]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tProjectStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tSite]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tSitePeriod]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tSitePeriodStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tSitePicture]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tSkill]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tSkillCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tStyle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tWork]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tWorkType]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "desktop-rae7e6c.dbSoundBetter.dbo",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
