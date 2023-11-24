@@ -37,6 +37,7 @@ namespace prjMusicBetter.Controllers
                 .Include(t => t.FCity)
                 .Include(t => t.FMember)
                 .FirstOrDefaultAsync(m => m.FSiteId == id);
+
             if (tSite == null)
             {
                 return NotFound();
@@ -48,8 +49,8 @@ namespace prjMusicBetter.Controllers
         // GET: TSites/Create
         public IActionResult Create()
         {
-            ViewData["FCityId"] = new SelectList(_context.TCities, "FCityId", "FCityId");
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");
+            ViewData["FCity"] = new SelectList(_context.TCities, "FCity", "FCity");
+            ViewData["FName"] = new SelectList(_context.TMembers, "FName", "FName");
             return View();
         }
 

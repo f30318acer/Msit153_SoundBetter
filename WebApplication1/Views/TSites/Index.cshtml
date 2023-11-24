@@ -57,16 +57,17 @@
                 @Html.DisplayFor(modelItem => item.FPhone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FCity.FCityId)
+                @Html.DisplayFor(modelItem => item.FCity.FCity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FAddress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FMember.FMemberId)
+                @Html.DisplayFor(modelItem => item.FMember.FName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FSiteId" class="btn">修改</a> 
+                <a asp-action="Edit" asp-route-id="@item.FSiteId" class="btn">修改</a>
+                <a asp-action="Details" asp-route-id="@item.FSiteId" class="btn">詳細資訊</a>
                 <a asp-action="Delete" asp-route-id="@item.FSiteId" class="btn">刪除</a>
             </td>
         </tr>
