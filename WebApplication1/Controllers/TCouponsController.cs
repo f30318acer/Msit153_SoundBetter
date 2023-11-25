@@ -133,9 +133,41 @@ namespace prjMusicBetter.Controllers
         // POST: TCoupons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
+        //{
+        //    if (id != tCoupon.FCouponId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(tCoupon);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!TCouponExists(tCoupon.FCouponId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tCoupon);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
+        public async Task<IActionResult> Edit(int id, [Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate")] TCoupon tCoupon, IFormFile FPicture)
         {
             if (id != tCoupon.FCouponId)
             {
@@ -146,8 +178,36 @@ namespace prjMusicBetter.Controllers
             {
                 try
                 {
-                    _context.Update(tCoupon);
-                    await _context.SaveChangesAsync();
+                    var couponToUpdate = await _context.TCoupons.FirstOrDefaultAsync(c => c.FCouponId == id);
+
+                    if (couponToUpdate == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (FPicture != null && FPicture.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(FPicture.FileName);
+                        var filePath = Path.Combine(_environment.WebRootPath, "img", fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await FPicture.CopyToAsync(fileStream);
+                        }
+
+                        // 只有在上傳新圖片時才更新圖片路徑
+                        couponToUpdate.FPicture = fileName;
+                    }
+
+                    // 更新除圖片以外的其他屬性
+                    if (await TryUpdateModelAsync<TCoupon>(
+                        couponToUpdate,
+                        "",
+                        c => c.FCouponContent, c => c.FCouponCode, c => c.FDescription, c => c.FStartdate, c => c.FEnddate))
+                    {
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -160,10 +220,13 @@ namespace prjMusicBetter.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(tCoupon);
         }
+
+
+
+
 
         // GET: TCoupons/Delete/5
         public async Task<IActionResult> Delete(int? id)

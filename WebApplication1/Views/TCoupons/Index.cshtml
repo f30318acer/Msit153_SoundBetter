@@ -59,7 +59,7 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.FPicture)
                                             </th>
-                                            <th></th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -84,7 +84,12 @@
                                                 <td>
                                                     @if (!string.IsNullOrEmpty(item.FPicture))
                                                     {
-                                                        <img src="@Url.Content("~/img/" + item.FPicture)" alt="Coupon Image" style="width:100px; height:auto;">
+                                                        <img src="@Url.Content("~/img/" + item.FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @:No Image
                                                     }
                                                     @Html.DisplayFor(modelItem => item.FPicture)
                                                 </td>
