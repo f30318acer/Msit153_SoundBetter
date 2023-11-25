@@ -7,6 +7,7 @@ using System.Security.Claims;
 using prjMusicBetter.Models.ViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 
 
@@ -73,8 +74,12 @@ namespace WebApplication1.Controllers
 
                 ClaimsIdentity identity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
 
-               
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+
+                TempData["AlertLogin"] = member.FName;
             }
+
+           
         }
 
 
