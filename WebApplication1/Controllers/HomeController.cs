@@ -7,6 +7,8 @@ using System.Security.Claims;
 using prjMusicBetter.Models.ViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Authentication;
 
 
 
@@ -17,11 +19,13 @@ namespace WebApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly dbSoundBetterContext _context;
+   
 
         public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context)
         {
             _logger = logger;
             _context = context;
+        
         }
 
         public IActionResult Index()
@@ -31,9 +35,9 @@ namespace WebApplication1.Controllers
 
             };
 
-            foreach(var role in roleActions.Keys)
+            foreach (var role in roleActions.Keys)
             {
-                if(HttpContext.User.IsInRole(role))
+                if (HttpContext.User.IsInRole(role))
                 {
                     return roleActions[role]();
                 }
@@ -41,7 +45,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        //[HttpPost]
+        [HttpPost]
         //public IActionResult Login(LoginVM vm, string? returnUrl)
         //{
         //    //VM表單驗證
@@ -53,17 +57,17 @@ namespace WebApplication1.Controllers
         //    //todo
         //    //vm.password 進行雜湊 再去比對
 
-        //    var member = _context.TMembers.FirstOrDefault(m=>m.FEmail==vm.Email &&m.FPasswod==vm.Password);
+        //    var member = _context.TMembers.FirstOrDefault(m => m.FEmail == vm.Email && m.FPasswod == vm.Password);
 
         //    //輸入錯誤
-        //    if(member ==null)
+        //    if (member == null)
         //    {
         //        ModelState.AddModelError("", "帳號密碼錯誤!");
         //        return View(vm);
         //    }
 
         //    //登入
-        //    if(member != null)
+        //    if (member != null)
         //    {
         //        List<Claim> claims = new List<Claim>
         //        {
@@ -71,9 +75,11 @@ namespace WebApplication1.Controllers
         //            new Claim(ClaimTypes.Role,"Member"),
         //        };
 
-        //        ClaimsIdentity identity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
+        //        ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-               
+        //        TempData["AlertLogin"] = member.FUserame;
+
         //    }
         //}
 
@@ -95,20 +101,20 @@ namespace WebApplication1.Controllers
 
             foreach (var role in roleActions.Keys)
             {
-                if(HttpContext.User.IsInRole(role))
+                if (HttpContext.User.IsInRole(role))
                 {
                     return roleActions[role]();
                 }
             }
-                return View();
+            return View();
         }
 
-		public ActionResult Register()
-		{
+        public ActionResult Register()
+        {
 
             ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
-            return View();         
-		}
+            return View();
+        }
         public IActionResult test()
         {
             return View();

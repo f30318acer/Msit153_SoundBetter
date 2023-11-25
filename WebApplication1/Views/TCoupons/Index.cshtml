@@ -82,6 +82,10 @@
                                                     @Html.DisplayFor(modelItem => item.FEnddate)
                                                 </td>
                                                 <td>
+                                                    @if (!string.IsNullOrEmpty(item.FPicture))
+                                                    {
+                                                        <img src="@Url.Content("~/img/" + item.FPicture)" alt="Coupon Image" style="width:100px; height:auto;">
+                                                    }
                                                     @Html.DisplayFor(modelItem => item.FPicture)
                                                 </td>
                                                 <td>

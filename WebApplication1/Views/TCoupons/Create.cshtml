@@ -77,6 +77,16 @@
             </div>
         </div>
     </section>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <!-- 其他表單元素 -->
+
+        <div class="form-group">
+            <label asp-for="FPicture" class="control-label"></label>
+            <input type="file" asp-for="FPicture" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">保存</button>
+    </form>
 </main>
 @* ================================================= *@
 <script>

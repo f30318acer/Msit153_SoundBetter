@@ -12,10 +12,13 @@ namespace prjMusicBetter.Controllers
     public class TCouponsController : Controller
     {
         private readonly dbSoundBetterContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public TCouponsController(dbSoundBetterContext context)
+
+        public TCouponsController(dbSoundBetterContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: TCoupons
@@ -75,12 +78,35 @@ namespace prjMusicBetter.Controllers
         // POST: TCoupons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(tCoupon);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tCoupon);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
+        public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate")] TCoupon tCoupon, IFormFile FPicture)
         {
             if (ModelState.IsValid)
             {
+                if (FPicture != null && FPicture.Length > 0)
+                {
+                    var path = Path.Combine(_environment.WebRootPath, "img", FPicture.FileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await FPicture.CopyToAsync(stream);
+                    }
+
+                    tCoupon.FPicture = FPicture.FileName; // 儲存檔案名
+                }
+
                 _context.Add(tCoupon);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

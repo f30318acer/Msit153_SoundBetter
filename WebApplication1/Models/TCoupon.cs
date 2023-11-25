@@ -19,7 +19,7 @@ public partial class TCoupon
 
     public DateTime? FEnddate { get; set; }
 
-    public string FPicture { get; set; }
+    public string FPicture { get; set; }//儲存圖片路徑
 
     public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
 
