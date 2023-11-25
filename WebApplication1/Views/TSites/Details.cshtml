@@ -50,8 +50,7 @@
         <dt class="col-sm-2">
             場地圖片
         </dt>
-        <dd class="col-sm-10">
-            <img id="img1" />
+        <dd class="col-sm-10" id="imgContainer">
         </dd>
     </dl>
 </div>
@@ -64,10 +63,24 @@
 @section Scripts {
     <script>
         async function loadImage() {
-            const response = await fetch('@Url.Content("~/api/GetImageByte/6")');
-            const datas = await response.blob();
-            document.querySelector('#img1').src = URL.createObjectURL(datas);
+            try {
+                // 使用 Razor 語法獲取 SiteId 和 ImageData
+                const siteDetails = @Html.Raw(Json.Serialize(ViewData["SiteDetails"]));
+
+                // 創建 img 元素
+                const imgElement = document.createElement('img');
+
+                // 設置圖片的 src 為 Base64 字串
+                imgElement.src = `data:image/jpeg;base64,${siteDetails.ImageData}`;
+
+                // 將 img 元素添加到適當的位置，這裡使用 imgContainer 作為容器
+                document.querySelector('#imgContainer').appendChild(imgElement);
+            } catch (error) {
+                console.error('載入圖片時發生錯誤:', error);
+            }
         }
-        loadImage();
+
+        // 在 Razor 頁面加載完成後調用 loadImage 函數
+        document.addEventListener('DOMContentLoaded', loadImage);
     </script>
 }
