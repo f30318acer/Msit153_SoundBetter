@@ -19,8 +19,22 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
+            Dictionary<string, Func<RedirectToActionResult>> roleActions = new Dictionary<string, Func<RedirectToActionResult>>
+            {
+
+            };
+
+            foreach(var role in roleActions.Keys)
+            {
+                if(HttpContent.User.IsInRole(role))
+                {
+                    return roleActions[role]();
+                }
+            }
             return View();
         }
+        
+
         public IActionResult Vision()
         {
             return View();
