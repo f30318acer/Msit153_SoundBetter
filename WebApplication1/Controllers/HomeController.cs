@@ -4,12 +4,10 @@ using prjMusicBetter.Models;
 using System.Diagnostics;
 using WebApplication1.Models;
 using System.Security.Claims;
-<<<<<<< Updated upstream
-=======
 using prjMusicBetter.Models.ViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authentication.Cookies;
->>>>>>> Stashed changes
+
 
 
 
@@ -43,14 +41,6 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-<<<<<<< Updated upstream
-        //[HttpPost]
-        //public IActionResult Login(LoginVM vm ,string? returnUrl)
-        //{
-        //    //VM表單驗證
-        //    //if(Mod)
-        //}
-=======
         [HttpPost]
         public IActionResult Login(LoginVM vm, string? returnUrl)
         {
@@ -83,10 +73,10 @@ namespace WebApplication1.Controllers
 
                 ClaimsIdentity identity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
 
-                httpcont
+               
             }
         }
->>>>>>> Stashed changes
+
 
         public IActionResult Vision()
         {
@@ -111,21 +101,6 @@ namespace WebApplication1.Controllers
                 }
             }
                 return View();
-        }
-
-        [HttpPost]
-        public IActionResult Login(LoginVM vm, string? returnUrl)
-        {
-            //VM表單驗證
-            if(ModelState.IsValid == false)
-            {
-                return View(vm);
-            }
-            //todo
-            //vm.password 進入雜揍 再去比對
-
-           
-
         }
 
 		public ActionResult Register()
