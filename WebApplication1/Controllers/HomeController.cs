@@ -4,6 +4,7 @@ using prjMusicBetter.Models;
 using System.Diagnostics;
 using WebApplication1.Models;
 using System.Security.Claims;
+using prjMusicBetter.Models.ViewModels;
 
 
 
@@ -34,15 +35,15 @@ namespace WebApplication1.Controllers
                     return roleActions[role]();
                 }
             }
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(LoginVM vm ,string? returnUrl)
-        {
-            //VM表單驗證
-            if(Mod)
-        }
+        //public IActionResult Login(LoginVM vm ,string? returnUrl)
+        //{
+        //    //VM表單驗證
+        //}
 
         public IActionResult Vision()
         {
