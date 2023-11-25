@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using prjMusicBetter.Models;
 using System.Diagnostics;
 using WebApplication1.Models;
+using System.Security.Claims;
+
+
 
 namespace WebApplication1.Controllers
 {
@@ -26,14 +29,20 @@ namespace WebApplication1.Controllers
 
             foreach(var role in roleActions.Keys)
             {
-                if(HttpContent.User.IsInRole(role))
+                if(HttpContext.User.IsInRole(role))
                 {
                     return roleActions[role]();
                 }
             }
             return View();
         }
-        
+
+        [HttpPost]
+        public IActionResult Login(LoginVM vm ,string? returnUrl)
+        {
+            //VM表單驗證
+            if(Mod)
+        }
 
         public IActionResult Vision()
         {
