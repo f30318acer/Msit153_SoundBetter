@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Authentication;
+using System.Security.Policy;
 
 
 
@@ -46,42 +47,51 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        //public IActionResult Login(LoginVM vm, string? returnUrl)
-        //{
-        //    //VM表單驗證
-        //    if (ModelState.IsValid == false)
-        //    {
-        //        return View(vm);
-        //    }
+        public IActionResult Login(LoginVM vm, string? returnUrl)
+        {
+            //VM表單驗證
+            if (ModelState.IsValid == false)
+            {
+                return View(vm);
+            }
 
-        //    //todo
-        //    //vm.password 進行雜湊 再去比對
+            //todo
+            //vm.password 進行雜湊 再去比對
 
-        //    var member = _context.TMembers.FirstOrDefault(m => m.FEmail == vm.Email && m.FPasswod == vm.Password);
+            var member = _context.TMembers.FirstOrDefault(m => m.FEmail == vm.Email && m.FPasswod == vm.Password);
 
-        //    //輸入錯誤
-        //    if (member == null)
-        //    {
-        //        ModelState.AddModelError("", "帳號密碼錯誤!");
-        //        return View(vm);
-        //    }
+            //輸入錯誤
+            if (member == null)
+            {
+                ModelState.AddModelError("", "帳號密碼錯誤!");
+                return View(vm);
+            }
 
-        //    //登入
-        //    if (member != null)
-        //    {
-        //        List<Claim> claims = new List<Claim>
-        //        {
-        //            new Claim("fMemberID",member.FMemberId.ToString()),
-        //            new Claim(ClaimTypes.Role,"Member"),
-        //        };
+            //登入
+            if (member != null)
+            {
+                List<Claim> claims = new List<Claim>
+                {
+                    new Claim("fMemberID",member.FMemberId.ToString()),
+                    new Claim(ClaimTypes.Role,"Member"),
+                };
 
-        //        ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        //        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-        //        TempData["AlertLogin"] = member.FUserame;
+                TempData["AlertLogin"] = member.FUserame;
 
-        //    }
-        //}
+                return RedirectToAction("BgHome");
+            }
+
+            if(Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index");
+        }
+
 
 
         public IActionResult Vision()

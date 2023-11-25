@@ -75,6 +75,8 @@ namespace prjMusicBetter.Controllers
             return View();
         }
 
+        //原先的程式碼
+
         // POST: TCoupons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -90,6 +92,8 @@ namespace prjMusicBetter.Controllers
         //    }
         //    return View(tCoupon);
         //}
+
+       /* 塞入圖片功能*/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate")] TCoupon tCoupon, IFormFile FPicture)
@@ -113,6 +117,7 @@ namespace prjMusicBetter.Controllers
             }
             return View(tCoupon);
         }
+
 
         // GET: TCoupons/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -165,6 +170,7 @@ namespace prjMusicBetter.Controllers
         //    return View(tCoupon);
         //}
 
+        //圖片更新功能
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate")] TCoupon tCoupon, IFormFile FPicture)
@@ -223,9 +229,6 @@ namespace prjMusicBetter.Controllers
             }
             return View(tCoupon);
         }
-
-
-
 
 
         // GET: TCoupons/Delete/5

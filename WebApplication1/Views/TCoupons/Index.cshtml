@@ -6,12 +6,11 @@
 }
 <main id="main" class="main">
     <!-- 其他內容... -->
-    <div class="pagetitle">
-       
+    <div class="pagetitle"> 
         <p>
             <button onclick="location.href='@Url.Action("Create", "TCoupons")'" class="btn btn-primary">新增優惠券</button>
         </p>
-
+      @*   搜尋 *@
         <form asp-action="Index" method="get">
             <div class="form-group">
                 <label for="search">搜尋關鍵字:</label>
@@ -81,12 +80,14 @@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.FEnddate)
                                                 </td>
+                                                @* 圖片 *@
                                                 <td>
                                                     @if (!string.IsNullOrEmpty(item.FPicture))
                                                     {
                                                         <img src="@Url.Content("~/img/" + item.FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
 
                                                     }
+                                                   @*  沒有圖片顯示No Image *@
                                                     else
                                                     {
                                                         @:No Image

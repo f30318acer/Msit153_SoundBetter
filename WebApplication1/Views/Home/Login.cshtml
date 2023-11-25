@@ -1,4 +1,6 @@
-﻿@{
+﻿@model prjMusicBetter.Models.ViewModels.LoginVM
+
+@{
     ViewData["Title"] = "Login";
 }
 
@@ -18,16 +20,19 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="form3Example3c" class="form-control"value="Kevin@gmail.com" />
-                                            <label class="form-label" for="form3Example3c">Your Email </label>
+                                            <input type="email" id="inputEmail" class="form-control"value="" />
+                                            @Html.ValidationMessageFor(model => model.Email,"",new{@class = "text-danger"})
+                                            <label class="form-label" for="inputEmail">Your Email </label>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control"value="123" />
-                                            <label class="form-label" for="form3Example4c">Password</label>
+                                            <input type="password" id="inputPassword" class="form-control" value="" />
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <label class="form-label" for="inputPassword">Password</label>
                                         </div>
                                     </div>
                                     <div class="container">
@@ -40,9 +45,9 @@
                                             </div>
                                             <!-- Second Column for the Login Button -->
                                             <div class="col">
-                                                <a asp-area="" asp-controller="Home" asp-action="Index"
+                                                @* <a asp-area="" asp-controller="Home" asp-action="Index"
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                                transition: all 0.3s ease;">登入</a>
+                                                transition: all 0.3s ease;">登入</a> *@
                                             </div>
                                             @*後台登入平台*@
                                             <div class="col">

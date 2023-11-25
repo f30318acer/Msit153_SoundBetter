@@ -12,10 +12,12 @@ namespace prjMusicBetter.Controllers
     public class TMembersController : Controller
     {
         private readonly dbSoundBetterContext _context;
+        private readonly IWebHostEnvironment _environment;//注入
 
-        public TMembersController(dbSoundBetterContext context)
+        public TMembersController(dbSoundBetterContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: TMembers
@@ -73,19 +75,49 @@ namespace prjMusicBetter.Controllers
         // POST: TMembers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("FMemberId,FUsername,FName,FPasswod,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(tMember);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId", tMember.FPermissionId);
+        //    return View(tMember);
+        //}
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FMemberId,FUsername,FName,FPasswod,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember)
+        public async Task<IActionResult> Create([Bind("FMemberId,FUsername,FName,FPasswod,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember, IFormFile FPicture)
         {
             if (ModelState.IsValid)
             {
+                if (FPicture != null && FPicture.Length > 0)
+                {
+                    var path = Path.Combine(_environment.WebRootPath, "img", FPicture.FileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await FPicture.CopyToAsync(stream);
+                    }
+
+                    tMember.FPhotoPath = FPicture.FileName; // 儲存檔案名
+                }
+
                 _context.Add(tMember);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId", tMember.FPermissionId);
             return View(tMember);
         }
+
+
+
+
+
 
         // GET: TMembers/Edit/5
         public async Task<IActionResult> Edit(int? id)
