@@ -4,6 +4,12 @@ using prjMusicBetter.Models;
 using System.Diagnostics;
 using WebApplication1.Models;
 using System.Security.Claims;
+<<<<<<< Updated upstream
+=======
+using prjMusicBetter.Models.ViewModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authentication.Cookies;
+>>>>>>> Stashed changes
 
 
 
@@ -37,12 +43,50 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+<<<<<<< Updated upstream
         //[HttpPost]
         //public IActionResult Login(LoginVM vm ,string? returnUrl)
         //{
         //    //VM表單驗證
         //    //if(Mod)
         //}
+=======
+        [HttpPost]
+        public IActionResult Login(LoginVM vm, string? returnUrl)
+        {
+            //VM表單驗證
+            if (ModelState.IsValid == false)
+            {
+                return View(vm);
+            }
+
+            //todo
+            //vm.password 進行雜湊 再去比對
+
+            var member = _context.TMembers.FirstOrDefault(m=>m.FEmail==vm.Email &&m.FPasswod==vm.Password);
+
+            //輸入錯誤
+            if(member ==null)
+            {
+                ModelState.AddModelError("", "帳號密碼錯誤!");
+                return View(vm);
+            }
+
+            //登入
+            if(member != null)
+            {
+                List<Claim> claims = new List<Claim>
+                {
+                    new Claim("fMemberID",member.FMemberId.ToString()),
+                    new Claim(ClaimTypes.Role,"Member"),
+                };
+
+                ClaimsIdentity identity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
+
+                httpcont
+            }
+        }
+>>>>>>> Stashed changes
 
         public IActionResult Vision()
         {
@@ -52,10 +96,38 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public ActionResult Login()
+        public IActionResult Login()
         {
-            return View();
+            Dictionary<string, Func<RedirectToActionResult>> roleActions = new Dictionary<string, Func<RedirectToActionResult>>
+            {
+
+            };
+
+            foreach (var role in roleActions.Keys)
+            {
+                if(HttpContext.User.IsInRole(role))
+                {
+                    return roleActions[role]();
+                }
+            }
+                return View();
         }
+
+        [HttpPost]
+        public IActionResult Login(LoginVM vm, string? returnUrl)
+        {
+            //VM表單驗證
+            if(ModelState.IsValid == false)
+            {
+                return View(vm);
+            }
+            //todo
+            //vm.password 進入雜揍 再去比對
+
+           
+
+        }
+
 		public ActionResult Register()
 		{
 
