@@ -9,7 +9,7 @@ public partial class TMember
 {
     public int FMemberId { get; set; }
 
-    public string FUserame { get; set; }
+    public string FUsername { get; set; }
 
     public string FName { get; set; }
 

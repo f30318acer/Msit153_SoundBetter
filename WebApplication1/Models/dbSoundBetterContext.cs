@@ -432,7 +432,7 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FPhotoPath)
                 .HasMaxLength(50)
                 .HasColumnName("fPhotoPath");
-            entity.Property(e => e.FUserame)
+            entity.Property(e => e.FUsername)
                 .HasMaxLength(50)
                 .HasColumnName("fUserame");
 
