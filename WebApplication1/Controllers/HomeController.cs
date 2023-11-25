@@ -37,12 +37,12 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Login(LoginVM vm ,string? returnUrl)
-        {
-            //VM表單驗證
-            if(Mod)
-        }
+        //[HttpPost]
+        //public IActionResult Login(LoginVM vm ,string? returnUrl)
+        //{
+        //    //VM表單驗證
+        //    //if(Mod)
+        //}
 
         public IActionResult Vision()
         {

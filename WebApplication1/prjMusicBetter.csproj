@@ -867,4 +867,8 @@
     <None Include="wwwroot\assets\vendor\tinymce\tinymce.min.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>

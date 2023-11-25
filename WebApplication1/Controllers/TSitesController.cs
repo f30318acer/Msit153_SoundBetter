@@ -36,6 +36,7 @@ namespace prjMusicBetter.Controllers
             var tSite = await _context.TSites
                 .Include(t => t.FCity)
                 .Include(t => t.FMember)
+                .Include(t => t.TSitePictures)
                 .FirstOrDefaultAsync(m => m.FSiteId == id);
 
             if (tSite == null)
