@@ -40,9 +40,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.FStyle)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FWorkType)
-            </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -65,9 +63,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FStyle.FStyleId)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FWorkType.FWorkTypeId)
-            </td>
+         
             <td>
                         <a asp-action="Edit" asp-route-id="@item.FWorkId" class="btn">修改</a> |
                         <a asp-action="Details" asp-route-id="@item.FWorkId" class="btn">詳細資料</a> |
