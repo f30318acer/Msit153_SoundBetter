@@ -15,7 +15,7 @@
      }
 </style>
 <main id="main" class="main">
-<h1>Index</h1>
+<h1>作品管理</h1>
 
 
 <p>
@@ -33,12 +33,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.FDescription)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FThumbnail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FFilePath)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.FMember)
             </th>
@@ -63,12 +58,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FDescription)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FThumbnail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FFilePath)
-            </td>
+     
             <td>
                 @Html.DisplayFor(modelItem => item.FMember.FMemberId)
             </td>
