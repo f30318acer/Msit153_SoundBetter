@@ -13,10 +13,12 @@ namespace prjMusicBetter.Controllers
     public class TSitesController : Controller
     {
         private readonly dbSoundBetterContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public TSitesController(dbSoundBetterContext context)
+        public TSitesController(dbSoundBetterContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: TSites
@@ -45,27 +47,6 @@ namespace prjMusicBetter.Controllers
                 return NotFound();
             }
 
-            var imagePath = tSite.TSitePictures.FirstOrDefault()?.FPicturePath;
-            string imageData = null;
-            if (imagePath != null && System.IO.File.Exists(imagePath))
-            {
-                imageData = System.IO.File.ReadAllBytes(imagePath).ToString();
-            }
-            // 將 tSite 轉換為包含必要信息的匿名對象
-            var siteDetails = new
-            {
-                SiteId = tSite.FSiteId,
-                SiteName = tSite.FSiteName,
-                Phone = tSite.FPhone,
-                SiteType = tSite.FSiteType,
-                Address = tSite.FAddress,
-                City = tSite.FCity.FCity,
-                Member = tSite.FMember.FName,
-                ImageData = imageData != null ? (imageData) : null
-            };
-
-            // 使用 ViewData 傳遞給視圖
-            ViewData["SiteDetails"] = siteDetails;
             return View(tSite);
         }
 
