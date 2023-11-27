@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<prjMusicBetter.Models.TClass>
+@{
 	ViewData["Title"] = "Index";
 }
 <style>
@@ -22,6 +23,17 @@
 		</div>
 		<div class="clearfix"></div>
 		<div class="row playlist-area">
+			@foreach (var item in Model)
+			{
+				<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+					<a asp-area="" asp-controller="Class" asp-action="Viewclass">
+						<div class="playlist-item">
+							<img src="~/img/classimg/1.jpg" alt="">
+							<h5>@Html.DisplayFor(modelItem => item.FClassName)</h5>
+						</div>
+					</a>
+				</div>
+			}
 			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
 				<a asp-area="" asp-controller="Class" asp-action="Viewclass">
 					<div class="playlist-item">
