@@ -1,73 +1,76 @@
 ﻿@model prjMusicBetter.Models.TSite
+                 prjMusicBetter.ViewModels.SiteViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "_Layout2";
 }
 <main id="main" class="main">
-<h1>Details</h1>
+    <h1>Details</h1>
 
-<div>
-    <h4>TSite</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FPhone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FPhone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FAddress)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FAddress)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FCity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FCity.FCity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FMember)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FMember.FName)
-        </dd>
-        <dt class="col-sm-2">
-            場地圖片
-        </dt>
-        <dd class="col-sm-10">
-                @if (!string.IsNullOrEmpty(FPicture))
+    <div>
+        <h4>TSite</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FSiteName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FSiteName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FPhone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FPhone)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FSiteType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FSiteType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FAddress)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FAddress)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FCity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCity.FCity)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FMember)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FMember.FName)
+            </dd>
+            <dt class="col-sm-2">
+                場地圖片
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model != null)
                 {
-                    <img src="@Url.Content("~/img/" + FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
-
+                    foreach (var sitePicture in Model.TSitePictures)
+                    {
+                        <img src="@Url.Content("~/img/" + sitePicture.FPicturePath)" alt="Site Picture" />
+                    }
                 }
                 @*  沒有圖片顯示No Image *@
                 else
                 {
                     @:No Image
                 }
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
 </main>
 
 @section Scripts {

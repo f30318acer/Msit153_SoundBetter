@@ -7,18 +7,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.ViewModels;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace prjMusicBetter.Controllers
 {
     public class TSitesController : Controller
     {
         private readonly dbSoundBetterContext _context;
-        private readonly IWebHostEnvironment _environment;
 
-        public TSitesController(dbSoundBetterContext context, IWebHostEnvironment environment)
+        public TSitesController(dbSoundBetterContext context)
         {
             _context = context;
-            _environment = environment;
         }
 
         // GET: TSites
@@ -35,19 +35,24 @@ namespace prjMusicBetter.Controllers
             {
                 return NotFound();
             }
-            
-            var tSite = await _context.TSites
-                .Include(t => t.FCity)
-                .Include(t => t.FMember)
-                .Include(t => t.TSitePictures)
-                .FirstOrDefaultAsync(m => m.FSiteId == id);
-           
-            if (tSite == null)
+
+            var tSite = from t in _context.TSites
+                        where t.FSiteId == id
+                        join f in _context.TSitePictures on t.FSiteId equals f.FSiteId
+                        select new SiteViewModel
+                        {
+                            TSite = t,
+                            TSitePicture = f.FPicturePath.ToList(),
+                        };
+
+            var viewModel = await tSite.FirstOrDefaultAsync();
+
+            if (viewModel == null)
             {
                 return NotFound();
             }
 
-            return View(tSite);
+            return View(viewModel);
         }
 
         // GET: TSites/Create
