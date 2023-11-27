@@ -30,6 +30,18 @@ namespace WebApplication1.Controllers
         }
 
         public IActionResult Index()
+        { 
+            return View();
+        }
+        public IActionResult Vision()
+        {
+            return View();
+        }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Login()
         {
             Dictionary<string, Func<RedirectToActionResult>> roleActions = new Dictionary<string, Func<RedirectToActionResult>>
             {
@@ -84,39 +96,12 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("BgHome");
             }
 
-            if(Url.IsLocalUrl(returnUrl))
+            if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
 
             return RedirectToAction("Index");
-        }
-
-
-
-        public IActionResult Vision()
-        {
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-        public IActionResult Login()
-        {
-            Dictionary<string, Func<RedirectToActionResult>> roleActions = new Dictionary<string, Func<RedirectToActionResult>>
-            {
-
-            };
-
-            foreach (var role in roleActions.Keys)
-            {
-                if (HttpContext.User.IsInRole(role))
-                {
-                    return roleActions[role]();
-                }
-            }
-            return View();
         }
 
         public ActionResult Register()

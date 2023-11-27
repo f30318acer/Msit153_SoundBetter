@@ -8,6 +8,7 @@
 <main id="main" class="main">
     <h1>Details</h1>
 
+<<<<<<< HEAD
     <div>
         <h4>TSite</h4>
         <hr />
@@ -53,17 +54,77 @@
             </dt>
             <dd class="col-sm-10">
                 @if (Model != null)
+=======
+<div>
+    <h4>TSite</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FSiteName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FSiteName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPhone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPhone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FSiteType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FSiteType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FAddress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FAddress)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FCity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FCity.FCity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FMember)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FMember.FName)
+        </dd>
+        <dt class="col-sm-2">
+            場地圖片
+        </dt>
+<<<<<<< HEAD
+      @*   <dd class="col-sm-10">
+=======
+        @*<dd class="col-sm-10">
+>>>>>>> 863b08f3ef7ea5a58484cbe330ef0c3535f85b19
+                @if (!string.IsNullOrEmpty(FPicture))
+>>>>>>> a8530499042d200a3e36fe76872b71a9c5fea144
                 {
                     foreach (var sitePicture in Model.TSitePictures)
                     {
                         <img src="@Url.Content("~/img/" + sitePicture.FPicturePath)" alt="Site Picture" />
                     }
                 }
+<<<<<<< HEAD
                 @*  沒有圖片顯示No Image *@
+               @*  else
+                {
+                    @:No Image
+                } *@
+        @* </dd> *@ *
+=======
+                  沒有圖片顯示No Image 
                 else
                 {
                     @:No Image
                 }
+<<<<<<< HEAD
             </dd>
         </dl>
     </div>
@@ -71,6 +132,16 @@
         <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
         <a asp-action="Index">Back to List</a>
     </div>
+=======
+        </dd>*@
+>>>>>>> 863b08f3ef7ea5a58484cbe330ef0c3535f85b19
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+>>>>>>> a8530499042d200a3e36fe76872b71a9c5fea144
 </main>
 
 @section Scripts {

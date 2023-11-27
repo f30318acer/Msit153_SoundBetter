@@ -1,0 +1,68 @@
+﻿@model prjMusicBetter.Models.TClass
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout2";
+}
+<main id="main" class="main">
+<h1>Details</h1>
+
+<div>
+    <h4>TClass</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FClassName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FClassName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FStartdate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FStartdate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FEnddate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FEnddate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FThumbnailPath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FThumbnailPath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FSite)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FSite.FSiteId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FTeacher)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FTeacher.FMemberId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FClassId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</main>
