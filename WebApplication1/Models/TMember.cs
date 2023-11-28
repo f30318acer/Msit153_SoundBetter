@@ -19,7 +19,7 @@ public partial class TMember
 
     public string FEmail { get; set; }
 
-    public bool? FGender { get; set; }
+    public int? FGender { get; set; }
 
     public DateTime? FBirthday { get; set; }
 
@@ -30,4 +30,34 @@ public partial class TMember
     public int? FPermissionId { get; set; }
 
     public string FPhotoPath { get; set; }
+
+    public virtual TMemberPromission FPermission { get; set; }
+
+    public virtual ICollection<TApplicationRecord> TApplicationRecords { get; set; } = new List<TApplicationRecord>();
+
+    public virtual ICollection<TArticle> TArticles { get; set; } = new List<TArticle>();
+
+    public virtual ICollection<TClass> TClasses { get; set; } = new List<TClass>();
+
+    public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
+
+    public virtual ICollection<TDealProject> TDealProjects { get; set; } = new List<TDealProject>();
+
+    public virtual ICollection<TDealSiteLoan> TDealSiteLoans { get; set; } = new List<TDealSiteLoan>();
+
+    public virtual ICollection<TEvaluate> TEvaluates { get; set; } = new List<TEvaluate>();
+
+    public virtual ICollection<TMemberCoupon> TMemberCoupons { get; set; } = new List<TMemberCoupon>();
+
+    public virtual ICollection<TMemberRelation> TMemberRelations { get; set; } = new List<TMemberRelation>();
+
+    public virtual ICollection<TMemberSite> TMemberSites { get; set; } = new List<TMemberSite>();
+
+    public virtual ICollection<TMemberSkill> TMemberSkills { get; set; } = new List<TMemberSkill>();
+
+    public virtual ICollection<TProject> TProjects { get; set; } = new List<TProject>();
+
+    public virtual ICollection<TSite> TSites { get; set; } = new List<TSite>();
+
+    public virtual ICollection<TWork> TWorks { get; set; } = new List<TWork>();
 }
