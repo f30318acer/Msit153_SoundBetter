@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 
 namespace prjMusicBetter.Controllers
@@ -32,9 +33,10 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-        public IActionResult Memberclass()
+        public async Task<IActionResult> Memberclass(int? id)
         {
-            return View();
+            var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher).Where(t => t.FTeacherId == id);
+            return View(await dbSoundBetterContext.ToListAsync());
         }
         public IActionResult Create()
         {
