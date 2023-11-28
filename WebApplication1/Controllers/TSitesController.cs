@@ -42,7 +42,7 @@ namespace prjMusicBetter.Controllers
                         select new SiteViewModel
                         {
                             TSite = t,
-                            TSitePicture = f.FPicturePath.ToList(),
+                            TSitePicture = f
                         };
 
             var viewModel = await tSite.FirstOrDefaultAsync();
