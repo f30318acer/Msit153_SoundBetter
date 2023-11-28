@@ -27,7 +27,7 @@
                                 <!-- 表格標題和內容... -->
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <form asp-action="Edit">
+                                        <form asp-action="Edit" method="post"enctype="multipart/form-data">
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                             <input type="hidden" asp-for="FMemberId" />
                                             <div class="form-group">
@@ -80,17 +80,25 @@
                                                 <select asp-for="FPermissionId" class="form-control" asp-items="ViewBag.FPermissionId"></select>
                                                 <span asp-validation-for="FPermissionId" class="text-danger"></span>
                                             </div>
-                                            <div class="form-group">
+                                          @*   <div class="form-group">
                                                 <label asp-for="FPhotoPath" class="control-label"></label>
                                                 <input asp-for="FPhotoPath" class="form-control" />
                                                 <span asp-validation-for="FPhotoPath" class="text-danger"></span>
-                                            </div>
+                                            </div> *@
                                            
-                                            <form asp-action="Edit">
-                                                <input type="hidden" asp-for="FMemberId" />
-                                                <input type="submit" value="Save" class="btn btn-primary" onclick="return confirmEdit();" /> |
-                                                <a asp-action="Index" class="btn btn-primary">Back to List</a>
-                                            </form>
+                                            <div class="form-group">
+                                                <label asp-for="FPhotoPath" class="control-label">圖片</label>
+                                                @if (Model.FPhotoPath != null)
+                                                {
+                                                    <img src="@Url.Content("~/img/" + Model.FPhotoPath)" alt="Current Image" style="width:150px;" />
+                                                }
+                                                <input type ="file" asp-for="FPhotoPath" class="form-control" />
+                                                <span asp-validation-for="FPhotoPath"class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Save"class="btn btn-primary" />|
+                                                <a asp-action="Index" class="btn btn=secondary">Back to List</a>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>  

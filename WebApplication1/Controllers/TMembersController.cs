@@ -75,49 +75,44 @@ namespace prjMusicBetter.Controllers
         // POST: TMembers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("FMemberId,FUsername,FName,FPasswod,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(tMember);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId", tMember.FPermissionId);
-        //    return View(tMember);
-        //}
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FMemberId,FUsername,FName,FPasswod,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember, IFormFile FPicture)
+        public async Task<IActionResult> Create([Bind("FMemberId,FUserame,FName,FPassword,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember)
         {
             if (ModelState.IsValid)
             {
-                if (FPicture != null && FPicture.Length > 0)
-                {
-                    var path = Path.Combine(_environment.WebRootPath, "img", FPicture.FileName);
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await FPicture.CopyToAsync(stream);
-                    }
-
-                    tMember.FPhotoPath = FPicture.FileName; // 儲存檔案名
-                }
-
                 _context.Add(tMember);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId", tMember.FPermissionId);
             return View(tMember);
         }
 
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("FMemberId,FUsername,FName,FPasswod,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember, IFormFile FPicture)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (FPicture != null && FPicture.Length > 0)
+        //        {
+        //            var path = Path.Combine(_environment.WebRootPath, "img", FPicture.FileName);
+        //            using (var stream = new FileStream(path, FileMode.Create))
+        //            {
+        //                await FPicture.CopyToAsync(stream);
+        //            }
 
+        //            tMember.FPhotoPath = FPicture.FileName; // 儲存檔案名
+        //        }
 
-
+        //        _context.Add(tMember);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tMember);
+        //}
 
         // GET: TMembers/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -139,11 +134,44 @@ namespace prjMusicBetter.Controllers
         // POST: TMembers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("FMemberId,FUserame,FName,FPassword,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember)
+        //{
+        //    if (id != tMember.FMemberId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(tMember);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!TMemberExists(tMember.FMemberId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId", tMember.FPermissionId);
+        //    return View(tMember);
+        //}
+        //圖片更新功能
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FMemberId,FUsername,FName,FPasswod,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember)
+        public async Task<IActionResult> Edit(int id, [Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate")] TCoupon tCoupon, IFormFile FPicture)
         {
-            if (id != tMember.FMemberId)
+            if (id != tCoupon.FCouponId)
             {
                 return NotFound();
             }
@@ -152,12 +180,40 @@ namespace prjMusicBetter.Controllers
             {
                 try
                 {
-                    _context.Update(tMember);
-                    await _context.SaveChangesAsync();
+                    var couponToUpdate = await _context.TCoupons.FirstOrDefaultAsync(c => c.FCouponId == id);
+
+                    if (couponToUpdate == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (FPicture != null && FPicture.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(FPicture.FileName);
+                        var filePath = Path.Combine(_environment.WebRootPath, "img", fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await FPicture.CopyToAsync(fileStream);
+                        }
+
+                        // 只有在上傳新圖片時才更新圖片路徑
+                        couponToUpdate.FPicture = fileName;
+                    }
+
+                    // 更新除圖片以外的其他屬性
+                    if (await TryUpdateModelAsync<TCoupon>(
+                        couponToUpdate,
+                        "",
+                        c => c.FCouponContent, c => c.FCouponCode, c => c.FDescription, c => c.FStartdate, c => c.FEnddate))
+                    {
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TMemberExists(tMember.FMemberId))
+                    if (!TMemberExists(tCoupon.FCouponId))
                     {
                         return NotFound();
                     }
@@ -166,12 +222,9 @@ namespace prjMusicBetter.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId", tMember.FPermissionId);
-            return View(tMember);
+            return View(tCoupon);
         }
-
         // GET: TMembers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
