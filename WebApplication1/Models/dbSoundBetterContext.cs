@@ -424,9 +424,9 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FName)
                 .HasMaxLength(50)
                 .HasColumnName("fName");
-            entity.Property(e => e.FPasswod)
+            entity.Property(e => e.FPassword)
                 .HasMaxLength(50)
-                .HasColumnName("fPasswod");
+                .HasColumnName("fPassword");
             entity.Property(e => e.FPermissionId).HasColumnName("fPermissionID");
             entity.Property(e => e.FPhone)
                 .HasMaxLength(50)
@@ -570,9 +570,8 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FBudget)
                 .HasColumnType("money")
                 .HasColumnName("fBudget");
-            entity.Property(e => e.FDescription)
-                .HasMaxLength(50)
-                .HasColumnName("fDescription");
+            entity.Property(e => e.FDescription).HasColumnName("fDescription");
+            entity.Property(e => e.FDescription2).HasColumnName("fDescription2");
             entity.Property(e => e.FEnddate)
                 .HasColumnType("datetime")
                 .HasColumnName("fEnddate");
