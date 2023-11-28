@@ -106,12 +106,13 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public ActionResult Register()
+        public IActionResult Register()
         {
-
-            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
+            //ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
             return View();
         }
+        [HttpPost]
+       
         public IActionResult test()
         {
             return View();
