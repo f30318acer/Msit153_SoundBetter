@@ -26,7 +26,7 @@ namespace prjMusicBetter.Models.Daos
                 fBirthday = Convert.ToDateTime(vm.fBirthday),
 
             };
-            _context.TMembers.Add(mem);
+            //_context.TMembers.Add(mem);
             _context.SaveChanges();
             if(vm.Photo!=null)
             {
