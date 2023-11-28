@@ -75,10 +75,10 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.FPhotoPath)
                                         </th>
-                                        <th>
+                                        <th hidden>
                                             @Html.DisplayNameFor(model => model.FPermission)
                                         </th>
-                                        <th></th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -115,8 +115,8 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.FPhotoPath)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FPermission.FPromissionId)
+                                            <td hidden>
+                                                @Html.DisplayFor(modelItem => item.FPermission)
                                             </td>
                                             <td >
                                                 <a asp-action="Edit" asp-route-id="@item.FMemberId" class="btn btn-outline-success">修改</a> 

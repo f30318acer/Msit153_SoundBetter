@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace prjMusicBetter.Models;
 
@@ -9,26 +10,27 @@ public partial class TMember
 {
     public int FMemberId { get; set; }
 
+    [DisplayName("使用者姓名")] // 這個就是顯示在表格標題上的文字
     public string FUserame { get; set; }
-
+    [DisplayName("姓名")] // 這個就是顯示在表格標題上的文字
     public string FName { get; set; }
-
+    [DisplayName("密碼")] // 這個就是顯示在表格標題上的文字
     public string FPassword { get; set; }
-
+    [DisplayName("電話")] // 這個就是顯示在表格標題上的文字
     public string FPhone { get; set; }
-
+    [DisplayName("電子郵箱")] // 這個就是顯示在表格標題上的文字
     public string FEmail { get; set; }
-
+    [DisplayName("性別")] // 這個就是顯示在表格標題上的文字
     public int? FGender { get; set; }
-
+    [DisplayName("生日")] // 這個就是顯示在表格標題上的文字
     public DateTime? FBirthday { get; set; }
-
+    [DisplayName("創立時間")] // 這個就是顯示在表格標題上的文字
     public DateTime? FCreationTime { get; set; }
-
+    [DisplayName("自我介紹")] // 這個就是顯示在表格標題上的文字
     public string FIntroduction { get; set; }
 
     public int? FPermissionId { get; set; }
-
+    [DisplayName("我的頭像")] // 這個就是顯示在表格標題上的文字
     public string FPhotoPath { get; set; }
 
     public virtual TMemberPromission FPermission { get; set; }
