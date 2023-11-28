@@ -98,8 +98,8 @@ namespace prjMusicBetter.Controllers
             {
                 return NotFound();
             }
-            ViewData["FCityId"] = new SelectList(_context.TCities, "FCityId", "FCityId", tSite.FCityId);
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tSite.FMemberId);
+            ViewData["FCity"] = new SelectList(_context.TCities, "FCityId", "FCity", tSite.FCity);
+            ViewData["FName"] = new SelectList(_context.TMembers, "FMemberId", "FName", tSite.FMember);
             return View(tSite);
         }
 

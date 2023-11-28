@@ -36,4 +36,17 @@ public partial class TSite
     public virtual ICollection<TSitePeriod> TSitePeriods { get; set; } = new List<TSitePeriod>();
 
     public virtual ICollection<TSitePicture> TSitePictures { get; set; } = new List<TSitePicture>();
+    public string SiteTypeText
+    {
+        get
+        {
+            var siteTypeMapping = new Dictionary<int, string>
+                {
+                    { 1, "音樂學校" },
+                    { 2, "錄音室" },
+                };
+
+            return siteTypeMapping.GetValueOrDefault(FSiteType, "未知");
+        }
+    }
 }
