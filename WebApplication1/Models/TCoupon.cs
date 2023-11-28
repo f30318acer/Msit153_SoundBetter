@@ -22,6 +22,7 @@ public partial class TCoupon
     public DateTime? FEnddate { get; set; }
     [DisplayName("圖片")]
     public string FPicture { get; set; }
+    
 
     public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
 
