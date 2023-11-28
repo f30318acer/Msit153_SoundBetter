@@ -14,11 +14,6 @@ namespace prjMusicBetter.Controllers
             _context = context;
         }
         /*=======課程首頁===============*/
-
-        //public IActionResult Index()
-        //      {
-        //          return View();
-        //      }
         public async Task<IActionResult> Index()
         {
             var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher);
