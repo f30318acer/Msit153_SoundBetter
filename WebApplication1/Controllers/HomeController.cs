@@ -33,6 +33,10 @@ namespace WebApplication1.Controllers
         { 
             return View();
         }
+        public IActionResult BackgroundIndex()
+        {
+            return View();
+        }
         public IActionResult Vision()
         {
             return View();
@@ -45,7 +49,8 @@ namespace WebApplication1.Controllers
         {
             Dictionary<string, Func<RedirectToActionResult>> roleActions = new Dictionary<string, Func<RedirectToActionResult>>
             {
-
+                 {"Administrator",()=>RedirectToAction("Index", "BgHome") }, // 假設管理員角色是 "Administrator"
+                 {"Member",()=>RedirectToAction("Index", "Home")} // 假設一般會員角色是 "Member"
             };
 
             foreach (var role in roleActions.Keys)
@@ -59,7 +64,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginVM vm, string? returnUrl)
+        public async Task<IActionResult> Login(LoginVM vm, string? returnUrl)
         {
             //VM表單驗證
             if (ModelState.IsValid == false)
@@ -70,38 +75,36 @@ namespace WebApplication1.Controllers
             //todo
             //vm.password 進行雜湊 再去比對
 
-            var member = _context.TMembers.FirstOrDefault(m => m.FEmail == vm.Email && m.FPasswod == vm.Password);
+            var member = _context.TMembers
+                .FirstOrDefault(m => m.FEmail == vm.Email && m.FPasswod == vm.Password);
 
-            //輸入錯誤
-            if (member == null)
+
+            //建立用戶身分宣告
+            var claims = new List<Claim>
             {
-                ModelState.AddModelError("", "帳號密碼錯誤!");
-                return View(vm);
-            }
+                new Claim(ClaimTypes.Name,member.FUserame),
+                new Claim("fMemberID",member.FMemberId.ToString()),
+                new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),     
+            };
+            var identity=new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal =new ClaimsPrincipal(identity);
 
-            //登入
-            if (member != null)
+            //執行登入
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal);
+
+            //確定登入完後提供 歡迎回來 登入者fUserName
+            TempData["AlertLogin"] = $"歡迎回來,{member.FUserame}!";
+
+            //依據用戶角色重定向倒不同頁面
+            if (member.FPermissionId == 1)
             {
-                List<Claim> claims = new List<Claim>
-                {
-                    new Claim("fMemberID",member.FMemberId.ToString()),
-                    new Claim(ClaimTypes.Role,"Member"),
-                };
-
-                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
-
-                TempData["AlertLogin"] = member.FUserame;
-
-                return RedirectToAction("BgHome");
+                return RedirectToAction("index", "Bghome");
             }
-
-            if (Url.IsLocalUrl(returnUrl))
+            else
             {
-                return Redirect(returnUrl);
+                //一般會員重定向到首頁
+                return RedirectToAction("index", "Home");
             }
-
-            return RedirectToAction("Index");
         }
 
         public ActionResult Register()
@@ -120,7 +123,7 @@ namespace WebApplication1.Controllers
             return View();
         }
         //會員登出功能
-        public IActionResult LoginoutAsync()
+        public async Task<IActionResult> LoginoutAsync()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
