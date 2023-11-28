@@ -53,6 +53,12 @@
                                                 transition: all 0.3s ease;">登入</a> *@
                                             </div>
                                             @*後台登入平台*@
+                                            <div class="mx-3 text-end position-sticky ">
+                                                <input type="button" class="btn btn-outline-secondary" value="DemoMember" id="DemoMember" />
+                                                <input type="button" class="btn btn-outline-secondary" value="DemoEmployee" id="DemoEmployee" />
+
+                                            </div>
+
                                             <div class="col">
                                                 <a asp-area="" asp-controller="BgHome" asp-action="Index"
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
@@ -80,3 +86,19 @@
         </div>
     </div>
 </section>
+@section Scripts{
+    <script>
+        //一般會員登入 目前還沒設任何功能
+        $('#DemoMember').on('click', function () {
+            let email = "kevin@gmail.com"
+            $('#inputEmail').val(email)
+            $('#inputPassword').val("123")
+        })
+        //管理員登入 
+        $('#DemoEmployee').on('click', function () {
+            let email = "gaytony@gmail.com" 
+            $('#inputEmail').val(email)
+            $('#inputPassword').val("123")
+        })
+    </script>
+}

@@ -114,10 +114,12 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        
         public IActionResult NoLogin()
         {
             return View();
         }
+
         public IActionResult ForgetPwd()
         {
             return View();
