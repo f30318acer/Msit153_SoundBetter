@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using prjMusicBetter.Models;
@@ -36,23 +37,26 @@ namespace prjMusicBetter.Controllers
                 return NotFound();
             }
 
-            var tSite = from t in _context.TSites
-                        where t.FSiteId == id
-                        join f in _context.TSitePictures on t.FSiteId equals f.FSiteId
-                        select new SiteViewModel
-                        {
-                            TSite = t,
-                            TSitePicture = f
-                        };
+            var tSite = await _context.TSites
+                .Include(t => t.FCity)
+                .Include(t => t.FMember)
+                .FirstOrDefaultAsync(m => m.FSiteId == id);
 
-            var viewModel = await tSite.FirstOrDefaultAsync();
+            var tSitePicture = await _context.TSitePictures
+                .FirstOrDefaultAsync(f => f.FSiteId == id);
 
-            if (viewModel == null)
+            var siteViewModel = new SiteViewModel
+            {
+                TSite = tSite,
+                TSitePicture = tSitePicture
+            };
+
+            if (siteViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(viewModel);
+            return View(siteViewModel);
         }
 
         // GET: TSites/Create
@@ -170,14 +174,14 @@ namespace prjMusicBetter.Controllers
             {
                 _context.TSites.Remove(tSite);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TSiteExists(int id)
         {
-          return (_context.TSites?.Any(e => e.FSiteId == id)).GetValueOrDefault();
+            return (_context.TSites?.Any(e => e.FSiteId == id)).GetValueOrDefault();
         }
     }
 }
