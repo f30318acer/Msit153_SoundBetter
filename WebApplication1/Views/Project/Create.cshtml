@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Create";
 }
 
@@ -20,10 +19,10 @@
                                         <div class="photo-card mb-2 d-flex justify-content-center">
                                             <div class="photo">
                                                 <img src="~/img/playlist/13.jpg" style="border-radius:10px">
-                                                <input type="text" name="Photo" style="display: none;"> 
+                                                <input type="text" name="Photo" style="display: none;">
                                             </div>
                                         </div>
-                                        <div class="photo-upload mb-2 d-flex justify-content-center">         
+                                        <div class="photo-upload mb-2 d-flex justify-content-center">
                                             <input type="button" value="上傳照片" class="btn btn-primary">
                                         </div>
                                     </div>
@@ -31,15 +30,23 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案名稱</label>
-                                            <input type="password" id="form3Example4c" class="form-control" />
-                                            
+                                            <input type="text" id="fName" class="form-control" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label" for="form3Example4c">專案預算</label>
+                                            <input type="text" id="fBudget" class="form-control" />
+
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">專案介紹</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription" style="height: 100px"></textarea>
 
                                         </div>
                                     </div>
@@ -47,7 +54,14 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">人員需求</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription2" style="height: 100px"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label" for="form3Example3c">製作期限</label>
+                                            <input type="datetime-local" class="form-control mb-3" id="fEnddate">
 
                                         </div>
                                     </div>
@@ -55,21 +69,19 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">Demo上傳: </label>
-                                            <input type="file" id="form3Example4c"  />
-                                            
+                                            <input type="file" id="form3Example4c" />
                                         </div>
                                     </div>
 
                                     <div class="text-right">
-                                        <a href="~/project/list" type="button" class="btn btn-secondary">取消</a>
-                                        <a href="~/project/list" type="button" class="btn btn-success">確認建立</a>
-                                        
+                                        <a href="~/VCProject/List" type="button" class="btn btn-secondary">取消</a>
+                                        <button type="button" class="btn btn-success" id="buttonSend">確認建立</button>
                                     </div>
                                 </form>
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-4 d-flex align-items-center order-1 order-lg-2">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                                class="img-fluid" alt="Sample image">
+                                     class="img-fluid" alt="Sample image">
                             </div>
                         </div>
                     </div>
@@ -79,3 +91,48 @@
     </div>
 </section>
 
+@section Scripts{
+    <script>
+        const url = '/apiTProjects/Create';
+
+        $('#buttonSend').click(function () {
+
+            // 獲取當前的本地時間
+            const currentDate = new Date();
+
+            // 格式化日期字串
+            //const formattedDate = currentDate.getFullYear() + '-' +
+            //    padZero(currentDate.getMonth() + 1) + '-' +
+            //    padZero(currentDate.getDate()) + 'T' +
+            //    padZero(currentDate.getHours()) + ':' +
+            //    padZero(currentDate.getMinutes()) + ':' +
+            //    padZero(currentDate.getSeconds());
+
+            const fBudgetValue = parseFloat($('#fBudget').val());
+
+            const jsonData = JSON.stringify({
+                fMemberId: 1,
+                fName: $('#fName').val(),
+                fBudget: fBudgetValue,
+                fStartdate: currentDate,
+                fEnddate: $('#fEnddate').val(),
+                fDescription: $('#fDescription').val(),
+                fProjectStatusId: 1,
+                fStartdate2: $('#fDescription2').val(),
+                fSiteId: 1
+            })
+            // console.log(jsonData)
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: jsonData
+            }).done(function (data) {
+                alert("新增成功，編號為 " + data.fProjectId)
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log("POST request failed: " + textStatus + ", " + errorThrown);
+                alert("新增失敗");
+            });
+        });
+    </script>
+}
