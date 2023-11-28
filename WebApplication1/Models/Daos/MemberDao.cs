@@ -21,11 +21,25 @@ namespace prjMusicBetter.Models.Daos
                 fPassword = vm.fPassword,
                 fEmail = vm.fEmail,
                 fPhone = vm.fPhone,
-                fGender=vm.fGender,
+                fGender=vm.fGender, //看要不要設成bit
                 fCreationTime = DateTime.Now,
                 fBirthday = Convert.ToDateTime(vm.fBirthday),
 
             };
+            _context.TMembers.Add(mem);
+            _context.SaveChanges();
+            if(vm.Photo!=null)
+            {
+                string fileName = $"MemberId_{mem.fMemberID}.jpg";
+                mem.fPhotoPath = fileName ;
+                string fphotoPath = Path.Combine(_environment.WebRootPath, "img/Member", fileName);
+                using (var fileStream = new FileStream(fphotoPath, FileMode.Create))
+                {
+                    vm.Photo.CopyTo(fileStream);
+                }
+            }
+            _context.Update(mem);
+            _context.SaveChanges();
         }
     }
 }
