@@ -90,7 +90,7 @@
                                                 <label asp-for="FPhotoPath" class="control-label">圖片</label>
                                                 @if (Model.FPhotoPath != null)
                                                 {
-                                                    <img src="@Url.Content("~/img/" + Model.FPhotoPath)" alt="Current Image" style="width:150px;" />
+                                                    <img src="@Url.Content("~/img/Member/" + Model.FPhotoPath)" alt="Current Image" style="width:150px;" />
                                                 }
                                                 <input type ="file" asp-for="FPhotoPath" class="form-control" />
                                                 <span asp-validation-for="FPhotoPath"class="text-danger"></span>
