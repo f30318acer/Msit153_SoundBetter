@@ -119,6 +119,12 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        //會員登出功能
+        public IActionResult LoginoutAsync()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        }
 
         public IActionResult ForgetPwd()
         {
