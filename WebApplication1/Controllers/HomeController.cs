@@ -111,8 +111,20 @@ namespace WebApplication1.Controllers
             //ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
             return View();
         }
-        [HttpPost]
-       
+
+       [HttpPost]
+       //public IActionResult Register(FMemberVM vm)
+       // {
+       //     if(ModelState.IsValid==false) 
+       //     {
+       //         return View(vm);
+       //     }
+       //     try
+       //     {
+                
+       //     }
+
+       // }
         public IActionResult test()
         {
             return View();

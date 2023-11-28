@@ -15,7 +15,7 @@ namespace prjMusicBetter.Models.EFModels
         public string fPassword {  get; set; }
         public string fPhone { get; set; }
         public string fEmail { get; set; }
-        public bool fGender { get; set;}
+        public int fGender { get; set;}
         public DateTime? fBirthday { get; set; }
         public DateTime? fCreationTime {get; set; }
         public string fIntroduction {  get; set;}
