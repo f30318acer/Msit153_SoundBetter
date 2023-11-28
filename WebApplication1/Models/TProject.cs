@@ -27,6 +27,8 @@ public partial class TProject
 
     public string FThumbnailPath { get; set; }
 
+    public string FDescription2 { get; set; }
+
     public virtual TMember FMember { get; set; }
 
     public virtual TProjectStatus FProjectStatus { get; set; }

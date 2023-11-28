@@ -13,13 +13,13 @@ public partial class TMember
 
     public string FName { get; set; }
 
-    public string FPasswod { get; set; }
+    public string FPassword { get; set; }
 
     public string FPhone { get; set; }
 
     public string FEmail { get; set; }
 
-    public bool? FGender { get; set; }
+    public int? FGender { get; set; }
 
     public DateTime? FBirthday { get; set; }
 
