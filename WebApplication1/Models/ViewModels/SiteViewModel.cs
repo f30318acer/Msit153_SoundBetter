@@ -6,7 +6,5 @@ namespace prjMusicBetter.Models.ViewModels
     {
         public TSite? TSite { get; set; }
         public TSitePicture? TSitePicture { get; set; }
-        public virtual TCity? FCity { get; set; }
-        public virtual TMember? FMember { get; set; }
     }
 }
