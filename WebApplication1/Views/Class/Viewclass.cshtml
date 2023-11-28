@@ -1,4 +1,5 @@
-﻿@{
+﻿@model prjMusicBetter.Models.TClass
+@{
     ViewData["Title"] = "Viewclass";
 }
 
@@ -135,7 +136,7 @@
         </div>
         <div class="wave-player-warp">
             <div class="wave-player-info">
-                <h2>輕鬆學配樂！</h2>
+                <h2>@Model.FClassName</h2>
                 <h4 style="color:gray;">類型：配樂</h4>
             </div>
         </div>
@@ -146,25 +147,13 @@
     <div class="row">
         <div class="col-md-6">
             <div class="detail-block">
-                <a asp-area="" asp-controller="Class" asp-action="Index">
+                <a asp-area="" asp-controller="Members" asp-action="Profile1">
                     <h3 class="detail-title">授課導師</h3>
                     <div class="profile-wrapper">
                         <img src="https://bonbonmusic-prod.s3.amazonaws.com/profile_pics/5e64a14454b8d" alt="Julianna">
                     </div>
-                    <h2 class="teacher-name">Julianna 老師</h2>
-                    <span class="teacher-intro" title="
-
-► 自我介紹
-台灣高雄人，影視配樂作曲家。自幼便浸淫在古典音樂的氛圍裡，音樂班時期主修大提琴，副修鋼琴。在十六歲那年，因觀看了「新天堂樂園」一片而深受感動，便暗自決定轉往電影配樂發展。當時她首次開始嘗試作曲，不久之後也得到一個幫學校班級音樂劇作曲的機會。她希望她的音樂能帶給人們影響，就如同電影帶給她的感動一樣。
-
-     在國立中山大學畢業之後，她決定要開拓視野，便申請了美國的學校，於二零一二年赴紐約大學 (New York University) 電影配樂研究所 (Scoring for Film and Multimedia) 攻讀碩士。在校期間曾師事於Ira Newborn, Rich Shemaria, Joseph Church 和 Mark Suozzo。並且，在受到紐約市廣泛多元文化的影響之下，她積極地找尋和不同創作者合作的機會。因為她著迷於那超越國籍、存在於不同創作者間、因為交流碰撞而產生出的火花。因此，她的音樂不只包含了電影配樂，也有現代舞、劇場、遊戲、裝置藝術等等。她的作品曾於紐約時代廣場、中央車站、林肯中心、皇后美術館、皇后植物園以及米蘭世博、北京國際書展等地展出及演出。配樂作品也入圍多項獨立影展，《晝夏》曾入圍紐約獨立影展；而《青紀之砂》曾入圍坎城影展短片角落，2015 年榮獲上海驕傲電影節最佳音樂音效獎。2016 年也於 Cine Film Scoring Contest 中，被評選為當次前 30% 之作曲家。2017年於ASCAP Film Scoring Workshop with Richard Bellis中，被評選為當次全球三、四百份申請件中之前10%作曲家。2018年被選入首屆台北影視音媒合會配樂類作曲家，以及文化部配樂人才養成計畫——馬步計畫，進行為期四個月的培訓。
-
-日後，她又受到了許多不同音樂的影響，例如：爵士樂、流行音樂、獨立音樂和傳統音樂等等，使她致力於結合多種音樂中、令她感動的元素，去創造出她自己獨一無二的聲響，並期望如實地傳達她的感動給人們。除此之外，在世界各地旅行的經驗，也讓她開始以一位藝術家的定位來思考，並著手嘗試融合東西方的音樂。她從來不滿足於她已學會的知識和技能，仍然持續找尋、開發廣大音樂世界中的更多可能性和潛在性。" style="display: block;">
-
-                        08/05/2021 更新：
-                        1. COVID-19 疫情期間，全面採用 Zoom 進行線上教學。待政府公告疫情趨緩後，可再自由選擇線上或實體教學。
-                        2. 因平...
-                    </span>
+                    <h2 class="teacher-name">@Model.FTeacher</h2>
+                    @ViewBag.teacher
                     <span class="teacher-seemore"><span class="glyphicon glyphicon-triangle-right"></span>點此看更多老師資訊</span>
                 </a>
             </div>
@@ -173,11 +162,11 @@
             <div class="detail-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
                 <h3 class="detail-title">課程資訊</h3>
                 <h2 class="price">價格</h2>
-                <h2 style="text-align: center">1950</h2>
+                <h2 style="text-align: center">@(Math.Round((decimal)Model.FPrice))/每堂</h2>
                 <h2 class="price">日期</h2>
-                <h2 style="text-align: center">2023/07/09</h2>
+                <h2 style="text-align: center">@Model.FStartdate</h2>
                 <h2 style="text-align: center">~</h2>
-                <h2 style="text-align: center">2023/12/24</h2>
+                <h2 style="text-align: center">@Model.FEnddate</h2>
                 <div>
                     <form asp-controller="Class" asp-action="Createclass" method="get" style="text-align: center; margin: 20px auto;">
                         <button name="createClass" class="btm">購買課程</button>
@@ -192,53 +181,7 @@
         <div class="detail-block">
             <h3 class="detail-title">課程簡介</h3>
             <span class="detail-wrapper">
-                您是否身陷過電影配樂的黑洞中，
-                情緒被重重感染，
-                因而無法自拔呢？
-
-                您是否也想創造這樣的悸動，
-                在自己及每個人的生命裡，
-                留下足跡呢？
-
-                本課程將用深入淺出的教學方式，
-                解密電影配樂帶來的震撼及感動！
-
-                您，
-                也可以是創造那份感動的人！
-
-                ・
-
-                Photo by James Owen on Unsplash
-            </span>
-        </div>
-
-
-        <div class="detail-block">
-            <h3 class="detail-title">課程說明</h3>
-            <span class="detail-wrapper">
-                本課程適合什麼人？
-                有基本音樂能力，懂得操作電腦，對各類配樂創作（尤其是影像配樂創作）有興趣之無基礎初學者、進階學習者、興趣培養者與升學考試者（若有短期衝刺班計畫，費用則會視情況另計）。
-
-                老師有什麼特色？
-                可視情況中、英語授課，且老師很有耐心！因為我堅信：音樂是美好的！任何令人討厭音樂的理由，都是人為因素。我希望，學生可以討厭老師，但不要因此討厭音樂 QQ
-
-                我會學習到什麼？
-                DAW的建立及軟體使用、基礎音樂能力（樂理、聽音、基本和聲進行與和弦概念）、基礎樂器學、影片配樂的創作技巧與分析（以管弦樂風格為主，其他樂曲風格為輔）、各類樂風之仿作與在電影中的應用、音樂製作產業之作業流程、電影音樂賞析及作曲家小知識等等。可依學生期許及學習目標客製化，彈性調整上課進度。
-
-                我要帶什麼去上課？
-                第一堂課將重點放在了解學生的程度，以及學生期許之學習目標。無基礎者，將由老師協助，從建立自己簡單的音樂工作站開始。有基礎者，可先將自己的筆電與作品帶來，讓老師了解學生的情況和特色。本課程建議要準備自己的DAW （Digital Audio Workstation），用以練習實作與創作，不限於PC或MAC。但若從軟體操作開始學習的話，建議使用Mac搭配Logic。
-
-                我需要注意什麼？
-                一顆熱愛音樂、不畏艱難的心很重要！奠定良好的基礎，是日後進階學習高深、複雜技巧的基石。每位學生的學習狀況與進度各不相同，關鍵還是在耐心與恆心地學習。因此我會建議，穩穩地踏著自己的步伐前進，腳踏實地克服自己學習的障礙，才是進步的正確道路。
-
-                一期一堂、四堂和八堂課，有什麼不一樣呢？
-                基本上從零基礎，到至少能完成製作音樂的階段，需要一段時間。若按部就班、照表操課的話，大約需要十二堂課、三個月左右的時間。但每個人的學習狀況不同，因此老師也會視學生的情況，做課綱的調整。故在此提供的堂數選擇，都有其基本的功用及進度：《一堂課》屬體驗課程，引領學生入門，並建立觀念；《四堂課》則由架設音樂工作站，至實際軟體操作為主；《八堂課》則延伸四堂課的進度，開始進入琢磨基礎音樂能力、基礎樂器學，及電影影像、劇情、樂曲風格分析、實作、仿作的階段；《十二堂課》則延續八堂課的進度，進入個人創作及實戰演練的階段（因系統限制，此進度需自行再購買四堂課）。不過再次強調，每個人的進度不同；有基礎者經評估後，也可直接跳至進階學習階段。因此第一堂課，老師需要先了解學生學習的狀況和程度，才能量身訂製屬於學生個人的進度表。
-
-                我還有問題想問——
-                若想更瞭解老師的話，請上官網：shuoanchen.com
-                若不確定自己應該上哪堂課，想尋求建議的話，也歡迎來信洽詢：chensa0207@gmail.com
-
-                期待與您一同創造美好的音樂！^^
+                @Model.FDescription
             </span>
         </div>
     </section>
@@ -248,21 +191,56 @@
     <section class="similar-songs-section">
         <div class="container-fluid">
             <h3>你可能會想看的其他課程</h3>
-            <div class="row playlist-area">
-                <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                    <div class="playlist-item">
-                        <img src="/img/classimg/2.jpg" alt="">
-                        <h5>《什麼？歌曲創作也可以很簡單！》</h5>
+            @{
+                if (@Model.FClassId < (ViewBag.AllClass - 2))
+                {
+                    <div class="row playlist-area">
+                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 1)">
+                                <div class="playlist-item">
+                                    <img src="/img/classimg/2.jpg" alt="">
+                                    <h5>@ViewBag.PrClass</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 2)">
+                                <div class="playlist-item">
+                                    <img src="~/img/classimg/3.jpg" alt="">
+                                    <h5>@ViewBag.SenClass</h5>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                    <div class="playlist-item">
-                        <img src="~/img/classimg/3.jpg" alt="">
-                        <h5>基礎電影配樂課</h5>
+                }
+                else
+                {
+                    <div class="row playlist-area">
+                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 1)">
+                                <div class="playlist-item">
+                                    <img src="/img/classimg/2.jpg" alt="">
+                                    <h5>@ViewBag.PrClass</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 2)">
+                                <div class="playlist-item">
+                                    <img src="~/img/classimg/3.jpg" alt="">
+                                    <h5>@ViewBag.SenClass</h5>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </div>
+                }
+            }
         </div>
     </section>
     <!-- Similar Songs section end -->
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

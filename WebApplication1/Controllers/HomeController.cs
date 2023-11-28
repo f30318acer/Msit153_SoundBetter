@@ -75,7 +75,7 @@ namespace WebApplication1.Controllers
             //vm.password 進行雜湊 再去比對
 
             var member = _context.TMembers
-                .FirstOrDefault(m => m.FEmail == vm.Email && m.FPasswod == vm.Password);
+                .FirstOrDefault(m => m.FEmail == vm.Email && m.FPassword == vm.Password);
 
 
             //建立用戶身分宣告

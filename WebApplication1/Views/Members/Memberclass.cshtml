@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<prjMusicBetter.Models.TClass>
+@{
 	ViewData["Title"] = "Memberclass";
 }
 <style>
@@ -59,26 +60,17 @@
 		</div>
 		<div class="clearfix"></div>
 		<div class="row playlist-area">
-			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-				<a asp-area="" asp-controller="Class" asp-action="Viewclass">
-					<div class="playlist-item">
-						<img src="~/img/classimg/1.jpg" alt="">
-						<h5>輕鬆學配樂！</h5>
-					</div>
-				</a>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 artists">
-				<div class="playlist-item">
-					<img src="~/img/classimg/2.jpg" alt="">
-					<h5>《什麼？歌曲創作也可以很簡單！》</h5>
+			@foreach (var item in Model)
+			{
+				<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+					<a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@item.FClassId">
+						<div class="playlist-item">
+							<img src="~/img/classimg/1.jpg" alt="">
+							<h5>@Html.DisplayFor(modelItem => item.FClassName)</h5>
+						</div>
+					</a>
 				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-				<div class="playlist-item">
-					<img src="~/img/classimg/3.jpg" alt="">
-					<h5>基礎電影配樂課</h5>
-				</div>
-			</div>
+			}
 		</div>
 	</div>
 </section>

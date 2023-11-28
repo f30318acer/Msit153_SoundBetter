@@ -13,7 +13,7 @@ public partial class TMember
 
     public string FName { get; set; }
 
-    public string FPasswod { get; set; }
+    public string FPassword { get; set; }
 
     public string FPhone { get; set; }
 
