@@ -180,32 +180,32 @@ namespace prjMusicBetter.Controllers
             {
                 try
                 {
-                    var couponToUpdate = await _context.TCoupons.FirstOrDefaultAsync(c => c.FCouponId == id);
+                    var memberToUpdate = await _context.TMembers.FirstOrDefaultAsync(c => c.FMemberId == id);
 
-                    if (couponToUpdate == null)
+                    if (memberToUpdate == null)
                     {
                         return NotFound();
                     }
 
-                    if (FPicture != null && FPicture.Length > 0)
+                    if (FPhotoPath != null && FPhotoPath.Length > 0)
                     {
-                        var fileName = Path.GetFileName(FPicture.FileName);
+                        var fileName = Path.GetFileName(FPhotoPath.FileName);
                         var filePath = Path.Combine(_environment.WebRootPath, "img", fileName);
 
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
-                            await FPicture.CopyToAsync(fileStream);
+                            await FPhotoPath.CopyToAsync(fileStream);
                         }
 
                         // 只有在上傳新圖片時才更新圖片路徑
-                        couponToUpdate.FPicture = fileName;
+                        memberToUpdate.FPhotoPath = fileName;
                     }
 
                     // 更新除圖片以外的其他屬性
-                    if (await TryUpdateModelAsync<TCoupon>(
-                        couponToUpdate,
+                    if (await TryUpdateModelAsync<TMember>(
+                        memberToUpdate,
                         "",
-                        c => c.FCouponContent, c => c.FCouponCode, c => c.FDescription, c => c.FStartdate, c => c.FEnddate))
+                c => c.FUserame, c => c.FName, c => c.FPassword, c => c.FPhone, c => c.FEmail, c => c.FGender, c => c.FBirthday, c => c.FCreationTime, c => c.FIntroduction, c => c.FPermissionId))
                     {
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
@@ -213,7 +213,7 @@ namespace prjMusicBetter.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TMemberExists(tCoupon.FCouponId))
+                    if (!TMemberExists(tMember.FMemberId))
                     {
                         return NotFound();
                     }
@@ -223,7 +223,7 @@ namespace prjMusicBetter.Controllers
                     }
                 }
             }
-            return View(tCoupon);
+            return View(tMember);
         }
         // GET: TMembers/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -258,14 +258,14 @@ namespace prjMusicBetter.Controllers
             {
                 _context.TMembers.Remove(tMember);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TMemberExists(int id)
         {
-          return (_context.TMembers?.Any(e => e.FMemberId == id)).GetValueOrDefault();
+            return (_context.TMembers?.Any(e => e.FMemberId == id)).GetValueOrDefault();
         }
     }
 }
