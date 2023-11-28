@@ -171,7 +171,7 @@ namespace prjMusicBetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("FMemberId,FUserame,FName,FPassword,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember, IFormFile FPhotoPath)
         {
-            if (id != tCoupon.FCouponId)
+            if (id != tMember.FMemberId)
             {
                 return NotFound();
             }
