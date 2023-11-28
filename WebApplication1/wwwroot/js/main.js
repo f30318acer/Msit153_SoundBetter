@@ -55,6 +55,5 @@ $(window).on('load', function() {
 		items: 1,
 		autoplay: true
 	});
-
 })(jQuery);
 

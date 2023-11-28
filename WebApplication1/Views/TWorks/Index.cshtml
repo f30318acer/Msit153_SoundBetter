@@ -1,0 +1,76 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TWork>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout2";
+}
+<style>
+     .table > thead > * > * {
+         background-color: lightskyblue;
+     }
+
+     .btn {
+         border-radius: 10px;
+         background-color: lightgreen;
+     }
+</style>
+<main id="main" class="main">
+<h1>作品管理</h1>
+
+
+<p>
+    <a asp-action="Create" class="btn">Create New</a>
+</p>
+    <table class="table  table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FWorkName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FUpdateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.FMember)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStyle)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FWorkName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FUpdateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FDescription)
+            </td>
+     
+            <td>
+                @Html.DisplayFor(modelItem => item.FMember.FMemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FStyle.FStyleId)
+            </td>
+         
+            <td>
+                        <a asp-action="Edit" asp-route-id="@item.FWorkId" class="btn">修改</a> |
+                        <a asp-action="Details" asp-route-id="@item.FWorkId" class="btn">詳細資料</a> |
+                        <a asp-action="Delete" asp-route-id="@item.FWorkId" class="btn">刪除</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</main>

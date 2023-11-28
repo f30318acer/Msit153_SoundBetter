@@ -1,7 +1,25 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using prjMusicBetter.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<dbSoundBetterContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("dbSoundBetterConnection")
+));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+{
+    option.LoginPath = new PathString("/Home/Login");
+
+    option.AccessDeniedPath = new PathString("/Home/NoRole");
+
+    option.ExpireTimeSpan = TimeSpan.FromDays(1);
+});
 
 var app = builder.Build();
 
@@ -22,6 +40,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Rate}/{action=Rate}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

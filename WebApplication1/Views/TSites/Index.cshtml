@@ -1,0 +1,77 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TSite>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout2";
+
+}
+<style>
+    .table > thead > * > * {
+        background-color: lightskyblue;
+    }
+    .btn {
+        border-radius: 10px;
+        background-color: lightgreen;
+    }
+</style>
+<main id="main" class="main">
+<h1>場地管理</h1>
+
+<p>
+    <a asp-action="Create" class="btn">新增場地</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                場地名稱
+            </th>
+            <th>
+                場地類型
+            </th>
+            <th>
+                連絡電話
+            </th>
+            <th>
+                城市
+            </th>
+            <th>
+                地址
+            </th>
+            <th>
+                會員
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSiteName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSiteType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FCity.FCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FMember.FName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FSiteId" class="btn">修改</a>
+                <a asp-action="Details" asp-route-id="@item.FSiteId" class="btn">詳細資訊</a>
+                <a asp-action="Delete" asp-route-id="@item.FSiteId" class="btn">刪除</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</main>

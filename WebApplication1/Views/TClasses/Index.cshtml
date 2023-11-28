@@ -1,0 +1,78 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TClass>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout2";
+}
+<main id="main" class="main">
+<h1>課程管理</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FStartdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEnddate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FThumbnailPath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FTeacher)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FStartdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEnddate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FThumbnailPath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSite.FSiteId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FTeacher.FMemberId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FClassId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FClassId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FClassId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</main>

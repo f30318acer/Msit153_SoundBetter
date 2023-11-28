@@ -1,0 +1,137 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TMember>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout2";
+}
+
+<main id="main" class="main">
+
+
+    <div class="pagetitle">
+        <p>
+            <button onclick="location.href='@Url.Action("Create", "TMembers")'" class="btn btn-primary">新增會員</button>
+        </p>
+
+        <form asp-action="Index" method="get">
+            <div class="form-group">
+                <label for="search">搜尋關鍵字:</label>
+                <input type="text" class="form-control" id="search" name="search" value="@ViewData["CurrentFilter"]" />
+            </div>
+            <button type="submit" class="btn btn-secondary">搜尋</button>
+        </form>
+
+        <h1>會員清單</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Tables</li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">會員清單</h5>
+                        <!-- Table with stripped rows -->
+                        <div class="datatable-container">
+                            <!-- Table with stripped rows -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FUserame)
+                                        </th>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FPasswod)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FPhone)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FEmail)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FGender)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FBirthday)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FCreationTime)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FIntroduction)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FPhotoPath)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FPermission)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td >
+                                                @Html.DisplayFor(modelItem => item.FUserame)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FPasswod)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FPhone)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FEmail)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FGender)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FBirthday)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FCreationTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FIntroduction)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FPhotoPath)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FPermission.FPromissionId)
+                                            </td>
+                                            <td >
+                                                <a asp-action="Edit" asp-route-id="@item.FMemberId" class="btn btn-outline-success">修改</a> 
+                                                @* <a asp-action="Details" asp-route-id="@item.FMemberId">細節</a> | *@
+                                                <a asp-action="Delete" asp-route-id="@item.FMemberId" class="btn btn-outline-danger">刪除</a>  
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End Table with stripped rows -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->

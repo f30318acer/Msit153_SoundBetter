@@ -1,14 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using prjMusicBetter.Models;
 
 namespace prjMusicBetter.Controllers
 {
     public class ClassController : Controller
     {
-		/*=======課程首頁===============*/
+        private readonly dbSoundBetterContext _context;
 
-		public IActionResult Index()
+        public ClassController(dbSoundBetterContext context)
         {
-            return View();
+            _context = context;
+        }
+        /*=======課程首頁===============*/
+
+        //public IActionResult Index()
+        //      {
+        //          return View();
+        //      }
+        public async Task<IActionResult> Index()
+        {
+            var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher);
+            return View(await dbSoundBetterContext.ToListAsync());
         }
 
         /*=======課程內頁===============*/
@@ -17,5 +30,15 @@ namespace prjMusicBetter.Controllers
 		{
 			return View();
 		}
-	}
+
+
+
+
+        /*=======課程內頁===============*/
+
+        public IActionResult Createclass()
+        {
+            return View();
+        }
+    }
 }
