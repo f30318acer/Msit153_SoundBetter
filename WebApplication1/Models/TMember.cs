@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace prjMusicBetter.Models;
 
@@ -9,6 +10,7 @@ public partial class TMember
 {
     public int FMemberId { get; set; }
 
+    [Display]
     public string FUserame { get; set; }
 
     public string FName { get; set; }

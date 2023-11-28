@@ -113,7 +113,16 @@
                                                 @Html.DisplayFor(modelItem => item.FIntroduction)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.FPhotoPath)
+                                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
+                                                {
+                                                    <img src="@Url.Content("~/img/" + item.FPhotoPath)" alt="Coupon Image" style="width:100px; height:auto;" />
+
+                                                }
+                                                else
+                                                {
+                                                    @:No Image
+                                                }
+                                                @Html.DisplayFor(modelItem=>item.FPhotoPath)
                                             </td>
                                             <td hidden>
                                                 @Html.DisplayFor(modelItem => item.FPermission)

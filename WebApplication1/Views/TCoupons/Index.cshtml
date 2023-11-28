@@ -113,27 +113,31 @@
         </div>
     </section>
 </main>
-<script>
-    $(document).ready(function () {
-        $("#searchButton").click(function () {
-            var searchText = $("#searchText").val();
-            $.ajax({
-                url: '@Url.Action("GetCoupons", "TCoupons")',
-                type: 'GET',
-                data: { search: searchText },
-                success: function (data) {
-                    // 處理返回的數據
-                    console.log(data);
-                    // 例如，更新表格
-                },
-                error: function (error) {
-                    // 處理錯誤
-                    console.error("錯誤: ", error);
-                }
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#searchButton").click(function () {
+                var searchText = $("#searchText").val();
+                $.ajax({
+                    url: '@Url.Action("GetCoupons", "TCoupons")',
+                    type: 'GET',
+                    data: { search: searchText },
+                    success: function (data) {
+                        // 處理返回的數據
+                        console.log(data);
+                        // 例如，更新表格
+                    },
+                    error: function (error) {
+                        // 處理錯誤
+                        console.error("錯誤: ", error);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+
+}
+
 
 <input type="text" id="searchText" />
 <button id="searchButton">搜尋</button>
