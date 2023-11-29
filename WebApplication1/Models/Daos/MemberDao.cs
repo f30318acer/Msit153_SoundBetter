@@ -36,14 +36,14 @@ namespace prjMusicBetter.Models.Daos
         {
             var mem = new TMember
             {
-                FUsername = vm.fUsername,
+                //FUsername = vm.fUsername,
                 FName = vm.fName,
                 FPassword = vm.fPassword,
                 FEmail = vm.fEmail,
                 FPhone = vm.fPhone,
                 FGender =Convert.ToBoolean(vm.fGender),
-                FPermissionId = 2,
-                FCreationTime = DateTime.Now,
+                //FPermissionId = 2,
+                //FCreationTime = DateTime.Now,
                 FBirthday = Convert.ToDateTime(vm.fBirthday)
             };
             _context.TMembers.Add(mem);
