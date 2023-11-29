@@ -1,0 +1,95 @@
+﻿@model prjMusicBetter.Models.TClass
+
+@{
+    ViewData["Title"] = "Create";
+}
+<!-- Contact section -->
+<section class="contact-section">
+    <div class="container-fluid">
+        <div class="contact-warp">
+            <div class="section-title mb-0">
+                <h2>新建課程</h2>
+            </div>
+            <form class="contact-from col-lg-8">
+                @*<div class="row">
+                <div class="col-md-6">
+                <label for="CourseName">課程名稱:</label>
+                <input type="text" id="CourseName" name="CourseName" required />
+                </div>
+                <div class="col-md-6">
+                <label for="Price">單堂價格:</label>
+                <input type="number" id="Price" name="Price" required />
+                </div>
+                <div class="col-md-12">
+                <label for="CourseDescription">課程說明:</label>
+                <textarea id="CourseDescription" name="CourseDescription" required></textarea>
+                <label for="TimeSlot">日期:</label>
+                <input type="text" id="TimeSlot" name="TimeSlot" required />
+                <label for="CourseImage">圖片:</label>
+                <input type="file" id="CourseImage" name="CourseImage" accept="image/*" />
+                <button type="submit" class="btm">確定建立</button>
+                </div>
+                </div>*@
+                <div class="row">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group col-md-2">
+                            <label asp-for="FTeacherId" class="control-label"></label>
+                            <select asp-for="FTeacherId" class="form-control" asp-items="ViewBag.FTeacherId"></select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label asp-for="FClassName" class="control-label">課程名稱:</label>
+                            <input asp-for="FClassName" class="form-control" />
+                            <span asp-validation-for="FClassName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label asp-for="FPrice" class="control-label">單堂價格:</label>
+                            <input asp-for="FPrice" class="form-control" />
+                            <span asp-validation-for="FPrice" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="FDescription" class="control-label">課程說明:</label>
+                            <input asp-for="FDescription" class="form-control" />
+                            <span asp-validation-for="FDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="FStartdate" class="control-label">開始日期:</label>
+                            <input asp-for="FStartdate" class="form-control" />
+                            <span asp-validation-for="FStartdate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="FEnddate" class="control-label">結束日期:</label>
+                            <input asp-for="FEnddate" class="form-control" />
+                            <span asp-validation-for="FEnddate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="FSiteId" class="control-label">地點:</label>
+                            <select asp-for="FSiteId" class="form-control" asp-items="ViewBag.FSiteId"></select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="FThumbnailPath" class="control-label">圖片:</label>
+                            <input asp-for="FThumbnailPath" class="form-control" />
+                            <span asp-validation-for="FThumbnailPath" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <input type="submit" value="確定建立" class="btn btn-primary" style="background:#fc0254;color: #fff" />
+                        </div>
+                    </form>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+<!-- Contact end -->
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

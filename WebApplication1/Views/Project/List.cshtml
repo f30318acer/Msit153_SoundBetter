@@ -15,7 +15,7 @@
 				<div class="text-right">
 					<input type="text" name="keywords" placeholder="專案" />
 					<button type="button" class="btn btn-secondary">搜尋</button>
-					<a href="~/VCProject/Create" type="button" class="btn btn-success">建立專案</a>
+					<a href="~/Project/Create" type="button" class="btn btn-success">建立專案</a>
 				</div>
 			</div>
 		</div>
@@ -49,6 +49,7 @@
 	</div>
 </section>
 <!-- Help section end -->
+
 @section Scripts{
 	<script>
 		function load() {
@@ -57,7 +58,7 @@
 				console.log(datas);
 				const docFrag = $(document.createDocumentFragment())
 				$.each(datas, function (index, item) {
-					const descriSub = item.fDescription.length > 50 ? item.fDescription.substring(0, 50) + '...' : item.fDescription;
+					const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
 					const card = $(
 						`<a class="mix col-lg-3 col-md-4 col-sm-6">
 							<div class="playlist-item">

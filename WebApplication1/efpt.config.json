@@ -28,6 +28,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tArticleFav]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tArticlePicture]",
          "ObjectType": 0
       },
@@ -37,6 +41,10 @@
       },
       {
          "Name": "[dbo].[tClass]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tClassFav]",
          "ObjectType": 0
       },
       {
@@ -92,7 +100,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tNotification]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tProject]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tProjectFav]",
          "ObjectType": 0
       },
       {
@@ -133,6 +149,10 @@
       },
       {
          "Name": "[dbo].[tWork]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tWorkFav]",
          "ObjectType": 0
       },
       {

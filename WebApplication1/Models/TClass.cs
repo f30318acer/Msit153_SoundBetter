@@ -25,9 +25,15 @@ public partial class TClass
 
     public string FThumbnailPath { get; set; }
 
+    public int? FMaxStudent { get; set; }
+
+    public int? FCurrentStudent { get; set; }
+
     public virtual TSite FSite { get; set; }
 
     public virtual TMember FTeacher { get; set; }
+
+    public virtual ICollection<TClassFav> TClassFavs { get; set; } = new List<TClassFav>();
 
     public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
 }

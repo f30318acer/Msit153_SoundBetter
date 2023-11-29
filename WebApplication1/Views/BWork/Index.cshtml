@@ -1,0 +1,118 @@
+﻿
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout2";
+}
+<style>
+    .table > thead > * > * {
+        background-color: lightskyblue;
+    }
+
+    .btn {
+        border-radius: 10px;
+        background-color: lightgreen;
+    }
+</style>
+<main id="main" class="main">
+    <h1>作品管理</h1>
+
+
+    <p>
+        <a asp-action="Create" class="btn">Create New</a>
+    </p>
+    <table class="table  table-hover">
+        <thead>
+            <tr>
+                <th>
+                   作品名稱
+                </th>
+                <th>
+                    更新日期
+                </th>
+                <th>
+                   作品描述
+                </th>
+                <th>
+                   會員編號
+                </th>
+                <th>
+                   作品風格
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody  id="bodylist">
+            @*@foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FWorkName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FUpdateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FDescription)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FMember.FMemberId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FStyle.FStyleId)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.FWorkId" class="btn">修改</a> |
+                        <a asp-action="Details" asp-route-id="@item.FWorkId" class="btn">詳細資料</a> |
+                        <a asp-action="Delete" asp-route-id="@item.FWorkId" class="btn">刪除</a>
+                    </td>
+                </tr>
+            }*@
+        </tbody>
+    </table>
+</main>
+
+@section Scripts{
+ <script>
+        function load() {
+            const divList = $('#bodylist')
+            $.getJSON('/apiTWork/List', function (datas) {
+                console.log(datas);
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(
+                        ` <tr>
+                                    <td>
+                                   ${item.fWorkName}
+                                    </td>
+                                    <td>
+                                  ${item.fUpdateTime}
+                                    </td>
+                                    <td>
+                                ${item.fDescription}
+                                    </td>
+                                    <td>
+                                ${item.fMemberId}
+                                    </td>
+                                    <td>
+                                 ${item.fStyleId}
+                                    </td>
+
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="${item.fWorkId}" class="btn">修改</a> |
+                                        <a asp-action="Details" asp-route-id="${item.fWorkId}" class="btn">詳細資料</a> |
+                                        <a asp-action="Delete" asp-route-id="${item.FWorkId}" class="btn">刪除</a>
+                                    </td>
+                                </tr>`);
+                    docFrag.append(card);
+                })
+                divList.html(docFrag)
+            })
+        }
+        load();
+ </script>
+}

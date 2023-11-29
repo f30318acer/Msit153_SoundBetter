@@ -15,23 +15,23 @@ namespace prjMusicBetter.Models.Daos
         }
         public void Register(FMemberVM vm)
         {
-            var mem = new Members
+            var mem = new TMember
             {
-                fName = vm.fName,
-                fPassword = vm.fPassword,
-                fEmail = vm.fEmail,
-                fPhone = vm.fPhone,
-                fGender=vm.fGender, //看要不要設成bit
-                fCreationTime = DateTime.Now,
-                fBirthday = Convert.ToDateTime(vm.fBirthday),
+                FName = vm.fName,
+                FPassword = vm.fPassword,
+                FEmail = vm.fEmail,
+                FPhone = vm.fPhone,
+                FGender=vm.fGender, //看要不要設成bit
+                FCreationTime = DateTime.Now,
+                FBirthday = Convert.ToDateTime(vm.fBirthday),
 
             };
             //_context.TMembers.Add(mem);
             _context.SaveChanges();
             if(vm.Photo!=null)
             {
-                string fileName = $"MemberId_{mem.fMemberID}.jpg";
-                mem.fPhotoPath = fileName ;
+                string fileName = $"MemberId_{mem.FMemberId}.jpg";
+                mem.FPhotoPath = fileName ;
                 string fphotoPath = Path.Combine(_environment.WebRootPath, "img/Member", fileName);
                 using (var fileStream = new FileStream(fphotoPath, FileMode.Create))
                 {
