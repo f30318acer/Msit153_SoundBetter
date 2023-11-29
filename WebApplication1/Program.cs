@@ -1,17 +1,22 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<UserInfoService>();
+
+//建立資料庫連接需要特別加這一段
 builder.Services.AddDbContext<dbSoundBetterContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("dbSoundBetterConnection")
 ));
 
+//登入cookie 要加這一段才能使用
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     option.LoginPath = new PathString("/Home/Login");

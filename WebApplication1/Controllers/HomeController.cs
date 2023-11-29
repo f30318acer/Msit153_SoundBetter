@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Policy;
+using prjMusicBetter.Models.infra;
 
 
 
@@ -20,15 +21,22 @@ namespace WebApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly dbSoundBetterContext _context;
-   
+        private readonly IWebHostEnvironment _environment;
+        private readonly UserInfoService _userInfoService;
 
-        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context)
+
+        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment, UserInfoService userInfoService)
         {
             _logger = logger;
             _context = context;
-        
+            _environment = environment;
+            _userInfoService = userInfoService;
         }
 
+        public IActionResult test()
+        {
+            return View();
+        }
         public IActionResult Index()
         { 
             return View();
@@ -125,7 +133,7 @@ namespace WebApplication1.Controllers
        //     }
 
        // }
-        public IActionResult test()
+        public IActionResult test1()
         {
             return View();
         }
