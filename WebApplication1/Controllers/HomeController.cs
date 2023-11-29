@@ -125,19 +125,25 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Register(FMemberVM vm)
-        //{
-        //    if (ModelState.IsValid == false)
-        //    {
-        //        return View(vm);
-        //    }
-        //    try
-        //    {
-              
-        //    }
-
-        // }
+        [HttpPost]
+        public IActionResult Register(FMemberVM vm)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View(vm);
+            }
+            try
+            {
+                _service.MemberResgister(vm);
+                TempData["AlertRegister"] = vm.fName;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("","新增失敗,"+ex.Message);
+                return View(vm);
+            }
+            return RedirectToAction("Index");
+         }
 
         //============================================
         [Authorize]
