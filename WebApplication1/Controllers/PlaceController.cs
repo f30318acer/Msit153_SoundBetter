@@ -16,6 +16,7 @@ namespace Music_matchmaking_platform.Controllers
 			var dbSoundBetterContext = _context.TSites
 				.Include(t => t.FCity)
 				.Include(t => t.FMember)
+				.Include(t => t.FSitePicture)
 				.Select(t => new
 				{
 					fSiteId = t.FSiteId,
@@ -24,7 +25,8 @@ namespace Music_matchmaking_platform.Controllers
 					fAddress = t.FAddress,
 					fCity = t.FCity.FCity,
 					fSiteType = t.FSiteType,
-					fName = t.FMember.FName
+					fName = t.FMember.FName,
+					fPicturePath = t.FSitePicture.FPicturePath
 				})
 				.ToList();
 			return Json(dbSoundBetterContext);
