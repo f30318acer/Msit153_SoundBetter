@@ -17,11 +17,8 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+     
         public IActionResult Profile()
-        {
-            return View();
-        }
-        public IActionResult Profile1()
         {
             return View();
         }
