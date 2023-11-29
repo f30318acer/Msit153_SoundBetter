@@ -960,11 +960,6 @@ public partial class dbSoundBetterContext : DbContext
             //    .OnDelete(DeleteBehavior.ClientSetNull)
             //    .HasConstraintName("FK_tSitePicture_tSite");
 
-            entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
-                .HasForeignKey(d => d.FSiteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tSitePicture_tSite");
-
         });
 
         modelBuilder.Entity<TSkill>(entity =>
