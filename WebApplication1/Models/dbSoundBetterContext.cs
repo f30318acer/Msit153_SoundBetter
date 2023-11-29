@@ -758,6 +758,11 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tSite_tMember");
+
+            entity.HasOne(d => d.FSitePicture).WithOne(p => p.FSite)
+                .HasForeignKey<TSitePicture>(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tSite_tSitePicture");
         });
 
         modelBuilder.Entity<TSitePeriod>(entity =>
@@ -941,10 +946,10 @@ public partial class dbSoundBetterContext : DbContext
                 .HasColumnName("fPicturePath");
             entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
 
-            entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
-                .HasForeignKey(d => d.FSiteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tSitePicture_tSite");
+            //entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
+            //    .HasForeignKey(d => d.FSiteId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_tSitePicture_tSite");
         });
 
         modelBuilder.Entity<TSkill>(entity =>
