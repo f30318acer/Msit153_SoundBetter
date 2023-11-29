@@ -40,23 +40,15 @@ namespace prjMusicBetter.Controllers
             var tSite = await _context.TSites
                 .Include(t => t.FCity)
                 .Include(t => t.FMember)
-                .FirstOrDefaultAsync(m => m.FSiteId == id);
+                .Include(t => t.FSitePicture)
+                .FirstOrDefaultAsync(t => t.FSiteId == id);
 
-            var tSitePicture = await _context.TSitePictures
-                .FirstOrDefaultAsync(f => f.FSiteId == id);
-
-            var siteViewModel = new SiteViewModel
-            {
-                TSite = tSite,
-                TSitePicture = tSitePicture
-            };
-
-            if (siteViewModel == null)
+            if (tSite == null)
             {
                 return NotFound();
             }
 
-            return View(siteViewModel);
+            return View(tSite);
         }
 
         // GET: TSites/Create
