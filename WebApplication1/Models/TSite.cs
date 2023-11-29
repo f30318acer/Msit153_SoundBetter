@@ -25,11 +25,9 @@ public partial class TSite
 
     public virtual TMember FMember { get; set; }
 
-<<<<<<< HEAD
     public virtual TSitePicture FSitePicture { get; set; }
 
-=======
->>>>>>> b1dc8aa55c491e2232e9ffb2be4a3aac3513b4a5
+
     public virtual ICollection<TClass> TClasses { get; set; } = new List<TClass>();
 
     public virtual ICollection<TDealSiteLoan> TDealSiteLoans { get; set; } = new List<TDealSiteLoan>();
@@ -40,7 +38,7 @@ public partial class TSite
 
     public virtual ICollection<TSitePeriod> TSitePeriods { get; set; } = new List<TSitePeriod>();
 
-<<<<<<< HEAD
+
     //public virtual ICollection<TSitePicture> TSitePictures { get; set; } = new List<TSitePicture>();
     public string SiteTypeText
     {
@@ -54,7 +52,7 @@ public partial class TSite
             return siteTypeMapping.GetValueOrDefault(FSiteType, "未知");
         }
     }
-=======
+
     public virtual ICollection<TSitePicture> TSitePictures { get; set; } = new List<TSitePicture>();
->>>>>>> b1dc8aa55c491e2232e9ffb2be4a3aac3513b4a5
+
 }
