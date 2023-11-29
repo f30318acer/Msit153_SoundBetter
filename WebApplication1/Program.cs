@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Product}/{action=Create}/{id?}");
+    pattern: "{controller=ShoppingCart}/{action=Checkout}/{id?}");
 
 app.Run();
