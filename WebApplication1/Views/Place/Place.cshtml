@@ -72,6 +72,9 @@
 					</div>
 				</div>
 			</div>
+			<div id="divList" class="row playlist-area">
+				<!--List內容-->
+			</div>
 		</div>
 	</div>
 </section>
@@ -79,12 +82,29 @@
 @section Scripts{
 	<script>
 		const btn = document.querySelector('#btn1');
-		// btn.addEventListener('click', () => {
-		// 	location.href = '@Url.Content("~/Place/PlaceDetail")';
-		// })
+
 		btn.addEventListener('click', async function () {
 			var page = await '@Url.Content("~/Place/PlaceDetail")';
 			location.href = page;
 		})
+		function load() {
+			const divList = $('#divList')
+			$.getJSON('/Place/List', function (datas) {
+				const docFrag = $(document.createDocumentFragment())
+				$.each(datas, function (index, item) {
+					const card = $(
+						`<a class="mix col-lg-3 col-md-4 col-sm-6">
+									<div class="playlist-item">
+										<h5>${item.fSiteName}</h5>
+										<h5>${item.fCity}</h5>
+										<h5>${item.fName}</h5>
+									</div>
+								</a>`);
+					docFrag.append(card);
+				})
+				divList.html(docFrag)
+			})
+		}
+		load();
 	</script>
 }

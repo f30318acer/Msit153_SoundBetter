@@ -10,7 +10,7 @@
                     <div class="card-body p-md-5">
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-6 col-xl-8 order-2 order-lg-1">
-                                <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">建立專案</p>
+                                <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">建立文章</p>
 
 
                                 <form class="mx-1 mx-md-4">
@@ -29,49 +29,29 @@
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example4c">專案名稱</label>
-                                            <input type="text" id="fName" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example4c">專案風格</label>
-                                            <select id="selectStyle" class="form-select"></select>
+                                            <label class="form-label" for="form3Example4c">文章標題</label>
+                                            <input type="text" id="fTitle" class="form-control" />
+
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example4c">專案預算</label>
-                                            <input type="text" id="fBudget" class="form-control" />
+                                            <label class="form-label" for="form3Example4c">文章風格</label>
+                                            <input type="text" id="fStyleID" class="form-control" />
+
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example3c">專案介紹</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription" style="height: 100px"></textarea>
+                                            <label class="form-label" for="form3Example3c">文章內容</label>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fContent" style="height: 100px"></textarea>
+
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example3c">人員需求</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription2" style="height: 100px"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example3c">製作期限</label>
-                                            <input type="datetime-local" class="form-control mb-3" id="fEnddate">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example4c">Demo上傳: </label>
-                                            <input type="file" id="form3Example4c" />
-                                        </div>
-                                    </div>
+
                                     <div class="text-right">
                                         <a href="~/VCProject/List" type="button" class="btn btn-secondary">取消</a>
                                         <button type="button" class="btn btn-success" id="buttonSend">確認建立</button>
@@ -92,47 +72,33 @@
 
 @section Scripts{
     <script>
-        const url = '/apiTProjects/Create';
-        const selStyle = document.querySelector('#selectStyle');
+        const url = '/apiTArticle/Create';
 
         $('#buttonSend').click(function () {
 
             // 獲取當前的本地時間
             const currentDate = new Date();
-            const fBudgetValue = parseFloat($('#fBudget').val());
+
             const jsonData = JSON.stringify({
                 fMemberId: 1,
-                fName: $('#fName').val(),
-                fBudget: fBudgetValue,
-                fStartdate: currentDate,
-                fEnddate: $('#fEnddate').val(),
-                fDescription: $('#fDescription').val(),
-                fProjectStatusId: 1,
-                fDescription2: $('#fDescription2').val(),
-                fSiteId: 1,
-                fStyleId: selStyle.value
+                fTitle: 'a',
+                fContent: 'a',
+                fStyleId: 1
+                
             })
-            // console.log(jsonData)
+          
+             console.log(jsonData)
             $.ajax({
                 url: url,
                 type: 'POST',
                 contentType: 'application/json',
                 data: jsonData
             }).done(function (data) {
-                alert("新增成功，編號為 " + data.fProjectId)
+                alert("新增成功")
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.log("POST request failed: " + textStatus + ", " + errorThrown);
                 alert("新增失敗");
             });
         });
-
-        //Style選擇器
-        async function loadStyle() {
-            const response = await fetch('@Url.Content("~/apiTStyle/List")');
-            const data = await response.json();
-            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
-            selStyle.innerHTML = style.join("");
-        }
-        loadStyle();
     </script>
 }
