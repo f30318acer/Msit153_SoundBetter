@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using prjMusicBetter.Models.ViewModels;
-using NuGet.Protocol;
 
 namespace Music_matchmaking_platform.Controllers
 {
@@ -17,7 +13,22 @@ namespace Music_matchmaking_platform.Controllers
 		}
 		public IActionResult List()
 		{
-			var dbSoundBetterContext = _context.TSites.Include(t => t.FCity).Include(t => t.FMember);
+			var dbSoundBetterContext = _context.TSites
+				.Include(t => t.FCity)
+				.Include(t => t.FMember)
+				.Include(t => t.FSitePicture)
+				.Select(t => new
+				{
+					fSiteId = t.FSiteId,
+					fSiteName = t.FSiteName,
+					fPhone = t.FPhone,
+					fAddress = t.FAddress,
+					fCity = t.FCity.FCity,
+					fSiteType = t.FSiteType,
+					fName = t.FMember.FName,
+					fPicturePath = t.FSitePicture.FPicturePath
+				})
+				.ToList();
 			return Json(dbSoundBetterContext);
 		}
 		public IActionResult QueryByCity(int? id)//CityId

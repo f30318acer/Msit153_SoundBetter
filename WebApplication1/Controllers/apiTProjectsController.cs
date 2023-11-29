@@ -71,7 +71,7 @@ namespace prjSoundBetterApi.Controllers
         }
         //===新增===
         [HttpPost]
-        public IActionResult Create(TProject? project)
+        public IActionResult Create([FromBody] TProject? project)
         {
             if (project != null)
             {

@@ -13,6 +13,7 @@
 			</div>
 			<div class="container col-lg-9">
 				<div class="text-right">
+					<select id="selectStyle" class="form-select"></select>
 					<input type="text" name="keywords" placeholder="專案" />
 					<button type="button" class="btn btn-secondary">搜尋</button>
 					<a href="~/Project/Create" type="button" class="btn btn-success">建立專案</a>
@@ -52,6 +53,8 @@
 
 @section Scripts{
 	<script>
+		const selStyle = document.querySelector('#selectStyle');
+
 		function load() {
 			const divList = $('#divList')
 			$.getJSON('/apiTProjects/List', function (datas) {
@@ -73,5 +76,14 @@
 			})
 		}
 		load();
+
+		//Style選擇器
+		async function loadStyle() {
+			const response = await fetch('@Url.Content("~/apiTStyle/List")');
+			const data = await response.json();
+			const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+			selStyle.innerHTML = style.join("");
+		}
+		loadStyle();
 	</script>
 }

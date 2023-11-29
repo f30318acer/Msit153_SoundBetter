@@ -6,6 +6,9 @@ namespace prjMusicBetter.Models.ViewModels
     {
         public string? fPhotoPath {  get; set; }
         public IFormFile? Photo {  get; set; }
+        [Display(Name = "使用者姓名")]
+        [Required(ErrorMessage = "{0}是必填欄位!")]
+        public string? fUsername { get; set; }
 
         [Display(Name = "姓名")]
         [Required(ErrorMessage ="{0}是必填欄位!")]

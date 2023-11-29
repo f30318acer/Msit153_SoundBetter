@@ -72,10 +72,11 @@
 					</div>
 				</div>
 			</div>
-			<div id="divList" class="row playlist-area">
-				<!--List內容-->
-			</div>
-		</div>
+
+        </div>
+		<div id="divList" class="row playlist-area">
+            <!--List內容-->
+        </div>
 	</div>
 </section>
 
@@ -90,15 +91,15 @@
 		function load() {
 			const divList = $('#divList')
 			$.getJSON('/Place/List', function (datas) {
-				console.log(datas);
 				const docFrag = $(document.createDocumentFragment())
 				$.each(datas, function (index, item) {
 					const card = $(
-						`<a class="mix col-lg-3 col-md-4 col-sm-6">
+						`<a class="mix col-lg-4 col-md-5 col-sm-7">
 									<div class="playlist-item">
+										<img src="/img/${item.fPicturePath}" alt = "" >
 										<h5>${item.fSiteName}</h5>
 										<h5>${item.fCity}</h5>
-										<h5>${item.fMember}</h5>
+										<h5>${item.fSiteType}</h5>
 									</div>
 								</a>`);
 					docFrag.append(card);

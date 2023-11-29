@@ -19,7 +19,7 @@ namespace prjMusicBetter.Models.infra
 
             int id = Convert.ToInt32(memberId.Value);
             TMember member = new dbSoundBetterContext().TMembers.FirstOrDefault(m => m.FMemberId == id);
-            return (member);
+            return member;
         }
     }
 }
