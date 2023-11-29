@@ -150,6 +150,9 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FContent).HasColumnName("fContent");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
             entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
+            entity.Property(e => e.FTitle)
+                .HasMaxLength(50)
+                .HasColumnName("fTitle");
             entity.Property(e => e.FUpdateTime)
                 .HasColumnType("datetime")
                 .HasColumnName("fUpdateTime");
@@ -467,9 +470,7 @@ public partial class dbSoundBetterContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("fEmail");
             entity.Property(e => e.FGender).HasColumnName("fGender");
-            entity.Property(e => e.FIntroduction)
-                .HasMaxLength(50)
-                .HasColumnName("fIntroduction");
+            entity.Property(e => e.FIntroduction).HasColumnName("fIntroduction");
             entity.Property(e => e.FName)
                 .HasMaxLength(50)
                 .HasColumnName("fName");
@@ -483,9 +484,9 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FPhotoPath)
                 .HasMaxLength(250)
                 .HasColumnName("fPhotoPath");
-            entity.Property(e => e.FUserame)
+            entity.Property(e => e.FUsername)
                 .HasMaxLength(50)
-                .HasColumnName("fUserame");
+                .HasColumnName("fUsername");
 
             entity.HasOne(d => d.FPermission).WithMany(p => p.TMembers)
                 .HasForeignKey(d => d.FPermissionId)

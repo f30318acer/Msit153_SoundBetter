@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<UserInfoService>();
+//builder.Services.AddScoped<UserInfoService>();
 
 //建立資料庫連接需要特別加這一段
 builder.Services.AddDbContext<dbSoundBetterContext>(

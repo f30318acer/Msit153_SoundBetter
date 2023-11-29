@@ -205,7 +205,7 @@ namespace prjMusicBetter.Controllers
                     if (await TryUpdateModelAsync<TMember>(
                         memberToUpdate,
                         "",
-                c => c.FUserame, c => c.FName, c => c.FPassword, c => c.FPhone, c => c.FEmail, c => c.FGender, c => c.FBirthday, c => c.FCreationTime, c => c.FIntroduction, c => c.FPermissionId))
+                c => c.FUsername, c => c.FName, c => c.FPassword, c => c.FPhone, c => c.FEmail, c => c.FGender, c => c.FBirthday, c => c.FCreationTime, c => c.FIntroduction, c => c.FPermissionId))
                     {
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));

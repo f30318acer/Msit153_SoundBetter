@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace prjMusicBetter.Models;
 
@@ -10,26 +9,26 @@ public partial class TMember
 {
     public int FMemberId { get; set; }
 
-    [Display(Name = "使用者名稱")]
-    public string FUserame { get; set; }
-    [Display(Name = "姓名")]
+    public string FUsername { get; set; }
+
     public string FName { get; set; }
-    [Display(Name = "密碼")]
+
     public string FPassword { get; set; }
-    [Display(Name = "密碼")]
+
     public string FPhone { get; set; }
-    [Display(Name = "電子信箱")]
+
     public string FEmail { get; set; }
+
     public int? FGender { get; set; }
-    [Display(Name = "生日")]
+
     public DateTime? FBirthday { get; set; }
-    [Display(Name = "建立時間")]
+
     public DateTime? FCreationTime { get; set; }
-    [Display(Name = "自我介紹")]
+
     public string FIntroduction { get; set; }
-   
+
     public int? FPermissionId { get; set; }
-    [Display(Name = "照片")]
+
     public string FPhotoPath { get; set; }
 
     public virtual TMemberPromission FPermission { get; set; }

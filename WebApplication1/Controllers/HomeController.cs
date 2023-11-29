@@ -22,15 +22,15 @@ namespace WebApplication1.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly dbSoundBetterContext _context;
         private readonly IWebHostEnvironment _environment;
-        private readonly UserInfoService _userInfoService;
+        //private readonly UserInfoService _userInfoService;
 
 
-        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment, UserInfoService userInfoService)
+        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment )
         {
             _logger = logger;
             _context = context;
             _environment = environment;
-            _userInfoService = userInfoService;
+            //_userInfoService = userInfoService;
         }
 
         public IActionResult test()
@@ -89,7 +89,7 @@ namespace WebApplication1.Controllers
             //建立用戶身分宣告
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name,member.FUserame),
+                new Claim(ClaimTypes.Name,member.FUsername),
                 new Claim("fMemberID",member.FMemberId.ToString()),
                 new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),     
             };
@@ -100,7 +100,7 @@ namespace WebApplication1.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal);
 
             //確定登入完後提供 歡迎回來 登入者fUserName
-            TempData["AlertLogin"] = $"歡迎回來,{member.FUserame}!";
+            TempData["AlertLogin"] = $"歡迎回來,{member.FUsername}!";
 
             //依據用戶角色重定向倒不同頁面
             if (member.FPermissionId == 1)

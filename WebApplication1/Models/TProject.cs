@@ -29,7 +29,6 @@ public partial class TProject
 
     public string FDescription2 { get; set; }
 
-
     public int? FStyleId { get; set; }
 
     public virtual TMember FMember { get; set; }

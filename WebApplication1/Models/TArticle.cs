@@ -17,6 +17,8 @@ public partial class TArticle
 
     public DateTime? FUpdateTime { get; set; }
 
+    public string FTitle { get; set; }
+
     public virtual TMember FMember { get; set; }
 
     public virtual TStyle FStyle { get; set; }
