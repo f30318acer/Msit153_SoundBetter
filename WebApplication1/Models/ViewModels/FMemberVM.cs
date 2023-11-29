@@ -35,11 +35,7 @@ namespace prjMusicBetter.Models.ViewModels
         [Required(ErrorMessage = "{0}是必填欄位!")]
         [DataType(DataType.Text)]
         public string fPhone { get; set; }
-
-        public int fGender { get; set; }
-
-        public string? fCreationTime { get; set; }
-
+        public string fGender { get; set; }
         [Display(Name = "生日")]
         [Required(ErrorMessage = "{0}是必填欄位!")]
         [DataType(DataType.Date)]
