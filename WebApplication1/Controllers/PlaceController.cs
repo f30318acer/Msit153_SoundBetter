@@ -16,6 +16,16 @@ namespace Music_matchmaking_platform.Controllers
 			var dbSoundBetterContext = _context.TSites
 				.Include(t => t.FCity)
 				.Include(t => t.FMember)
+				.Select(t => new
+				{
+					fSiteId = t.FSiteId,
+					fSiteName = t.FSiteName,
+					fPhone = t.FPhone,
+					fAddress = t.FAddress,
+					fCity = t.FCity.FCity,
+					fSiteType = t.FSiteType,
+					fName = t.FMember.FName
+				})
 				.ToList();
 			return Json(dbSoundBetterContext);
 		}
