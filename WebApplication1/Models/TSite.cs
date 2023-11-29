@@ -27,7 +27,6 @@ public partial class TSite
 
     public virtual TSitePicture FSitePicture { get; set; }
 
-
     public virtual ICollection<TClass> TClasses { get; set; } = new List<TClass>();
 
     public virtual ICollection<TDealSiteLoan> TDealSiteLoans { get; set; } = new List<TDealSiteLoan>();
@@ -52,7 +51,4 @@ public partial class TSite
             return siteTypeMapping.GetValueOrDefault(FSiteType, "未知");
         }
     }
-
-    public virtual ICollection<TSitePicture> TSitePictures { get; set; } = new List<TSitePicture>();
-
 }
