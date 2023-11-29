@@ -38,8 +38,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">文章風格</label>
-                                            <input type="text" id="fStyleID" class="form-control" />
-
+                                            <select id="selectStyle" class="form-select"></select>
                                         </div>
                                     </div>
 
@@ -73,21 +72,18 @@
 @section Scripts{
     <script>
         const url = '/apiTArticle/Create';
-
+        const selStyle = document.querySelector('#selectStyle');
         $('#buttonSend').click(function () {
 
             // 獲取當前的本地時間
             const currentDate = new Date();
-
             const jsonData = JSON.stringify({
                 fMemberId: 1,
-                fTitle: 'a',
-                fContent: 'a',
-                fStyleId: 1
-                
+                fTitle: $('#fTitle'),
+                fContent: $('#fContent'),
+                fStyleId: selStyle.value
             })
-          
-             console.log(jsonData)
+            console.log(jsonData)
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -100,5 +96,13 @@
                 alert("新增失敗");
             });
         });
+        //Style選擇器
+        async function loadStyle() {
+            const response = await fetch('@Url.Content("~/apiTStyle/List")');
+            const data = await response.json();
+            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+            selStyle.innerHTML = style.join("");
+        }
+        loadStyle();
     </script>
 }
