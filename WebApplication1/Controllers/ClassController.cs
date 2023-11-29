@@ -14,17 +14,18 @@ namespace prjMusicBetter.Controllers
             _context = context;
         }
         /*=======課程首頁===============*/
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher);
-            return View(await dbSoundBetterContext.ToListAsync());
+            /*var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher);
+            return View(await dbSoundBetterContext.ToListAsync());*/
+            return View();
         }
 
         /*=======課程內頁===============*/
 
-        public async Task<IActionResult> Viewclass(int? id)
+        public IActionResult Viewclass()
         {
-            if (id == null || _context.TClasses == null)
+			/*if (id == null || _context.TClasses == null)
             {
                 return NotFound();
             }
@@ -56,26 +57,22 @@ namespace prjMusicBetter.Controllers
             var Introduction = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
             ViewBag.teacher = Introduction;//教師自述
 
-            return View(tClass);
-        }
+            return View(tClass);*/
+			return View();
+		}
 
 
 
 
         /*=======新增課程===============*/
 
-        //public IActionResult Createclass()
-        //{
-        //    return View();
-        //}
-
         public IActionResult Create()
         {
-            ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId");
-            //ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");
+            /*ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId");
+            ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");*/
             return View();
         }
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FClassId,FTeacherId,FClassName,FPrice,FDescription,FStartdate,FEnddate,FSiteId,FThumbnailPath")] TClass tClass)
         {
@@ -88,6 +85,6 @@ namespace prjMusicBetter.Controllers
             ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
             return View(tClass);
-        }
+        }*/
     }
 }
