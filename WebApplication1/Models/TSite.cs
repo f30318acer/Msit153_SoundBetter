@@ -20,8 +20,8 @@ public partial class TSite
     public int FCityId { get; set; }
 
     public string FAddress { get; set; }
-
-    public virtual TCity FCity { get; set; }
+	
+	public virtual TCity FCity { get; set; }
 
     public virtual TMember FMember { get; set; }
 
