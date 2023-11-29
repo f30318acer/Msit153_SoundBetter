@@ -26,10 +26,16 @@ namespace Music_matchmaking_platform.Controllers
 					fCity = t.FCity.FCity,
 					fSiteType = t.FSiteType,
 					fName = t.FMember.FName,
-					fPicturePath = t.FSitePicture.FPicturePath
+					fPicturePath = t.FSitePicture.FPicturePath,
+					fSiteTypeText = t.SiteTypeText
 				})
 				.ToList();
 			return Json(dbSoundBetterContext);
+		}
+		public IActionResult GetCities()
+		{
+			var cities = _context.TCities.ToList();
+			return Json(cities);
 		}
 		public IActionResult QueryByCity(int? id)//CityId
 		{
