@@ -41,8 +41,8 @@ namespace prjMusicBetter.Models.Daos
                 FPassword = vm.fPassword,
                 FEmail = vm.fEmail,
                 FPhone = vm.fPhone,
-                FGender = vm.fGender, //看要不要設成bit
-                FPermissionId = 1,
+                FGender =Convert.ToBoolean(vm.fGender),
+                FPermissionId = 2,
                 FCreationTime = DateTime.Now,
                 FBirthday = Convert.ToDateTime(vm.fBirthday)
             };
