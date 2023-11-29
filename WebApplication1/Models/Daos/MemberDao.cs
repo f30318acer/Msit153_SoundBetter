@@ -13,20 +13,40 @@ namespace prjMusicBetter.Models.Daos
             _context = context;
             _environment = environment;
         }
+        public TMember GetMemberByEmail(string email)
+        {
+            var memInDb = _context.TMembers.FirstOrDefault(m=>m.FEmail==email);
+            if (memInDb == null)
+            {
+                return null;
+            }
+            return memInDb;
+        }
+        public TMember GetMemberByPhone(string phone)
+        {
+            var memInDb = _context.TMembers.FirstOrDefault(m=>m.FPhone==phone);
+            if(memInDb == null)
+            {
+                return null;
+            }
+            return memInDb;
+        }
+        //註冊頁面有甚麼就填寫甚麼
         public void Register(FMemberVM vm)
         {
             var mem = new TMember
             {
+                FUsername = vm.fUsername,
                 FName = vm.fName,
                 FPassword = vm.fPassword,
                 FEmail = vm.fEmail,
                 FPhone = vm.fPhone,
-                FGender=vm.fGender, //看要不要設成bit
+                FGender = vm.fGender, //看要不要設成bit
+                FPermissionId = 1,
                 FCreationTime = DateTime.Now,
-                FBirthday = Convert.ToDateTime(vm.fBirthday),
-
+                FBirthday = Convert.ToDateTime(vm.fBirthday)
             };
-            //_context.TMembers.Add(mem);
+            _context.TMembers.Add(mem);
             _context.SaveChanges();
             if(vm.Photo!=null)
             {

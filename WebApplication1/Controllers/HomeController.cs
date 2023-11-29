@@ -11,6 +11,9 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Policy;
 using prjMusicBetter.Models.infra;
+using Microsoft.AspNetCore.Authorization;
+using prjMusicBetter.Models.Daos;
+using prjMusicBetter.Models.Services;
 
 
 
@@ -22,15 +25,17 @@ namespace WebApplication1.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly dbSoundBetterContext _context;
         private readonly IWebHostEnvironment _environment;
-        //private readonly UserInfoService _userInfoService;
+        private readonly UserInfoService _userInfoService;
+        MemberDao dao;
+        MemberService _service;
 
 
-        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment )
+        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment ,UserInfoService userInfoService)
         {
             _logger = logger;
             _context = context;
             _environment = environment;
-            //_userInfoService = userInfoService;
+            _userInfoService = userInfoService;
         }
 
         public IActionResult test()
@@ -120,22 +125,25 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-       [HttpPost]
-       //public IActionResult Register(FMemberVM vm)
-       // {
-       //     if(ModelState.IsValid==false) 
-       //     {
-       //         return View(vm);
-       //     }
-       //     try
-       //     {
-                
-       //     }
+        //[HttpPost]
+        //public IActionResult Register(FMemberVM vm)
+        //{
+        //    if (ModelState.IsValid == false)
+        //    {
+        //        return View(vm);
+        //    }
+        //    try
+        //    {
+              
+        //    }
 
-       // }
-        public IActionResult test1()
+        // }
+
+        //============================================
+        [Authorize]
+        public IActionResult Test()
         {
-            return View();
+            return Content(_userInfoService.GetMemberInfo().FName);
         }
         
         public IActionResult NoLogin()
