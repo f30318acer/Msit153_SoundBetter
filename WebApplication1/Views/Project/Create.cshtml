@@ -13,57 +13,60 @@
                                 <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">建立專案</p>
 
 
-                                <form class="mx-1 mx-md-4">
+                                <form class="mx-1 mx-md-4" id="projectForm" method="post" action="~/apiTProjects/Create">
 
                                     <div class="photo-button mb-3">
                                         <div class="photo-card mb-2 d-flex justify-content-center">
                                             <div class="photo">
                                                 <img src="~/img/playlist/13.jpg" style="border-radius:10px">
-                                                <input type="text" name="Photo" style="display: none;">
+                                                
                                             </div>
                                         </div>
                                         <div class="photo-upload mb-2 d-flex justify-content-center">
-                                            <input type="button" value="上傳照片" class="btn btn-primary">
+                                            <input type="file" name="formFile" class="btn btn-primary" @*style="display: none;"*@>
+                                            @*<input type="button" value="上傳照片" class="btn btn-primary">*@
                                         </div>
                                     </div>
+                                    
+                                    <input type="hidden" id="fMemberId" class="form-control" name="fMemberId" value="1" />                                   
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案名稱</label>
-                                            <input type="text" id="fName" class="form-control" />
+                                            <input type="text" id="fName" class="form-control" name="fName" />
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案風格</label>
-                                            <select id="selectStyle" class="form-select"></select>
+                                            <select id="selectStyle" class="form-select" name="fStyleId"></select>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案預算</label>
-                                            <input type="text" id="fBudget" class="form-control" />
+                                            <input type="number" id="fBudget" class="form-control" name="fBudget" />
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">專案介紹</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription" style="height: 100px"></textarea>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription" style="height: 100px" name="fDescription"></textarea>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">人員需求</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription2" style="height: 100px"></textarea>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription2" style="height: 100px" name="fDescription2"></textarea>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">製作期限</label>
-                                            <input type="datetime-local" class="form-control mb-3" id="fEnddate">
+                                            <input type="datetime-local" class="form-control mb-3" id="fEnddate" name="fEnddate">
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
@@ -93,38 +96,57 @@
 @section Scripts{
     <script>
         const url = '/apiTProjects/Create';
+        const btn = document.querySelector('#buttonSend');
         const selStyle = document.querySelector('#selectStyle');
 
-        $('#buttonSend').click(function () {
-
-            // 獲取當前的本地時間
-            const currentDate = new Date();
-            const fBudgetValue = parseFloat($('#fBudget').val());
-            const jsonData = JSON.stringify({
-                fMemberId: 1,
-                fName: $('#fName').val(),
-                fBudget: fBudgetValue,
-                fStartdate: currentDate,
-                fEnddate: $('#fEnddate').val(),
-                fDescription: $('#fDescription').val(),
-                fProjectStatusId: 1,
-                fDescription2: $('#fDescription2').val(),
-                fSiteId: 1,
-                fStyleId: selStyle.value
+        //===
+        btn.addEventListener('click', event => {
+            event.preventDefault();
+            const formData = new FormData(document.querySelector('#projectForm'));
+            fetch('@Url.Content("~/apiTProjects/Create")', {
+                method: 'POST',
+                body: formData
             })
-            // console.log(jsonData)
-            $.ajax({
-                url: url,
-                type: 'POST',
-                contentType: 'application/json',
-                data: jsonData
-            }).done(function (data) {
-                alert("新增成功，編號為 " + data.fProjectId)
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log("POST request failed: " + textStatus + ", " + errorThrown);
-                alert("新增失敗");
-            });
-        });
+                .then(response => {
+                    if (response.ok) {
+                        alert("新增成功");
+                        location.href = '@Url.Content("~/Project/List")';
+                    }
+                })
+        
+        })
+        //===
+
+        //$('#buttonSend').click(function () {
+
+        //    // 獲取當前的本地時間
+        //    const currentDate = new Date();
+        //    const fBudgetValue = parseFloat($('#fBudget').val());
+        //    const jsonData = JSON.stringify({
+        //        fMemberId: 1,
+        //        fName: $('#fName').val(),
+        //        fBudget: fBudgetValue,
+        //        fStartdate: currentDate,
+        //        fEnddate: $('#fEnddate').val(),
+        //        fDescription: $('#fDescription').val(),
+        //        fProjectStatusId: 1,
+        //        fDescription2: $('#fDescription2').val(),
+        //        fSiteId: 1,
+        //        fStyleId: selStyle.value
+        //    })
+        //    // console.log(jsonData)
+        //    $.ajax({
+        //        url: url,
+        //        type: 'POST',
+        //        contentType: 'application/json',
+        //        data: jsonData
+        //    }).done(function (data) {
+        //        alert("新增成功，編號為 " + data.fProjectId)
+        //    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //        console.log("POST request failed: " + textStatus + ", " + errorThrown);
+        //        alert("新增失敗");
+        //    });
+        //});
 
         //Style選擇器
         async function loadStyle() {
