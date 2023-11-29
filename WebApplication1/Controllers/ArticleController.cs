@@ -8,7 +8,7 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-        public IActionResult Index()
+        public IActionResult Detail()
         {
             return View();
         }
