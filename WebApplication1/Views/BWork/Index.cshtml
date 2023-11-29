@@ -21,7 +21,7 @@
     <p>
         <a asp-action="Create" class="btn">Create New</a>
     </p>
-    <table class="table  table-hover">
+    <table class="table  table-hover" id="bodylist">
         <thead>
             <tr>
                 <th>
@@ -43,7 +43,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody  id="bodylist">
+        <tbody >
             @*@foreach (var item in Model)
             {
                 <tr>
@@ -78,7 +78,7 @@
 @section Scripts{
  <script>
         function load() {
-            const divList = $('#bodylist')
+            const divList = $('#bodylist>tbody')
             $.getJSON('/apiTWork/List', function (datas) {
                 console.log(datas);
                 const docFrag = $(document.createDocumentFragment())
