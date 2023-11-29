@@ -57,7 +57,7 @@ namespace prjMusicBetter.Controllers
         }
         //===新增===
         [HttpPost]
-        public IActionResult Create(TArticle? article)
+        public IActionResult Create([FromBody] TArticle? article)
         {
             if (article != null)
             {
