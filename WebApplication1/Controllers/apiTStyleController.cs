@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using prjMusicBetter.Models;
 using WebApplication1.Models;
 
 namespace prjSoundBetterApi.Controllers
