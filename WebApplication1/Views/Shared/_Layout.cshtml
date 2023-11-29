@@ -37,12 +37,16 @@
 	<h3 style="color:white">Better</h3>
         </a>
         <div class="header-right">
+         
             <div class="user-panel">
-                <a href="#" class="hr-btn">Help</a>
-                <span>|</span>
+            
+                @* <a href="#" class="hr-btn">Help</a> *@
                 @*登入功能*@
-                <a asp-area="" asp-controller="Home" asp-action="login">Login</a>
-                <a asp-area="" asp-controller="Home" asp-action="Register">Create an account</a>
+                <li class="d-flex align-items-center mx-2">
+                    <img src="~/img/header/user.png" class="circle-size-35" width="40px" />
+                    <img src="~/img/icons/login.png" class="width-16px"width="16px" />
+                    <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a>
+                </li>
             </div>
         </div>
         @*搜尋列*@
@@ -86,8 +90,7 @@
 
                         <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-light">課程管理</a>
                     </li>
-                </ul>
-               
+                </ul>        
             </li>
             <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
                 <img src="~/img/header/shopping-cart.png" width="50px" class="shopping-cart-icon"/>
