@@ -65,16 +65,16 @@
             })
         }
         load();
-        $(document).ready(function () {
-            $.getJSON('/Place/GetCities', function (cities) {
-                const citySelect = $('#citySelect');
-                $.each(cities, function (index, city) {
-                    citySelect.append($('<option>', {
-                        value: city.fCityId,
-                        text: city.fCity
-                    }));
-                });
-            });
-        });
+        // function loadCity() {
+        //     $.getJSON('/Place/GetCities', function (cities) {
+        //         const citySelect = $('#citySelect');
+        //         $.each(cities, function (index, city) {
+        //             citySelect.append($('<option>', {
+        //                 value: city.fCityId,
+        //                 text: city.fCity
+        //             }))
+        //         })
+        //     })
+        // }
     </script>
 }
