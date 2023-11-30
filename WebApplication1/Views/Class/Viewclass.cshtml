@@ -127,7 +127,7 @@
     }
 </style>
 <section id="title" class="player-section" style="background-image: url('/img/classimg/class_bg.jpg');">
-    @*<div class="player-box">
+    <div class="player-box">
         <div class="tarck-thumb-warp">
             <div class="tarck-thumb">
                 <img alt="輕鬆學配樂！" src="~/img/classimg/1.jpg">
@@ -139,10 +139,10 @@
                 <h4 style="color:gray;">類型：配樂</h4>
             </div>
         </div>
-    </div>*@
+    </div>
 </section>
 <div id="bodydiv" class="container body-container">
-    @*<div class="row">
+    <div class="row">
         <div class="col-md-6">
             <div class="detail-block">
                 <a asp-area="" asp-controller="Members" asp-action="Profile1">
@@ -160,11 +160,11 @@
             <div class="detail-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
                 <h3 class="detail-title">課程資訊</h3>
                 <h2 class="price">價格</h2>
-                <h2 style="text-align: center">@(Math.Round((decimal)Model.FPrice))/每堂</h2>
+                <h3 style="text-align: center">@(Math.Round((decimal)Model.FPrice))/每堂</h3>
                 <h2 class="price">日期</h2>
-                <h2 style="text-align: center">@Model.FStartdate</h2>
-                <h2 style="text-align: center">~</h2>
-                <h2 style="text-align: center">@Model.FEnddate</h2>
+                <h3 style="text-align: center">@Model.FStartdate</h3>
+                <h3 style="text-align: center">~</h3>
+                <h3 style="text-align: center">@Model.FEnddate</h3>
                 <div>
                     <form asp-controller="Class" asp-action="Createclass" method="get" style="text-align: center; margin: 20px auto;">
                         <button name="createClass" class="btm">購買課程</button>
@@ -182,12 +182,12 @@
                 @Model.FDescription
             </span>
         </div>
-    </section>*@
+    </section>
 </div>
 <div id="order" class="course-container">
     <!-- Similar Songs section -->
     <section class="similar-songs-section">
-        @*<div class="container-fluid">
+        <div class="container-fluid">
             <h3>你可能會想看的其他課程</h3>
             @{
                 if (@Model.FClassId < (ViewBag.AllClass - 2))
@@ -196,7 +196,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 1)">
                                 <div class="playlist-item">
-                                    <img src="/img/classimg/2.jpg" alt="">
+                                    <img src="/img/classimg/@(ViewBag.PrePath).jpg" alt="">
                                     <h5>@ViewBag.PrClass</h5>
                                 </div>
                             </a>
@@ -204,7 +204,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 2)">
                                 <div class="playlist-item">
-                                    <img src="~/img/classimg/3.jpg" alt="">
+                                    <img src="~/img/classimg/@(ViewBag.SenPath).jpg" alt="">
                                     <h5>@ViewBag.SenClass</h5>
                                 </div>
                             </a>
@@ -217,7 +217,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 1)">
                                 <div class="playlist-item">
-                                    <img src="/img/classimg/2.jpg" alt="">
+                                    <img src="/img/classimg/@(ViewBag.PrePath).jpg" alt="">
                                     <h5>@ViewBag.PrClass</h5>
                                 </div>
                             </a>
@@ -225,7 +225,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 2)">
                                 <div class="playlist-item">
-                                    <img src="~/img/classimg/3.jpg" alt="">
+                                    <img src="~/img/classimg/@(ViewBag.SenPath).jpg" alt="">
                                     <h5>@ViewBag.SenClass</h5>
                                 </div>
                             </a>
@@ -233,19 +233,19 @@
                     </div>
                 }
             }
-        </div>*@
+        </div>
     </section>
     <!-- Similar Songs section end -->
 </div>
 @section Scripts {
-    <script>
+    @*<script>
         const selStyle = document.querySelector('#selectStyle');
 
         function load() {
             const divList = $('#title')
             const Id = @ViewBag.Id
             //讀取Json資料
-            $.getJSON(`/apiTClass/QueryById?id=${Id}`, function (datas) {
+                $.getJSON(`/apiTClass/QueryById?id=${datas['fClassID']}`, function (datas) {
                 console.log(datas);
 
                 //做出一個空的容器來存放div
@@ -275,7 +275,7 @@
 
             const bodydiv = $('#bodydiv')
             //讀取Json資料
-            $.getJSON(`/apiTClass/QueryById?id=${Id}`, function (datas) {
+            $.getJSON(`/apiTClass/QueryById?id=${datas['fClassID']}`, function (datas) {
                 console.log(datas);
 
                 //做出一個空的容器來存放div
@@ -335,7 +335,7 @@
 
             const divorder = $('#order')
             //讀取Json資料
-            $.getJSON(`/apiTClass/QueryById?id=${Id}`, function (datas) {
+            $.getJSON(`/apiTClass/QueryById?id=${datas['fClassID']}`, function (datas) {
                 console.log(datas);
 
                 //做出一個空的容器來存放div
@@ -408,7 +408,7 @@
             selStyle.innerHTML = style.join("");//加入到指定的位置
         }
         loadStyle();//啟動
-    </script>
+    </script>*@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

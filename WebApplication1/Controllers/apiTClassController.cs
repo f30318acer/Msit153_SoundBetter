@@ -65,7 +65,7 @@ namespace prjMusicBetter.Controllers
 				return NotFound();
             }
 
-            var SiteId = _context.TSites.Where(t => t.FSiteId == tProject.FSiteId).Select(t => t.FSiteName).SingleOrDefault();
+            /*var SiteId = _context.TSites.Where(t => t.FSiteId == tProject.FSiteId).Select(t => t.FSiteName).SingleOrDefault();
             ViewBag.FSiteId = SiteId;//地點名稱
 
             var TName = _context.TMembers.Where(t => t.FMemberId == tProject.FTeacherId).Select(t => t.FName).SingleOrDefault();
@@ -94,7 +94,7 @@ namespace prjMusicBetter.Controllers
             ViewBag.AllClass = _context.TClasses.Count();//有多少課程
 
 
-            ViewBag.Id = id;//id
+            ViewBag.Id = id;//id*/
             return Json(tProject);
 		}
 		//===新增===

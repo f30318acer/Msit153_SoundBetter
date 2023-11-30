@@ -15,6 +15,12 @@ public partial class TArticle
 
     public int FStyleId { get; set; }
 
+    public DateTime? FUpdateTime { get; set; }
+
+    public string FTitle { get; set; }
+
+    public string FPhotoPath { get; set; }
+
     public virtual TMember FMember { get; set; }
 
     public virtual TStyle FStyle { get; set; }

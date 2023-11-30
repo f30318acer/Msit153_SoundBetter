@@ -81,7 +81,7 @@ public partial class dbSoundBetterContext : DbContext
 
 //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;Persist Security Info=True;User ID=bbb;Password=123");
+//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;User ID=bbb;Password=123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -139,7 +139,16 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
             entity.Property(e => e.FContent).HasColumnName("fContent");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FPhotoPath)
+                .HasMaxLength(250)
+                .HasColumnName("fPhotoPath");
             entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
+            entity.Property(e => e.FTitle)
+                .HasMaxLength(50)
+                .HasColumnName("fTitle");
+            entity.Property(e => e.FUpdateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fUpdateTime");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TArticles)
                 .HasForeignKey(d => d.FMemberId)
@@ -195,12 +204,12 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FClassName)
                 .HasMaxLength(50)
                 .HasColumnName("fClassName");
-            entity.Property(e => e.FDescription)
-                .HasMaxLength(50)
-                .HasColumnName("fDescription");
+            entity.Property(e => e.FCurrentStudent).HasColumnName("fCurrentStudent");
+            entity.Property(e => e.FDescription).HasColumnName("fDescription");
             entity.Property(e => e.FEnddate)
                 .HasColumnType("datetime")
                 .HasColumnName("fEnddate");
+            entity.Property(e => e.FMaxStudent).HasColumnName("fMaxStudent");
             entity.Property(e => e.FPrice)
                 .HasColumnType("money")
                 .HasColumnName("fPrice");
@@ -361,9 +370,7 @@ public partial class dbSoundBetterContext : DbContext
             entity.ToTable("tEvaluate");
 
             entity.Property(e => e.FEvaluateId).HasColumnName("fEvaluateID");
-            entity.Property(e => e.FContent)
-                .HasMaxLength(50)
-                .HasColumnName("fContent");
+            entity.Property(e => e.FContent).HasColumnName("fContent");
             entity.Property(e => e.FEvaluateStatusId).HasColumnName("fEvaluateStatusID");
             entity.Property(e => e.FEvaluateTime)
                 .HasColumnType("datetime")
@@ -418,9 +425,7 @@ public partial class dbSoundBetterContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("fEmail");
             entity.Property(e => e.FGender).HasColumnName("fGender");
-            entity.Property(e => e.FIntroduction)
-                .HasMaxLength(50)
-                .HasColumnName("fIntroduction");
+            entity.Property(e => e.FIntroduction).HasColumnName("fIntroduction");
             entity.Property(e => e.FName)
                 .HasMaxLength(50)
                 .HasColumnName("fName");
@@ -434,9 +439,9 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FPhotoPath)
                 .HasMaxLength(250)
                 .HasColumnName("fPhotoPath");
-            entity.Property(e => e.FUserame)
+            entity.Property(e => e.FUsername)
                 .HasMaxLength(50)
-                .HasColumnName("fUserame");
+                .HasColumnName("fUsername");
 
             entity.HasOne(d => d.FPermission).WithMany(p => p.TMembers)
                 .HasForeignKey(d => d.FPermissionId)
@@ -584,6 +589,7 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FStartdate)
                 .HasColumnType("datetime")
                 .HasColumnName("fStartdate");
+            entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
             entity.Property(e => e.FThumbnailPath)
                 .HasMaxLength(50)
                 .HasColumnName("fThumbnailPath");

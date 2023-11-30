@@ -23,9 +23,9 @@ namespace prjMusicBetter.Controllers
 
         /*=======課程內頁===============*/
 
-        public IActionResult Viewclass()
+        public async Task<IActionResult> Viewclass(int? id)
         {
-			/*if (id == null || _context.TClasses == null)
+            if (id == null || _context.TClasses == null)
             {
                 return NotFound();
             }
@@ -42,23 +42,30 @@ namespace prjMusicBetter.Controllers
             {
                 var Preclass = _context.TClasses.Where(t => t.FClassId == (id + 1)).Select(t => t.FClassName).SingleOrDefault();
                 ViewBag.PrClass = Preclass;//下一個課程名稱
+                var PrePath = _context.TClasses.Where(t => t.FClassId == (id + 1)).Select(t => t.FThumbnailPath).SingleOrDefault();
+                ViewBag.PrePath = PrePath;//下一個課程圖片位址
                 var Senclass = _context.TClasses.Where(t => t.FClassId == (id + 2)).Select(t => t.FClassName).SingleOrDefault();
                 ViewBag.SenClass = Senclass;//下下一個課程名稱
+                var SenPath = _context.TClasses.Where(t => t.FClassId == (id + 2)).Select(t => t.FThumbnailPath).SingleOrDefault();
+                ViewBag.SenPath = SenPath;//下下一個課程圖片位址
             }
             else
             {
                 var Preclass = _context.TClasses.Where(t => t.FClassId == (id - 1)).Select(t => t.FClassName).SingleOrDefault();
                 ViewBag.PrClass = Preclass;//上一個課程名稱
+                var PrePath = _context.TClasses.Where(t => t.FClassId == (id - 1)).Select(t => t.FThumbnailPath).SingleOrDefault();
+                ViewBag.PrePath = PrePath;//上一個課程圖片位址
                 var Senclass = _context.TClasses.Where(t => t.FClassId == (id - 2)).Select(t => t.FClassName).SingleOrDefault();
                 ViewBag.SenClass = Senclass;//上上一個課程名稱
+                var SenPath = _context.TClasses.Where(t => t.FClassId == (id - 2)).Select(t => t.FThumbnailPath).SingleOrDefault();
+                ViewBag.SenPath = SenPath;//上一個課程圖片位址
             }
             ViewBag.AllClass = _context.TClasses.Count();//有多少課程
 
             var Introduction = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
             ViewBag.teacher = Introduction;//教師自述
 
-            return View(tClass);*/
-			return View();
+            return View(tClass);
 		}
 
 

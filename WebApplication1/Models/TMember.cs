@@ -9,7 +9,7 @@ public partial class TMember
 {
     public int FMemberId { get; set; }
 
-    public string FUserame { get; set; }
+    public string FUsername { get; set; }
 
     public string FName { get; set; }
 
@@ -19,7 +19,7 @@ public partial class TMember
 
     public string FEmail { get; set; }
 
-    public int? FGender { get; set; }
+    public bool? FGender { get; set; }
 
     public DateTime? FBirthday { get; set; }
 
