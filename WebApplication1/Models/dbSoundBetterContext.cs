@@ -23,11 +23,15 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TArticle> TArticles { get; set; }
 
+    public virtual DbSet<TArticleFav> TArticleFavs { get; set; }
+
     public virtual DbSet<TArticlePicture> TArticlePictures { get; set; }
 
     public virtual DbSet<TCity> TCities { get; set; }
 
     public virtual DbSet<TClass> TClasses { get; set; }
+
+    public virtual DbSet<TClassFav> TClassFavs { get; set; }
 
     public virtual DbSet<TCoupon> TCoupons { get; set; }
 
@@ -55,7 +59,11 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TMemberSkill> TMemberSkills { get; set; }
 
+    public virtual DbSet<TNotification> TNotifications { get; set; }
+
     public virtual DbSet<TProject> TProjects { get; set; }
+
+    public virtual DbSet<TProjectFav> TProjectFavs { get; set; }
 
     public virtual DbSet<TProjectSkillRequire> TProjectSkillRequires { get; set; }
 
@@ -76,6 +84,8 @@ public partial class dbSoundBetterContext : DbContext
     public virtual DbSet<TStyle> TStyles { get; set; }
 
     public virtual DbSet<TWork> TWorks { get; set; }
+
+    public virtual DbSet<TWorkFav> TWorkFavs { get; set; }
 
     public virtual DbSet<TWorkType> TWorkTypes { get; set; }
 
@@ -161,6 +171,25 @@ public partial class dbSoundBetterContext : DbContext
                 .HasConstraintName("FK_tArticle_tStyle");
         });
 
+        modelBuilder.Entity<TArticleFav>(entity =>
+        {
+            entity.HasKey(e => e.FArticleFavId);
+
+            entity.ToTable("tArticleFav");
+
+            entity.Property(e => e.FArticleFavId).HasColumnName("fArticleFavID");
+            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.HasOne(d => d.FArticle).WithMany(p => p.TArticleFavs)
+                .HasForeignKey(d => d.FArticleId)
+                .HasConstraintName("FK_tArticleFav_tArticle");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TArticleFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tArticleFav_tMember");
+        });
+
         modelBuilder.Entity<TArticlePicture>(entity =>
         {
             entity.HasKey(e => e.FArticlePictureId);
@@ -229,6 +258,25 @@ public partial class dbSoundBetterContext : DbContext
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TClasses)
                 .HasForeignKey(d => d.FTeacherId)
                 .HasConstraintName("FK_tClass_tMember");
+        });
+
+        modelBuilder.Entity<TClassFav>(entity =>
+        {
+            entity.HasKey(e => e.FClassFav);
+
+            entity.ToTable("tClassFav");
+
+            entity.Property(e => e.FClassFav).HasColumnName("fClassFav");
+            entity.Property(e => e.FClassId).HasColumnName("fClassID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.HasOne(d => d.FClass).WithMany(p => p.TClassFavs)
+                .HasForeignKey(d => d.FClassId)
+                .HasConstraintName("FK_tClassFav_tClass");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TClassFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tClassFav_tMember");
         });
 
         modelBuilder.Entity<TCoupon>(entity =>
@@ -565,13 +613,30 @@ public partial class dbSoundBetterContext : DbContext
                 .HasConstraintName("FK_tMemberSkill_tSkill");
         });
 
+        modelBuilder.Entity<TNotification>(entity =>
+        {
+            entity.HasKey(e => e.FNotificationId);
+
+            entity.ToTable("tNotification");
+
+            entity.Property(e => e.FNotificationId).HasColumnName("fNotificationID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FNotification).HasColumnName("fNotification");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TNotifications)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tNotification_tMember");
+        });
+
         modelBuilder.Entity<TProject>(entity =>
         {
             entity.HasKey(e => e.FProjectId);
 
             entity.ToTable("tProject");
 
-            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+            entity.Property(e => e.FProjectId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("fProjectID");
             entity.Property(e => e.FBudget)
                 .HasColumnType("money")
                 .HasColumnName("fBudget");
@@ -586,6 +651,7 @@ public partial class dbSoundBetterContext : DbContext
                 .HasColumnName("fName");
             entity.Property(e => e.FProjectStatusId).HasColumnName("fProjectStatusID");
             entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FSkillId).HasColumnName("fSkillID");
             entity.Property(e => e.FStartdate)
                 .HasColumnType("datetime")
                 .HasColumnName("fStartdate");
@@ -598,6 +664,11 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tProject_tMember");
+
+            entity.HasOne(d => d.FProject).WithOne(p => p.TProject)
+                .HasForeignKey<TProject>(d => d.FProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProject_tSkill");
 
             entity.HasOne(d => d.FProjectStatus).WithMany(p => p.TProjects)
                 .HasForeignKey(d => d.FProjectStatusId)
@@ -613,6 +684,25 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FSiteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tProject_tStyle");
+        });
+
+        modelBuilder.Entity<TProjectFav>(entity =>
+        {
+            entity.HasKey(e => e.FProjectFav).HasName("PK_fProjectFav");
+
+            entity.ToTable("tProjectFav");
+
+            entity.Property(e => e.FProjectFav).HasColumnName("fProjectFav");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TProjectFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tProjectFav_tMember");
+
+            entity.HasOne(d => d.FProject).WithMany(p => p.TProjectFavs)
+                .HasForeignKey(d => d.FProjectId)
+                .HasConstraintName("FK_tProjectFav_tProject");
         });
 
         modelBuilder.Entity<TProjectSkillRequire>(entity =>
@@ -665,6 +755,9 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FPhone)
                 .HasMaxLength(50)
                 .HasColumnName("fPhone");
+            entity.Property(e => e.FPicture)
+                .HasMaxLength(50)
+                .HasColumnName("fPicture");
             entity.Property(e => e.FSiteName)
                 .HasMaxLength(50)
                 .HasColumnName("fSiteName");
@@ -968,6 +1061,25 @@ public partial class dbSoundBetterContext : DbContext
             entity.HasOne(d => d.FWorkType).WithMany(p => p.TWorks)
                 .HasForeignKey(d => d.FWorkTypeId)
                 .HasConstraintName("FK_tWork_tWorkType");
+        });
+
+        modelBuilder.Entity<TWorkFav>(entity =>
+        {
+            entity.HasKey(e => e.FWorkFav);
+
+            entity.ToTable("tWorkFav");
+
+            entity.Property(e => e.FWorkFav).HasColumnName("fWorkFav");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TWorkFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tWorkFav_tMember");
+
+            entity.HasOne(d => d.FWork).WithMany(p => p.TWorkFavs)
+                .HasForeignKey(d => d.FWorkId)
+                .HasConstraintName("FK_tWorkFav_tWork");
         });
 
         modelBuilder.Entity<TWorkType>(entity =>

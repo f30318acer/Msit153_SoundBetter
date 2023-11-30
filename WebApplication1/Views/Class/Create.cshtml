@@ -10,10 +10,10 @@
             <div class="section-title mb-0">
                 <h2>新建課程</h2>
             </div>
-            <form class="contact-from col-lg-8">
+            <form id="classForm" method="post" class="contact-from col-lg-8">
                 <div class="row">
-                    <input type="hidden" id="fClassID" name="fClassID" />
-                    <input type="hidden" id="fTeacherID" name="fTeacherID" />
+                    @*<input type="hidden" id="fClassID" name="fClassID" />*@
+                    <input type="hidden" id="fTeacherID" name="fTeacherID" value="1" />
                     <div class="col-md-6">
                         <label for="fClassName">課程名稱:</label>
                         <input type="text" id="fClassName" name="fClassName" required />
@@ -28,24 +28,24 @@
                     </div>
                     <div class="col-md-6">
                         <label for="fStartdate">開始日期:</label>
-                        <input type="text" id="fStartdate" name="fStartdate" required />
+                        <input type="datetime-local" id="fStartdate" name="fStartdate" required />
                     </div>
                     <div class="col-md-6">
                         <label for="fEnddate">結束日期:</label>
-                        <input type="text" id="fEnddate" name="fEnddate" required />
+                        <input type="datetime-local" id="fEnddate" name="fEnddate" required />
                     </div>
                     <div class="col-md-12">
                         <label for="fSiteID">上課地點:</label>
                         <input type="text" id="fSiteID" name="fSiteID" required />
-                        <label for="fThumbnailPath">圖片:</label>
-                        <input type="file" id="fThumbnailPath" name="fThumbnailPath" accept="image/*" />
+                        <label for="formFile">圖片:</label>
+                        <input type="file" id="formFile" name="formFile" accept="image/*" />
                         <label for="fMaxStudent">課程人數:</label>
                         <input type="text" id="fMaxStudent" name="fMaxStudent" required />
-                        <button type="submit" class="btm">確定建立</button>
+                        <button id ="buttonSubmit" type="submit" class="btm">確定建立</button>
                     </div>
                 </div>
                 @*<div class="row">
-                <form asp-action="Create" id="classForm">
+                <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group col-md-2">
                 <label asp-for="FTeacherId" class="control-label"></label>
@@ -126,7 +126,8 @@
             })
         })*/
 
-        const btn = document.querySelector('#buttonSend');
+        const btn = document.querySelector('#buttonSubmit');
+
         btn.addEventListener('click', event => {
 
             event.preventDefault();//不讓submit運作

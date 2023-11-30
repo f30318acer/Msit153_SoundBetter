@@ -103,17 +103,15 @@ namespace prjMusicBetter.Controllers
 		{
 			if (project != null)
 			{
-				string strPath = Path.Combine(_host.WebRootPath, "img/classimg", formFile.FileName);
-				//                           (      根目錄      ,  指定的資料夾  ,     檔案名稱     )
-				//將檔案上傳到我指定的路徑
-				using (var fileStream = new FileStream(strPath, FileMode.Create))//(路徑,要做什麼)
-				{
-					formFile.CopyTo(fileStream);
-				}
+                if (formFile != null)
+                {
+                    string photoName = Guid.NewGuid().ToString() + ".jpg";
+                    project.FThumbnailPath = photoName;
+                    formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
+                }
 
-				project.FThumbnailPath = formFile.FileName;
-
-				_context.Add(project);
+                
+                _context.Add(project);
 				_context.SaveChanges();
 				return Content("新增成功");
 			}
