@@ -8,1087 +8,1097 @@ namespace prjMusicBetter.Models;
 
 public partial class dbSoundBetterContext : DbContext
 {
-	public dbSoundBetterContext()
-	{
-	}
+    public dbSoundBetterContext()
+    {
+    }
 
-	public dbSoundBetterContext(DbContextOptions<dbSoundBetterContext> options)
-		: base(options)
-	{
-	}
+    public dbSoundBetterContext(DbContextOptions<dbSoundBetterContext> options)
+        : base(options)
+    {
+    }
 
-	public virtual DbSet<TApplicationRecord> TApplicationRecords { get; set; }
+    public virtual DbSet<TApplicationRecord> TApplicationRecords { get; set; }
 
-	public virtual DbSet<TApplicationStatus> TApplicationStatuses { get; set; }
+    public virtual DbSet<TApplicationStatus> TApplicationStatuses { get; set; }
 
-	public virtual DbSet<TArticle> TArticles { get; set; }
+    public virtual DbSet<TArticle> TArticles { get; set; }
 
-	public virtual DbSet<TArticleFav> TArticleFavs { get; set; }
+    public virtual DbSet<TArticleFav> TArticleFavs { get; set; }
 
-	public virtual DbSet<TArticlePicture> TArticlePictures { get; set; }
+    public virtual DbSet<TArticlePicture> TArticlePictures { get; set; }
 
-	public virtual DbSet<TCity> TCities { get; set; }
+    public virtual DbSet<TCity> TCities { get; set; }
 
-	public virtual DbSet<TClass> TClasses { get; set; }
+    public virtual DbSet<TClass> TClasses { get; set; }
 
-	public virtual DbSet<TClassFav> TClassFavs { get; set; }
+    public virtual DbSet<TClassFav> TClassFavs { get; set; }
 
-	public virtual DbSet<TCoupon> TCoupons { get; set; }
+    public virtual DbSet<TCoupon> TCoupons { get; set; }
 
-	public virtual DbSet<TDealClass> TDealClasses { get; set; }
+    public virtual DbSet<TDealClass> TDealClasses { get; set; }
 
-	public virtual DbSet<TDealProject> TDealProjects { get; set; }
+    public virtual DbSet<TDealProject> TDealProjects { get; set; }
 
-	public virtual DbSet<TDealSiteLoan> TDealSiteLoans { get; set; }
+    public virtual DbSet<TDealSiteLoan> TDealSiteLoans { get; set; }
 
-	public virtual DbSet<TEvaluate> TEvaluates { get; set; }
+    public virtual DbSet<TEvaluate> TEvaluates { get; set; }
 
-	public virtual DbSet<TEvaluateStatus> TEvaluateStatuses { get; set; }
+    public virtual DbSet<TEvaluateStatus> TEvaluateStatuses { get; set; }
 
-	public virtual DbSet<TMember> TMembers { get; set; }
+    public virtual DbSet<TMember> TMembers { get; set; }
 
-	public virtual DbSet<TMemberCoupon> TMemberCoupons { get; set; }
+    public virtual DbSet<TMemberCoupon> TMemberCoupons { get; set; }
 
-	public virtual DbSet<TMemberPromission> TMemberPromissions { get; set; }
+    public virtual DbSet<TMemberPromission> TMemberPromissions { get; set; }
 
-	public virtual DbSet<TMemberRelation> TMemberRelations { get; set; }
+    public virtual DbSet<TMemberRelation> TMemberRelations { get; set; }
 
-	public virtual DbSet<TMemberRelationStatus> TMemberRelationStatuses { get; set; }
+    public virtual DbSet<TMemberRelationStatus> TMemberRelationStatuses { get; set; }
 
-	public virtual DbSet<TMemberSite> TMemberSites { get; set; }
+    public virtual DbSet<TMemberSite> TMemberSites { get; set; }
 
-	public virtual DbSet<TMemberSkill> TMemberSkills { get; set; }
+    public virtual DbSet<TMemberSkill> TMemberSkills { get; set; }
 
-	public virtual DbSet<TNotification> TNotifications { get; set; }
+    public virtual DbSet<TNotification> TNotifications { get; set; }
 
-	public virtual DbSet<TProject> TProjects { get; set; }
+    public virtual DbSet<TProject> TProjects { get; set; }
 
-	public virtual DbSet<TProjectFav> TProjectFavs { get; set; }
+    public virtual DbSet<TProjectFav> TProjectFavs { get; set; }
 
-	public virtual DbSet<TProjectSkillRequire> TProjectSkillRequires { get; set; }
+    public virtual DbSet<TProjectSkillRequire> TProjectSkillRequires { get; set; }
 
-	public virtual DbSet<TProjectStatus> TProjectStatuses { get; set; }
+    public virtual DbSet<TProjectStatus> TProjectStatuses { get; set; }
 
-	public virtual DbSet<TSite> TSites { get; set; }
+    public virtual DbSet<TSite> TSites { get; set; }
 
-	public virtual DbSet<TSitePeriod> TSitePeriods { get; set; }
+    public virtual DbSet<TSitePeriod> TSitePeriods { get; set; }
 
-	public virtual DbSet<TSitePeriodStatus> TSitePeriodStatuses { get; set; }
+    public virtual DbSet<TSitePeriodStatus> TSitePeriodStatuses { get; set; }
 
-	public virtual DbSet<TSitePicture> TSitePictures { get; set; }
+    public virtual DbSet<TSitePicture> TSitePictures { get; set; }
 
-	public virtual DbSet<TSkill> TSkills { get; set; }
+    public virtual DbSet<TSkill> TSkills { get; set; }
 
-	public virtual DbSet<TSkillCategory> TSkillCategories { get; set; }
+    public virtual DbSet<TSkillCategory> TSkillCategories { get; set; }
 
-	public virtual DbSet<TStyle> TStyles { get; set; }
+    public virtual DbSet<TStyle> TStyles { get; set; }
 
-	public virtual DbSet<TWork> TWorks { get; set; }
+    public virtual DbSet<TWork> TWorks { get; set; }
 
-	public virtual DbSet<TWorkFav> TWorkFavs { get; set; }
+    public virtual DbSet<TWorkFav> TWorkFavs { get; set; }
 
-	public virtual DbSet<TWorkType> TWorkTypes { get; set; }
+    public virtual DbSet<TWorkType> TWorkTypes { get; set; }
 
-	//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-	//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;User ID=bbb;Password=123");
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;Persist Security Info=True;User ID=bbb;Password=123");
 
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
-	{
-		modelBuilder.Entity<TApplicationRecord>(entity =>
-		{
-			entity.HasKey(e => e.FApplicationRecordId);
 
-			entity.ToTable("tApplicationRecord");
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TApplicationRecord>(entity =>
+        {
+            entity.HasKey(e => e.FApplicationRecordId);
 
-			entity.Property(e => e.FApplicationRecordId).HasColumnName("fApplicationRecordID");
-			entity.Property(e => e.FApplicationStatusId).HasColumnName("fApplicationStatusID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
-			entity.Property(e => e.FSelfIntroduction)
-				.HasMaxLength(50)
-				.HasColumnName("fSelf_Introduction");
+            entity.ToTable("tApplicationRecord");
 
-			entity.HasOne(d => d.FApplicationStatus).WithMany(p => p.TApplicationRecords)
-				.HasForeignKey(d => d.FApplicationStatusId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tApplicationRecord_tApplicationStatus");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TApplicationRecords)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tApplicationRecord_tMember");
-
-			entity.HasOne(d => d.FProject).WithMany(p => p.TApplicationRecords)
-				.HasForeignKey(d => d.FProjectId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tApplicationRecord_tProject");
-		});
-
-		modelBuilder.Entity<TApplicationStatus>(entity =>
-		{
-			entity.HasKey(e => e.FApplicationStatus);
-
-			entity.ToTable("tApplicationStatus");
-
-			entity.Property(e => e.FApplicationStatus)
-				.ValueGeneratedNever()
-				.HasColumnName("fApplicationStatus");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(10)
-				.IsFixedLength()
-				.HasColumnName("fDescription");
-		});
-
-		modelBuilder.Entity<TArticle>(entity =>
-		{
-			entity.HasKey(e => e.FArticleId);
-
-			entity.ToTable("tArticle");
-
-			entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
-			entity.Property(e => e.FContent).HasColumnName("fContent");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
-			entity.Property(e => e.FTitle)
-				.HasMaxLength(50)
-				.HasColumnName("fTitle");
-			entity.Property(e => e.FUpdateTime)
-				.HasColumnType("datetime")
-				.HasColumnName("fUpdateTime");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TArticles)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tArticle_tMember");
-
-			entity.HasOne(d => d.FStyle).WithMany(p => p.TArticles)
-				.HasForeignKey(d => d.FStyleId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tArticle_tStyle");
-		});
-
-		modelBuilder.Entity<TArticleFav>(entity =>
-		{
-			entity.HasKey(e => e.FArticleFavId);
-
-			entity.ToTable("tArticleFav");
-
-			entity.Property(e => e.FArticleFavId).HasColumnName("fArticleFavID");
-			entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-
-			entity.HasOne(d => d.FArticle).WithMany(p => p.TArticleFavs)
-				.HasForeignKey(d => d.FArticleId)
-				.HasConstraintName("FK_tArticleFav_tArticle");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TArticleFavs)
-				.HasForeignKey(d => d.FMemberId)
-				.HasConstraintName("FK_tArticleFav_tMember");
-		});
-
-		modelBuilder.Entity<TArticlePicture>(entity =>
-		{
-			entity.HasKey(e => e.FArticlePictureId);
-
-			entity.ToTable("tArticlePicture");
-
-			entity.Property(e => e.FArticlePictureId).HasColumnName("fArticlePictureID");
-			entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
-			entity.Property(e => e.FPicturePath)
-				.HasMaxLength(50)
-				.HasColumnName("fPicturePath");
-
-			entity.HasOne(d => d.FArticle).WithMany(p => p.TArticlePictures)
-				.HasForeignKey(d => d.FArticleId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tArticlePicture_tArticle");
-		});
-
-		modelBuilder.Entity<TCity>(entity =>
-		{
-			entity.HasKey(e => e.FCityId);
-
-			entity.ToTable("tCity");
-
-			entity.Property(e => e.FCityId)
-				.ValueGeneratedNever()
-				.HasColumnName("fCityID");
-			entity.Property(e => e.FCity)
-				.HasMaxLength(10)
-				.IsFixedLength()
-				.HasColumnName("fCity");
-		});
-
-		modelBuilder.Entity<TClass>(entity =>
-		{
-			entity.HasKey(e => e.FClassId);
-
-			entity.ToTable("tClass");
-
-			entity.Property(e => e.FClassId).HasColumnName("fClassID");
-			entity.Property(e => e.FClassName)
-				.HasMaxLength(50)
-				.HasColumnName("fClassName");
-			entity.Property(e => e.FCurrentStudent).HasColumnName("fCurrentStudent");
-			entity.Property(e => e.FDescription).HasColumnName("fDescription");
-			entity.Property(e => e.FEnddate)
-				.HasColumnType("datetime")
-				.HasColumnName("fEnddate");
-			entity.Property(e => e.FMaxStudent).HasColumnName("fMaxStudent");
-			entity.Property(e => e.FPrice)
-				.HasColumnType("money")
-				.HasColumnName("fPrice");
-			entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-			entity.Property(e => e.FStartdate)
-				.HasColumnType("datetime")
-				.HasColumnName("fStartdate");
-			entity.Property(e => e.FTeacherId).HasColumnName("fTeacherID");
-			entity.Property(e => e.FThumbnailPath)
-				.HasMaxLength(50)
-				.HasColumnName("fThumbnailPath");
-
-			entity.HasOne(d => d.FSite).WithMany(p => p.TClasses)
-				.HasForeignKey(d => d.FSiteId)
-				.HasConstraintName("FK_tClass_tSite");
-
-			entity.HasOne(d => d.FTeacher).WithMany(p => p.TClasses)
-				.HasForeignKey(d => d.FTeacherId)
-				.HasConstraintName("FK_tClass_tMember");
-		});
-
-		modelBuilder.Entity<TClassFav>(entity =>
-		{
-			entity.HasKey(e => e.FClassFav);
-
-			entity.ToTable("tClassFav");
-
-			entity.Property(e => e.FClassFav).HasColumnName("fClassFav");
-			entity.Property(e => e.FClassId).HasColumnName("fClassID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-
-			entity.HasOne(d => d.FClass).WithMany(p => p.TClassFavs)
-				.HasForeignKey(d => d.FClassId)
-				.HasConstraintName("FK_tClassFav_tClass");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TClassFavs)
-				.HasForeignKey(d => d.FMemberId)
-				.HasConstraintName("FK_tClassFav_tMember");
-		});
-
-		modelBuilder.Entity<TCoupon>(entity =>
-		{
-			entity.HasKey(e => e.FCouponId);
-
-			entity.ToTable("tCoupon");
-
-			entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
-			entity.Property(e => e.FCouponCode)
-				.HasMaxLength(50)
-				.HasColumnName("fCouponCode");
-			entity.Property(e => e.FCouponContent)
-				.HasMaxLength(50)
-				.HasColumnName("fCouponContent");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-			entity.Property(e => e.FEnddate)
-				.HasColumnType("datetime")
-				.HasColumnName("fEnddate");
-			entity.Property(e => e.FPicture)
-				.HasMaxLength(50)
-				.HasColumnName("fPicture");
-			entity.Property(e => e.FStartdate)
-				.HasColumnType("datetime")
-				.HasColumnName("fStartdate");
-		});
-
-		modelBuilder.Entity<TDealClass>(entity =>
-		{
-			entity.HasKey(e => e.FDealClassId);
-
-			entity.ToTable("tDealClass");
-
-			entity.Property(e => e.FDealClassId).HasColumnName("fDealClassID");
-			entity.Property(e => e.FClassId).HasColumnName("fClassID");
-			entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
-			entity.Property(e => e.FEnddate)
-				.HasColumnType("datetime")
-				.HasColumnName("fEnddate");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FPrice)
-				.HasColumnType("money")
-				.HasColumnName("fPrice");
-			entity.Property(e => e.FStartdate)
-				.HasColumnType("datetime")
-				.HasColumnName("fStartdate");
-
-			entity.HasOne(d => d.FClass).WithMany(p => p.TDealClasses)
-				.HasForeignKey(d => d.FClassId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tDealClass_tClass");
-
-			entity.HasOne(d => d.FCoupon).WithMany(p => p.TDealClasses)
-				.HasForeignKey(d => d.FCouponId)
-				.HasConstraintName("FK_tDealClass_tCoupon");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TDealClasses)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tDealClass_tMember");
-		});
-
-		modelBuilder.Entity<TDealProject>(entity =>
-		{
-			entity.HasKey(e => e.FDealProject);
-
-			entity.ToTable("tDealProject");
-
-			entity.Property(e => e.FDealProject).HasColumnName("fDealProject");
-			entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
-			entity.Property(e => e.FEnddate)
-				.HasColumnType("datetime")
-				.HasColumnName("fEnddate");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FPrice)
-				.HasColumnType("money")
-				.HasColumnName("fPrice");
-			entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
-			entity.Property(e => e.FStartdate)
-				.HasColumnType("datetime")
-				.HasColumnName("fStartdate");
-
-			entity.HasOne(d => d.FCoupon).WithMany(p => p.TDealProjects)
-				.HasForeignKey(d => d.FCouponId)
-				.HasConstraintName("FK_tDealProject_tCoupon");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TDealProjects)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tDealProject_tMember");
-
-			entity.HasOne(d => d.FProject).WithMany(p => p.TDealProjects)
-				.HasForeignKey(d => d.FProjectId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tDealProject_tProject");
-		});
-
-		modelBuilder.Entity<TDealSiteLoan>(entity =>
-		{
-			entity.HasKey(e => e.FDealSiteLoanId).HasName("PK_DealSiteLoan");
-
-			entity.ToTable("tDealSiteLoan");
-
-			entity.Property(e => e.FDealSiteLoanId).HasColumnName("fDealSiteLoanID");
-			entity.Property(e => e.FCoupon).HasColumnName("fCoupon");
-			entity.Property(e => e.FEnddate)
-				.HasColumnType("datetime")
-				.HasColumnName("fEnddate");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FPrice)
-				.HasColumnType("money")
-				.HasColumnName("fPrice");
-			entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-			entity.Property(e => e.FStartdate)
-				.HasColumnType("datetime")
-				.HasColumnName("fStartdate");
-
-			entity.HasOne(d => d.FCouponNavigation).WithMany(p => p.TDealSiteLoans)
-				.HasForeignKey(d => d.FCoupon)
-				.HasConstraintName("FK_tDealSiteLoan_tCoupon");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TDealSiteLoans)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tDealSiteLoan_tMember");
-
-			entity.HasOne(d => d.FSite).WithMany(p => p.TDealSiteLoans)
-				.HasForeignKey(d => d.FSiteId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tDealSiteLoan_tSite");
-		});
-
-		modelBuilder.Entity<TEvaluate>(entity =>
-		{
-			entity.HasKey(e => e.FEvaluateId);
-
-			entity.ToTable("tEvaluate");
-
-			entity.Property(e => e.FEvaluateId).HasColumnName("fEvaluateID");
-			entity.Property(e => e.FContent).HasColumnName("fContent");
-			entity.Property(e => e.FEvaluateStatusId).HasColumnName("fEvaluateStatusID");
-			entity.Property(e => e.FEvaluateTime)
-				.HasColumnType("datetime")
-				.HasColumnName("fEvaluateTime");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
-
-			entity.HasOne(d => d.FEvaluateStatus).WithMany(p => p.TEvaluates)
-				.HasForeignKey(d => d.FEvaluateStatusId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tEvaluate_tEvaluateStatus");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TEvaluates)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tEvaluate_tMember");
-
-			entity.HasOne(d => d.FWork).WithMany(p => p.TEvaluates)
-				.HasForeignKey(d => d.FWorkId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tEvaluate_tWork");
-		});
-
-		modelBuilder.Entity<TEvaluateStatus>(entity =>
-		{
-			entity.HasKey(e => e.FEvaluateStatusId);
-
-			entity.ToTable("tEvaluateStatus");
-
-			entity.Property(e => e.FEvaluateStatusId)
-				.ValueGeneratedNever()
-				.HasColumnName("fEvaluateStatusID");
-			entity.Property(e => e.FDescriptiion)
-				.HasMaxLength(50)
-				.HasColumnName("fDescriptiion");
-		});
-
-		modelBuilder.Entity<TMember>(entity =>
-		{
-			entity.HasKey(e => e.FMemberId);
-
-			entity.ToTable("tMember");
-
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FBirthday)
-				.HasColumnType("datetime")
-				.HasColumnName("fBirthday");
-			entity.Property(e => e.FCreationTime)
-				.HasColumnType("datetime")
-				.HasColumnName("fCreationTime");
-			entity.Property(e => e.FEmail)
-				.HasMaxLength(50)
-				.HasColumnName("fEmail");
-			entity.Property(e => e.FGender).HasColumnName("fGender");
-			entity.Property(e => e.FIntroduction).HasColumnName("fIntroduction");
-			entity.Property(e => e.FName)
-				.HasMaxLength(50)
-				.HasColumnName("fName");
-			entity.Property(e => e.FPassword)
-				.HasMaxLength(50)
-				.HasColumnName("fPassword");
-			entity.Property(e => e.FPermissionId).HasColumnName("fPermissionID");
-			entity.Property(e => e.FPhone)
-				.HasMaxLength(50)
-				.HasColumnName("fPhone");
-			entity.Property(e => e.FPhotoPath)
-				.HasMaxLength(250)
-				.HasColumnName("fPhotoPath");
-			entity.Property(e => e.FUsername)
-				.HasMaxLength(50)
-				.HasColumnName("fUsername");
-
-			entity.HasOne(d => d.FPermission).WithMany(p => p.TMembers)
-				.HasForeignKey(d => d.FPermissionId)
-				.HasConstraintName("FK_tMember_tMemberPromission");
-		});
-
-		modelBuilder.Entity<TMemberCoupon>(entity =>
-		{
-			entity.HasKey(e => e.FMemberCouponId);
-
-			entity.ToTable("tMemberCoupon");
-
-			entity.Property(e => e.FMemberCouponId).HasColumnName("fMemberCouponID");
-			entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-
-			entity.HasOne(d => d.FCoupon).WithMany(p => p.TMemberCoupons)
-				.HasForeignKey(d => d.FCouponId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberCoupon_tCoupon");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TMemberCoupons)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberCoupon_tMember");
-		});
-
-		modelBuilder.Entity<TMemberPromission>(entity =>
-		{
-			entity.HasKey(e => e.FPromissionId);
-
-			entity.ToTable("tMemberPromission");
-
-			entity.Property(e => e.FPromissionId)
-				.ValueGeneratedNever()
-				.HasColumnName("fPromissionID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-		});
-
-		modelBuilder.Entity<TMemberRelation>(entity =>
-		{
-			entity.HasKey(e => e.FMemberRelationId);
-
-			entity.ToTable("tMemberRelation");
-
-			entity.Property(e => e.FMemberRelationId).HasColumnName("fMemberRelationID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FMemberRelationStatusId).HasColumnName("fMemberRelationStatusID");
-			entity.Property(e => e.FRelationMemberId).HasColumnName("fRelationMemberID");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TMemberRelations)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberRelation_tMember");
-
-			entity.HasOne(d => d.FMemberRelationStatus).WithMany(p => p.TMemberRelations)
-				.HasForeignKey(d => d.FMemberRelationStatusId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberRelation_tMemberRelationStatus");
-		});
-
-		modelBuilder.Entity<TMemberRelationStatus>(entity =>
-		{
-			entity.HasKey(e => e.FMemberRelationStatusId);
-
-			entity.ToTable("tMemberRelationStatus");
-
-			entity.Property(e => e.FMemberRelationStatusId)
-				.ValueGeneratedNever()
-				.HasColumnName("fMemberRelationStatusID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-		});
-
-		modelBuilder.Entity<TMemberSite>(entity =>
-		{
-			entity.HasKey(e => e.FMemberSiteId);
-
-			entity.ToTable("tMemberSite");
-
-			entity.Property(e => e.FMemberSiteId).HasColumnName("fMemberSiteID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TMemberSites)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberSite_tMember");
-
-			entity.HasOne(d => d.FSite).WithMany(p => p.TMemberSites)
-				.HasForeignKey(d => d.FSiteId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberSite_tSite");
-		});
-
-		modelBuilder.Entity<TMemberSkill>(entity =>
-		{
-			entity.HasKey(e => e.FMemberSkillId);
-
-			entity.ToTable("tMemberSkill");
-
-			entity.Property(e => e.FMemberSkillId).HasColumnName("fMemberSkillID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FSkillId).HasColumnName("fSkillID");
-			entity.Property(e => e.FYearExp).HasColumnName("fYearExp");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TMemberSkills)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberSkill_tMember");
-
-			entity.HasOne(d => d.FSkill).WithMany(p => p.TMemberSkills)
-				.HasForeignKey(d => d.FSkillId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tMemberSkill_tSkill");
-		});
-
-		modelBuilder.Entity<TNotification>(entity =>
-		{
-			entity.HasKey(e => e.FNotificationId);
-
-			entity.ToTable("tNotification");
-
-			entity.Property(e => e.FNotificationId).HasColumnName("fNotificationID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FNotification).HasColumnName("fNotification");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TNotifications)
-				.HasForeignKey(d => d.FMemberId)
-				.HasConstraintName("FK_tNotification_tMember");
-		});
-
-		modelBuilder.Entity<TProject>(entity =>
-		{
-			entity.HasKey(e => e.FProjectId);
-
-			entity.ToTable("tProject");
-
-			entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
-			entity.Property(e => e.FBudget)
-				.HasColumnType("money")
-				.HasColumnName("fBudget");
-			entity.Property(e => e.FDescription).HasColumnName("fDescription");
-			entity.Property(e => e.FDescription2).HasColumnName("fDescription2");
-			entity.Property(e => e.FEnddate)
-				.HasColumnType("datetime")
-				.HasColumnName("fEnddate");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FName)
-				.HasMaxLength(50)
-				.HasColumnName("fName");
-			entity.Property(e => e.FProjectStatusId).HasColumnName("fProjectStatusID");
-			entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-			entity.Property(e => e.FStartdate)
-				.HasColumnType("datetime")
-				.HasColumnName("fStartdate");
-			entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
-			entity.Property(e => e.FThumbnailPath)
-				.HasMaxLength(50)
-				.HasColumnName("fThumbnailPath");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TProjects)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tProject_tMember");
-
-			entity.HasOne(d => d.FProjectStatus).WithMany(p => p.TProjects)
-				.HasForeignKey(d => d.FProjectStatusId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tProject_tProjectStatus");
-
-			entity.HasOne(d => d.FSite).WithMany(p => p.TProjects)
-				.HasForeignKey(d => d.FSiteId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tProject_tSite");
-
-			entity.HasOne(d => d.FSiteNavigation).WithMany(p => p.TProjects)
-				.HasForeignKey(d => d.FSiteId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tProject_tStyle");
-		});
-
-		modelBuilder.Entity<TProjectFav>(entity =>
-		{
-			entity.HasKey(e => e.FProjectFav).HasName("PK_fProjectFav");
-
-			entity.ToTable("tProjectFav");
-
-			entity.Property(e => e.FProjectFav).HasColumnName("fProjectFav");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TProjectFavs)
-				.HasForeignKey(d => d.FMemberId)
-				.HasConstraintName("FK_tProjectFav_tMember");
-
-			entity.HasOne(d => d.FProject).WithMany(p => p.TProjectFavs)
-				.HasForeignKey(d => d.FProjectId)
-				.HasConstraintName("FK_tProjectFav_tProject");
-		});
-
-		modelBuilder.Entity<TProjectSkillRequire>(entity =>
-		{
-			entity.HasKey(e => e.FProjectSkillRequireId);
-
-			entity.ToTable("tProjectSkillRequire");
-
-			entity.Property(e => e.FProjectSkillRequireId).HasColumnName("fProjectSkillRequireID");
-			entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
-			entity.Property(e => e.FSkillId).HasColumnName("fSkillID");
-
-			entity.HasOne(d => d.FProject).WithMany(p => p.TProjectSkillRequires)
-				.HasForeignKey(d => d.FProjectId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tProjectSkillRequire_tProject");
-
-			entity.HasOne(d => d.FSkill).WithMany(p => p.TProjectSkillRequires)
-				.HasForeignKey(d => d.FSkillId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tProjectSkillRequire_tSkill");
-		});
-
-		modelBuilder.Entity<TProjectStatus>(entity =>
-		{
-			entity.HasKey(e => e.FProjectStatusId);
-
-			entity.ToTable("tProjectStatus");
-
-			entity.Property(e => e.FProjectStatusId)
-				.ValueGeneratedNever()
-				.HasColumnName("fProjectStatusID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-		});
-
-		modelBuilder.Entity<TSite>(entity =>
-		{
-			entity.HasKey(e => e.FSiteId);
-
-			entity.ToTable("tSite");
-
-			entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-			entity.Property(e => e.FAddress)
-				.HasMaxLength(50)
-				.HasColumnName("fAddress");
-			entity.Property(e => e.FCityId).HasColumnName("fCityID");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FPhone)
-				.HasMaxLength(50)
-				.HasColumnName("fPhone");
-			entity.Property(e => e.FSiteName)
-				.HasMaxLength(50)
-				.HasColumnName("fSiteName");
-			entity.Property(e => e.FSiteType).HasColumnName("fSiteType");
-
-			entity.HasOne(d => d.FCity).WithMany(p => p.TSites)
-				.HasForeignKey(d => d.FCityId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tSite_tCity");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TSites)
-				.HasForeignKey(d => d.FMemberId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tSite_tMember");
-
-			entity.HasOne(d => d.FSitePicture).WithOne(p => p.FSite)
-				.HasForeignKey<TSitePicture>(d => d.FSiteId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tSite_tSitePicture");
-		});
-
-		modelBuilder.Entity<TSitePeriod>(entity =>
-		{
-			entity.HasKey(e => e.FSitePeriodId);
-
-			entity.ToTable("tSitePeriod");
-
-			entity.Property(e => e.FSitePeriodId).HasColumnName("fSitePeriodID");
-			entity.Property(e => e.FFriAfternoon).HasColumnName("fFriAfternoon");
-			entity.Property(e => e.FFriMidnight).HasColumnName("fFriMidnight");
-			entity.Property(e => e.FFriMorning).HasColumnName("fFriMorning");
-			entity.Property(e => e.FFriNight).HasColumnName("fFriNight");
-			entity.Property(e => e.FMonAfternoon).HasColumnName("fMonAfternoon");
-			entity.Property(e => e.FMonMidnight).HasColumnName("fMonMidnight");
-			entity.Property(e => e.FMonMorning).HasColumnName("fMonMorning");
-			entity.Property(e => e.FMonNight).HasColumnName("fMonNight");
-			entity.Property(e => e.FSatAfternoon).HasColumnName("fSatAfternoon");
-			entity.Property(e => e.FSatMidnight).HasColumnName("fSatMidnight");
-			entity.Property(e => e.FSatMorning).HasColumnName("fSatMorning");
-			entity.Property(e => e.FSatNight).HasColumnName("fSatNight");
-			entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-			entity.Property(e => e.FSunAfternoon).HasColumnName("fSunAfternoon");
-			entity.Property(e => e.FSunMidnight).HasColumnName("fSunMidnight");
-			entity.Property(e => e.FSunMorning).HasColumnName("fSunMorning");
-			entity.Property(e => e.FSunNight).HasColumnName("fSunNight");
-			entity.Property(e => e.FThurAfternoon).HasColumnName("fThurAfternoon");
-			entity.Property(e => e.FThurMidnight).HasColumnName("fThurMidnight");
-			entity.Property(e => e.FThurMorning).HasColumnName("fThurMorning");
-			entity.Property(e => e.FThurNight).HasColumnName("fThurNight");
-			entity.Property(e => e.FTuesAfternoon).HasColumnName("fTuesAfternoon");
-			entity.Property(e => e.FTuesMidnight).HasColumnName("fTuesMidnight");
-			entity.Property(e => e.FTuesMorning).HasColumnName("fTuesMorning");
-			entity.Property(e => e.FTuesNight).HasColumnName("fTuesNight");
-			entity.Property(e => e.FWedAfternoon).HasColumnName("fWedAfternoon");
-			entity.Property(e => e.FWedMidnight).HasColumnName("fWedMidnight");
-			entity.Property(e => e.FWedMorning).HasColumnName("fWedMorning");
-			entity.Property(e => e.FWedNight).HasColumnName("fWedNight");
-
-			entity.HasOne(d => d.FFriAfternoonNavigation).WithMany(p => p.TSitePeriodFFriAfternoonNavigations)
-				.HasForeignKey(d => d.FFriAfternoon)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus17");
-
-			entity.HasOne(d => d.FFriMidnightNavigation).WithMany(p => p.TSitePeriodFFriMidnightNavigations)
-				.HasForeignKey(d => d.FFriMidnight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus19");
-
-			entity.HasOne(d => d.FFriMorningNavigation).WithMany(p => p.TSitePeriodFFriMorningNavigations)
-				.HasForeignKey(d => d.FFriMorning)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus16");
-
-			entity.HasOne(d => d.FFriNightNavigation).WithMany(p => p.TSitePeriodFFriNightNavigations)
-				.HasForeignKey(d => d.FFriNight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus18");
-
-			entity.HasOne(d => d.FMonAfternoonNavigation).WithMany(p => p.TSitePeriodFMonAfternoonNavigations)
-				.HasForeignKey(d => d.FMonAfternoon)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus1");
-
-			entity.HasOne(d => d.FMonMidnightNavigation).WithMany(p => p.TSitePeriodFMonMidnightNavigations)
-				.HasForeignKey(d => d.FMonMidnight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus3");
-
-			entity.HasOne(d => d.FMonMorningNavigation).WithMany(p => p.TSitePeriodFMonMorningNavigations)
-				.HasForeignKey(d => d.FMonMorning)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus");
-
-			entity.HasOne(d => d.FMonNightNavigation).WithMany(p => p.TSitePeriodFMonNightNavigations)
-				.HasForeignKey(d => d.FMonNight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus2");
-
-			entity.HasOne(d => d.FSatAfternoonNavigation).WithMany(p => p.TSitePeriodFSatAfternoonNavigations)
-				.HasForeignKey(d => d.FSatAfternoon)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus21");
-
-			entity.HasOne(d => d.FSatMidnightNavigation).WithMany(p => p.TSitePeriodFSatMidnightNavigations)
-				.HasForeignKey(d => d.FSatMidnight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus23");
-
-			entity.HasOne(d => d.FSatMorningNavigation).WithMany(p => p.TSitePeriodFSatMorningNavigations)
-				.HasForeignKey(d => d.FSatMorning)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus20");
-
-			entity.HasOne(d => d.FSatNightNavigation).WithMany(p => p.TSitePeriodFSatNightNavigations)
-				.HasForeignKey(d => d.FSatNight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus22");
-
-			entity.HasOne(d => d.FSite).WithMany(p => p.TSitePeriods)
-				.HasForeignKey(d => d.FSiteId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tSitePeriod_tSite");
-
-			entity.HasOne(d => d.FSunAfternoonNavigation).WithMany(p => p.TSitePeriodFSunAfternoonNavigations)
-				.HasForeignKey(d => d.FSunAfternoon)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus25");
-
-			entity.HasOne(d => d.FSunMidnightNavigation).WithMany(p => p.TSitePeriodFSunMidnightNavigations)
-				.HasForeignKey(d => d.FSunMidnight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus27");
-
-			entity.HasOne(d => d.FSunMorningNavigation).WithMany(p => p.TSitePeriodFSunMorningNavigations)
-				.HasForeignKey(d => d.FSunMorning)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus24");
-
-			entity.HasOne(d => d.FSunNightNavigation).WithMany(p => p.TSitePeriodFSunNightNavigations)
-				.HasForeignKey(d => d.FSunNight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus26");
-
-			entity.HasOne(d => d.FThurAfternoonNavigation).WithMany(p => p.TSitePeriodFThurAfternoonNavigations)
-				.HasForeignKey(d => d.FThurAfternoon)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus13");
-
-			entity.HasOne(d => d.FThurMidnightNavigation).WithMany(p => p.TSitePeriodFThurMidnightNavigations)
-				.HasForeignKey(d => d.FThurMidnight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus15");
-
-			entity.HasOne(d => d.FThurMorningNavigation).WithMany(p => p.TSitePeriodFThurMorningNavigations)
-				.HasForeignKey(d => d.FThurMorning)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus12");
-
-			entity.HasOne(d => d.FThurNightNavigation).WithMany(p => p.TSitePeriodFThurNightNavigations)
-				.HasForeignKey(d => d.FThurNight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus14");
-
-			entity.HasOne(d => d.FTuesAfternoonNavigation).WithMany(p => p.TSitePeriodFTuesAfternoonNavigations)
-				.HasForeignKey(d => d.FTuesAfternoon)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus5");
-
-			entity.HasOne(d => d.FTuesMidnightNavigation).WithMany(p => p.TSitePeriodFTuesMidnightNavigations)
-				.HasForeignKey(d => d.FTuesMidnight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus7");
-
-			entity.HasOne(d => d.FTuesMorningNavigation).WithMany(p => p.TSitePeriodFTuesMorningNavigations)
-				.HasForeignKey(d => d.FTuesMorning)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus4");
-
-			entity.HasOne(d => d.FTuesNightNavigation).WithMany(p => p.TSitePeriodFTuesNightNavigations)
-				.HasForeignKey(d => d.FTuesNight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus6");
-
-			entity.HasOne(d => d.FWedAfternoonNavigation).WithMany(p => p.TSitePeriodFWedAfternoonNavigations)
-				.HasForeignKey(d => d.FWedAfternoon)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus9");
-
-			entity.HasOne(d => d.FWedMidnightNavigation).WithMany(p => p.TSitePeriodFWedMidnightNavigations)
-				.HasForeignKey(d => d.FWedMidnight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus11");
-
-			entity.HasOne(d => d.FWedMorningNavigation).WithMany(p => p.TSitePeriodFWedMorningNavigations)
-				.HasForeignKey(d => d.FWedMorning)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus8");
-
-			entity.HasOne(d => d.FWedNightNavigation).WithMany(p => p.TSitePeriodFWedNightNavigations)
-				.HasForeignKey(d => d.FWedNight)
-				.HasConstraintName("FK_tSitePeriod_tSitePeriodStatus10");
-		});
-
-		modelBuilder.Entity<TSitePeriodStatus>(entity =>
-		{
-			entity.HasKey(e => e.FSitePeriodStatusId);
-
-			entity.ToTable("tSitePeriodStatus");
-
-			entity.Property(e => e.FSitePeriodStatusId)
-				.ValueGeneratedNever()
-				.HasColumnName("fSitePeriodStatusID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-		});
-
-		modelBuilder.Entity<TSitePicture>(entity =>
-		{
-			entity.HasKey(e => e.FSitePictureId);
-
-			entity.ToTable("tSitePicture");
-
-			entity.Property(e => e.FSitePictureId).HasColumnName("fSitePictureID");
-			entity.Property(e => e.FPicturePath)
-				.HasMaxLength(50)
-				.HasColumnName("fPicturePath");
-			entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-
-			//entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
-			//	.HasForeignKey(d => d.FSiteId)
-			//	.OnDelete(DeleteBehavior.ClientSetNull)
-			//	.HasConstraintName("FK_tSitePicture_tSite");
-		});
-
-		modelBuilder.Entity<TSkill>(entity =>
-		{
-			entity.HasKey(e => e.FSkillId);
-
-			entity.ToTable("tSkill");
-
-			entity.Property(e => e.FSkillId)
-				.ValueGeneratedNever()
-				.HasColumnName("fSkillID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-			entity.Property(e => e.FName)
-				.HasMaxLength(50)
-				.HasColumnName("fName");
-			entity.Property(e => e.FSkillCategoryId).HasColumnName("fSkillCategoryID");
-			entity.Property(e => e.FThumbnailPath)
-				.HasMaxLength(50)
-				.HasColumnName("fThumbnailPath");
-
-			entity.HasOne(d => d.FSkillCategory).WithMany(p => p.TSkills)
-				.HasForeignKey(d => d.FSkillCategoryId)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK_tSkill_tSkillCategory");
-		});
-
-		modelBuilder.Entity<TSkillCategory>(entity =>
-		{
-			entity.HasKey(e => e.FSkillCategoryId);
-
-			entity.ToTable("tSkillCategory");
-
-			entity.Property(e => e.FSkillCategoryId)
-				.ValueGeneratedNever()
-				.HasColumnName("fSkillCategoryID");
-			entity.Property(e => e.FName)
-				.HasMaxLength(50)
-				.HasColumnName("fName");
-			entity.Property(e => e.FThumbnailPath)
-				.HasMaxLength(50)
-				.HasColumnName("fThumbnailPath");
-		});
-
-		modelBuilder.Entity<TStyle>(entity =>
-		{
-			entity.HasKey(e => e.FStyleId);
-
-			entity.ToTable("tStyle");
-
-			entity.Property(e => e.FStyleId)
-				.ValueGeneratedNever()
-				.HasColumnName("fStyleID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-			entity.Property(e => e.FName)
-				.HasMaxLength(50)
-				.HasColumnName("fName");
-			entity.Property(e => e.FThumbnailPath)
-				.HasMaxLength(50)
-				.HasColumnName("fThumbnailPath");
-		});
-
-		modelBuilder.Entity<TWork>(entity =>
-		{
-			entity.HasKey(e => e.FWorkId);
-
-			entity.ToTable("tWork");
-
-			entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
-			entity.Property(e => e.FDescription)
-				.HasMaxLength(50)
-				.HasColumnName("fDescription");
-			entity.Property(e => e.FFilePath)
-				.HasMaxLength(50)
-				.HasColumnName("fFilePath");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
-			entity.Property(e => e.FThumbnail)
-				.HasMaxLength(50)
-				.HasColumnName("fThumbnail");
-			entity.Property(e => e.FUpdateTime)
-				.HasColumnType("datetime")
-				.HasColumnName("fUpdateTime");
-			entity.Property(e => e.FWorkName)
-				.HasMaxLength(50)
-				.HasColumnName("fWorkName");
-			entity.Property(e => e.FWorkTypeId).HasColumnName("fWorkTypeID");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TWorks)
-				.HasForeignKey(d => d.FMemberId)
-				.HasConstraintName("FK_tWork_tMember");
-
-			entity.HasOne(d => d.FStyle).WithMany(p => p.TWorks)
-				.HasForeignKey(d => d.FStyleId)
-				.HasConstraintName("FK_tWork_tStyle");
-
-			entity.HasOne(d => d.FWorkType).WithMany(p => p.TWorks)
-				.HasForeignKey(d => d.FWorkTypeId)
-				.HasConstraintName("FK_tWork_tWorkType");
-		});
-
-		modelBuilder.Entity<TWorkFav>(entity =>
-		{
-			entity.HasKey(e => e.FWorkFav);
-
-			entity.ToTable("tWorkFav");
-
-			entity.Property(e => e.FWorkFav).HasColumnName("fWorkFav");
-			entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-			entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
-
-			entity.HasOne(d => d.FMember).WithMany(p => p.TWorkFavs)
-				.HasForeignKey(d => d.FMemberId)
-				.HasConstraintName("FK_tWorkFav_tMember");
-
-			entity.HasOne(d => d.FWork).WithMany(p => p.TWorkFavs)
-				.HasForeignKey(d => d.FWorkId)
-				.HasConstraintName("FK_tWorkFav_tWork");
-		});
-
-		modelBuilder.Entity<TWorkType>(entity =>
-		{
-			entity.HasKey(e => e.FWorkTypeId);
-
-			entity.ToTable("tWorkType");
-
-			entity.Property(e => e.FWorkTypeId)
-				.ValueGeneratedNever()
-				.HasColumnName("fWorkTypeID");
-			entity.Property(e => e.FWorkType)
-				.HasMaxLength(50)
-				.HasColumnName("fWorkType");
-		});
-
-		OnModelCreatingPartial(modelBuilder);
-	}
-
-	partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+            entity.Property(e => e.FApplicationRecordId).HasColumnName("fApplicationRecordID");
+            entity.Property(e => e.FApplicationStatusId).HasColumnName("fApplicationStatusID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+            entity.Property(e => e.FSelfIntroduction)
+                .HasMaxLength(50)
+                .HasColumnName("fSelf_Introduction");
+
+            entity.HasOne(d => d.FApplicationStatus).WithMany(p => p.TApplicationRecords)
+                .HasForeignKey(d => d.FApplicationStatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tApplicationRecord_tApplicationStatus");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TApplicationRecords)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tApplicationRecord_tMember");
+
+            entity.HasOne(d => d.FProject).WithMany(p => p.TApplicationRecords)
+                .HasForeignKey(d => d.FProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tApplicationRecord_tProject");
+        });
+
+        modelBuilder.Entity<TApplicationStatus>(entity =>
+        {
+            entity.HasKey(e => e.FApplicationStatus);
+
+            entity.ToTable("tApplicationStatus");
+
+            entity.Property(e => e.FApplicationStatus)
+                .ValueGeneratedNever()
+                .HasColumnName("fApplicationStatus");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("fDescription");
+        });
+
+        modelBuilder.Entity<TArticle>(entity =>
+        {
+            entity.HasKey(e => e.FArticleId);
+
+            entity.ToTable("tArticle");
+
+            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+            entity.Property(e => e.FContent).HasColumnName("fContent");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.Property(e => e.FPhotoPath)
+                .HasMaxLength(250)
+                .HasColumnName("fPhotoPath");
+
+            entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
+            entity.Property(e => e.FTitle)
+                .HasMaxLength(50)
+                .HasColumnName("fTitle");
+            entity.Property(e => e.FUpdateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fUpdateTime");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TArticles)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tArticle_tMember");
+
+            entity.HasOne(d => d.FStyle).WithMany(p => p.TArticles)
+                .HasForeignKey(d => d.FStyleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tArticle_tStyle");
+        });
+
+        modelBuilder.Entity<TArticleFav>(entity =>
+        {
+            entity.HasKey(e => e.FArticleFavId);
+
+            entity.ToTable("tArticleFav");
+
+            entity.Property(e => e.FArticleFavId).HasColumnName("fArticleFavID");
+            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.HasOne(d => d.FArticle).WithMany(p => p.TArticleFavs)
+                .HasForeignKey(d => d.FArticleId)
+                .HasConstraintName("FK_tArticleFav_tArticle");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TArticleFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tArticleFav_tMember");
+        });
+
+        modelBuilder.Entity<TArticlePicture>(entity =>
+        {
+            entity.HasKey(e => e.FArticlePictureId);
+
+            entity.ToTable("tArticlePicture");
+
+            entity.Property(e => e.FArticlePictureId).HasColumnName("fArticlePictureID");
+            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+            entity.Property(e => e.FPicturePath)
+                .HasMaxLength(50)
+                .HasColumnName("fPicturePath");
+
+            entity.HasOne(d => d.FArticle).WithMany(p => p.TArticlePictures)
+                .HasForeignKey(d => d.FArticleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tArticlePicture_tArticle");
+        });
+
+        modelBuilder.Entity<TCity>(entity =>
+        {
+            entity.HasKey(e => e.FCityId);
+
+            entity.ToTable("tCity");
+
+            entity.Property(e => e.FCityId)
+                .ValueGeneratedNever()
+                .HasColumnName("fCityID");
+            entity.Property(e => e.FCity)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("fCity");
+        });
+
+        modelBuilder.Entity<TClass>(entity =>
+        {
+            entity.HasKey(e => e.FClassId);
+
+            entity.ToTable("tClass");
+
+            entity.Property(e => e.FClassId).HasColumnName("fClassID");
+            entity.Property(e => e.FClassName)
+                .HasMaxLength(50)
+                .HasColumnName("fClassName");
+            entity.Property(e => e.FCurrentStudent).HasColumnName("fCurrentStudent");
+            entity.Property(e => e.FDescription).HasColumnName("fDescription");
+            entity.Property(e => e.FEnddate)
+                .HasColumnType("datetime")
+                .HasColumnName("fEnddate");
+            entity.Property(e => e.FMaxStudent).HasColumnName("fMaxStudent");
+            entity.Property(e => e.FPrice)
+                .HasColumnType("money")
+                .HasColumnName("fPrice");
+            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FStartdate)
+                .HasColumnType("datetime")
+                .HasColumnName("fStartdate");
+            entity.Property(e => e.FTeacherId).HasColumnName("fTeacherID");
+            entity.Property(e => e.FThumbnailPath)
+                .HasMaxLength(50)
+                .HasColumnName("fThumbnailPath");
+
+            entity.HasOne(d => d.FSite).WithMany(p => p.TClasses)
+                .HasForeignKey(d => d.FSiteId)
+                .HasConstraintName("FK_tClass_tSite");
+
+            entity.HasOne(d => d.FTeacher).WithMany(p => p.TClasses)
+                .HasForeignKey(d => d.FTeacherId)
+                .HasConstraintName("FK_tClass_tMember");
+        });
+
+        modelBuilder.Entity<TClassFav>(entity =>
+        {
+            entity.HasKey(e => e.FClassFav);
+
+            entity.ToTable("tClassFav");
+
+            entity.Property(e => e.FClassFav).HasColumnName("fClassFav");
+            entity.Property(e => e.FClassId).HasColumnName("fClassID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.HasOne(d => d.FClass).WithMany(p => p.TClassFavs)
+                .HasForeignKey(d => d.FClassId)
+                .HasConstraintName("FK_tClassFav_tClass");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TClassFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tClassFav_tMember");
+        });
+
+        modelBuilder.Entity<TCoupon>(entity =>
+        {
+            entity.HasKey(e => e.FCouponId);
+
+            entity.ToTable("tCoupon");
+
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
+            entity.Property(e => e.FCouponCode)
+                .HasMaxLength(50)
+                .HasColumnName("fCouponCode");
+            entity.Property(e => e.FCouponContent)
+                .HasMaxLength(50)
+                .HasColumnName("fCouponContent");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+            entity.Property(e => e.FEnddate)
+                .HasColumnType("datetime")
+                .HasColumnName("fEnddate");
+            entity.Property(e => e.FPicture)
+                .HasMaxLength(50)
+                .HasColumnName("fPicture");
+            entity.Property(e => e.FStartdate)
+                .HasColumnType("datetime")
+                .HasColumnName("fStartdate");
+        });
+
+        modelBuilder.Entity<TDealClass>(entity =>
+        {
+            entity.HasKey(e => e.FDealClassId);
+
+            entity.ToTable("tDealClass");
+
+            entity.Property(e => e.FDealClassId).HasColumnName("fDealClassID");
+            entity.Property(e => e.FClassId).HasColumnName("fClassID");
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
+            entity.Property(e => e.FEnddate)
+                .HasColumnType("datetime")
+                .HasColumnName("fEnddate");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FPrice)
+                .HasColumnType("money")
+                .HasColumnName("fPrice");
+            entity.Property(e => e.FStartdate)
+                .HasColumnType("datetime")
+                .HasColumnName("fStartdate");
+
+            entity.HasOne(d => d.FClass).WithMany(p => p.TDealClasses)
+                .HasForeignKey(d => d.FClassId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tDealClass_tClass");
+
+            entity.HasOne(d => d.FCoupon).WithMany(p => p.TDealClasses)
+                .HasForeignKey(d => d.FCouponId)
+                .HasConstraintName("FK_tDealClass_tCoupon");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TDealClasses)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tDealClass_tMember");
+        });
+
+        modelBuilder.Entity<TDealProject>(entity =>
+        {
+            entity.HasKey(e => e.FDealProject);
+
+            entity.ToTable("tDealProject");
+
+            entity.Property(e => e.FDealProject).HasColumnName("fDealProject");
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
+            entity.Property(e => e.FEnddate)
+                .HasColumnType("datetime")
+                .HasColumnName("fEnddate");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FPrice)
+                .HasColumnType("money")
+                .HasColumnName("fPrice");
+            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+            entity.Property(e => e.FStartdate)
+                .HasColumnType("datetime")
+                .HasColumnName("fStartdate");
+
+            entity.HasOne(d => d.FCoupon).WithMany(p => p.TDealProjects)
+                .HasForeignKey(d => d.FCouponId)
+                .HasConstraintName("FK_tDealProject_tCoupon");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TDealProjects)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tDealProject_tMember");
+
+            entity.HasOne(d => d.FProject).WithMany(p => p.TDealProjects)
+                .HasForeignKey(d => d.FProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tDealProject_tProject");
+        });
+
+        modelBuilder.Entity<TDealSiteLoan>(entity =>
+        {
+            entity.HasKey(e => e.FDealSiteLoanId).HasName("PK_DealSiteLoan");
+
+            entity.ToTable("tDealSiteLoan");
+
+            entity.Property(e => e.FDealSiteLoanId).HasColumnName("fDealSiteLoanID");
+            entity.Property(e => e.FCoupon).HasColumnName("fCoupon");
+            entity.Property(e => e.FEnddate)
+                .HasColumnType("datetime")
+                .HasColumnName("fEnddate");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FPrice)
+                .HasColumnType("money")
+                .HasColumnName("fPrice");
+            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FStartdate)
+                .HasColumnType("datetime")
+                .HasColumnName("fStartdate");
+
+            entity.HasOne(d => d.FCouponNavigation).WithMany(p => p.TDealSiteLoans)
+                .HasForeignKey(d => d.FCoupon)
+                .HasConstraintName("FK_tDealSiteLoan_tCoupon");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TDealSiteLoans)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tDealSiteLoan_tMember");
+
+            entity.HasOne(d => d.FSite).WithMany(p => p.TDealSiteLoans)
+                .HasForeignKey(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tDealSiteLoan_tSite");
+        });
+
+        modelBuilder.Entity<TEvaluate>(entity =>
+        {
+            entity.HasKey(e => e.FEvaluateId);
+
+            entity.ToTable("tEvaluate");
+
+            entity.Property(e => e.FEvaluateId).HasColumnName("fEvaluateID");
+            entity.Property(e => e.FContent).HasColumnName("fContent");
+            entity.Property(e => e.FEvaluateStatusId).HasColumnName("fEvaluateStatusID");
+            entity.Property(e => e.FEvaluateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fEvaluateTime");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
+
+            entity.HasOne(d => d.FEvaluateStatus).WithMany(p => p.TEvaluates)
+                .HasForeignKey(d => d.FEvaluateStatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tEvaluate_tEvaluateStatus");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TEvaluates)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tEvaluate_tMember");
+
+            entity.HasOne(d => d.FWork).WithMany(p => p.TEvaluates)
+                .HasForeignKey(d => d.FWorkId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tEvaluate_tWork");
+        });
+
+        modelBuilder.Entity<TEvaluateStatus>(entity =>
+        {
+            entity.HasKey(e => e.FEvaluateStatusId);
+
+            entity.ToTable("tEvaluateStatus");
+
+            entity.Property(e => e.FEvaluateStatusId)
+                .ValueGeneratedNever()
+                .HasColumnName("fEvaluateStatusID");
+            entity.Property(e => e.FDescriptiion)
+                .HasMaxLength(50)
+                .HasColumnName("fDescriptiion");
+        });
+
+        modelBuilder.Entity<TMember>(entity =>
+        {
+            entity.HasKey(e => e.FMemberId);
+
+            entity.ToTable("tMember");
+
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FBirthday)
+                .HasColumnType("datetime")
+                .HasColumnName("fBirthday");
+            entity.Property(e => e.FCreationTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fCreationTime");
+            entity.Property(e => e.FEmail)
+                .HasMaxLength(50)
+                .HasColumnName("fEmail");
+            entity.Property(e => e.FGender).HasColumnName("fGender");
+            entity.Property(e => e.FIntroduction).HasColumnName("fIntroduction");
+            entity.Property(e => e.FName)
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FPassword)
+                .HasMaxLength(50)
+                .HasColumnName("fPassword");
+            entity.Property(e => e.FPermissionId).HasColumnName("fPermissionID");
+            entity.Property(e => e.FPhone)
+                .HasMaxLength(50)
+                .HasColumnName("fPhone");
+            entity.Property(e => e.FPhotoPath)
+                .HasMaxLength(250)
+                .HasColumnName("fPhotoPath");
+            entity.Property(e => e.FUsername)
+                .HasMaxLength(50)
+                .HasColumnName("fUsername");
+
+            entity.HasOne(d => d.FPermission).WithMany(p => p.TMembers)
+                .HasForeignKey(d => d.FPermissionId)
+                .HasConstraintName("FK_tMember_tMemberPromission");
+        });
+
+        modelBuilder.Entity<TMemberCoupon>(entity =>
+        {
+            entity.HasKey(e => e.FMemberCouponId);
+
+            entity.ToTable("tMemberCoupon");
+
+            entity.Property(e => e.FMemberCouponId).HasColumnName("fMemberCouponID");
+            entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.HasOne(d => d.FCoupon).WithMany(p => p.TMemberCoupons)
+                .HasForeignKey(d => d.FCouponId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberCoupon_tCoupon");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TMemberCoupons)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberCoupon_tMember");
+        });
+
+        modelBuilder.Entity<TMemberPromission>(entity =>
+        {
+            entity.HasKey(e => e.FPromissionId);
+
+            entity.ToTable("tMemberPromission");
+
+            entity.Property(e => e.FPromissionId)
+                .ValueGeneratedNever()
+                .HasColumnName("fPromissionID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+        });
+
+        modelBuilder.Entity<TMemberRelation>(entity =>
+        {
+            entity.HasKey(e => e.FMemberRelationId);
+
+            entity.ToTable("tMemberRelation");
+
+            entity.Property(e => e.FMemberRelationId).HasColumnName("fMemberRelationID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FMemberRelationStatusId).HasColumnName("fMemberRelationStatusID");
+            entity.Property(e => e.FRelationMemberId).HasColumnName("fRelationMemberID");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TMemberRelations)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberRelation_tMember");
+
+            entity.HasOne(d => d.FMemberRelationStatus).WithMany(p => p.TMemberRelations)
+                .HasForeignKey(d => d.FMemberRelationStatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberRelation_tMemberRelationStatus");
+        });
+
+        modelBuilder.Entity<TMemberRelationStatus>(entity =>
+        {
+            entity.HasKey(e => e.FMemberRelationStatusId);
+
+            entity.ToTable("tMemberRelationStatus");
+
+            entity.Property(e => e.FMemberRelationStatusId)
+                .ValueGeneratedNever()
+                .HasColumnName("fMemberRelationStatusID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+        });
+
+        modelBuilder.Entity<TMemberSite>(entity =>
+        {
+            entity.HasKey(e => e.FMemberSiteId);
+
+            entity.ToTable("tMemberSite");
+
+            entity.Property(e => e.FMemberSiteId).HasColumnName("fMemberSiteID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TMemberSites)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberSite_tMember");
+
+            entity.HasOne(d => d.FSite).WithMany(p => p.TMemberSites)
+                .HasForeignKey(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberSite_tSite");
+        });
+
+        modelBuilder.Entity<TMemberSkill>(entity =>
+        {
+            entity.HasKey(e => e.FMemberSkillId);
+
+            entity.ToTable("tMemberSkill");
+
+            entity.Property(e => e.FMemberSkillId).HasColumnName("fMemberSkillID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FSkillId).HasColumnName("fSkillID");
+            entity.Property(e => e.FYearExp).HasColumnName("fYearExp");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TMemberSkills)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberSkill_tMember");
+
+            entity.HasOne(d => d.FSkill).WithMany(p => p.TMemberSkills)
+                .HasForeignKey(d => d.FSkillId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tMemberSkill_tSkill");
+        });
+
+        modelBuilder.Entity<TNotification>(entity =>
+        {
+            entity.HasKey(e => e.FNotificationId);
+
+            entity.ToTable("tNotification");
+
+            entity.Property(e => e.FNotificationId).HasColumnName("fNotificationID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FNotification).HasColumnName("fNotification");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TNotifications)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tNotification_tMember");
+        });
+
+        modelBuilder.Entity<TProject>(entity =>
+        {
+            entity.HasKey(e => e.FProjectId);
+
+            entity.ToTable("tProject");
+
+            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+            entity.Property(e => e.FBudget)
+                .HasColumnType("money")
+                .HasColumnName("fBudget");
+            entity.Property(e => e.FDescription).HasColumnName("fDescription");
+            entity.Property(e => e.FDescription2).HasColumnName("fDescription2");
+            entity.Property(e => e.FEnddate)
+                .HasColumnType("datetime")
+                .HasColumnName("fEnddate");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FName)
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FProjectStatusId).HasColumnName("fProjectStatusID");
+            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FStartdate)
+                .HasColumnType("datetime")
+                .HasColumnName("fStartdate");
+            entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
+            entity.Property(e => e.FThumbnailPath)
+                .HasMaxLength(50)
+                .HasColumnName("fThumbnailPath");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TProjects)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProject_tMember");
+
+            entity.HasOne(d => d.FProjectStatus).WithMany(p => p.TProjects)
+                .HasForeignKey(d => d.FProjectStatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProject_tProjectStatus");
+
+            entity.HasOne(d => d.FSite).WithMany(p => p.TProjects)
+                .HasForeignKey(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProject_tSite");
+
+            entity.HasOne(d => d.FSiteNavigation).WithMany(p => p.TProjects)
+                .HasForeignKey(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProject_tStyle");
+        });
+
+        modelBuilder.Entity<TProjectFav>(entity =>
+        {
+            entity.HasKey(e => e.FProjectFav).HasName("PK_fProjectFav");
+
+            entity.ToTable("tProjectFav");
+
+            entity.Property(e => e.FProjectFav).HasColumnName("fProjectFav");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TProjectFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tProjectFav_tMember");
+
+            entity.HasOne(d => d.FProject).WithMany(p => p.TProjectFavs)
+                .HasForeignKey(d => d.FProjectId)
+                .HasConstraintName("FK_tProjectFav_tProject");
+        });
+
+        modelBuilder.Entity<TProjectSkillRequire>(entity =>
+        {
+            entity.HasKey(e => e.FProjectSkillRequireId);
+
+            entity.ToTable("tProjectSkillRequire");
+
+            entity.Property(e => e.FProjectSkillRequireId).HasColumnName("fProjectSkillRequireID");
+            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+            entity.Property(e => e.FSkillId).HasColumnName("fSkillID");
+
+            entity.HasOne(d => d.FProject).WithMany(p => p.TProjectSkillRequires)
+                .HasForeignKey(d => d.FProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProjectSkillRequire_tProject");
+
+            entity.HasOne(d => d.FSkill).WithMany(p => p.TProjectSkillRequires)
+                .HasForeignKey(d => d.FSkillId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProjectSkillRequire_tSkill");
+        });
+
+        modelBuilder.Entity<TProjectStatus>(entity =>
+        {
+            entity.HasKey(e => e.FProjectStatusId);
+
+            entity.ToTable("tProjectStatus");
+
+            entity.Property(e => e.FProjectStatusId)
+                .ValueGeneratedNever()
+                .HasColumnName("fProjectStatusID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+        });
+
+        modelBuilder.Entity<TSite>(entity =>
+        {
+            entity.HasKey(e => e.FSiteId);
+
+            entity.ToTable("tSite");
+
+            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FAddress)
+                .HasMaxLength(50)
+                .HasColumnName("fAddress");
+            entity.Property(e => e.FCityId).HasColumnName("fCityID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FPhone)
+                .HasMaxLength(50)
+                .HasColumnName("fPhone");
+            entity.Property(e => e.FSiteName)
+                .HasMaxLength(50)
+                .HasColumnName("fSiteName");
+            entity.Property(e => e.FSiteType).HasColumnName("fSiteType");
+
+            entity.HasOne(d => d.FCity).WithMany(p => p.TSites)
+                .HasForeignKey(d => d.FCityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tSite_tCity");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TSites)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tSite_tMember");
+
+
+            entity.HasOne(d => d.FSitePicture).WithOne(p => p.FSite)
+                .HasForeignKey<TSitePicture>(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tSite_tSitePicture");
+
+        });
+
+        modelBuilder.Entity<TSitePeriod>(entity =>
+        {
+            entity.HasKey(e => e.FSitePeriodId);
+
+            entity.ToTable("tSitePeriod");
+
+            entity.Property(e => e.FSitePeriodId).HasColumnName("fSitePeriodID");
+            entity.Property(e => e.FFriAfternoon).HasColumnName("fFriAfternoon");
+            entity.Property(e => e.FFriMidnight).HasColumnName("fFriMidnight");
+            entity.Property(e => e.FFriMorning).HasColumnName("fFriMorning");
+            entity.Property(e => e.FFriNight).HasColumnName("fFriNight");
+            entity.Property(e => e.FMonAfternoon).HasColumnName("fMonAfternoon");
+            entity.Property(e => e.FMonMidnight).HasColumnName("fMonMidnight");
+            entity.Property(e => e.FMonMorning).HasColumnName("fMonMorning");
+            entity.Property(e => e.FMonNight).HasColumnName("fMonNight");
+            entity.Property(e => e.FSatAfternoon).HasColumnName("fSatAfternoon");
+            entity.Property(e => e.FSatMidnight).HasColumnName("fSatMidnight");
+            entity.Property(e => e.FSatMorning).HasColumnName("fSatMorning");
+            entity.Property(e => e.FSatNight).HasColumnName("fSatNight");
+            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FSunAfternoon).HasColumnName("fSunAfternoon");
+            entity.Property(e => e.FSunMidnight).HasColumnName("fSunMidnight");
+            entity.Property(e => e.FSunMorning).HasColumnName("fSunMorning");
+            entity.Property(e => e.FSunNight).HasColumnName("fSunNight");
+            entity.Property(e => e.FThurAfternoon).HasColumnName("fThurAfternoon");
+            entity.Property(e => e.FThurMidnight).HasColumnName("fThurMidnight");
+            entity.Property(e => e.FThurMorning).HasColumnName("fThurMorning");
+            entity.Property(e => e.FThurNight).HasColumnName("fThurNight");
+            entity.Property(e => e.FTuesAfternoon).HasColumnName("fTuesAfternoon");
+            entity.Property(e => e.FTuesMidnight).HasColumnName("fTuesMidnight");
+            entity.Property(e => e.FTuesMorning).HasColumnName("fTuesMorning");
+            entity.Property(e => e.FTuesNight).HasColumnName("fTuesNight");
+            entity.Property(e => e.FWedAfternoon).HasColumnName("fWedAfternoon");
+            entity.Property(e => e.FWedMidnight).HasColumnName("fWedMidnight");
+            entity.Property(e => e.FWedMorning).HasColumnName("fWedMorning");
+            entity.Property(e => e.FWedNight).HasColumnName("fWedNight");
+
+            entity.HasOne(d => d.FFriAfternoonNavigation).WithMany(p => p.TSitePeriodFFriAfternoonNavigations)
+                .HasForeignKey(d => d.FFriAfternoon)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus17");
+
+            entity.HasOne(d => d.FFriMidnightNavigation).WithMany(p => p.TSitePeriodFFriMidnightNavigations)
+                .HasForeignKey(d => d.FFriMidnight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus19");
+
+            entity.HasOne(d => d.FFriMorningNavigation).WithMany(p => p.TSitePeriodFFriMorningNavigations)
+                .HasForeignKey(d => d.FFriMorning)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus16");
+
+            entity.HasOne(d => d.FFriNightNavigation).WithMany(p => p.TSitePeriodFFriNightNavigations)
+                .HasForeignKey(d => d.FFriNight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus18");
+
+            entity.HasOne(d => d.FMonAfternoonNavigation).WithMany(p => p.TSitePeriodFMonAfternoonNavigations)
+                .HasForeignKey(d => d.FMonAfternoon)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus1");
+
+            entity.HasOne(d => d.FMonMidnightNavigation).WithMany(p => p.TSitePeriodFMonMidnightNavigations)
+                .HasForeignKey(d => d.FMonMidnight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus3");
+
+            entity.HasOne(d => d.FMonMorningNavigation).WithMany(p => p.TSitePeriodFMonMorningNavigations)
+                .HasForeignKey(d => d.FMonMorning)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus");
+
+            entity.HasOne(d => d.FMonNightNavigation).WithMany(p => p.TSitePeriodFMonNightNavigations)
+                .HasForeignKey(d => d.FMonNight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus2");
+
+            entity.HasOne(d => d.FSatAfternoonNavigation).WithMany(p => p.TSitePeriodFSatAfternoonNavigations)
+                .HasForeignKey(d => d.FSatAfternoon)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus21");
+
+            entity.HasOne(d => d.FSatMidnightNavigation).WithMany(p => p.TSitePeriodFSatMidnightNavigations)
+                .HasForeignKey(d => d.FSatMidnight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus23");
+
+            entity.HasOne(d => d.FSatMorningNavigation).WithMany(p => p.TSitePeriodFSatMorningNavigations)
+                .HasForeignKey(d => d.FSatMorning)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus20");
+
+            entity.HasOne(d => d.FSatNightNavigation).WithMany(p => p.TSitePeriodFSatNightNavigations)
+                .HasForeignKey(d => d.FSatNight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus22");
+
+            entity.HasOne(d => d.FSite).WithMany(p => p.TSitePeriods)
+                .HasForeignKey(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tSitePeriod_tSite");
+
+            entity.HasOne(d => d.FSunAfternoonNavigation).WithMany(p => p.TSitePeriodFSunAfternoonNavigations)
+                .HasForeignKey(d => d.FSunAfternoon)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus25");
+
+            entity.HasOne(d => d.FSunMidnightNavigation).WithMany(p => p.TSitePeriodFSunMidnightNavigations)
+                .HasForeignKey(d => d.FSunMidnight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus27");
+
+            entity.HasOne(d => d.FSunMorningNavigation).WithMany(p => p.TSitePeriodFSunMorningNavigations)
+                .HasForeignKey(d => d.FSunMorning)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus24");
+
+            entity.HasOne(d => d.FSunNightNavigation).WithMany(p => p.TSitePeriodFSunNightNavigations)
+                .HasForeignKey(d => d.FSunNight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus26");
+
+            entity.HasOne(d => d.FThurAfternoonNavigation).WithMany(p => p.TSitePeriodFThurAfternoonNavigations)
+                .HasForeignKey(d => d.FThurAfternoon)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus13");
+
+            entity.HasOne(d => d.FThurMidnightNavigation).WithMany(p => p.TSitePeriodFThurMidnightNavigations)
+                .HasForeignKey(d => d.FThurMidnight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus15");
+
+            entity.HasOne(d => d.FThurMorningNavigation).WithMany(p => p.TSitePeriodFThurMorningNavigations)
+                .HasForeignKey(d => d.FThurMorning)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus12");
+
+            entity.HasOne(d => d.FThurNightNavigation).WithMany(p => p.TSitePeriodFThurNightNavigations)
+                .HasForeignKey(d => d.FThurNight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus14");
+
+            entity.HasOne(d => d.FTuesAfternoonNavigation).WithMany(p => p.TSitePeriodFTuesAfternoonNavigations)
+                .HasForeignKey(d => d.FTuesAfternoon)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus5");
+
+            entity.HasOne(d => d.FTuesMidnightNavigation).WithMany(p => p.TSitePeriodFTuesMidnightNavigations)
+                .HasForeignKey(d => d.FTuesMidnight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus7");
+
+            entity.HasOne(d => d.FTuesMorningNavigation).WithMany(p => p.TSitePeriodFTuesMorningNavigations)
+                .HasForeignKey(d => d.FTuesMorning)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus4");
+
+            entity.HasOne(d => d.FTuesNightNavigation).WithMany(p => p.TSitePeriodFTuesNightNavigations)
+                .HasForeignKey(d => d.FTuesNight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus6");
+
+            entity.HasOne(d => d.FWedAfternoonNavigation).WithMany(p => p.TSitePeriodFWedAfternoonNavigations)
+                .HasForeignKey(d => d.FWedAfternoon)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus9");
+
+            entity.HasOne(d => d.FWedMidnightNavigation).WithMany(p => p.TSitePeriodFWedMidnightNavigations)
+                .HasForeignKey(d => d.FWedMidnight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus11");
+
+            entity.HasOne(d => d.FWedMorningNavigation).WithMany(p => p.TSitePeriodFWedMorningNavigations)
+                .HasForeignKey(d => d.FWedMorning)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus8");
+
+            entity.HasOne(d => d.FWedNightNavigation).WithMany(p => p.TSitePeriodFWedNightNavigations)
+                .HasForeignKey(d => d.FWedNight)
+                .HasConstraintName("FK_tSitePeriod_tSitePeriodStatus10");
+        });
+
+        modelBuilder.Entity<TSitePeriodStatus>(entity =>
+        {
+            entity.HasKey(e => e.FSitePeriodStatusId);
+
+            entity.ToTable("tSitePeriodStatus");
+
+            entity.Property(e => e.FSitePeriodStatusId)
+                .ValueGeneratedNever()
+                .HasColumnName("fSitePeriodStatusID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+        });
+
+        modelBuilder.Entity<TSitePicture>(entity =>
+        {
+            entity.HasKey(e => e.FSitePictureId);
+
+            entity.ToTable("tSitePicture");
+
+            entity.Property(e => e.FSitePictureId).HasColumnName("fSitePictureID");
+            entity.Property(e => e.FPicturePath)
+                .HasMaxLength(50)
+                .HasColumnName("fPicturePath");
+            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+
+
+            //entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
+            //    .HasForeignKey(d => d.FSiteId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_tSitePicture_tSite");
+
+        });
+
+        modelBuilder.Entity<TSkill>(entity =>
+        {
+            entity.HasKey(e => e.FSkillId);
+
+            entity.ToTable("tSkill");
+
+            entity.Property(e => e.FSkillId)
+                .ValueGeneratedNever()
+                .HasColumnName("fSkillID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+            entity.Property(e => e.FName)
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FSkillCategoryId).HasColumnName("fSkillCategoryID");
+            entity.Property(e => e.FThumbnailPath)
+                .HasMaxLength(50)
+                .HasColumnName("fThumbnailPath");
+
+            entity.HasOne(d => d.FSkillCategory).WithMany(p => p.TSkills)
+                .HasForeignKey(d => d.FSkillCategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tSkill_tSkillCategory");
+        });
+
+        modelBuilder.Entity<TSkillCategory>(entity =>
+        {
+            entity.HasKey(e => e.FSkillCategoryId);
+
+            entity.ToTable("tSkillCategory");
+
+            entity.Property(e => e.FSkillCategoryId)
+                .ValueGeneratedNever()
+                .HasColumnName("fSkillCategoryID");
+            entity.Property(e => e.FName)
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FThumbnailPath)
+                .HasMaxLength(50)
+                .HasColumnName("fThumbnailPath");
+        });
+
+        modelBuilder.Entity<TStyle>(entity =>
+        {
+            entity.HasKey(e => e.FStyleId);
+
+            entity.ToTable("tStyle");
+
+            entity.Property(e => e.FStyleId)
+                .ValueGeneratedNever()
+                .HasColumnName("fStyleID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+            entity.Property(e => e.FName)
+                .HasMaxLength(50)
+                .HasColumnName("fName");
+            entity.Property(e => e.FThumbnailPath)
+                .HasMaxLength(50)
+                .HasColumnName("fThumbnailPath");
+        });
+
+        modelBuilder.Entity<TWork>(entity =>
+        {
+            entity.HasKey(e => e.FWorkId);
+
+            entity.ToTable("tWork");
+
+            entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
+            entity.Property(e => e.FDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fDescription");
+            entity.Property(e => e.FFilePath)
+                .HasMaxLength(50)
+                .HasColumnName("fFilePath");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
+            entity.Property(e => e.FThumbnail)
+                .HasMaxLength(50)
+                .HasColumnName("fThumbnail");
+            entity.Property(e => e.FUpdateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fUpdateTime");
+            entity.Property(e => e.FWorkName)
+                .HasMaxLength(50)
+                .HasColumnName("fWorkName");
+            entity.Property(e => e.FWorkTypeId).HasColumnName("fWorkTypeID");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TWorks)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tWork_tMember");
+
+            entity.HasOne(d => d.FStyle).WithMany(p => p.TWorks)
+                .HasForeignKey(d => d.FStyleId)
+                .HasConstraintName("FK_tWork_tStyle");
+
+            entity.HasOne(d => d.FWorkType).WithMany(p => p.TWorks)
+                .HasForeignKey(d => d.FWorkTypeId)
+                .HasConstraintName("FK_tWork_tWorkType");
+        });
+
+        modelBuilder.Entity<TWorkFav>(entity =>
+        {
+            entity.HasKey(e => e.FWorkFav);
+
+            entity.ToTable("tWorkFav");
+
+            entity.Property(e => e.FWorkFav).HasColumnName("fWorkFav");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TWorkFavs)
+                .HasForeignKey(d => d.FMemberId)
+                .HasConstraintName("FK_tWorkFav_tMember");
+
+            entity.HasOne(d => d.FWork).WithMany(p => p.TWorkFavs)
+                .HasForeignKey(d => d.FWorkId)
+                .HasConstraintName("FK_tWorkFav_tWork");
+        });
+
+        modelBuilder.Entity<TWorkType>(entity =>
+        {
+            entity.HasKey(e => e.FWorkTypeId);
+
+            entity.ToTable("tWorkType");
+
+            entity.Property(e => e.FWorkTypeId)
+                .ValueGeneratedNever()
+                .HasColumnName("fWorkTypeID");
+            entity.Property(e => e.FWorkType)
+                .HasMaxLength(50)
+                .HasColumnName("fWorkType");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

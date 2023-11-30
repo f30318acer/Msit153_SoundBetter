@@ -14,9 +14,11 @@ namespace prjSoundBetterApi.Controllers
     public class apiTProjectsController : Controller
     {
         private readonly dbSoundBetterContext _context;
-        public apiTProjectsController(dbSoundBetterContext context)
+        private IWebHostEnvironment _enviro = null;
+        public apiTProjectsController(IWebHostEnvironment p, dbSoundBetterContext context)
         {
             _context = context;
+            _enviro = p;
         }
         //===List_All===
         public IActionResult List()
@@ -71,10 +73,20 @@ namespace prjSoundBetterApi.Controllers
         }
         //===新增===
         [HttpPost]
-        public IActionResult Create([FromBody] TProject? project)
-        {
+        public IActionResult Create(TProject? project,IFormFile formFile)
+        {            
             if (project != null)
             {
+                if (formFile != null)
+                {
+                    string photoName = Guid.NewGuid().ToString() + ".jpg";
+                    project.FThumbnailPath = photoName;
+                    formFile.CopyTo(new FileStream(_enviro.WebRootPath + "/img/project/" + photoName, FileMode.Create));
+                }
+                DateTime now = DateTime.Now;
+                project.FStartdate = now;
+                project.FProjectStatusId = 1;
+                project.FSiteId = 1;
                 _context.Add(project);
                 _context.SaveChanges();
                 return Content("新增成功");

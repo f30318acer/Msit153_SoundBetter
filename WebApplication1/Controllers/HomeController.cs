@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         private readonly dbSoundBetterContext _context;
         private readonly IWebHostEnvironment _environment;
         private readonly UserInfoService _userInfoService;
-        MemberDao dao;
+        MemberDao _dao;
         MemberService _service;
 
 
@@ -36,6 +36,8 @@ namespace WebApplication1.Controllers
             _context = context;
             _environment = environment;
             _userInfoService = userInfoService;
+            _dao = new MemberDao(_context, _environment);
+            _service = new MemberService(_context, _environment);
         }
 
         public IActionResult test()
@@ -125,19 +127,25 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Register(FMemberVM vm)
-        //{
-        //    if (ModelState.IsValid == false)
-        //    {
-        //        return View(vm);
-        //    }
-        //    try
-        //    {
-              
-        //    }
-
-        // }
+        [HttpPost]
+        public IActionResult Register(FMemberVM vm)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View(vm);
+            }
+            try
+            {
+                _service.MemberResgister(vm);
+                TempData["AlertRegister"] = vm.fName;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("","新增失敗,"+ex.Message);
+                return View(vm);
+            }
+            return RedirectToAction("Index");
+         }
 
         //============================================
         [Authorize]
