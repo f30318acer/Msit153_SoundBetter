@@ -43,7 +43,7 @@
                     場地類型
                 </dt>
                 <dd class="col-sm-10">
-                    @Model.SiteTypeText
+                   @*  @Model.SiteTypeText *@
                 </dd>
                 <br />
                 <dt class="col-sm-2">
@@ -78,7 +78,7 @@
                 </dt>
                 <br />
                 <dd class="col-sm-10" id="PlacePic">
-                    @if (Model.FSitePicture != null)
+                   @*  @if (Model.FSitePicture != null)
                     {
                         var sitePicture = Model.FSitePicture;
                         <img src="@Url.Content("~/img/" + sitePicture.FPicturePath)" alt="Site Picture" style="width: 700px; height:auto" />
@@ -86,7 +86,7 @@
                     else
                     {
                         <p>No Image</p>
-                    }
+                    } *@
                 </dd>
         </dl>
     </div>

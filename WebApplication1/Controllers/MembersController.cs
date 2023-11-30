@@ -35,6 +35,10 @@ namespace prjMusicBetter.Controllers
         {
             ViewBag.Display = display;
             TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("error");
+            }
             var photo = (from m in _context.TMembers
                          where m.FMemberId == member.FMemberId
                          select new FMemberDto
@@ -56,7 +60,7 @@ namespace prjMusicBetter.Controllers
                                   FBirthday = Convert.ToDateTime(m.FBirthday).ToString("yyyy-MM-dd"),
                                   FEmail = m.FEmail,
                                   FPhone = m.FPhone,
-                                  FGender = m.FGender ? "男" : "女",
+                                  FGender = (bool)m.FGender ? "男" : "女",
                                   FPassword = m.FPassword,
                                   FPhotoPath = m.FPhotoPath,
                               }).FirstOrDefault();
