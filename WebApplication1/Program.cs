@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
+using prjMusicBetter.Models.EFModels;
+using prjMusicBetter.Models.infra;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
