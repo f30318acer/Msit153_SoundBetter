@@ -1,0 +1,254 @@
+﻿@model prjMusicBetter.Models.TProject
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!-- Intro section -->
+<input type="hidden" id="styleId" value="@Html.DisplayFor(model => model.FStyleId)" />
+<input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
+
+<section class="intro-section spad">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="playlist-item">
+					<img src="~/img/project/@Html.DisplayFor(model => model.FThumbnailPath)" alt="">
+				</div>
+			</div>
+			<div class="col-lg-9">
+				<h2>@Html.DisplayFor(model => model.FName)</h2>				
+				<p id="styleName"></p>
+				<div class="text-right">
+					<a href="~/project/applyconfirm" class="btn btn-danger btn-lg">應徵</a>
+					<button href="#" class="btn btn-warning btn-lg">追蹤製作</button>
+				</div>
+				<p>
+					@Html.DisplayFor(model => model.FDescription)
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="col-lg-6">
+			<div class="song-details-box">
+				<h3>製作專案Demo</h3>
+				<!-- song -->
+				<div class="song-item">
+					<div class="row">
+						<div class="col-xl-5 col-lg-12 col-md-5">
+							<div class="song-info-box">
+								<img src="~/img/songs/1.jpg" alt="">
+								<div class="song-info">
+									<h4>Project Demo01</h4>
+									<p>One Night in Ibiza</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-7 col-lg-12 col-md-7">
+							<div class="single_player_container">
+								<div class="single_player">
+									<div class="jp-jplayer jplayer" data-ancestor=".jp_container_1" data-url="music-files/1.mp3"></div>
+									<div class="jp-audio jp_container_1" role="application" aria-label="media player">
+										<div class="jp-gui jp-interface">
+
+											<!-- Player Controls -->
+											<div class="player_controls_box">
+												<button class="jp-prev player_button" tabindex="0"></button>
+												<button class="jp-play player_button" tabindex="0"></button>
+												<button class="jp-next player_button" tabindex="0"></button>
+												<button class="jp-stop player_button" tabindex="0"></button>
+											</div>
+											<!-- Progress Bar -->
+											<div class="player_bars">
+												<div class="jp-progress">
+													<div class="jp-seek-bar">
+														<div>
+															<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
+														</div>
+													</div>
+												</div>
+												<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- song -->
+				<div class="song-item">
+					<div class="row">
+						<div class="col-xl-5 col-lg-12 col-md-5">
+							<div class="song-info-box">
+								<img src="~/img/songs/2.jpg" alt="">
+								<div class="song-info">
+									<h4>Project Demo02</h4>
+									<p>Dream in colors</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-7 col-lg-12 col-md-7">
+							<div class="single_player_container">
+								<div class="single_player">
+									<div class="jp-jplayer jplayer" data-ancestor=".jp_container_2" data-url="music-files/2.mp3"></div>
+									<div class="jp-audio jp_container_2" role="application" aria-label="media player">
+										<div class="jp-gui jp-interface">
+
+											<!-- Player Controls -->
+											<div class="player_controls_box">
+												<button class="jp-prev player_button" tabindex="0"></button>
+												<button class="jp-play player_button" tabindex="0"></button>
+												<button class="jp-next player_button" tabindex="0"></button>
+												<button class="jp-stop player_button" tabindex="0"></button>
+											</div>
+											<!-- Progress Bar -->
+											<div class="player_bars">
+												<div class="jp-progress">
+													<div class="jp-seek-bar">
+														<div>
+															<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
+														</div>
+													</div>
+												</div>
+												<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3">
+				<h3>製作專長需求</h3>
+			</div>
+			<div class="col-lg-12">
+				<p>
+					@Html.DisplayFor(model => model.FDescription2)
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row" id="memberInfo">
+		</div>
+	</div>
+
+</section>
+<!-- Intro section end -->
+
+
+<div>
+    <h4>TProject</h4>
+    <hr 
+            @Html.DisplayFor(model => model.FDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FThumbnailPath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FThumbnailPath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FDescription2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FDescription2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FStyleId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FStyleId)
+        </dd>/>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FBudget)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FBudget)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FStartdate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FStartdate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FEnddate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FEnddate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FDescription)
+        </dt>
+        <dd class = "col-sm-10">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FMember)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FMember.FMemberId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FProjectStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FProjectStatus.FProjectStatusId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FSite)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FSite.FSiteId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FSiteNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FSiteNavigation.FStyleId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FProjectId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts{
+	<script>
+		const styleId = $('#styleId').val();
+		const memberId = $('#memberId').val();
+
+		$.getJSON(`/apiTStyle/QueryById/${styleId}`, function (datas) {
+			console.log(datas);
+			$('#styleName').html(`製作風格 : ${datas[0].fName}`);
+		})
+
+		$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
+			console.log(datas);
+			$('#memberInfo').html(`
+				<div class="col-lg-6" >
+					<h5>製作發案人 : ${datas.fUsername}</h5>
+				</div>
+				<div class="col-lg-6" >
+					<h5 class="text-right">聯絡電話 : ${datas.fPhone}<br>Email : ${datas.fEmail}</h5>
+				</div>
+				`);
+		})
+	</script>
+}

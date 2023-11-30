@@ -71,8 +71,23 @@ namespace prjSoundBetterApi.Controllers
             }
             return Json(tProject);
         }
-        //===新增===
-        [HttpPost]
+        //===找業主===
+		public IActionResult QueryMemberById(int? id)
+		{
+			if (id == null || _context.TMembers == null)
+			{
+				return NotFound();
+			}
+
+			var member = _context.TMembers.FirstOrDefault(m => m.FMemberId == id);
+			if (member == null)
+			{
+				return NotFound();
+			}
+			return Json(member);
+		}
+		//===新增===
+		[HttpPost]
         public IActionResult Create(TProject? project,IFormFile formFile)
         {            
             if (project != null)
