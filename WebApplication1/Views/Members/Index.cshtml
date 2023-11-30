@@ -10,8 +10,6 @@
     }
 }
 
-
-
 <div class="container row p-2 mx-auto border border-dark rounded-3 m-3">
     <div class="col-3  border rounded-3 p-2 color-FCFCFC">
         <div class="p-3">
@@ -86,13 +84,15 @@
     </div>
     <div class="col-9 p-2" id="divPartial"></div>
 </div>
-@section Scripts{
+@section Scripts
+{
     <script>
 
         function loadPage(display) {
             $('#divPartial').load(`@Url.Content("~/Members/")${display}`)
         }
 
+        //將會員資料回傳至這裡
         $('#info').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
         })
@@ -100,15 +100,4 @@
 
 
     </script>
-
-
-
-
-
-
-
-
-
-
-
 }
