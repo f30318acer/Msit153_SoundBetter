@@ -40,16 +40,18 @@
     <script>
         const btn = document.querySelector('#btn1');
         const slt = document.querySelector('#citySelect');
+        const selValue = $('#citySelect').val();
 
         btn.addEventListener('click', async function () {
             var page = await '@Url.Content("~/Place/PlaceDetail")';
             location.href = page;
         })
-        function load(selectedCityId) {
+
+        function loadPlaceByCity(cityval) {
             const divList = $('#divList');
-            let url = '/Place/List';
-            if (selectedCityId) {
-                url += `?fCityId=${selectedCityId}`;
+            let url = '/Place/QueryByCity';
+            if (cityval) {
+                url += `?fCityId=${cityval}`;
             }
             $.getJSON(url, function (datas) {
                 const docFrag = $(document.createDocumentFragment())
@@ -69,24 +71,44 @@
                 divList.html(docFrag)
             })
         }
-        load();
-        function loadCity() {
-            $.getJSON('/Place/GetCities', function (cities) {
-                const citySelect = $('#citySelect');
-                $.each(cities, function (index, city) {
-                    citySelect.append($('<option>', {
-                        value: city.fCityId,
-                        text: city.fCity
-                    }))
+
+        function loadPlace() {
+            const divList = $('#divList');
+            let url = '/Place/List';
+
+            $.getJSON(url, function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    const card = $(
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7">
+                                    <div class="playlist-item">
+                                        <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
+                                        <h5>${item.fSiteName}</h5>
+                                        <h5>${item.fCity}</h5>
+                                        <h5>@Model${item.fSiteTypeText}</h5><button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
+                                    </div>
+                                 <br />
+                                 </a>`);
+                    docFrag.append(card);
                 })
+                divList.html(docFrag)
             })
         }
 
-        loadCity();
+        loadPlace();
 
-        slt.addEventListener('change', async function () {
-            const selectedCityId = $(slt).val();
-            load(selectedCityId);
-        })
+        async function loadCity() {
+            const response = await fetch('@Url.Content("~/Place/GetCities")');
+            const data = await response.json();
+            const style = data.map(s => `<option value="${s.fCityId}">${s.fCity}</option>`);
+            slt.innerHTML = style.join("");
+
+            slt.addEventListener('change', async function () {
+                const cityval = $('#citySelect').val();
+                loadPlaceByCity(cityval);
+            });
+        }
+
+        loadCity();
     </script>
 }
