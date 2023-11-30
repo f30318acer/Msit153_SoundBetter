@@ -26,18 +26,20 @@
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class=" width-50px  fw-bold">使用者姓名</div>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="inputName" name="fUsername" class="form-control" placeholder="請輸入姓名" />
-                                            @Html.ValidationMessageFor(member=>member.fUsername,"",new{@class="text-danger"})
-                                        </div>
                                     </div>
-
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">帳號</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="inputName"name="fName" class="form-control" placeholder="請輸入帳號" />
+                                            <input type="text" id="fUsername" name="fUsername" class="form-control" placeholder="請輸入帳號" />
+                                            @Html.ValidationMessageFor(member => member.fUsername, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class=" width-50px  fw-bold">帳號</div>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="fName" name="fName" class="form-control" placeholder="請輸入帳號" />
                                             @Html.ValidationMessageFor(member=>member.fName,"",new{@class="text-danger"})
                                         </div>
                                     </div>
@@ -46,7 +48,7 @@
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">電子信箱</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="inputEmail" name="fEmail" class="form-control" placeholder="請輸入電子郵箱" />
+                                            <input type="email" id="fEmail" name="fEmail" class="form-control" placeholder="請輸入電子郵箱" />
                                             @Html.ValidationMessageFor(member=>member.fEmail,"",new{@class="text-danger"})
                                         </div>
                                     </div>
@@ -55,7 +57,7 @@
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">電話</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="inputPhone" name="fPhone" class="form-control" placeholder="請輸入電話" />
+                                            <input type="text" id="fPhone" name="fPhone" class="form-control" placeholder="請輸入電話" />
                                             @Html.ValidationMessageFor(member => member.fPhone, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -64,20 +66,18 @@
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">密碼</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="inputPassword" name="fPassword" class="form-control" placeholder="請輸入密碼" />
+                                            <input type="password" id="fPassword" name="fPassword" class="form-control" placeholder="請輸入密碼" />
                                             @Html.ValidationMessageFor(member=>member.fPassword,"",new{@class="text-danger"})
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
+                                  @*   <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">確定密碼</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="inputComfirmPassword" name="ComfirmPassword" class="form-control" placeholder="請重新輸入密碼" />
+                                            <input type="password" id="ComfirmPassword" name="ComfirmPassword" class="form-control" placeholder="請重新輸入密碼" />
                                             <span asp-validation-for="ComfirmPassword" class="text-danger"></span>
                                         </div>
-                                    </div>
-
-
+                                    </div> *@
                                     <div class="pt-2 d-flex align-items-baseline">
                                         <div class=" width-50px  fw-bold">性別</div>
                                         <div class="mx-3 d-flex">
@@ -128,3 +128,22 @@
         </div>
     </div>
 </section>
+@section Scripts{
+    <script>
+        const photo = document.querySelector('#photo')
+
+        photo.addEventListener('change', () => {
+            const file =photo.files
+            if (file.length == 0) {
+                let imgDefault = '@Url.Content("~/img/Member/default.jpg")'
+                $('#imgMember').attr('src', imgDefault)
+            }
+            else {
+                const url = URL.createObjectURL(file[0]);
+                $('#imgMember').attr('src',url)
+            }
+        })
+
+    </script>
+
+}

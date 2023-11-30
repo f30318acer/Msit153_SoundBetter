@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         private readonly dbSoundBetterContext _context;
         private readonly IWebHostEnvironment _environment;
         private readonly UserInfoService _userInfoService;
-        MemberDao dao;
+        MemberDao _dao;
         MemberService _service;
 
 
@@ -36,6 +36,8 @@ namespace WebApplication1.Controllers
             _context = context;
             _environment = environment;
             _userInfoService = userInfoService;
+            _dao = new MemberDao(_context, _environment);
+            _service = new MemberService(_context, _environment);
         }
 
         public IActionResult test()

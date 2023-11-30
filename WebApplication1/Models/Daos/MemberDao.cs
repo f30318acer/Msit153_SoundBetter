@@ -42,7 +42,7 @@ namespace prjMusicBetter.Models.Daos
                 FEmail = vm.fEmail,
                 FPhone = vm.fPhone,
                 FGender =Convert.ToBoolean(vm.fGender),
-                FPermissionId = 2,
+                FPermissionId = 2,//一般會員執行寫2
                 FCreationTime = DateTime.Now,
                 FBirthday = Convert.ToDateTime(vm.fBirthday)
             };
