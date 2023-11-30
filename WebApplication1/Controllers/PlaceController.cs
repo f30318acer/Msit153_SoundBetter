@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using System;
 
 namespace Music_matchmaking_platform.Controllers
 {
     public class PlaceController : Controller
     {
 		private readonly dbSoundBetterContext _context;
-		public PlaceController(dbSoundBetterContext context)
+		private readonly IWebHostEnvironment _environment;
+		public PlaceController(dbSoundBetterContext context, IWebHostEnvironment environment)
 		{
 			_context = context;
+			_environment = environment;
 		}
 
 		public IActionResult List()
@@ -36,23 +39,32 @@ namespace Music_matchmaking_platform.Controllers
 
 		public IActionResult GetCities()
 		{
-			var cities = _context.TCities.ToList();
+			var cities = _context.TCities;
 			return Json(cities);
 		}
 		public IActionResult QueryByCity(int? id)//CityId
 		{
-			if (id == null || _context.TSites == null)
-			{
-				return NotFound();
-			}
+			Console.WriteLine($"{id}");
+            var query = _context.TSites
+				.Include(t => t.FCity)
+				.Include(t => t.FMember)
+				.Where(t => t.FCityId == id);
 
-			var tSite = _context.TSites.Where(m => m.FCityId == id);
-			if (tSite == null)
-			{
-				return NotFound();
-			}
-			return Json(tSite);
-		}
+			var a = query
+				.Select(t => new
+				{
+					fSiteId = t.FSiteId,
+					fSiteName = t.FSiteName,
+					fPhone = t.FPhone,
+					fAddress = t.FAddress,
+					fCity = t.FCity.FCity,
+					fSiteType = t.FSiteType,
+					fName = t.FMember.FName,
+					fPicturePath = t.FPicture,
+					fCityId = t.FCityId
+				});
+				return Json(a);
+        }
 		public IActionResult PlaceDetail()
         {
             return View();
