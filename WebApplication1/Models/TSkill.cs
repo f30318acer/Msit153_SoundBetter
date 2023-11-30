@@ -21,5 +21,7 @@ public partial class TSkill
 
     public virtual ICollection<TMemberSkill> TMemberSkills { get; set; } = new List<TMemberSkill>();
 
+    public virtual TProject TProject { get; set; }
+
     public virtual ICollection<TProjectSkillRequire> TProjectSkillRequires { get; set; } = new List<TProjectSkillRequire>();
 }

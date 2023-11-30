@@ -31,7 +31,11 @@ public partial class TProject
 
     public int? FStyleId { get; set; }
 
+    public int? FSkillId { get; set; }
+
     public virtual TMember FMember { get; set; }
+
+    public virtual TSkill FProject { get; set; }
 
     public virtual TProjectStatus FProjectStatus { get; set; }
 

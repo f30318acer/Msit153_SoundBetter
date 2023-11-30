@@ -11,12 +11,12 @@ namespace Music_matchmaking_platform.Controllers
 		{
 			_context = context;
 		}
+
 		public IActionResult List()
 		{
-			var dbSoundBetterContext = _context.TSites
+            var dbSoundBetterContext = _context.TSites
 				.Include(t => t.FCity)
 				.Include(t => t.FMember)
-				.Include(t => t.FSitePicture)
 				.Select(t => new
 				{
 					fSiteId = t.FSiteId,
@@ -26,12 +26,14 @@ namespace Music_matchmaking_platform.Controllers
 					fCity = t.FCity.FCity,
 					fSiteType = t.FSiteType,
 					fName = t.FMember.FName,
-					fPicturePath = t.FSitePicture.FPicturePath,
-					fSiteTypeText = t.SiteTypeText
+					fPicturePath = t.FPicture,
+					fCityId = t.FCityId
 				})
 				.ToList();
+
 			return Json(dbSoundBetterContext);
 		}
+
 		public IActionResult GetCities()
 		{
 			var cities = _context.TCities.ToList();
