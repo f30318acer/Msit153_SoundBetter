@@ -194,6 +194,10 @@ namespace WebApplication1.Controllers
         public IActionResult aboutUS() { return View(); }
         public IActionResult TermOfTeacher() { return View(); }
         public IActionResult Term() { return View(); }
+        public IActionResult JoinUS() { return View(); }
+        public IActionResult Partner() { return View(); }
+
+        public IActionResult contactUS() { return View(); }
 
 
 
