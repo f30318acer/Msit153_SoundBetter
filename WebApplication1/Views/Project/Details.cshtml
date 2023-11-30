@@ -17,13 +17,15 @@
 					<img src="~/img/project/@Html.DisplayFor(model => model.FThumbnailPath)" alt="">
 				</div>
 			</div>
-			<div class="col-lg-9">
+			<div class="col-lg-6">
 				<h2>@Html.DisplayFor(model => model.FName)</h2>				
 				<p id="styleName"></p>
-				<div class="text-right">
-					<a href="~/project/applyconfirm" class="btn btn-danger btn-lg">應徵</a>
-					<button href="#" class="btn btn-warning btn-lg">追蹤製作</button>
-				</div>
+			</div>
+			<div class="col-lg-3 text-right">
+				<a href="~/project/applyconfirm" class="btn btn-danger btn-lg">應徵</a>
+				<button href="#" class="btn btn-warning btn-lg">追蹤製作</button>
+			</div>
+			<div class="col-lg-12">
 				<p>
 					@Html.DisplayFor(model => model.FDescription)
 				</p>
