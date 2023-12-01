@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace prjMusicBetter.Models.ViewModels
 {
+    //登入畫面上所顯示的欄位
     public class LoginVM
     {
         [Display(Name = "電子郵件")]

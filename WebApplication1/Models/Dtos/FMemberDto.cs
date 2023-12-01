@@ -5,7 +5,7 @@
 
         public int FMemberID { get; set; }
         public string? FPhotoPath { get; set; }
-        //public string FUsername { get; set; }
+        public string FUsername { get; set; }
         public string FName { get; set; }
         public string FPassword { get; set; }
         public string FPhone { get; set; }
