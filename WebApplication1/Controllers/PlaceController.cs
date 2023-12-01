@@ -17,40 +17,9 @@ namespace Music_matchmaking_platform.Controllers
 
 		public IActionResult List()
 		{
-            var dbSoundBetterContext = _context.TSites
+			var dbSoundBetterContext = _context.TSites
 				.Include(t => t.FCity)
 				.Include(t => t.FMember)
-				.Select(t => new
-				{
-					fSiteId = t.FSiteId,
-					fSiteName = t.FSiteName,
-					fPhone = t.FPhone,
-					fAddress = t.FAddress,
-					fCity = t.FCity.FCity,
-					fSiteType = t.FSiteType,
-					fName = t.FMember.FName,
-					fPicturePath = t.FPicture,
-					fCityId = t.FCityId
-				})
-				.ToList();
-
-			return Json(dbSoundBetterContext);
-		}
-
-		public IActionResult GetCities()
-		{
-			var cities = _context.TCities;
-			return Json(cities);
-		}
-		public IActionResult QueryByCity(int? id)//CityId
-		{
-			Console.WriteLine($"{id}");
-            var query = _context.TSites
-				.Include(t => t.FCity)
-				.Include(t => t.FMember)
-				.Where(t => t.FCityId == id);
-
-			var a = query
 				.Select(t => new
 				{
 					fSiteId = t.FSiteId,
@@ -63,7 +32,34 @@ namespace Music_matchmaking_platform.Controllers
 					fPicturePath = t.FPicture,
 					fCityId = t.FCityId
 				});
-				return Json(a);
+
+			return Json(dbSoundBetterContext);
+		}
+
+		public IActionResult GetCities()
+		{
+			var cities = _context.TCities;
+			return Json(cities);
+		}
+		public IActionResult QueryByCity(int? fCityId)
+		{
+            var query = _context.TSites
+				.Include(t => t.FCity)
+				.Include(t => t.FMember)
+				.Where(t => t.FCityId == fCityId)
+				.Select(t => new
+				{
+					fSiteId = t.FSiteId,
+					fSiteName = t.FSiteName,
+					fPhone = t.FPhone,
+					fAddress = t.FAddress,
+					fCity = t.FCity.FCity,
+					fSiteType = t.FSiteType,
+					fName = t.FMember.FName,
+					fPicturePath = t.FPicture,
+					fCityId = t.FCityId
+				});
+				return Json(query);
         }
 		public IActionResult PlaceDetail()
         {
