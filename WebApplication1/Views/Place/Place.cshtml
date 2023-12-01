@@ -12,9 +12,9 @@
 <section class="similar-songs-section">
     <div class="container-fluid">
         <h3>場地一覽</h3>
-        <br />
         <select class="form-select" id="citySelect">
         </select>
+        <br />
 @*         <div class="row">
             <div class="col-xl-3 col-sm-6">
                 <div class="similar-song">
@@ -31,6 +31,7 @@
                 </div>
             </div>
         </div> *@
+        <br />
         <div id="divList" class="row playlist-area">
             <!--List內容-->
         </div>
@@ -57,7 +58,7 @@
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item) {
                     const card = $(
-                        `<a class="mix col-lg-4 col-md-5 col-sm-7">
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
                             <div class="playlist-item">
                                 <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
                                 <h5>${item.fSiteName}</h5>
@@ -80,14 +81,14 @@
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item) {
                     const card = $(
-                        `<a class="mix col-lg-4 col-md-5 col-sm-7">
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
                                     <div class="playlist-item">
                                         <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
                                         <h5>${item.fSiteName}</h5>
                                         <h5>${item.fCity}</h5>
                                         <h5>@Model${item.fSiteTypeText}</h5><button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
                                     </div>
-                                 <br />
+                                 
                                  </a>`);
                     docFrag.append(card);
                 })
