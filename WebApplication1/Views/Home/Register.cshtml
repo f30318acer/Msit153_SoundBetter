@@ -1,4 +1,4 @@
-﻿@model prjMusicBetter.Models.TMember
+﻿@model prjMusicBetter.Models.ViewModels.FMemberVM
 @{
     ViewData["Title"] = "Login";
 }
@@ -12,67 +12,104 @@
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                                 <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">Register</p>
+                                <form method="post" enctype="multipart/form-data"class="mx-1 mx-md-4">
 
-
-                                <form class="mx-1 mx-md-4" asp-action="Create">
-                                   
-                                    <div class="photo-button mb-3"><div class="photo-card mb-2 d-flex justify-content-center">
-                                        <div class="photo"><img src="~/img/artist.jpg" style="border-radius:10px"> 
-                                            <input type="text" name="Photo" style="display: none;"> <i class="fas fa-camera"></i></div></div> 
-                                            <div class="photo-upload mb-2 d-flex justify-content-center"><input type="file" style="display: none;">
-                                            <input type="button" value="上傳大頭照" class="btn btn-light"> <input type="button" value="移除大頭照" class="btn btn-light">
+                                    <div class="photo-button mb-3">
+                                        <div class="photo-card mb-2 d-flex justify-content-center">
+                                            <div class="photo">
+                                                <img src="~/img/Member/default.jpg" class="circle-size-300"id="imgMember">
+                                                <input type="file" name="Photo"id="form-control"/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="form3Example4c" class="form-control" asp-for="FUsername" />
-                                            <label class="form-label" for="form3Example4c">FUsername</label>
-                                        </div>
                                     </div>
-
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class=" width-50px  fw-bold">使用者姓名</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="form3Example4c" class="form-control" asp-for="FName" />
-                                            <label class="form-label" for="form3Example4c">Name</label>
+                                            <input type="text" id="fUsername" name="fUsername" class="form-control" placeholder="請輸入使用者姓名" />
+                                            @Html.ValidationMessageFor(member => member.fUsername, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class=" width-50px  fw-bold">姓名</div>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="fName" name="fName" class="form-control" placeholder="請輸入姓名" />
+                                            @Html.ValidationMessageFor(member=>member.fName,"",new{@class="text-danger"})
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                        <div class=" width-50px  fw-bold">電子信箱</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="form3Example3c" class="form-control" asp-for="FEmail" />
-                                            <label class="form-label" for="form3Example3c">Your Email</label>
+                                            <input type="email" id="fEmail" name="fEmail" class="form-control" placeholder="請輸入電子郵箱" />
+                                            @Html.ValidationMessageFor(member=>member.fEmail,"",new{@class="text-danger"})
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class=" width-50px  fw-bold">電話</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control" asp-for="FPassword" />
-                                            <label class="form-label" for="form3Example4c">Password</label>
+                                            <input type="text" id="fPhone" name="fPhone" class="form-control" placeholder="請輸入電話" />
+                                            @Html.ValidationMessageFor(member => member.fPhone, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                   
+
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class=" width-50px  fw-bold">密碼</div>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="form3Example4c" class="form-control" asp-for="FPhone" />
-                                            <label class="form-label" for="form3Example4c">Contact No.</label>
+                                            <input type="password" id="fPassword" name="fPassword" class="form-control" placeholder="請輸入密碼" />
+                                            @Html.ValidationMessageFor(member=>member.fPassword,"",new{@class="text-danger"})
                                         </div>
                                     </div>
-                                   
-
+                                  @*   <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class=" width-50px  fw-bold">確定密碼</div>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="password" id="ComfirmPassword" name="ComfirmPassword" class="form-control" placeholder="請重新輸入密碼" />
+                                            <span asp-validation-for="ComfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div> *@
+                                    <div class="pt-2 d-flex align-items-baseline">
+                                        <div class=" width-50px  fw-bold">性別</div>
+                                        <div class="mx-3 d-flex">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="fGender" id="genderFalse" value="False" checked>
+                                                <label class="form-check-label" for="genderFalse">
+                                                    男
+                                                </label>
+                                            </div>
+                                            <div class="form-check ">
+                                                <input class="form-check-input" type="radio" name="fGender" id="genderTrue" value="True">
+                                                <label class="form-check-label" for="genderTrue">
+                                                    女
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-2 d-flex col-6 align-items-center">
+                                        <div class=" width-50px  fw-bold">生日</div>
+                                        <div class="mx-3 d-flex">
+                                            <input type="date" class="form-control" value="" name="fBirthday" id="fBirthday" />
+                                            @Html.ValidationMessageFor(member=>member.fBirthday,"",new{@class="text-danger"})
+                                        </div>
+                                    </div>
                                     <div class="container">
-                                        <div class="row">
-                                            <div class="col">
-                                                <a  asp-area="" asp-controller="Home" asp-action="Register"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                                transition: all 0.3s ease;">Register </a>
-                                                <a asp-area="" asp-controller="Home" asp-action="index"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                                transition: all 0.3s ease;">回首頁 </a>
+                                        <input type="checkbox" id="showPassword"> 顯示密碼
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="d-flex justify-content-between p-2">
+                                            <div class="p-2">
+                                            </div>
+                                            <div class="p-2">
+                                                <input type="button" class="btn btn-outline-secondary" value="Demo" id="Demo" />
+                                                <input type="submit" value="註冊" id="Login" class="btn btn-dark fw-bold">
+                                                @Html.ActionLink("取消", "Login", "Home", "", new { @class = "btn btn-outline-dark fw-bold" })
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +117,7 @@
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                                     @*class="img-fluid"*@ alt="Sample image">
+                                @*class="img-fluid"*@ alt="Sample image">
                             </div>
                         </div>
                     </div>
@@ -89,3 +126,51 @@
         </div>
     </div>
 </section>
+@section Scripts{
+    <script>
+        const photo = document.querySelector('#photo')
+
+        photo.addEventListener('change', () => {
+            const file =photo.files
+            if (file.length == 0) {
+                let imgDefault = '@Url.Content("~/img/Member/default.jpg")'
+                $('#imgMember').attr('src', imgDefault)
+            }
+            else {
+                const url = URL.createObjectURL(file[0]);
+                $('#imgMember').attr('src',url)
+            }
+        })
+        //顯示密碼
+        // $(document).ready(function () {
+        //     $('#showPassword').in('change', function () {
+        //         var passwordInput = $('#fPassword');
+               
+        //         if ($(this).is(':check')) {
+        //             passwordInput.attr('type', 'text');
+                   
+        //         }
+        //         else {
+        //             passwordInput.attr('type', 'password');
+                   
+        //         }
+        //     })
+        // })
+
+        //demo 測試
+        // $('#Demo').on('click', () =>{
+        //     let fUsername = "Shiao"
+        //     $('#inputfUsername').val(fUsername)
+        //     let fName ="Shiao"
+        //             $("#inputfName").val(fName)
+        //     let fEmail ="shiao1124@gmail.com"
+        //             $('#inputfEmail').val(fEmail)
+        //     let fPhone = "0932456789"
+        //             $('#inputfPhone').val(fPhone)
+        //     let fBirthday = "1998-11-05"
+        //             $('#inputfBirthday').val(fBirthday)
+        //             $('#inputfPassword').val("123")
+        // })
+    </script>
+
+}

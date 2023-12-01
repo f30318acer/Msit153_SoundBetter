@@ -1,291 +1,131 @@
-﻿@{
-	ViewData["Title"] = "Profile";
+﻿@model prjMusicBetter.Models.Dtos.FMemberDto
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = Url.Content("~/Views/Shared/_Layout.cshtml");
+    string display = "MemberInfo";
+    if (!string.IsNullOrEmpty(ViewBag.Display))
+    {
+        display = ViewBag.Display;
+    }
 }
-<!-- Player section -->
-<section class="player-section set-bg" data-setbg="img/player-bg.jpg">
-	<div class="player-box">
-		<div class="tarck-thumb-warp">
-			<div class="tarck-thumb">
-				<img src="img/wave-thumb.jpg" alt="">
-				<button onclick="wavesurfer.playPause();" class="wp-play"></button>
-			</div>
-		</div>
-		<div class="wave-player-warp">
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="wave-player-info">
-						@*你的姓名1*@
-						<h2>Kevin</h2>
-						<p>One Night in Ibiza</p>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="songs-links">
-						<a href=""><img src="img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-			<div id="wavePlayer" class="clierfix">
-				<div id="audiowave" data-waveurl="music-files/8.mp3"></div>
-				<div id="currentTime"></div>
-				<div id="clipTime"></div>
-				<!-- Player Controls -->
-				<div class="wavePlayer_controls">
-					<button class="jp-prev player_button" onclick="wavesurfer.skipBackward();"></button>
-					<button class="jp-play player_button" onclick="wavesurfer.playPause();"></button>
-					<button class="jp-next player_button" onclick="wavesurfer.skipForward();"></button>
-					<button class="jp-stop player_button" onclick="wavesurfer.stop();"></button>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- Player section end -->
-<!-- Songs details section -->
-<section class="songs-details-section">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-3">
-				<div class="song-details-box">
-					@*會員資料*@
-					<h3>Member Details</h3>
-					<ul>
-						<li><strong>Genre:</strong><span>electro, drum & base, minimal</span></li>
-						<li><strong>Tags:</strong><span>quitar, piano, music, electronic music, minimal, chill music, pop, cultural, live, popular</span></li>
-						<li><strong>Instruments:</strong><span>quitar, piano, drums, bass</span></li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-lg-9">
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="song-details-box">
-							<h3>About the Me</h3>
-							<div class="artist-details">
-								<img src="img/artist.jpg" alt="">
-								<div class="ad-text">
-									@*會員姓名*@
-									<h5>Kevin</h5>
-									<span>Artist/ Songwriter</span>
-									@*自我介紹*@
-									<p>大家好，我是Kevin。我熱愛音樂和運動，目前在軟體行業工作。希望能在這裡與大家有更多的交流和學習。</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="song-details-box">
-							@*我的作品*@
-							<h3>Product List</h3>
-							<!-- song -->
-							<div class="song-item">
-								<div class="row">
-									<div class="col-xl-5 col-lg-12 col-md-5">
-										<div class="song-info-box">
-											<img src="img/songs/1.jpg" alt="">
-											<div class="song-info">
-												<h4>Jennifer Brown</h4>
-												<p>One Night in Ibiza</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-xl-7 col-lg-12 col-md-7">
-										<div class="single_player_container">
-											<div class="single_player">
-												<div class="jp-jplayer jplayer" data-ancestor=".jp_container_1" data-url="music-files/1.mp3"></div>
-												<div class="jp-audio jp_container_1" role="application" aria-label="media player">
-													<div class="jp-gui jp-interface">
 
-														<!-- Player Controls -->
-														<div class="player_controls_box">
-															<button class="jp-prev player_button" tabindex="0"></button>
-															<button class="jp-play player_button" tabindex="0"></button>
-															<button class="jp-next player_button" tabindex="0"></button>
-															<button class="jp-stop player_button" tabindex="0"></button>
-														</div>
-														<!-- Progress Bar -->
-														<div class="player_bars">
-															<div class="jp-progress">
-																<div class="jp-seek-bar">
-																	<div>
-																		<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-																	</div>
-																</div>
-															</div>
-															<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-														</div>
-													</div>
-													<div class="jp-no-solution">
-														<span>Update Required</span>
-														To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- song -->
-							<div class="song-item">
-								<div class="row">
-									<div class="col-xl-5 col-lg-12 col-md-5">
-										<div class="song-info-box">
-											<img src="img/songs/2.jpg" alt="">
-											<div class="song-info">
-												<h4>Michael Smith</h4>
-												<p>Dream in colors</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-xl-7 col-lg-12 col-md-7">
-										<div class="single_player_container">
-											<div class="single_player">
-												<div class="jp-jplayer jplayer" data-ancestor=".jp_container_2" data-url="music-files/2.mp3"></div>
-												<div class="jp-audio jp_container_2" role="application" aria-label="media player">
-													<div class="jp-gui jp-interface">
 
-														<!-- Player Controls -->
-														<div class="player_controls_box">
-															<button class="jp-prev player_button" tabindex="0"></button>
-															<button class="jp-play player_button" tabindex="0"></button>
-															<button class="jp-next player_button" tabindex="0"></button>
-															<button class="jp-stop player_button" tabindex="0"></button>
-														</div>
-														<!-- Progress Bar -->
-														<div class="player_bars">
-															<div class="jp-progress">
-																<div class="jp-seek-bar">
-																	<div>
-																		<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-																	</div>
-																</div>
-															</div>
-															<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-														</div>
-													</div>
-													<div class="jp-no-solution">
-														<span>Update Required</span>
-														To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- Songs details section -->
-<!-- Similar Songs section -->
-<section class="similar-songs-section">
-	<div class="container-fluid">
-		<h3>Similar Songs</h3>
-		<div class="row">
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="img/playlist/1.jpg" alt="">
-					<h4>Jennifer Brown</h4>
-					<p>One Night in Ibiza</p>
-					<div class="single_player">
-						<div class="jp-jplayer jplayer" data-ancestor=".jp_container_8" data-url="music-files/3.mp3"></div>
-						<div class="jp-audio jp_container_8" role="application" aria-label="media player">
-							<div class="jp-gui jp-interface">
-								<!-- Player Controls -->
-								<!-- Progress Bar -->
-								<div class="player_bars">
-									<div class="jp-progress">
-										<div class="jp-seek-bar">
-											<div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="img/playlist/2.jpg" alt="">
-					<h4>Jennifer Brown</h4>
-					<p>One Night in Ibiza</p>
-					<div class="single_player">
-						<div class="jp-jplayer jplayer" data-ancestor=".jp_container_9" data-url="music-files/4.mp3"></div>
-						<div class="jp-audio jp_container_9" role="application" aria-label="media player">
-							<div class="jp-gui jp-interface">
-								<!-- Player Controls -->
-								<!-- Progress Bar -->
-								<div class="player_bars">
-									<div class="jp-progress">
-										<div class="jp-seek-bar">
-											<div>
-											</div>
-										</div>
-									</div>
+    <div class="container row p-2 mx-auto border border-dark rounded-3 m-3">
+        <div class="col-3  border rounded-3 p-2 color-FCFCFC">
+            <div class="p-3">
+                <div class="circle-size-150 mx-auto">
+                    <form name="formUploadPhoto">
+                        <div>
+                            <div class="my-4 mx-auto btnUpload cursor-pointer" style="width:150px; height:150px">                               
+                                 <img src="~/img/Member/boy2.JPG" data-filename="MemberId_4.jpg" id="imgMemberPhoto" class="circle-size-150 cover rounded-circle">
+                            </div>
+                            <div class="width-400 mx-auto">
+                                <input type="file" class="form-control" style="visibility:hidden" id="inputUpload" name="Photo">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="mt-3">
+                    <input type="hidden" name="MemberId" value="4">
+                    <input type="hidden" name="" value="MemberInfo" id="display" class="form-control">
+                </div>
+            </div>
+            <div class="m-3 justify-content-center">
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="info">  
+                        <img class="d-flex w-25-h-25" src="~/" alt="">
+                        個人資料
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="order">
+                        <img class="d-flex w-25-h-25" src="" alt="">
+                        <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-dark">課程查詢</a>
+                        
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myKeep">
+                        <img class="d-flex w-25-h-25" src="/images/memberphoto/mykeep.png" alt="">
+                        我的收藏
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myKeep">
+                        <img class="d-flex w-25-h-25" src="/images/memberphoto/mykeep.png" alt="">
+                        <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark">我的優惠券</a>
+                    </div>
+                </div>
+              @*  <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="password">
+                        <img class="d-flex w-25-h-25" src="/images/memberphoto/exchange.png" alt="">
+                        修改密碼
+                    </div>
+                </div>*@
 
-								</div>
-							</div>
+            </div>
+        </div>
+        <div class="col-9  p-2" id="divPartial">
+            <form method="post">
+                <div class="container">
+                    <div class="m-3 fs-3 fw-bold  border-bottom py-4 ">個人資料</div>
+                    <div class="p-2 ">
+                        <input type="hidden" name="MemberId" value="4">
+                        <div class="row justify-content-around p-3">
+                          
+                            <div class="pt-2 d-flex col-6 align-items-center">
+                                <div class=" width-90px text-end fw-bold">姓名 :</div>
+                                <div class="mx-2">
+                                    Jokic
+                                </div>
+                            </div>
+                            <div class="pt-2 d-flex col-6 align-items-center">
+                                <div class=" width-90px text-end fw-bold">生日 :</div>
+                                <div class="mx-2">
+                                    1995-02-19
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-around p-3">
+                            <div class="pt-2 d-flex col-6 align-items-center">
+                                <div class=" width-90px text-end fw-bold">信箱 :</div>
+                                <div class="mx-2">
+                                    Jokic@gmail.com
+                                </div>
+                            </div>
+                            <div class="pt-2 d-flex col-6 align-items-center">
+                                <div class=" width-90px text-end fw-bold">電話 :</div>
+                                <div class="mx-2">
+                                    0987854568
+                                </div>
+                            </div>
+                          
+                        </div>
+                        <div class="pt-2 d-flex col-6 align-items-center  p-3 mt-3">
+                            <div class=" width-90px text-end fw-bold">性別 :</div>
+                            <div class="mx-2">
+                                男
+                            </div>
+                        </div>
+                        <div class="pt-2 d-flex col-6 align-items-center  p-3 mt-3">
+                            <div class=" width-90px text-end fw-bold">使用者姓名 :</div>
+                            <div class="mx-2">
+                                男
+                            </div>
+                        </div>
+                    </div>
+                    <div class="justify-content-around p-5">
+                        <div class="text-center">
+                            <a href="@Url.Action("ProfileEdit", "Member")" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">修改個人資料</a>
+                            @*<input type="submit" value="修改個人資料" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">*@
+                            <a href="@Url.Content("~/Home/Index")" class="btn btn-dark">回首頁</a>
+                        </div>
+                    </div>
+                </div>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HQovWu9wfZBnLgpt5k7BlUBqt_o4XyyVbyc2vg0tffnMuLqTvxn77jdU8k0bSIFXla1UNXH9GX5Pkyia_lxvHi7TYTlBlr0ytkaL4n-312QAjLEmFmiAX4J6FMdTeXBysN19XNxJP1fxx30rUtbDY2bysWp1aviFk0dFjFbFwr3PFg8lI82D4oXRiEwGT8XfQ">
+            </form>
+        </div>
+    </div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="img/playlist/3.jpg" alt="">
-					<h4>Jennifer Brown</h4>
-					<p>One Night in Ibiza</p>
-					<div class="single_player">
-						<div class="jp-jplayer jplayer" data-ancestor=".jp_container_10" data-url="music-files/5.mp3"></div>
-						<div class="jp-audio jp_container_10" role="application" aria-label="media player">
-							<div class="jp-gui jp-interface">
-								<!-- Player Controls -->
-								<!-- Progress Bar -->
-								<div class="player_bars">
-									<div class="jp-progress">
-										<div class="jp-seek-bar">
-											<div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="img/playlist/4.jpg" alt="">
-					<h4>Jennifer Brown</h4>
-					<p>One Night in Ibiza</p>
-					<div class="single_player">
-						<div class="jp-jplayer jplayer" data-ancestor=".jp_container_11" data-url="music-files/7.mp3"></div>
-						<div class="jp-audio jp_container_11" role="application" aria-label="media player">
-							<div class="jp-gui jp-interface">
-								<!-- Player Controls -->
-								<!-- Progress Bar -->
-								<div class="player_bars">
-									<div class="jp-progress">
-										<div class="jp-seek-bar">
-											<div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-</section>
+</div>

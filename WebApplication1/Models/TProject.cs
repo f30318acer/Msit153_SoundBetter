@@ -47,5 +47,7 @@ public partial class TProject
 
     public virtual ICollection<TDealProject> TDealProjects { get; set; } = new List<TDealProject>();
 
+    public virtual ICollection<TProjectFav> TProjectFavs { get; set; } = new List<TProjectFav>();
+
     public virtual ICollection<TProjectSkillRequire> TProjectSkillRequires { get; set; } = new List<TProjectSkillRequire>();
 }

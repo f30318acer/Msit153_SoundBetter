@@ -33,5 +33,7 @@ public partial class TClass
 
     public virtual TMember FTeacher { get; set; }
 
+    public virtual ICollection<TClassFav> TClassFavs { get; set; } = new List<TClassFav>();
+
     public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
 }

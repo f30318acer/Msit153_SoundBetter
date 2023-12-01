@@ -37,12 +37,16 @@
 	<h3 style="color:white">Better</h3>
         </a>
         <div class="header-right">
+         
             <div class="user-panel">
-                <a href="#" class="hr-btn">Help</a>
-                <span>|</span>
+            
+                @* <a href="#" class="hr-btn">Help</a> *@
                 @*登入功能*@
-                <a asp-area="" asp-controller="Home" asp-action="login">Login</a>
-                <a asp-area="" asp-controller="Home" asp-action="Register">Create an account</a>
+                <li class="d-flex align-items-center mx-2">
+                    <img src="~/img/header/user.png" class="circle-size-35" width="40px" />
+                    <img src="~/img/icons/login.png" class="width-16px"width="16px" />
+                    <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a>
+                </li>
             </div>
         </div>
         @*搜尋列*@
@@ -61,8 +65,8 @@
             @*找場地*@
             <li><a asp-area="" asp-controller="Place" asp-action="Place">找場地</a></li>
             @*音樂專區*@
-            <li>
-                <a href="#">音樂專區</a>
+            <li><a asp-area="" asp-controller="Article" asp-action="List">音樂專區</a></li>
+      
                 <ul class="sub-menu">
                     <li class="nav-item">   
                     </li>    
@@ -80,14 +84,13 @@
                 <ul class="sub-menu">
                     <li class="nav-item">
                       
-                        <a href="@Url.Content("~/Members/Profile1")" class="btn btn-light">會員簡介</a>
+                        <a href="@Url.Content("~/Members/Index")" class="btn btn-light">會員簡介</a>
 
                         <a href="@Url.Content("~/Members/ProfileEdit")" class="btn btn-light">修改個人資料</a>
 
                         <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-light">課程管理</a>
                     </li>
-                </ul>
-               
+                </ul>        
             </li>
             <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
                 <img src="~/img/header/shopping-cart.png" width="50px" class="shopping-cart-icon"/>
@@ -104,33 +107,33 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="footer-widget">
-                                <h2>關於我們</h2>
+                                @* <h2>關於我們</h2> *@
                                 <ul>
-                                    <li><a href="">創立故事</a></li>
-                                    <li><a href="">響受部落</a></li>
-                                    <li><a href="">音樂故事</a></li>
+                                    <li><a href="@Url.Action("List","Article")">創立故事</a></li>
+                                    <li><a href="@Url.Action("List","Article")">文章分享</a></li>
+                                    <li><a href="@Url.Action("List","Article")">音樂故事</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="footer-widget">
-                                <h2>商品</h2>
+                                @* <h2>常見問題</h2> *@
                                 <ul>
-                                    <li><a href="">音樂</a></li>
-                                    <li><a href="">訂閱</a></li>
-                                    <li><a href="">創作</a></li>
-                                    <li><a href="">焦點</a></li>
+                                    <li><a href="">關於我們</a></li>
+                                    <li><a href="">常見問題</a></li>
+                                    <li><a href="">成為老師</a></li>
+                                    <li><a href="">聯絡我們</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="footer-widget">
-                                <h2>創意</h2>
+                                @* <h2></h2> *@
                                 <ul>
-                                    <li><a href="">新聞</a></li>
-                                    <li><a href="">生涯</a></li>
-                                    <li><a href="">內容</a></li>
-                                    <li><a href="">聯絡方式</a></li>
+                                    <li><a href="">加入我們</a></li>
+                                    <li><a href="">合作夥伴</a></li>
+                                    <li><a href="">教學條款</a></li>
+                                    <li><a href="">相關契約</a></li>
                                 </ul>
                             </div>
                         </div>

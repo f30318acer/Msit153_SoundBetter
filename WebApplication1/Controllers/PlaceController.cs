@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using prjMusicBetter.Models;
 
 namespace Music_matchmaking_platform.Controllers
 {
@@ -9,9 +11,10 @@ namespace Music_matchmaking_platform.Controllers
 		{
 			_context = context;
 		}
+
 		public IActionResult List()
 		{
-			var dbSoundBetterContext = _context.TSites
+            var dbSoundBetterContext = _context.TSites
 				.Include(t => t.FCity)
 				.Include(t => t.FMember)
 				.Select(t => new
@@ -23,11 +26,14 @@ namespace Music_matchmaking_platform.Controllers
 					fCity = t.FCity.FCity,
 					fSiteType = t.FSiteType,
 					fName = t.FMember.FName,
-					fPicturePath = t.FPicture
+					fPicturePath = t.FPicture,
+					fCityId = t.FCityId
 				})
 				.ToList();
+
 			return Json(dbSoundBetterContext);
 		}
+
 		public IActionResult GetCities()
 		{
 			var cities = _context.TCities.ToList();
@@ -46,8 +52,6 @@ namespace Music_matchmaking_platform.Controllers
 				return NotFound();
 			}
 			return Json(tSite);
-		}
-		public IActionResult PlaceDetail()
 		}
 		public IActionResult PlaceDetail()
         {

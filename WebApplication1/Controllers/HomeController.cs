@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Policy;
+using prjMusicBetter.Models.infra;
+using Microsoft.AspNetCore.Authorization;
+using prjMusicBetter.Models.Daos;
+using prjMusicBetter.Models.Services;
 
 
 
@@ -20,15 +24,26 @@ namespace WebApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly dbSoundBetterContext _context;
-   
+        private readonly IWebHostEnvironment _environment;
+        private readonly UserInfoService _userInfoService;
+        MemberDao _dao;
+        MemberService _service;
 
-        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context)
+
+        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment ,UserInfoService userInfoService)
         {
             _logger = logger;
             _context = context;
-        
+            _environment = environment;
+            _userInfoService = userInfoService;
+            _dao = new MemberDao(_context, _environment);
+            _service = new MemberService(_context, _environment);
         }
 
+        public IActionResult test()
+        {
+            return View();
+        }
         public IActionResult Index()
         { 
             return View();
@@ -106,15 +121,37 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public ActionResult Register()
+        public IActionResult Register()
         {
-
-            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
+            //ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
             return View();
         }
-        public IActionResult test()
+
+        [HttpPost]
+        public IActionResult Register(FMemberVM vm)
         {
-            return View();
+            if (ModelState.IsValid == false)
+            {
+                return View(vm);
+            }
+            try
+            {
+                _service.MemberResgister(vm);
+                TempData["AlertRegister"] = vm.fName;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("","新增失敗,"+ex.Message);
+                return View(vm);
+            }
+            return RedirectToAction("Index");
+         }
+
+        //============================================
+        [Authorize]
+        public IActionResult Test()
+        {
+            return Content(_userInfoService.GetMemberInfo().FName);
         }
         
         public IActionResult NoLogin()
@@ -147,6 +184,11 @@ namespace WebApplication1.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult NotFoundPG()
+        {
+            return View();
         }
     }
 }

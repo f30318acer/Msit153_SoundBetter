@@ -12,14 +12,14 @@
 						<div class="hs-text">
 							<h2><span>聆聽 </span> 好聲音 </h2>
 							<p> 很久沒找到能讓你感動的好聲音嗎? 來這裡就對了!!! </p>
-							<a href="#" class="site-btn">現代音樂</a>
-							<a href="#" class="site-btn sb-c2">古典音樂</a>
+							<a href="@Url.Action("List","MusicShare")" class="site-btn">音樂探索</a>
+							<a href="@Url.Action("List","Article")" class="site-btn sb-c2">好文分享</a>
 						</div>
 					</div>
 
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/hero-bg.png" alt="">
+							<img src="~/img/hero-bg.png" alt="" >
 						</div>
 					</div>
 				</div>
@@ -32,13 +32,13 @@
 						<div class="hs-text">
 							<h2><span>創造</span> 好音樂 </h2>
 							<p> 優秀的音樂人才都在這，無論是混音師、作詞家、歌手都在這。在這完成你心目中最讚的音樂。 </p>
-							<a href="#" class="site-btn">找專案?</a>
-							<a href="#" class="site-btn sb-c2">找樂手?</a>
+							<a href="@Url.Action("List","Project")" class="site-btn">找專案?</a>
+							<a href="@Url.Action("Place","Place")" class="site-btn sb-c2">找場地?</a>
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/job_pa_mixer.png" alt="">
+							<img src="~/img/music_vj.png" alt="" >
 						</div>
 					</div>
 				</div>
@@ -52,13 +52,13 @@
 						<div class="hs-text">
 							<h2><span>發現 </span> 新曲目 </h2>
 							<p> 最新的創作都在這裡，讓你有新發現!!! </p>
-							<a href="#" class="site-btn">現代音樂</a>
-							<a href="#" class="site-btn sb-c2">古典音樂</a>
+							<a href="@Url.Action("List","MusicShare")" class="site-btn">音樂探索</a>
+							<a href="@Url.Action("List","Blog")" class="site-btn sb-c2">好文分享</a>
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/play2.png" alt="">
+							<img src="~/img/music_ongaku_kansyou.png" alt="" >
 						</div>
 					</div>
 				</div>
@@ -70,14 +70,14 @@
 					<div class="col-lg-6">
 						<div class="hs-text">
 							<h2><span>享受 </span> 好演出 </h2>
-							<p> 這裡有實力強勁的師資和場地，能成就自己演奏音樂的新能力!!! </p>
-							<a href="#" class="site-btn">找老師?</a>
-							<a href="#" class="site-btn sb-c2">找場地?</a>
+							<p> 這裡有實力強勁的師資和場地，成就自己表演能力!!! </p>
+							<a href="@Url.Action("index","Class")" class="site-btn">找課程?</a>
+							<a href="@Url.Action("Place","Place")" class="site-btn sb-c2">找場地?</a>
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/baby_music_piano_girl.png" alt="">
+							<img src="~/img/music_band_visual.png" alt="" >
 						</div>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 			</div>
 			<div class="col-lg-6">
 				<p>這邊匯集了所有創作者創意完成的許多曲目，值得您來細品。</p>
-				<a href="#" class="site-btn">PLAY</a>
+				<a href="@Url.Action("List","MusicShare")" class="site-btn">音樂探索</a>
 			</div>
 		</div>
 	</div>
@@ -113,7 +113,7 @@
 			<div class="col-md-4">
 				<div class="how-item">
 					<div class="hi-icon">
-						<img src="~/img/icons/brain.png" alt="">
+						<a href="@Url.Action("Register","Home")"><img src="~/img/icons/brain.png" alt=""></a>
 					</div>
 					<h4>註冊帳號</h4>
 					<p> 註冊帳號可以享有我們這邊的相關服務，比如找音樂、找樂手、找老師、找曲風。 </p>
@@ -122,7 +122,7 @@
 			<div class="col-md-4">
 				<div class="how-item">
 					<div class="hi-icon">
-						<img src="~/img/icons/pointer.png" alt="">
+						<a href="@Url.Action("List","Project")"><img src="~/img/icons/pointer.png" alt=""></a>
 					</div>
 					<h4>找專案</h4>
 					<p> 有未完成的創作嗎? 有靈感但缺項目嗎? 有能力但缺乏發揮空間嗎? 這邊幫你實現。 </p>
@@ -131,7 +131,7 @@
 			<div class="col-md-4">
 				<div class="how-item">
 					<div class="hi-icon">
-						<img src="~/img/icons/smartphone.png" alt="">
+						<a href="@Url.Action("List","MusicShare")"><img src="~/img/icons/smartphone.png" alt=""></a>
 					</div>
 					<h4>找曲目</h4>
 					<p>很久沒找到能讓你感動的好聲音嗎? 來這裡就對了!!! </p>
@@ -147,30 +147,30 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="section-title">
-					<h2>我們的理念</h2>
+					<h2>理念</h2>
 				</div>
 			</div>
 			<div class="col-lg-6">
-				<p>我們的理念是做出讓每個人都感動的音樂，讓創作者們把靈感發揮出來。</p>
+				<p>我們的理念是做出讓每個人都感動的音樂，讓創作者們把靈感發揮極致。</p>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-3 col-sm-6">
 				<div class="concept-item">
 					<img src="~/img/concept/1.jpg" alt="">
-					<h5>聽音樂</h5>
+					<h5>享受音樂</h5>
 				</div>
 			</div>
 			<div class="col-lg-3 col-sm-6">
 				<div class="concept-item">
 					<img src="~/img/concept/2.jpg" alt="">
-					<h5>演唱會</h5>
+					<h5>演唱會場</h5>
 				</div>
 			</div>
 			<div class="col-lg-3 col-sm-6">
 				<div class="concept-item">
 					<img src="~/img/concept/3.jpg" alt="">
-					<h5>DJ秀</h5>
+					<h5>創意混音</h5>
 				</div>
 			</div>
 			<div class="col-lg-3 col-sm-6">
@@ -189,10 +189,10 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="sub-text">
-					<h2>尊貴會員</h2>
+					<h2>付費會員</h2>
 					<h3></h3>
 					<p></p>
-					<a href="#" class="site-btn">試用</a>
+					<a href="@Url.Action("Register","Home")" class="site-btn">註冊</a>
 				</div>
 			</div>
 			<div class="col-lg-6">
@@ -215,7 +215,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="section-title">
-					<h2>尊貴會員</h2>
+					<h2>付費會員</h2>
 				</div>
 			</div>
 			<div class="col-lg-6">
