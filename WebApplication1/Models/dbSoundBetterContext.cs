@@ -91,8 +91,7 @@ public partial class dbSoundBetterContext : DbContext
 
 //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;Persist Security Info=True;User ID=bbb;Password=123");
-
+//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;User ID=bbb;Password=123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -150,11 +149,9 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
             entity.Property(e => e.FContent).HasColumnName("fContent");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-
             entity.Property(e => e.FPhotoPath)
                 .HasMaxLength(250)
                 .HasColumnName("fPhotoPath");
-
             entity.Property(e => e.FStyleId).HasColumnName("fStyleID");
             entity.Property(e => e.FTitle)
                 .HasMaxLength(50)
@@ -637,7 +634,9 @@ public partial class dbSoundBetterContext : DbContext
 
             entity.ToTable("tProject");
 
-            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
+            entity.Property(e => e.FProjectId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("fProjectID");
             entity.Property(e => e.FBudget)
                 .HasColumnType("money")
                 .HasColumnName("fBudget");
@@ -652,6 +651,7 @@ public partial class dbSoundBetterContext : DbContext
                 .HasColumnName("fName");
             entity.Property(e => e.FProjectStatusId).HasColumnName("fProjectStatusID");
             entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FSkillId).HasColumnName("fSkillID");
             entity.Property(e => e.FStartdate)
                 .HasColumnType("datetime")
                 .HasColumnName("fStartdate");
@@ -664,6 +664,11 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tProject_tMember");
+
+            entity.HasOne(d => d.FProject).WithOne(p => p.TProject)
+                .HasForeignKey<TProject>(d => d.FProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tProject_tSkill");
 
             entity.HasOne(d => d.FProjectStatus).WithMany(p => p.TProjects)
                 .HasForeignKey(d => d.FProjectStatusId)
@@ -750,6 +755,9 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FPhone)
                 .HasMaxLength(50)
                 .HasColumnName("fPhone");
+            entity.Property(e => e.FPicture)
+                .HasMaxLength(50)
+                .HasColumnName("fPicture");
             entity.Property(e => e.FSiteName)
                 .HasMaxLength(50)
                 .HasColumnName("fSiteName");
@@ -764,13 +772,6 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tSite_tMember");
-
-
-            entity.HasOne(d => d.FSitePicture).WithOne(p => p.FSite)
-                .HasForeignKey<TSitePicture>(d => d.FSiteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tSite_tSitePicture");
-
         });
 
         modelBuilder.Entity<TSitePeriod>(entity =>
@@ -954,12 +955,10 @@ public partial class dbSoundBetterContext : DbContext
                 .HasColumnName("fPicturePath");
             entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
 
-
-            //entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
-            //    .HasForeignKey(d => d.FSiteId)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK_tSitePicture_tSite");
-
+            entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
+                .HasForeignKey(d => d.FSiteId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tSitePicture_tSite");
         });
 
         modelBuilder.Entity<TSkill>(entity =>

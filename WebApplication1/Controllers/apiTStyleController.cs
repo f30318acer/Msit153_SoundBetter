@@ -24,5 +24,20 @@ namespace prjSoundBetterApi.Controllers
             var dbSoundBetterContext = _context.TStyles;
             return Json(dbSoundBetterContext);
         }
+        //===搜尋===
+        public IActionResult QueryById(int? id)
+        {
+            if (id == null || _context.TStyles == null)
+            {
+                return NotFound();
+            }
+
+            var tStyle = _context.TStyles.Where(m => m.FStyleId == id);
+            if (tStyle == null)
+            {
+                return NotFound();
+            }
+            return Json(tStyle);
+        }
     }
 }

@@ -30,26 +30,26 @@ namespace prjMusicBetter.Controllers
         }
 
         // GET: TSites/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.TSites == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.TSites == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var tSite = await _context.TSites
-                .Include(t => t.FCity)
-                .Include(t => t.FMember)
-                .Include(t => t.FSitePicture)
-                .FirstOrDefaultAsync(t => t.FSiteId == id);
+        //    var tSite = await _context.TSites
+        //        .Include(t => t.FCity)
+        //        .Include(t => t.FMember)
+        //        .Include(t => t.FSitePicture)
+        //        .FirstOrDefaultAsync(t => t.FSiteId == id);
 
-            if (tSite == null)
-            {
-                return NotFound();
-            }
+        //    if (tSite == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(tSite);
-        }
+        //    return View(tSite);
+        //}
 
         // GET: TSites/Create
         public IActionResult Create()

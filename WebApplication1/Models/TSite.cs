@@ -20,12 +20,12 @@ public partial class TSite
     public int FCityId { get; set; }
 
     public string FAddress { get; set; }
-	
-	public virtual TCity FCity { get; set; }
+
+    public string FPicture { get; set; }
+
+    public virtual TCity FCity { get; set; }
 
     public virtual TMember FMember { get; set; }
-
-    public virtual TSitePicture FSitePicture { get; set; }
 
     public virtual ICollection<TClass> TClasses { get; set; } = new List<TClass>();
 
@@ -37,18 +37,5 @@ public partial class TSite
 
     public virtual ICollection<TSitePeriod> TSitePeriods { get; set; } = new List<TSitePeriod>();
 
-
-    //public virtual ICollection<TSitePicture> TSitePictures { get; set; } = new List<TSitePicture>();
-    public string SiteTypeText
-    {
-        get
-        {
-            var siteTypeMapping = new Dictionary<int, string>
-                {
-                    { 1, "音樂學校" },
-                    { 2, "錄音室" },
-                };
-            return siteTypeMapping.GetValueOrDefault(FSiteType, "未知");
-        }
-    }
+    public virtual ICollection<TSitePicture> TSitePictures { get; set; } = new List<TSitePicture>();
 }
