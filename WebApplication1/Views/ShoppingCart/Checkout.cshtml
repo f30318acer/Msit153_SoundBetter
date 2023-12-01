@@ -2,6 +2,8 @@
     ViewData["Title"] = "List";
 }
    
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"></script>
 <div class="container">
   <main>
     <div class="py-5 text-center" style="text-align:left;">
@@ -35,12 +37,93 @@
             <div>
 
             </div>
-      
+      </div>
 
     <div class="row g-5">
      
       <div class="col-md-7 col-lg-8">
-       
+                <div class="col-md-6">
+                    <label for="cc-number" class="form-label">優惠券號碼</label>
+                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                    <button type="button" class="btn-primary">使用優惠券</button>
+                </div>
+
+                <div class="container card mt-3">
+                    <div class="form-group mt-3 mb-3">
+                        <label class="radio">
+                            <input type="radio" name='type' value='domestic-credit' id="pay-by-domestic-credit" checked='checked'> 捐贈發票
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name='type' value='aboard-credit' id="pay-by-aboard-credit"> 不捐贈發票
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name='type' value='atm' id="pay-by-atm"> 統編
+                        </label>
+                    </div>
+
+                    <div id='domestic-credit-form' class="form">
+                       
+                        <div class="input-group mb-3">
+                           
+                        </div>
+                        <div class="input-group mb-3">
+                           
+                            <label class="radio">
+                                <input type="radio" name='type' value='lovecode' id="entercode"> 手動輸入愛心碼
+                                <input type="text" id="domestic-card-csv">
+                            </label>
+
+                            <label class="radio">
+                                <input type="radio" name='type' value='lovecode' id="entercode">  聯合勸募協會
+                                <input type="text" id="domestic-card-csv">
+                            </label>
+                        </div>
+                        
+                    </div>
+
+                    <div id='aboard-credit-form' style="display: none;" class="form">
+                        <div class="text-center">
+                            <h3>使用國外信用卡</h3>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">國外信用卡卡號</span>
+                            </div>
+                            <input type="text" class="form-control" id="aboard-card-no">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">月</span>
+                            </div>
+                            <input type="text" class="form-control" id="aboard-card-month" placeholder="輸入月份">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">年</span>
+                            </div>
+                            <input type="text" class="form-control" id="aboard-card-year" placeholder="輸入年">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">末三碼</label>
+                            </div>
+                            <input type="text" class="form-control" id="aboard-card-csv" placeholder="輸入末三碼">
+                        </div>
+                        <div class="form-group">
+                            <span style="color: #fc3762;" id="aboard-card-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="aboard-submmit" class="btn btn-info">確認送出</button>
+                        </div>
+                    </div>
+
+                    <div id='atm-form' style="display: none;">
+                        <div class="text-center">
+                            <h3>使用ATM轉帳</h3>
+                            <p>轉帳資訊，如下</p>
+                            <p>XXXXXXXXXXXX</p>
+                            <p>XXXXXXXXXXXX</p>
+                            <p>XXXXXXXXXXXX</p>
+                        </div>
+                    </div>
+                    
+                </div>
 
           <hr class="my-4">
 
@@ -103,4 +186,95 @@
 <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <script src="checkout.js"></script>
-</>
+
+<script>
+    $('input[type=radio][name="type"]').on('change', function () {
+        switch ($(this).val()) {
+            case 'domestic-credit':
+                $("#domestic-credit-form").show()
+                $("#aboard-credit-form").hide()
+                $("#atm-form").hide()
+                break
+            case 'aboard-credit':
+                $("#domestic-credit-form").hide()
+                $("#aboard-credit-form").show()
+                $("#atm-form").hide()
+                break
+            case 'atm':
+                $("#domestic-credit-form").hide()
+                $("#aboard-credit-form").hide()
+                $("#atm-form").show()
+                break
+        }
+    })
+
+    $('#domestic-submmit').on('click', function (event) {
+        event.preventDefault()
+
+        let cardNo = $("#domestic-card-no").val()
+        let cardMonth = $("#domestic-card-month").val()
+        let cardYear = $("#domestic-card-year").val()
+        let cardCSV = $("#domestic-card-csv").val()
+
+        let errors = validateForm(cardNo, cardMonth, cardYear, cardCSV)
+        if (errors.length) {
+            $("#domestic-card-error").text(errors.join(','))
+            return
+        }
+
+        blockForm('domestic', true)
+
+        // ajax event
+        // submitForm(cardNo, cardMonth, cardYear, cardCSV)
+    })
+
+    $('#aboard-submmit').on('click', function (event) {
+        event.preventDefault()
+
+        let cardNo = $("#aboard-card-no").val()
+        let cardMonth = $("#aboard-card-month").val()
+        let cardYear = $("#aboard-card-year").val()
+        let cardCSV = $("#aboard-card-csv").val()
+
+        let errors = validateForm(cardNo, cardMonth, cardYear, cardCSV)
+        if (errors.length) {
+            $("#aboard-card-error").text(errors.join(', '))
+            return
+        }
+
+        blockForm('aboard', true)
+
+        // ajax event
+        // submitForm(cardNo, cardMonth, cardYear, cardCSV)
+
+    })
+
+    $('#resetForm').on('click', function (event) {
+        event.preventDefault()
+        blockForm('domestic', false)
+        blockForm('aboard', false)
+    })
+
+    function validateForm(no, month, year, csv) {
+        let errors = []
+
+        if (no.split('').length !== 12) errors.push('invalid card number')
+        if (month.split('').length !== 2) errors.push('invalid card month')
+        if (year.split('').length !== 2) errors.push('invalid card year')
+        if (csv.split('').length !== 3) errors.push('invalid card csv')
+
+        return errors
+    }
+
+    function blockForm(formType, isBlocking) {
+        $('input[type=radio][name="type"]:not(:checked)').attr("disabled", isBlocking)
+        $(`#${formType}-card-no`).prop('readonly', isBlocking)
+        $(`#${formType}-card-month`).prop('readonly', isBlocking)
+        $(`#${formType}-card-year`).prop('readonly', isBlocking)
+        $(`#${formType}-card-csv`).prop('readonly', isBlocking)
+        $(`#${formType}-card-error`).text('')
+    }
+
+    function submitForm(no, month, year, csv) {
+        // $('input[type=radio][name="type"]':not(:checked)').attr("disabled", true)
+    }</script>
