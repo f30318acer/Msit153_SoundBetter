@@ -130,7 +130,7 @@
     <div class="player-box">
         <div class="tarck-thumb-warp">
             <div class="tarck-thumb">
-                <img alt="輕鬆學配樂！" src="~/img/classimg/1.jpg">
+                <img alt="輕鬆學配樂！" src="~/img/classimg/@Model.FThumbnailPath">
             </div>
         </div>
         <div class="wave-player-warp">
@@ -148,7 +148,8 @@
                 <a asp-area="" asp-controller="Members" asp-action="Profile1">
                     <h3 class="detail-title">授課導師</h3>
                     <div class="profile-wrapper">
-                        <img src="https://bonbonmusic-prod.s3.amazonaws.com/profile_pics/5e64a14454b8d" alt="Julianna">
+                       @*<img src="~/img/Member/@(ViewBag.teacherimg)">*@
+                        <img src="~/img/@(ViewBag.teacherimg)">
                     </div>
                     <h2 class="teacher-name">@Model.FTeacher</h2>
                     @ViewBag.teacher
@@ -196,7 +197,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 1)">
                                 <div class="playlist-item">
-                                    <img src="/img/classimg/@(ViewBag.PrePath).jpg" alt="">
+                                    <img src="/img/classimg/@(ViewBag.PrePath)" alt="">
                                     <h5>@ViewBag.PrClass</h5>
                                 </div>
                             </a>
@@ -204,7 +205,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 2)">
                                 <div class="playlist-item">
-                                    <img src="~/img/classimg/@(ViewBag.SenPath).jpg" alt="">
+                                    <img src="~/img/classimg/@(ViewBag.SenPath)" alt="">
                                     <h5>@ViewBag.SenClass</h5>
                                 </div>
                             </a>
@@ -217,7 +218,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 1)">
                                 <div class="playlist-item">
-                                    <img src="/img/classimg/@(ViewBag.PrePath).jpg" alt="">
+                                    <img src="/img/classimg/@(ViewBag.PrePath)" alt="">
                                     <h5>@ViewBag.PrClass</h5>
                                 </div>
                             </a>
@@ -225,7 +226,7 @@
                         <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
                             <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 2)">
                                 <div class="playlist-item">
-                                    <img src="~/img/classimg/@(ViewBag.SenPath).jpg" alt="">
+                                    <img src="~/img/classimg/@(ViewBag.SenPath)" alt="">
                                     <h5>@ViewBag.SenClass</h5>
                                 </div>
                             </a>

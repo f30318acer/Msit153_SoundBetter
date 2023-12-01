@@ -65,6 +65,9 @@ namespace prjMusicBetter.Controllers
             var Introduction = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
             ViewBag.teacher = Introduction;//教師自述
 
+            var teacherimg = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FPhotoPath).SingleOrDefault();
+            ViewBag.teacherimg = teacherimg;//教師自述
+
             return View(tClass);
 		}
 
