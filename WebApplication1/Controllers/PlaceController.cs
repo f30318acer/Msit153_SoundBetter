@@ -14,7 +14,6 @@ namespace Music_matchmaking_platform.Controllers
 			_context = context;
 			_environment = environment;
 		}
-
 		public IActionResult List()
 		{
 			var dbSoundBetterContext = _context.TSites
@@ -35,7 +34,6 @@ namespace Music_matchmaking_platform.Controllers
 
 			return Json(dbSoundBetterContext);
 		}
-
 		public IActionResult GetCities()
 		{
 			var cities = _context.TCities;
@@ -73,5 +71,24 @@ namespace Music_matchmaking_platform.Controllers
         {
             return View();
         }
-    }
+        public async Task<IActionResult> Details(int? id)
+		{
+			if (id == null || _context.TSites == null)
+			{
+				return NotFound();
+			}
+
+			var tSite = await _context.TSites
+				.Include(t => t.FCity)
+				.Include(t => t.FMember)
+				.FirstOrDefaultAsync(t => t.FSiteId == id);
+
+			if (tSite == null)
+			{
+				return NotFound();
+			}
+
+			return View(tSite);
+		}
+	}
 }

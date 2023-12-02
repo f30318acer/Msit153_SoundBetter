@@ -24,18 +24,28 @@ namespace prjMusicBetter.Controllers
 
             return Json(IsLogin);
         }
-        //public IActionResult UpdateNav()
-        //{
-        //    if (HttpContext.User.IsInRole("Member"))
-        //    {
-        //        TMember member = _userInfoService.GetMemberInfo();
-        //        var dto = new
-        //        {
-        //            Role = "Member",
-        //            datas = member
-        //        };
-        //        return Json(dto);       
-        //    }
-        //}
+        public IActionResult UpdateNav()
+        {
+            if (HttpContext.User.IsInRole("Member"))
+            {
+                TMember member = _userInfoService.GetMemberInfo();
+                var dto = new
+                {
+                    Role = "Member",
+                    datas = member
+                };
+                return Json(dto);
+            }
+            else
+            {
+                var dto = new
+                {
+                    Role = "None",
+                    datas = "User not logged in or not a member"
+                };
+                return Json(dto);
+            }
+        }
+
     }
 }

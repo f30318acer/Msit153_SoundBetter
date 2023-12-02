@@ -12,25 +12,10 @@
 <section class="similar-songs-section">
     <div class="container-fluid">
         <h3>場地一覽</h3>
-        <br />
         <select class="form-select" id="citySelect">
         </select>
-@*         <div class="row">
-            <div class="col-xl-3 col-sm-6">
-                <div class="similar-song">
-                    <img class="ss-thumb" src="~/img/place1.jpg" alt="">
-                    <h4>The Ball Music Studio 這球大安店</h4>
-                    <p>台北市</p>
-                    <div class="single_player">
-                        <div class="jp-audio jp_container_8" role="application" aria-label="media player">
-                            <div class="jp-no-solution">
-                                音樂學校 <button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> *@
+        <br />
+        <br />
         <div id="divList" class="row playlist-area">
             <!--List內容-->
         </div>
@@ -42,11 +27,6 @@
         const btn = document.querySelector('#btn1');
         const slt = document.querySelector('#citySelect');
 
-        // btn.addEventListener('click', async function () {
-        //     var page = await '@Url.Content("~/Place/PlaceDetail")';
-        //     location.href = page;
-        // })
-
         function loadPlaceByCity(cityval) {
             const divList = $('#divList');
             let url = '/Place/QueryByCity';
@@ -57,7 +37,7 @@
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item) {
                     const card = $(
-                        `<a class="mix col-lg-4 col-md-5 col-sm-7">
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
                             <div class="playlist-item">
                                 <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
                                 <h5>${item.fSiteName}</h5>
@@ -80,7 +60,7 @@
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item) {
                     const card = $(
-                        `<a class="mix col-lg-4 col-md-5 col-sm-7">
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
                                     <div class="playlist-item">
                                         <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
                                         <h5>${item.fSiteName}</h5>

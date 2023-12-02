@@ -50,17 +50,25 @@
                                                 @* <a asp-area="" asp-controller="Home" asp-action="Index"
                                                    style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
                                                 transition: all 0.3s ease;">登入</a> *@
+                                            </div> 
+                                            @*登入平台*@
+                                            <div class="p-2">                                               
+                                                @Html.ActionLink("註冊", "Register", "Home", "", new { @class = "btn btn-outline-dark" })
+                                                <input type="submit" value="登入" id="Login" class="btn btn-dark fw-bold" />
+                                               
+                                               
                                             </div>
                                             <div class="p-2">
-                                                @Html.ActionLink("註冊","Register","Home","",new{@class="btn btn-outline-dark"})
-                                                <input type="submit" value="登入"id="Login" class="btn btn-dark fw-bold" />
-                                            </div>
-                                            @*後台登入平台*@
-                                            <div class="mx-3 text-end position-sticky ">
                                                 <input type="button" class="btn btn-outline-secondary" value="DemoEmployee" id="DemoEmployee" />
                                                 <input type="button" class="btn btn-outline-secondary" value="DemoAdministrator" id="DemoAdministrator" />
-
                                             </div>
+                                             <div class="p-2">
+                                              <a asp-area="" asp-controller="Home" asp-action="ForgetPwd"
+                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
+                                                transition: all 0.3s ease;">忘記密碼</a>
+                                            </div> 
+                                          
+                                          
 
                                             @*暫定連結後台 *@
                                            @*  <div class="col">
@@ -70,9 +78,7 @@
                                             </div> *@
 
                                             <div class="col">
-                                                <a asp-area="" asp-controller="Home" asp-action="ForgetPwd"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                                transition: all 0.3s ease;">忘記密碼</a>
+                                               
                                                @* @Html.ActionLink("忘記密碼","ForgetPwd","Home")*@
                                             </div>
                                         </div>

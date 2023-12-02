@@ -121,6 +121,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+
         public IActionResult Register()
         {
             //ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
@@ -196,7 +197,6 @@ namespace WebApplication1.Controllers
         public IActionResult Term() { return View(); }
         public IActionResult JoinUS() { return View(); }
         public IActionResult Partner() { return View(); }
-
         public IActionResult contactUS() { return View(); }
 
 
