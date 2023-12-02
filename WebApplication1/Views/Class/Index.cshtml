@@ -1,128 +1,172 @@
 ﻿@model IEnumerable<prjMusicBetter.Models.TClass>
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
 }
 <style>
-	.ddd {
-		border-bottom: 2px solid #fc0254;
-	}
+    .ddd {
+        border-bottom: 2px solid #fc0254;
+    }
+
+    .se {
+        background: #fc0254;
+        color: #fff;
+    }
+
+    .btm {
+        height: 60px;
+        min-width: 167px;
+        right: 0;
+        top: 0;
+        border: none;
+        border-radius: 80px;
+        color: #fff;
+        font-size: 15px;
+        background: #fc0254;
+        float: right;
+    }
+
+    .form-container {
+        float: right;
+        margin: 10px;
+    }
 </style>
 <!-- Playlist section -->
 <section class="playlist-section spad">
-	<div class="container-fluid">
-		<div class="section-title">
-			<h2>課程專區</h2>
-			<div class="container-fluid filter-row-container py-4 py-xl-2 px-4 px-lg-5 ddd">
-				<div class="filter-row">
-					<form class="search-form">
-						<input type="text" placeholder="輸入課程名稱">
-						<button>找尋課程</button>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-		<div class="row playlist-area">
-			@foreach (var item in Model)
-			{
-				<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-					<a asp-area="" asp-controller="Class" asp-action="Viewclass">
-						<div class="playlist-item">
-							<img src="~/img/classimg/1.jpg" alt="">
-							<h5>@Html.DisplayFor(modelItem => item.FClassName)</h5>
-						</div>
-					</a>
-				</div>
-			}
-			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-				<a asp-area="" asp-controller="Class" asp-action="Viewclass">
-					<div class="playlist-item">
-						<img src="~/img/classimg/1.jpg" alt="">
-						<h5>輕鬆學配樂！</h5>
-					</div>
-				</a>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 artists">
-				<div class="playlist-item">
-					<img src="~/img/classimg/2.jpg" alt="">
-					<h5>《什麼？歌曲創作也可以很簡單！》</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-				<div class="playlist-item">
-					<img src="~/img/classimg/3.jpg" alt="">
-					<h5>基礎電影配樂課</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 labels">
-				<div class="playlist-item">
-					<img src="~/img/classimg/4.jpg" alt="">
-					<h5>影像與聲效間的組合就是要帥又有質感！</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-				<div class="playlist-item">
-					<img src="~/img/classimg/5.jpg" alt="">
-					<h5>合唱指揮</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 artists">
-				<div class="playlist-item">
-					<img src="~/img/classimg/6.jpg" alt="">
-					<h5>提高電腦樂譜製作效率</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-				<div class="playlist-item">
-					<img src="~/img/classimg/7.jpg" alt="">
-					<h5>從喜歡唱歌到駕馭歌唱：歌唱工作者的第一課</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 labels">
-				<div class="playlist-item">
-					<img src="~/img/classimg/8.jpg" alt="">
-					<h5>跟音癡說掰掰</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-				<div class="playlist-item">
-					<img src="~/img/classimg/9.jpg" alt="">
-					<h5>這會是你上過最有效最快速真正快樂的歌唱課</h5>
-				</div>
-			</div>
-			<div class="mix col-lg-3 col-md-4 col-sm-6 artists">
-				<div class="playlist-item">
-					<img src="~/img/classimg/10.jpg" alt="">
-					<h5>衝刺學音樂！國內外音樂相關升學考試課程</h5>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <div class="section-title">
+            <h2>課程專區</h2>
+            <form asp-controller="Class" asp-action="Create" method="get" class="form-container">
+                <button name="createClass" class="btm">新建課程</button>
+            </form>
+            <div class="container-fluid filter-row-container py-4 py-xl-2 px-4 px-lg-5 ddd">
+                <div class="filter-row row">
+                    <div class="my-2 d-xl-inline-block me-2">
+                        <select class="form-select se" id="web-city-filter"><option value="default" selected="">選擇縣市</option><option value="1">基隆市</option><option value="2">臺北市</option><option value="3">新北市</option><option value="4">桃園市</option><option value="5">新竹市</option><option value="6">臺中市</option><option value="7">臺南市</option><option value="8">嘉義市</option><option value="9">高雄市</option><option value="10">新竹縣</option><option value="11">苗栗縣</option><option value="12">彰化縣</option><option value="13">南投縣</option><option value="14">雲林縣</option><option value="15">嘉義縣</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option></select>
+                    </div>
+                    <div class="my-2 d-xl-inline-block me-2">
+                        <select id="selectStyle" class="form-select se"></select>
+                    </div>
+                    <div class="my-2 d-xl-inline-block me-2">
+                        <select class="form-select se" id="web-type-filter"><option value="default" selected="">場地類型</option><option value="1">會議</option><option value="2">派對</option><option value="3">聚會</option><option value="4">私人談話</option><option value="5">課程講座</option><option value="6">運動</option><option value="7">工作</option><option value="8">展覽</option><option value="9">音樂/表演</option><option value="10">拍照/攝影</option><option value="11">美容</option><option value="12">烹飪</option><option value="13">儲物</option><option value="14">發表會</option><option value="15">親子活動</option><option value="16">婚禮</option><option value="17">其他</option></select>
+                    </div>
+                    <div class="my-2 d-xl-inline-block me-2">
+                        <input class="date-filter se" id="web-date-filter" placeholder="活動日期" type="hidden" value="2023-11-15"><input class="date-filter form-control input" placeholder="活動日期" tabindex="0" type="text" readonly="readonly">
+                    </div>
+                    <form class="search-form">
+                        <input type="text" id="courseName" placeholder="輸入課程名稱">
+                        @*<input type="button" class="btn btn-primary" value="找尋課程" />*@
+                        <button id="button1">找尋課程</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="divList" class="row playlist-area">
+            @*@foreach (var item in Model)
+            {
+            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@item.FClassId">
+            <div class="playlist-item">
+            <img src="~/img/classimg/1.jpg" alt="">
+            <h5>@Html.DisplayFor(modelItem => item.FClassName)</h5>
+            </div>
+            </a>
+            </div>
+            }*@
+            <!--List內容-->
+        </div>
+    </div>
 </section>
 <!-- Playlist section end -->
 <!-- Help section end -->
 <section class="help-section spad pt-0">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="section-title mb-0 pb-4">
-					<h2>找不到合適的課程嗎？ </h2>
-				</div>
-				<p>
-					想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
-					我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
-					線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
-				</p>
-			</div>
-			<div class="col-lg-6">
-				<div class="d-flex h-100 align-items-end">
-					<form class="search-form">
-						<input type="text" placeholder="輸入課程名稱">
-						<button>找尋課程</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title mb-0 pb-4">
+                    <h2>找不到合適的課程嗎？ </h2>
+                </div>
+                <p>
+                    想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
+                    我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
+                    線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="d-flex h-100 align-items-end">
+                    <form class="search-form">
+                        <input type="text" placeholder="輸入課程名稱">
+                        <button>找尋課程</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- Help section end -->
+@section Scripts{
+    <script>
+        const selStyle = document.querySelector('#selectStyle');
+
+        function load() {
+            const divList = $('#divList')
+            //讀取Json資料
+            $.getJSON('/apiTClass/List', function (datas) {
+                console.log(datas);
+
+                //做出一個空的容器來存放div
+                const docFrag = $(document.createDocumentFragment())
+
+                //讀出每個Json物件
+                $.each(datas, function (index, item) {
+                    //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                <div class="playlist-item">
+                                    <img src="/img/classimg/${item.fThumbnailPath}.jpg" alt="">
+                                    <h5>${item.fClassName}</h5>
+                                </div>
+                            </a>
+                        </div>`);
+                    docFrag.append(card);//.append()將一筆div放入容器中
+                })
+                divList.html(docFrag)//.html()一次將全部的資料都上傳
+            })
+        }
+        load();
+
+        //Style選擇器
+        async function loadStyle() {
+            const response = await fetch('@Url.Content("~/apiTStyle/List")');//從哪裡取得
+            const data = await response.json();//接收回傳的資料
+            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);//要把取得的資料作什麼加工
+            selStyle.innerHTML = style.join("");//加入到指定的位置
+        }
+        loadStyle();//啟動
+
+        //搜尋按鈕
+        $('#button1').click(function () {
+            event.preventDefault(); // 阻止表单的默认提交行为
+            const divList = $('#divList')
+            const courseId = document.getElementById('courseName').value//輸入框
+            $.getJSON(`/apiTClass/QueryById/?id=${courseId}`, function (datas) {
+                const docId = $(document.createDocumentFragment());
+                if (datas && datas['fClassId'] && datas['fThumbnailPath'] && datas['fClassName']) {
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                             <a href="/Class/Viewclass?id${datas['fClassId']}">
+                                <div class="playlist-item">
+                                            <img src="/img/classimg/${datas['fThumbnailPath']}.jpg" alt="">
+                                            <h5>${datas['fClassName']}</h5>
+                                </div>
+                            </a>
+                        </div>`);
+                    docId.append(card);//.append()將div放入容器中
+                }
+                divList.empty()
+                divList.append(docId)//.append()將全部的資料都上傳
+            })
+        })
+    </script>
+}

@@ -1,0 +1,152 @@
+﻿@model prjMusicBetter.Models.TClass
+
+@{
+    ViewData["Title"] = "Create";
+}
+<!-- Contact section -->
+<section class="contact-section">
+    <div class="container-fluid">
+        <div class="contact-warp">
+            <div class="section-title mb-0">
+                <h2>新建課程</h2>
+            </div>
+            <form class="contact-from col-lg-8">
+                <div class="row">
+                    <input type="hidden" id="fClassID" name="fClassID" />
+                    <input type="hidden" id="fTeacherID" name="fTeacherID" />
+                    <div class="col-md-6">
+                        <label for="fClassName">課程名稱:</label>
+                        <input type="text" id="fClassName" name="fClassName" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fPrice">單堂價格:</label>
+                        <input type="number" id="fPrice" name="fPrice" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="fDescription">課程說明:</label>
+                        <textarea id="fDescription" name="fDescription" required></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fStartdate">開始日期:</label>
+                        <input type="text" id="fStartdate" name="fStartdate" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fEnddate">結束日期:</label>
+                        <input type="text" id="fEnddate" name="fEnddate" required />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="fSiteID">上課地點:</label>
+                        <input type="text" id="fSiteID" name="fSiteID" required />
+                        <label for="fThumbnailPath">圖片:</label>
+                        <input type="file" id="fThumbnailPath" name="fThumbnailPath" accept="image/*" />
+                        <label for="fMaxStudent">課程人數:</label>
+                        <input type="text" id="fMaxStudent" name="fMaxStudent" required />
+                        <button type="submit" class="btm">確定建立</button>
+                    </div>
+                </div>
+                @*<div class="row">
+                <form asp-action="Create" id="classForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-md-2">
+                <label asp-for="FTeacherId" class="control-label"></label>
+                <select asp-for="FTeacherId" class="form-control" asp-items="ViewBag.FTeacherId"></select>
+                </div>
+                <div class="form-group col-md-5">
+                <label asp-for="FClassName" class="control-label">課程名稱:</label>
+                <input asp-for="FClassName" class="form-control" />
+                <span asp-validation-for="FClassName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-5">
+                <label asp-for="FPrice" class="control-label">單堂價格:</label>
+                <input asp-for="FPrice" class="form-control" />
+                <span asp-validation-for="FPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                <label asp-for="FDescription" class="control-label">課程說明:</label>
+                <input asp-for="FDescription" class="form-control" />
+                <span asp-validation-for="FDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                <label asp-for="FStartdate" class="control-label">開始日期:</label>
+                <input asp-for="FStartdate" class="form-control" />
+                <span asp-validation-for="FStartdate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                <label asp-for="FEnddate" class="control-label">結束日期:</label>
+                <input asp-for="FEnddate" class="form-control" />
+                <span asp-validation-for="FEnddate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                <label asp-for="FSiteId" class="control-label">地點:</label>
+                <select asp-for="FSiteId" class="form-control" asp-items="ViewBag.FSiteId"></select>
+                </div>
+                <div class="form-group col-md-12">
+                <label asp-for="FThumbnailPath" class="control-label">圖片:</label>
+                <input asp-for="FThumbnailPath" class="form-control" />
+                <span asp-validation-for="FThumbnailPath" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                <input id="buttonSend" type="submit" value="確定建立" class="btn btn-primary" style="background:#fc0254;color: #fff" />
+                </div>
+                </form>
+                </div>*@
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Contact end -->
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        /*$('#buttonSend').click(function () {
+            event.preventDefault(); // 阻止表单的默认提交行为
+            const divList = $('#divList')
+            const courseId = document.getElementById('courseName').value//輸入框
+            $.getJSON(`/apiTClass/QueryById/?id=${courseId}`, function (datas) {
+                const docId = $(document.createDocumentFragment());
+                if (datas && datas['fClassId'] && datas['fThumbnailPath'] && datas['fClassName']) {
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                     <a href="/Class/Viewclass?id${datas['fClassId']}">
+                                        <div class="playlist-item">
+                                                    <img src="/img/classimg/${datas['fThumbnailPath']}.jpg" alt="">
+                                                    <h5>${datas['fClassName']}</h5>
+                                        </div>
+                                    </a>
+                                </div>`);
+                    docId.append(card);//.append()將div放入容器中
+                }
+                divList.empty()
+                divList.append(docId)//.append()將全部的資料都上傳
+            })
+        })*/
+
+        const btn = document.querySelector('#buttonSend');
+        btn.addEventListener('click', event => {
+
+            event.preventDefault();//不讓submit運作
+
+            //傳整個Form的資料
+            const formData = new FormData(document.querySelector('#classForm'));
+
+            fetch('@Url.Content("~/apiTClass/Create")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("新增成功");
+                        //location.href = '@Url.Content("~/home/members")';
+                    }
+                })
+        })
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

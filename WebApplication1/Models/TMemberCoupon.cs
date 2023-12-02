@@ -13,5 +13,7 @@ public partial class TMemberCoupon
 
     public int FMemberId { get; set; }
 
+    public virtual TCoupon FCoupon { get; set; }
+
     public virtual TMember FMember { get; set; }
 }

@@ -19,11 +19,13 @@ public partial class TCoupon
 
     public DateTime? FEnddate { get; set; }
 
-    public string FPicture { get; set; }//儲存圖片路徑
+    public string FPicture { get; set; }
 
     public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
 
     public virtual ICollection<TDealProject> TDealProjects { get; set; } = new List<TDealProject>();
 
     public virtual ICollection<TDealSiteLoan> TDealSiteLoans { get; set; } = new List<TDealSiteLoan>();
+
+    public virtual ICollection<TMemberCoupon> TMemberCoupons { get; set; } = new List<TMemberCoupon>();
 }

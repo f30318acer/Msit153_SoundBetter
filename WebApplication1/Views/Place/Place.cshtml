@@ -1,87 +1,146 @@
 ﻿
 <style>
-	.similar-song .ss-thumb {
-		border-radius: 41px;
-		margin-bottom: 22px;
-		min-width: 100%;
-		width: 250px;
-		height: 300px;
-	}
+    .ss-thumb {
+        border-radius: 41px;
+        margin-bottom: 22px;
+        min-width: 100%;
+        width: 250px;
+        height: 300px;
+    }
+
+    #map {
+        height: 300px;
+        width: 100%;
+        margin-bottom: 22px;
+    }
+
+    #geocode-input {
+        margin-bottom: 10px;
+        width: 100%;
+    }
 </style>
 
 <section class="similar-songs-section">
-	<div class="container-fluid">
-		<h3>場地一覽</h3>
-		<div class="row">
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="~/img/place1.jpg" alt="">
-					<h4>The Ball Music Studio 這球大安店</h4>
-					<p>台北市</p>
-					<div class="single_player">
-						<div class="jp-audio jp_container_8" role="application" aria-label="media player">
-							<div class="jp-no-solution">
-								音樂學校 <button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="~/img/place2.jpg" alt="">
-					<h4>風華錄音</h4>
-					<p>台北市</p>
-					<div class="single_player">
-						<div class="jp-audio jp_container_9" role="application" aria-label="media player">
-							<div class="jp-no-solution">
-								錄音室 <button style="background-color:cornflowerblue;border-radius:8px;float:right" href="http://get.adobe.com/flashplayer/" target="_blank">我要預約</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="~/img/place3.jpg" alt="">
-					<h4>8度音樂空間</h4>
-					<p>新北市</p>
-					<div class="single_player">
-						<div class="jp-audio jp_container_10" role="application" aria-label="media player">
-							<div class="jp-no-solution">
-								音樂學校 <button style="background-color:cornflowerblue;border-radius:8px;float:right" href="http://get.adobe.com/flashplayer/" target="_blank">我要預約</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-sm-6">
-				<div class="similar-song">
-					<img class="ss-thumb" src="~/img/place4.jpg" alt="">
-					<h4>旋律文創中心</h4>
-					<p>台北市</p>
-					<div class="single_player">
-						<div class="jp-audio jp_container_11" role="application" aria-label="media player">
-							<div class="jp-no-solution">
-								展演空間 <button style="background-color:cornflowerblue;border-radius:8px;float:right" href="http://get.adobe.com/flashplayer/" target="_blank">我要預約</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <h3>場地一覽</h3>
+        <select class="form-select" id="citySelect">
+        </select>
+        <br />
+        <input type="text" id="geocode-input" placeholder="Enter a location">
+        <button id="geocode-button" class="button button-primary">Geocode</button>
+        <div id="map"></div>
+        <br />
+        <div id="divList" class="row playlist-area">
+            <!--List內容-->
+        </div>
+    </div>
 </section>
 
-@section Scripts{
-	<script>
-		const btn = document.querySelector('#btn1');
-		// btn.addEventListener('click', () => {
-		// 	location.href = '@Url.Content("~/Place/PlaceDetail")';
-		// })
-		btn.addEventListener('click', async function () {
-			var page = await '@Url.Content("~/Place/PlaceDetail")';
-			location.href = page;
-		})
-	</script>
+@section Scripts {
+    <script>
+        const btn = document.querySelector('#btn1');
+        const slt = document.querySelector('#citySelect');
+
+        function loadPlaceByCity(cityval) {
+            const divList = $('#divList');
+            let url = '/Place/QueryByCity';
+            if (cityval) {
+                url += `?fCityId=${cityval}`;
+            }
+            $.getJSON(url, function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    const card = $(
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
+                            <div class="playlist-item">
+                                <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
+                                <h5>${item.fSiteName}</h5>
+                                <h5>${item.fCity}</h5>
+                                <h5>@Model${item.fSiteTypeText}</h5><button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
+                            </div>
+                         <br />
+                         </a>`);
+                    docFrag.append(card);
+                })
+                divList.html(docFrag)
+            })
+        }
+
+        function loadPlace() {
+            const divList = $('#divList');
+            let url = '/Place/List';
+
+            $.getJSON(url, function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    const card = $(
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
+                                    <div class="playlist-item">
+                                        <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
+                                        <h5>${item.fSiteName}</h5>
+                                        <h5>${item.fCity}</h5>
+                                        <h5>@Model${item.fSiteTypeText}</h5><button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
+                                    </div>
+                                 <br />
+                                 </a>`);
+                    docFrag.append(card);
+                })
+                divList.html(docFrag)
+            })
+        }
+
+        loadPlace();
+
+        async function loadCity() {
+            const response = await fetch('@Url.Content("~/Place/GetCities")');
+            const data = await response.json();
+            const style = data.map(s => `<option value="${s.fCityId}">${s.fCity}</option>`);
+            slt.innerHTML = style.join("");
+
+            slt.addEventListener('change', async function () {
+                const cityval = $('#citySelect').val();
+                loadPlaceByCity(cityval);
+            });
+        }
+
+        loadCity();
+
+        let map;
+        let marker;
+        let geocoder;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 8,
+                center: { lat: -34.397, lng: 150.644 },
+                mapTypeControl: false,
+            });
+            geocoder = new google.maps.Geocoder();
+            marker = new google.maps.Marker({
+                map,
+            });
+        }
+
+        function geocodeAddress() {
+            const address = document.getElementById("geocode-input").value;
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    map.setCenter(results[0].geometry.location);
+                    marker.setPosition(results[0].geometry.location);
+                    marker.setMap(map);
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+
+        document.getElementById("geocode-button").addEventListener("click", geocodeAddress);
+
+        // 引入 Google Maps JavaScript API
+        // const script = document.createElement('script');
+        // script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDpJq9VUwOC98iybSUuQggk04ir2ev31aM&callback=initMap&v=weekly';
+        // script.defer = true;
+        // document.head.appendChild(script);
+
+    </script>
 }

@@ -75,48 +75,50 @@ namespace prjMusicBetter.Controllers
             return View();
         }
 
+      
+
         //原先的程式碼
 
         // POST: TCoupons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(tCoupon);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(tCoupon);
-        //}
-
-       /* 塞入圖片功能*/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate")] TCoupon tCoupon, IFormFile FPicture)
+        public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
         {
             if (ModelState.IsValid)
             {
-                if (FPicture != null && FPicture.Length > 0)
-                {
-                    var path = Path.Combine(_environment.WebRootPath, "img", FPicture.FileName);
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await FPicture.CopyToAsync(stream);
-                    }
-
-                    tCoupon.FPicture = FPicture.FileName; // 儲存檔案名
-                }
-
                 _context.Add(tCoupon);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tCoupon);
         }
+
+        /* 塞入圖片功能*/
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate")] TCoupon tCoupon, IFormFile FPicture)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (FPicture != null && FPicture.Length > 0)
+        //        {
+        //            var fileName = Path.Combine(_environment.WebRootPath, "img", FPicture.FileName);
+        //            using (var stream = new FileStream(path, FileMode.Create))
+        //            {
+        //                await FPicture.CopyToAsync(stream);
+        //            }
+
+        //            tCoupon.FPicture = FPicture.FileName; // 儲存檔案名
+        //        }
+
+        //        _context.Add(tCoupon);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tCoupon);
+        //}
 
 
         // GET: TCoupons/Edit/5

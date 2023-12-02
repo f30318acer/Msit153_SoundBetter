@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using prjMusicBetter.Models;
@@ -29,31 +30,26 @@ namespace prjMusicBetter.Controllers
         }
 
         // GET: TSites/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.TSites == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.TSites == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var tSite = from t in _context.TSites
-                        where t.FSiteId == id
-                        join f in _context.TSitePictures on t.FSiteId equals f.FSiteId
-                        select new SiteViewModel
-                        {
-                            TSite = t,
-                            TSitePicture = f.FPicturePath.ToList(),
-                        };
+        //    var tSite = await _context.TSites
+        //        .Include(t => t.FCity)
+        //        .Include(t => t.FMember)
+        //        .Include(t => t.FSitePicture)
+        //        .FirstOrDefaultAsync(t => t.FSiteId == id);
 
-            var viewModel = await tSite.FirstOrDefaultAsync();
+        //    if (tSite == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (viewModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(viewModel);
-        }
+        //    return View(tSite);
+        //}
 
         // GET: TSites/Create
         public IActionResult Create()
@@ -94,8 +90,8 @@ namespace prjMusicBetter.Controllers
             {
                 return NotFound();
             }
-            ViewData["FCityId"] = new SelectList(_context.TCities, "FCityId", "FCityId", tSite.FCityId);
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tSite.FMemberId);
+            ViewData["FCity"] = new SelectList(_context.TCities, "FCityId", "FCity", tSite.FCity);
+            ViewData["FName"] = new SelectList(_context.TMembers, "FMemberId", "FName", tSite.FMember);
             return View(tSite);
         }
 
@@ -170,14 +166,14 @@ namespace prjMusicBetter.Controllers
             {
                 _context.TSites.Remove(tSite);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TSiteExists(int id)
         {
-          return (_context.TSites?.Any(e => e.FSiteId == id)).GetValueOrDefault();
+            return (_context.TSites?.Any(e => e.FSiteId == id)).GetValueOrDefault();
         }
     }
 }

@@ -27,7 +27,15 @@ public partial class TProject
 
     public string FThumbnailPath { get; set; }
 
+    public string FDescription2 { get; set; }
+
+    public int? FStyleId { get; set; }
+
+    public int? FSkillId { get; set; }
+
     public virtual TMember FMember { get; set; }
+
+    public virtual TSkill FProject { get; set; }
 
     public virtual TProjectStatus FProjectStatus { get; set; }
 
@@ -38,6 +46,8 @@ public partial class TProject
     public virtual ICollection<TApplicationRecord> TApplicationRecords { get; set; } = new List<TApplicationRecord>();
 
     public virtual ICollection<TDealProject> TDealProjects { get; set; } = new List<TDealProject>();
+
+    public virtual ICollection<TProjectFav> TProjectFavs { get; set; } = new List<TProjectFav>();
 
     public virtual ICollection<TProjectSkillRequire> TProjectSkillRequires { get; set; } = new List<TProjectSkillRequire>();
 }

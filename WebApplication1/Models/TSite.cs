@@ -21,6 +21,8 @@ public partial class TSite
 
     public string FAddress { get; set; }
 
+    public string FPicture { get; set; }
+
     public virtual TCity FCity { get; set; }
 
     public virtual TMember FMember { get; set; }

@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace prjMusicBetter.Models;
 
@@ -34,7 +33,5 @@ public partial class TWork
 
     public virtual ICollection<TEvaluate> TEvaluates { get; set; } = new List<TEvaluate>();
 
-    [NotMapped]
-    public IFormFile File { get; set; }
-
+    public virtual ICollection<TWorkFav> TWorkFavs { get; set; } = new List<TWorkFav>();
 }

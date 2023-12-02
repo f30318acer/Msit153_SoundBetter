@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Create";
+}
+
+<section class="intro-section spad">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-8 order-2 order-lg-1">
+                                <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">建立文章</p>
+
+
+                                <form class="mx-1 mx-md-4">
+
+                                    <div class="photo-button mb-3">
+                                        <div class="photo-card mb-2 d-flex justify-content-center">
+                                            <div class="photo">
+                                                <img src="~/img/playlist/13.jpg" style="border-radius:10px">
+                                                <input type="text" name="Photo" style="display: none;">
+                                            </div>
+                                        </div>
+                                        <div class="photo-upload mb-2 d-flex justify-content-center">
+                                            <input type="button" value="上傳照片" class="btn btn-primary">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label" for="form3Example4c">文章標題</label>
+                                            <input type="text" id="fTitle" class="form-control" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label" for="form3Example4c">文章風格</label>
+                                            <select id="selectStyle" class="form-select"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label" for="form3Example3c">文章內容</label>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fContent" style="height: 100px"></textarea>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="text-right">
+                                        <a href="~/VCProject/List" type="button" class="btn btn-secondary">取消</a>
+                                        <button type="button" class="btn btn-success" id="buttonSend">確認建立</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-4 d-flex align-items-center order-1 order-lg-2">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                                     class="img-fluid" alt="Sample image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        const url = '/apiTArticle/Create';
+        const selStyle = document.querySelector('#selectStyle');
+        $('#buttonSend').click(function () {
+
+            // 獲取當前的本地時間
+            const currentDate = new Date();
+            const jsonData = JSON.stringify({
+                fMemberId: 1,
+                fTitle: $('#fTitle'),
+                fContent: $('#fContent'),
+                fStyleId: selStyle.value
+            })
+            console.log(jsonData)
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: jsonData
+            }).done(function (data) {
+                alert("新增成功")
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log("POST request failed: " + textStatus + ", " + errorThrown);
+                alert("新增失敗");
+            });
+        });
+        //Style選擇器
+        async function loadStyle() {
+            const response = await fetch('@Url.Content("~/apiTStyle/List")');
+            const data = await response.json();
+            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+            selStyle.innerHTML = style.join("");
+        }
+        loadStyle();
+    </script>
+}

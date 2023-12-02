@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Policy;
+using prjMusicBetter.Models.infra;
+using Microsoft.AspNetCore.Authorization;
+using prjMusicBetter.Models.Daos;
+using prjMusicBetter.Models.Services;
 
 
 
@@ -20,17 +24,32 @@ namespace WebApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly dbSoundBetterContext _context;
-   
+        private readonly IWebHostEnvironment _environment;
+        private readonly UserInfoService _userInfoService;
+        MemberDao _dao;
+        MemberService _service;
 
-        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context)
+
+        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment ,UserInfoService userInfoService)
         {
             _logger = logger;
             _context = context;
-        
+            _environment = environment;
+            _userInfoService = userInfoService;
+            _dao = new MemberDao(_context, _environment);
+            _service = new MemberService(_context, _environment);
         }
 
+        public IActionResult test()
+        {
+            return View();
+        }
         public IActionResult Index()
         { 
+            return View();
+        }
+        public IActionResult BackgroundIndex()
+        {
             return View();
         }
         public IActionResult Vision()
@@ -45,7 +64,8 @@ namespace WebApplication1.Controllers
         {
             Dictionary<string, Func<RedirectToActionResult>> roleActions = new Dictionary<string, Func<RedirectToActionResult>>
             {
-
+                 {"Administrator",()=>RedirectToAction("Index", "BgHome") }, // 假設管理員角色是 "Administrator"
+                 {"Member",()=>RedirectToAction("Index", "Home")} // 假設一般會員角色是 "Member"
             };
 
             foreach (var role in roleActions.Keys)
@@ -57,9 +77,8 @@ namespace WebApplication1.Controllers
             }
             return View();
         }
-
         [HttpPost]
-        public IActionResult Login(LoginVM vm, string? returnUrl)
+        public async Task<IActionResult> Login(LoginVM vm, string? returnUrl)
         {
             //VM表單驗證
             if (ModelState.IsValid == false)
@@ -70,54 +89,83 @@ namespace WebApplication1.Controllers
             //todo
             //vm.password 進行雜湊 再去比對
 
-            var member = _context.TMembers.FirstOrDefault(m => m.FEmail == vm.Email && m.FPasswod == vm.Password);
+            var member = _context.TMembers
+                .FirstOrDefault(m => m.FEmail == vm.Email && m.FPassword == vm.Password);
 
-            //輸入錯誤
-            if (member == null)
+
+            //建立用戶身分宣告
+            var claims = new List<Claim>
             {
-                ModelState.AddModelError("", "帳號密碼錯誤!");
+                new Claim(ClaimTypes.Name,member.FUsername),
+                new Claim("fMemberID",member.FMemberId.ToString()),
+                new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),     
+            };
+            var identity=new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal =new ClaimsPrincipal(identity);
+
+            //執行登入
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal);
+
+            //確定登入完後提供 歡迎回來 登入者fUserName
+            TempData["AlertLogin"] = $"歡迎回來,{member.FUsername}!";
+
+            //依據用戶角色重定向倒不同頁面
+            if (member.FPermissionId == 1)
+            {
+                return RedirectToAction("index", "Bghome");
+            }
+            else
+            {
+                //一般會員重定向到首頁
+                return RedirectToAction("index", "Home");
+            }
+        }
+
+
+        public IActionResult Register()
+        {
+            //ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(FMemberVM vm)
+        {
+            if (ModelState.IsValid == false)
+            {
                 return View(vm);
             }
-
-            //登入
-            if (member != null)
+            try
             {
-                List<Claim> claims = new List<Claim>
-                {
-                    new Claim("fMemberID",member.FMemberId.ToString()),
-                    new Claim(ClaimTypes.Role,"Member"),
-                };
-
-                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
-
-                TempData["AlertLogin"] = member.FUserame;
-
-                return RedirectToAction("BgHome");
+                _service.MemberResgister(vm);
+                TempData["AlertRegister"] = vm.fName;
             }
-
-            if (Url.IsLocalUrl(returnUrl))
+            catch (Exception ex)
             {
-                return Redirect(returnUrl);
+                ModelState.AddModelError("","新增失敗,"+ex.Message);
+                return View(vm);
             }
-
             return RedirectToAction("Index");
-        }
+         }
 
-        public ActionResult Register()
+        //============================================
+        [Authorize]
+        public IActionResult Test()
         {
-
-            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
-            return View();
+            return Content(_userInfoService.GetMemberInfo().FName);
         }
-        public IActionResult test()
-        {
-            return View();
-        }
+        
         public IActionResult NoLogin()
         {
             return View();
         }
+        //會員登出功能
+        public async Task<IActionResult> LoginoutAsync()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        }
+
         public IActionResult ForgetPwd()
         {
             return View();
@@ -138,5 +186,20 @@ namespace WebApplication1.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult NotFoundPG()
+        {
+            return View();
+        }
+
+        public IActionResult aboutUS() { return View(); }
+        public IActionResult TermOfTeacher() { return View(); }
+        public IActionResult Term() { return View(); }
+        public IActionResult JoinUS() { return View(); }
+        public IActionResult Partner() { return View(); }
+        public IActionResult contactUS() { return View(); }
+
+
+
     }
 }

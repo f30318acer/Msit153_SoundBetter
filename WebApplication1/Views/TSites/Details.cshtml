@@ -1,126 +1,96 @@
-﻿@* @model prjMusicBetter.Models.TSite
+@* @model prjMusicBetter.Models.TSite
 
 @{
     ViewData["Title"] = "Details";
     Layout = "_Layout2";
 }
+<style>
+    dt {
+        font-size: 30px;
+        color: darkblue;
+        font-family: 'Microsoft JhengHei UI'
+    }
+
+    dd:not(#PlacePic) {
+        background-color: white;
+        font-size: 20px;
+        font-family: 'Microsoft JhengHei UI';
+    }
+</style>
 <main id="main" class="main">
-    <h1>Details</h1>
+    <h1>詳細資訊</h1>
 
-<<<<<<< HEAD
     <div>
-        <h4>TSite</h4>
         <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FSiteName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FSiteName)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FPhone)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FPhone)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FSiteType)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FSiteType)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FAddress)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FAddress)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FCity)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FCity.FCity)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FMember)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FMember.FName)
-            </dd>
-            <dt class="col-sm-2">
-                場地圖片
-            </dt>
-            <dd class="col-sm-10">
-                @if (Model != null)
 
-    <h4>TSite</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FPhone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FPhone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FAddress)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FAddress)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FCity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FCity.FCity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FMember)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FMember.FName)
-        </dd>
-        <dt class="col-sm-2">
-            場地圖片
-        </dt>
-          <dd class="col-sm-10">
-                @if (!string.IsNullOrEmpty(FPicture))
-                {
-                    foreach (var sitePicture in Model.TSitePictures)
+        <dl class="row">
+            <div class="col-md-6">
+                <dt class="col-sm-2">
+                    場地名稱
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FSiteName)
+                </dd>
+                <br />
+                <dt class="col-sm-2">
+                    電話
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FPhone)
+                </dd>
+                <br />
+                <dt class="col-sm-2">
+                    場地類型
+                </dt>
+                <dd class="col-sm-10">
+                   @*  @Model.SiteTypeText *@
+                </dd>
+                <br />
+                <dt class="col-sm-2">
+                    地址
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FAddress)
+                </dd>
+                <br />
+                <dt class="col-sm-2">
+                    城市
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FCity.FCity)
+                </dd>
+                <br />
+                <dt class="col-sm-2">
+                    會員
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FMember.FName)
+                </dd>
+                <br />
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model?.FSiteId" class="btn">編輯場地</a> |
+                    <a asp-action="Index" class="btn">回場地列表</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <dt class="col-sm-2">
+                    場地圖片
+                </dt>
+                <br />
+                <dd class="col-sm-10" id="PlacePic">
+                   @*  @if (Model.FSitePicture != null)
                     {
-                        <img src="@Url.Content("~/img/" + sitePicture.FPicturePath)" alt="Site Picture" />
+                        var sitePicture = Model.FSitePicture;
+                        <img src="@Url.Content("~/img/" + sitePicture.FPicturePath)" alt="Site Picture" style="width: 700px; height:auto" />
                     }
-                }
-                  沒有圖片顯示No Image 
-                 else
-                {
-                     @:No Image
-                } 
-         </dd> 
-            </dd>
+                    else
+                    {
+                        <p>No Image</p>
+                    } *@
+                </dd>
         </dl>
     </div>
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
-        <a asp-action="Index">Back to List</a>
     </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
 </main>
 
 @section Scripts {
