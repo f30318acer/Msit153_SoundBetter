@@ -7,6 +7,17 @@
         width: 250px;
         height: 300px;
     }
+
+    #map {
+        height: 300px;
+        width: 100%;
+        margin-bottom: 22px;
+    }
+
+    #geocode-input {
+        margin-bottom: 10px;
+        width: 100%;
+    }
 </style>
 
 <section class="similar-songs-section">
@@ -15,6 +26,9 @@
         <select class="form-select" id="citySelect">
         </select>
         <br />
+        <input type="text" id="geocode-input" placeholder="Enter a location">
+        <button id="geocode-button" class="button button-primary">Geocode</button>
+        <div id="map"></div>
         <br />
         <div id="divList" class="row playlist-area">
             <!--List內容-->
@@ -90,5 +104,43 @@
         }
 
         loadCity();
+
+        let map;
+        let marker;
+        let geocoder;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 8,
+                center: { lat: -34.397, lng: 150.644 },
+                mapTypeControl: false,
+            });
+            geocoder = new google.maps.Geocoder();
+            marker = new google.maps.Marker({
+                map,
+            });
+        }
+
+        function geocodeAddress() {
+            const address = document.getElementById("geocode-input").value;
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    map.setCenter(results[0].geometry.location);
+                    marker.setPosition(results[0].geometry.location);
+                    marker.setMap(map);
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+
+        document.getElementById("geocode-button").addEventListener("click", geocodeAddress);
+
+        // 引入 Google Maps JavaScript API
+        // const script = document.createElement('script');
+        // script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDpJq9VUwOC98iybSUuQggk04ir2ev31aM&callback=initMap&v=weekly';
+        // script.defer = true;
+        // document.head.appendChild(script);
+
     </script>
 }
