@@ -23,19 +23,48 @@ namespace prjMusicBetter.Controllers
             _dao = new MemberDao(_context, _environment);
             _userInfoService = userInfoService;        
         }
+        //個人會員圖片 
         public IActionResult GetFMemberPhoto()
         {
             TMember member = _userInfoService.GetMemberInfo();
             var dto = _context.TMembers.Where(m=>m.FMemberId == member.FMemberId).Select(m => new { fphotoPath = m.FPhotoPath }).FirstOrDefault();
             return Json(dto);
         }
+        public IActionResult UploadPhoto(IFormFile photo)
+        {
+            try
+            {
+                var mem = _userInfoService.GetMemberInfo();
+                var memInDb = _context.TMembers.FirstOrDefault(m => m.FMemberId == mem.FMemberId);
 
+                string fileName = $"FMemberId_{mem.FMemberId}.jpg";
 
+                memInDb.FPhotoPath = fileName;
+                _context.SaveChanges();
 
+                string FPhotoPath = Path.Combine(_environment.WebRootPath, "img/Member", fileName);
+                using(var fileStream = new FileStream(FPhotoPath, FileMode.Create))
+                {
+                    photo.CopyTo(fileStream);
+                }
 
-
-
-
+                var result = new ApiResult
+                {
+                    StatusCode = 200,
+                    StatusMessage = "更新大頭貼成功",
+                };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                var result = new ApiResult
+                {
+                    StatusCode = 500,
+                    StatusMessage = "更新大頭貼失敗"
+                };
+                return Json(result);
+            }
+        }
 
         public IActionResult Index()
         {
