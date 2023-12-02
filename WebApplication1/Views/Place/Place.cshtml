@@ -15,22 +15,6 @@
         <select class="form-select" id="citySelect">
         </select>
         <br />
-@*         <div class="row">
-            <div class="col-xl-3 col-sm-6">
-                <div class="similar-song">
-                    <img class="ss-thumb" src="~/img/place1.jpg" alt="">
-                    <h4>The Ball Music Studio 這球大安店</h4>
-                    <p>台北市</p>
-                    <div class="single_player">
-                        <div class="jp-audio jp_container_8" role="application" aria-label="media player">
-                            <div class="jp-no-solution">
-                                音樂學校 <button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> *@
         <br />
         <div id="divList" class="row playlist-area">
             <!--List內容-->
@@ -42,11 +26,6 @@
     <script>
         const btn = document.querySelector('#btn1');
         const slt = document.querySelector('#citySelect');
-
-        // btn.addEventListener('click', async function () {
-        //     var page = await '@Url.Content("~/Place/PlaceDetail")';
-        //     location.href = page;
-        // })
 
         function loadPlaceByCity(cityval) {
             const divList = $('#divList');
@@ -88,7 +67,7 @@
                                         <h5>${item.fCity}</h5>
                                         <h5>@Model${item.fSiteTypeText}</h5><button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
                                     </div>
-                                 
+                                 <br />
                                  </a>`);
                     docFrag.append(card);
                 })
