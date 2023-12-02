@@ -7,54 +7,6 @@
 <input type="hidden" id="fMemberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="fCityId" value="@Html.DisplayFor(model => model.FCityId)" />
 
-@* <div>
-    <h4>TSite</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FPhone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FPhone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FAddress)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FAddress)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FPicture)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FPicture)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FCity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FCity.FCityId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FMember)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FMember.FMemberId)
-        </dd>
-    </dl>
-</div> *@
 <section class="contact-section">
     <div class="container-fluid">
         <div class="row">
@@ -376,15 +328,16 @@
                     </div>
                     <br />
                     <button class="site-btn">預約</button>
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
+                        <a asp-action="Index">Back to List</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
 @section Scripts
 {
     <script>
