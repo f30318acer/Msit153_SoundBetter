@@ -44,7 +44,7 @@
                 </dt>
                 <dd class="col-sm-10">
                    @*  @Model.SiteTypeText *@
-                </dd>
+               @*  </dd>
                 <br />
                 <dt class="col-sm-2">
                     地址
@@ -77,7 +77,7 @@
                     場地圖片
                 </dt>
                 <br />
-                <dd class="col-sm-10" id="PlacePic">
+                <dd class="col-sm-10" id="PlacePic"> *@
                    @*  @if (Model.FSitePicture != null)
                     {
                         var sitePicture = Model.FSitePicture;
@@ -116,4 +116,4 @@
         // 在 Razor 頁面加載完成後調用 loadImage 函數
         document.addEventListener('DOMContentLoaded', loadImage);
     </script>
-} *@
+} 
