@@ -13,9 +13,10 @@ using prjMusicBetter.Models.ViewModels;
 
 namespace prjMusicBetter.Controllers
 {
-
+    [Authorize(Roles = "Member")]
     public class MembersController : Controller
     {
+       
         private readonly dbSoundBetterContext _context;
         private readonly UserInfoService _userInfoService;
         private readonly IWebHostEnvironment _environment;
@@ -76,8 +77,7 @@ namespace prjMusicBetter.Controllers
         }
         public IActionResult MemberInfoEdit(int id)
         {
-            var dto = _memberDao.GetFMemberById(id);
-
+            var dto = _memberDao.GetFMemberById(id); 
             if (dto != null)
             {
                 FMemberEditVM vm = new FMemberEditVM()
@@ -99,10 +99,30 @@ namespace prjMusicBetter.Controllers
                 return RedirectToAction("ErrorPage"); // 或者 return View("ErrorView");
             }    
         }
-        //public IActionResult MemberInfoEdit(FMemberEditVM vm)
-        //{
-            
-        //}
+        [HttpPost]
+        public IActionResult MemberInfoEdit(FMemberEditVM vm)
+        {
+            var result = new ApiResult();
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+                result = new ApiResult { StatusCode = 500, StatusMessage = errors.FirstOrDefault() };
+                return Json(result);
+            }
+            var member = _context.TMembers.FirstOrDefault(m=>m.FMemberId == vm.FMemberID);
+            try
+            {
+                _service.FMemberEdit(vm);
+                result = new ApiResult { StatusCode = 200, StatusMessage = "編輯資料成功!" };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult { StatusCode = 500, StatusMessage = ex.Message };
+                return Json(result);
+            }
+        }
+        
         public IActionResult CoolPon()
         {
             return View();

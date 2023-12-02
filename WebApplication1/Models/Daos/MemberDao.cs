@@ -65,7 +65,7 @@ namespace prjMusicBetter.Models.Daos
         public FMemberEditDto GetFMemberById(int id)
         {
             FMemberEditDto dto = (from m in _context.TMembers
-                                  where m.FMemberId == id
+                                  where m.FMemberId == m.FMemberId //這裡不能只填ID 會抓不到
                                   select new FMemberEditDto
                                   {
                                       FMemberID = m.FMemberId,
@@ -78,10 +78,32 @@ namespace prjMusicBetter.Models.Daos
                                       FGender = m.FGender ? "女" : "男",
                                       FUsername = m.FUsername,
                                       FCreationTime = Convert.ToDateTime(m.FCreationTime).ToString("yyyy-MM-dd"),
-                                      FIntroduction = m.FIntroduction,
-                                      FPermissionId = m.FPermissionId
+                                      FIntroduction = m.FIntroduction
+
                                   }).FirstOrDefault();
             return dto;
+        }
+        public void EditMember(FMemberEditVM vm)
+        {
+            var member = _context.TMembers.Where(m => m.FMemberId == vm.FMemberID).FirstOrDefault();
+            if (vm.Photo != null)
+            {
+                string fileName = $"fMemberID_{member.FMemberId}.jpg";
+                member.FPhotoPath = fileName;
+                _context.SaveChanges();
+                string photoPath = Path.Combine(_environment.WebRootPath, "img/Member", fileName);
+                using (var fileStream = new FileStream(photoPath, FileMode.Create))
+                {
+                    vm.Photo.CopyTo(fileStream);
+                }
+
+            }
+            member.FName = vm.FName;
+            member.FPassword = vm.FPassword;
+            member.FEmail = vm.FEmail;
+            member.FPhone = vm.FPhone;
+            _context.SaveChanges();
+
         }
     }
 }
