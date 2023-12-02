@@ -36,12 +36,14 @@
 	<h2 style="color:#fc0254" >Sound</h2>
 	<h3 style="color:white">Better</h3>
         </a>
-        <div class="header-right">
-         
+
+
+       
+        <div class="header-right">         
             <div class="user-panel">
-            
-                @* <a href="#" class="hr-btn">Help</a> *@
+                            @* <a href="#" class="hr-btn">Help</a> *@
                 @*登入功能*@
+
                 <li class="d-flex align-items-center mx-2">
                     <img src="~/img/header/user.png" class="circle-size-35" width="40px" />
                     <img src="~/img/icons/login.png" class="width-16px"width="16px" />
@@ -49,6 +51,9 @@
                 </li>
             </div>
         </div>
+
+
+
         @*搜尋列*@
         <input class="search" type="text" name="keywords" placeholder="樂器、老師、課程" />
         @*這裡是各大功能*@
@@ -79,8 +84,8 @@
                 </ul>
             </li>
             @*會員資訊*@
-            <li>
-                <a href="blog.html">會員資訊</a>
+            <li>           
+                <a href="">會員資訊</a> 
                 <ul class="sub-menu">
                     <li class="nav-item">
                       
@@ -169,3 +174,34 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    AOS.init();
+
+    CheckLogin()
+
+    async function CheckLogin() {
+        const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`)
+        const isLogin = await response.json();
+
+        if (isLogin) {
+            const response = await fetch(`@Url.Content("~/apiHome/UpdateNav")`)
+            const dto = await response.json();
+
+            const { datas, role } = dto;
+
+            if (role == "Member") {
+                let str = "";
+                str+=`<ul class>`
+            }
+
+
+        }
+    }
+
+  
+
+
+
+
+</script>
