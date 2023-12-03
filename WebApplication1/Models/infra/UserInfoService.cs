@@ -15,7 +15,9 @@ namespace prjMusicBetter.Models.infra
         public TMember GetMemberInfo()
         {
             var claim = _contextAccessor.HttpContext.User.Claims.ToList();
+
             var memberId = claim.Where(c => c.Type == "fMemberID").FirstOrDefault();
+
             if(memberId == null)
             {
                 return null;

@@ -62,10 +62,10 @@ namespace prjMusicBetter.Models.Daos
             _context.Update(mem);
             _context.SaveChanges();
         }
-        public FMemberEditDto GetFMemberById(int id)
+        public FMemberEditDto GetFMemberById(int? id)
         {
             FMemberEditDto dto = (from m in _context.TMembers
-                                  where m.FMemberId == id //這裡不能只填ID 會抓不到
+                                  where m.FMemberId== id//這裡不能只填ID 會抓不到
                                   select new FMemberEditDto
                                   {
                                       FMemberID = m.FMemberId,

@@ -32,12 +32,12 @@ namespace WebApplication1.Controllers
         MemberService _service;
 
 
-        public HomeController(ILogger<HomeController> logger, dbSoundBetterContext context,IWebHostEnvironment environment ,UserInfoService userInfoService)
+        public HomeController(dbSoundBetterContext context,ILogger<HomeController> logger,IWebHostEnvironment environment ,UserInfoService userInfoService)
         {
             _logger = logger;
             _context = context;
-            _environment = environment;
             _userInfoService = userInfoService;
+            _environment = environment;            
             _dao = new MemberDao(_context, _environment);
             _service = new MemberService(_context, _environment);
         }
@@ -89,6 +89,13 @@ namespace WebApplication1.Controllers
 
             var member = _context.TMembers
                 .FirstOrDefault(m => m.FEmail == vm.Email && m.FPassword == vm.Password);
+
+            if (member == null)
+            {
+                ModelState.AddModelError("", "帳號密碼錯誤!");
+                return View(vm);
+            }
+
 
 
             //建立用戶身分宣告
@@ -158,7 +165,7 @@ namespace WebApplication1.Controllers
             return View();
         }
         //會員登出功能
-        public async Task<IActionResult> LoginoutAsync()
+        public async Task<IActionResult> Loginout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
@@ -168,6 +175,10 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+
+
+
+
         public IActionResult FAQ()
         {
             return View();
@@ -176,9 +187,6 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
