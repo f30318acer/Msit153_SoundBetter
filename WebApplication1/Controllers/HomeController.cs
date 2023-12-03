@@ -13,6 +13,8 @@ using System.Security.Policy;
 using prjMusicBetter.Models.infra;
 using Microsoft.AspNetCore.Authorization;
 using prjMusicBetter.Models.Daos;
+using System.Text;
+using System.Text.Json;
 using prjMusicBetter.Models.Services;
 
 
@@ -39,11 +41,7 @@ namespace WebApplication1.Controllers
             _dao = new MemberDao(_context, _environment);
             _service = new MemberService(_context, _environment);
         }
-        [Authorize]
-        public IActionResult test()
-        {
-            return Content(_userInfoService.GetMemberInfo().FName);
-        }
+       
         public IActionResult Index()
         { 
             return View();
