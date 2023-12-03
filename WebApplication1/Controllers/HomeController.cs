@@ -39,10 +39,10 @@ namespace WebApplication1.Controllers
             _dao = new MemberDao(_context, _environment);
             _service = new MemberService(_context, _environment);
         }
-
+        [Authorize]
         public IActionResult test()
         {
-            return View();
+            return Content(_userInfoService.GetMemberInfo().FName);
         }
         public IActionResult Index()
         { 
