@@ -31,7 +31,6 @@
 
 @section Scripts {
     <script>
-        const btn = document.querySelector('#btn1');
         const slt = document.querySelector('#citySelect');
 
         function loadPlaceByCity(cityval) {
@@ -41,24 +40,29 @@
                 url += `?fCityId=${cityval}`;
             }
 
-            // 清除之前的標記
-            if (marker) {
-                marker.setMap(null);
-            }
+            clearMarkers();
+
+            const bounds = new google.maps.LatLngBounds();
 
             $.getJSON(url, function (datas) {
+
                 const docFrag = $(document.createDocumentFragment());
                 datas.forEach(item => {
                     // 使用地址進行地理編碼
                     geocoder.geocode({ address: item.fAddress }, (results, status) => {
-
                         if (status === "OK") {
+
                             const location = results[0].geometry.location;
+                            bounds.extend(location);
+
                             const marker = new google.maps.Marker({
                                 position: location,
                                 map: map,
                                 title: item.fSiteName
                             });
+
+                            markers.push(marker);
+
                             const infoWindow = new google.maps.InfoWindow({
                                 content: `<div><strong>${item.fSiteName}</strong><br>${item.fAddress}</div>`
                             });
@@ -66,27 +70,36 @@
                             marker.addListener('click', function () {
                                 infoWindow.open(map, marker);
                             });
+
                         } else if (status === "ZERO_RESULTS") {
                             console.error("No results found for the provided address: " + item.fAddress);
+
                         } else {
                             console.error("Geocode was not successful for the following reason: " + status);
                         }
+                        fitBounds(map, bounds);
                     });
 
                     const card = $(
-                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fSiteId}">
                             <div class="playlist-item">
                                 <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
                                 <h5>${item.fSiteName}</h5>
                                 <h5>${item.fCity}</h5>
-                                <h5>@Model${item.fSiteTypeText}</h5><button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
+                                <h5>@Model${item.fSiteTypeText}</h5>
                             </div>
                          <br />
                          </a>`);
+
                     docFrag.append(card);
                 });
                 divList.html(docFrag);
             });
+        }
+
+        function fitBounds(map, bounds) {
+            // 設置地圖的範圍
+            map.fitBounds(bounds);
         }
 
         function loadPlace() {
@@ -97,12 +110,12 @@
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item) {
                     const card = $(
-                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
+                        `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fSiteId}">
                                     <div class="playlist-item">
                                         <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
                                         <h5>${item.fSiteName}</h5>
                                         <h5>${item.fCity}</h5>
-                                        <h5>@Model${item.fSiteTypeText}</h5><button id="btn1" style="background-color:cornflowerblue;border-radius:8px;float:right" target="_blank">我要預約</button>
+                                        <h5>@Model${item.fSiteTypeText}</h5>
                                     </div>
                                  <br />
                                  </a>`);
@@ -131,6 +144,7 @@
         let map;
         let marker;
         let geocoder;
+        let markers = [];
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
@@ -142,6 +156,15 @@
             marker = new google.maps.Marker({
                 map,
             });
+        }
+
+        function clearMarkers() {
+            // 遍歷地圖上的所有標記並將其清除
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            // 清空標記數組
+            markers = [];
         }
 
         // 引入 Google Maps JavaScript API

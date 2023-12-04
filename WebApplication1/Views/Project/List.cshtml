@@ -13,10 +13,10 @@
 			</div>
 			<div class="container col-lg-9">
 				<div class="text-right">
-					<select id="selectStyle" class="form-select"></select>
-					<input type="text" id="txtKeyword" name="keywords" placeholder="專案" />
-					<button type="button" id="btnSearch" class="btn btn-secondary">搜尋</button>
-					<a href="~/Project/Create" type="button" class="btn btn-success">建立專案</a>
+					<select id="selectStyle" class="form-select mr-2"></select>
+					<input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字"class="mr-2"/>
+					<button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+					<a href="~/Project/Create" type="button" class="btn btn-success mr-2">建立專案</a>
 				</div>
 			</div>
 		</div>
@@ -177,6 +177,7 @@
 		$('#btnSearch').click(function () {			
 			load(1);
 			loadPage();
+			$('#txtKeyword').val('');
 		});		
 	</script>
 }
