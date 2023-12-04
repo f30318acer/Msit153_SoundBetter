@@ -39,6 +39,14 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+//================= AspNetCore.Authentication 用戶登入驗證操作機制使用=====
+//執行順序不能顛倒不然驗證功能會無法正常工作。
+app.UseCookiePolicy();
+app.UseAuthentication();
+app.UseAuthorization();
+//================= AspNetCore.Authentication 用戶登入驗證操作機制使用======
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

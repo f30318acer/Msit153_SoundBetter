@@ -38,5 +38,23 @@ namespace prjMusicBetter.Models.Services
             }
             _dao.Register(vm);
         }
+        public void FMemberEdit(FMemberEditVM vm)
+        {
+            var memInEmail = _dao.GetMemberByEmail(vm.FEmail);
+            if (memInEmail != null && memInEmail.FMemberId != vm.FMemberID)
+            {
+               throw new Exception("此信箱已被其他會員註冊，無法修改!");
+            }
+            var memInPhone = _dao.GetMemberByPhone(vm.FPhone);
+            if (memInPhone != null && memInPhone.FMemberId != vm.FMemberID)
+            {
+                throw new Exception("已有此電話號碼!");
+            }
+            if(vm.FPhone.Length>10||vm.FPhone.Length < 10)
+            {
+                throw new Exception("電話號碼為10碼!");
+            }
+            _dao.EditMember(vm);
+        }
     }
 }

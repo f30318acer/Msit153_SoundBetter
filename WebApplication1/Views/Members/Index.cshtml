@@ -10,8 +10,6 @@
     }
 }
 
-
-
 <div class="container row p-2 mx-auto border border-dark rounded-3 m-3">
     <div class="col-3  border rounded-3 p-2 color-FCFCFC">
         <div class="p-3">
@@ -20,10 +18,9 @@
                     @{
                         if (Model.FPhotoPath != null)
                         {
-
                             <div>
                                 <div class="my-4 mx-auto btnUpload cursor-pointer" style="width:150px; height:150px">
-                                    <img src="@Url.Content("~/img/Member/")@Model.FPhotoPath" data-filename="@Model.FPhotoPath" id="imgMemberPhoto" class="circle-size-150 cover rounded-circle" />  
+                                    <img src="@Url.Content("~/img/Member/")@Model.FPhotoPath" data-filename="@Model.FPhotoPath" id="imgMemberPhoto" class="circle-size-150 cover rounded-circle" />
                                 </div>
                                 <div class="width-400 mx-auto">
                                     <input type="file" class="form-control" style="visibility:hidden" id="inputUpload" name="Photo">
@@ -45,105 +42,112 @@
                 </form>
             </div>
             <div class="mt-3">
-                <input type="hidden" name="MemberId" value="@Model.FMemberID" />
+                <input type="hidden" name="fMemberID" value="@Model.FMemberID" />
                 <input type="hidden" name="" value="@display" id="display" class="form-control">
             </div>
         </div>
         <div class="m-3 justify-content-center">
             <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="info">           
-                    <img class="d-flex w-25-h-25" src="@Url.Content("~/img/Member/user.png")" alt="">
+                <div class="btnOptions d-flex p-2 gap-3" id="info">
+                    <img class="d-flex w-25-h-25" src="@Url.Content("~/img/MyMemberphoto/user.png")" alt="">
                     個人資料
                 </div>
             </div>
             <div class=" border-bottom align-items-center d-flex">
                 <div class="btnOptions d-flex p-2 gap-3" id="order">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("~/img/Member/myorder.png")" alt="">
-                    <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-dark">課程查詢</a>
-
+                    <img class="d-flex w-25-h-25" src="@Url.Content("~/img/MyMemberphoto/myorder.png")" alt="">
+                    課程查詢
+                    @* <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-dark">課程查詢</a> *@
                 </div>
             </div>
             <div class=" border-bottom align-items-center d-flex">
                 <div class="btnOptions d-flex p-2 gap-3" id="myKeep">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/Member/mykeep.png")" alt="">
-                    我的收藏
+                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mymusic.JPG")" alt="">
+                    我的作品
                 </div>
             </div>
             <div class=" border-bottom align-items-center d-flex">
                 <div class="btnOptions d-flex p-2 gap-3" id="myKeep">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/Member/mykeep.png")" alt="">
-                    <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark">我的優惠券</a>
+                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/myproject.JPG")" alt="">
+                    我的專案
                 </div>
             </div>
-            @*  <div class=" border-bottom align-items-center d-flex">
-            <div class="btnOptions d-flex p-2 gap-3" id="password">
-            <img class="d-flex w-25-h-25" src="/images/memberphoto/exchange.png" alt="">
-            修改密碼
+            <div class=" border-bottom align-items-center d-flex">
+                <div class="btnOptions d-flex p-2 gap-3" id="myKeep">
+                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
+                    我的優惠券
+                    @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
+                </div>
             </div>
-            </div>*@
-
+            <div class=" border-bottom align-items-center d-flex">
+                <div class="btnOptions d-flex p-2 gap-3" id="password">
+                    <img class="d-flex w-25-h-25" src="/img/MyMemberphoto/myforgot.jpg" alt="">
+                    修改密碼
+                </div>
+            </div>                   
         </div>
     </div>
-    <div class="col-9  p-2" id="divPartial">
-        <form method="post">
-            <div class="container">
-                <div class="m-3 fs-3 fw-bold  border-bottom py-4 ">個人資料</div>
-                <div class="p-2 ">
-                    <input type="hidden" name="MemberId" value="4">
-                    <div class="row justify-content-around p-3">
-
-                        <div class="pt-2 d-flex col-6 align-items-center">
-                            <div class=" width-90px text-end fw-bold">姓名 :</div>
-                            <div class="mx-2">
-                                Jokic
-                            </div>
-                        </div>
-                        <div class="pt-2 d-flex col-6 align-items-center">
-                            <div class=" width-90px text-end fw-bold">生日 :</div>
-                            <div class="mx-2">
-                                1995-02-19
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-around p-3">
-                        <div class="pt-2 d-flex col-6 align-items-center">
-                            <div class=" width-90px text-end fw-bold">信箱 :</div>
-                            <div class="mx-2">
-                                Jokic@gmail.com
-                            </div>
-                        </div>
-                        <div class="pt-2 d-flex col-6 align-items-center">
-                            <div class=" width-90px text-end fw-bold">電話 :</div>
-                            <div class="mx-2">
-                                0987854568
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="pt-2 d-flex col-6 align-items-center  p-3 mt-3">
-                        <div class=" width-90px text-end fw-bold">性別 :</div>
-                        <div class="mx-2">
-                            男
-                        </div>
-                    </div>
-                    <div class="pt-2 d-flex col-6 align-items-center  p-3 mt-3">
-                        <div class=" width-90px text-end fw-bold">使用者姓名 :</div>
-                        <div class="mx-2">
-                            男
-                        </div>
-                    </div>
-                </div>
-                <div class="justify-content-around p-5">
-                    <div class="text-center">
-                        <a href="@Url.Action("ProfileEdit", "Member")" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">修改個人資料</a>
-                        @*<input type="submit" value="修改個人資料" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">*@
-                        <a href="@Url.Content("~/Home/Index")" class="btn btn-dark">回首頁</a>
-                    </div>
-                </div>
-            </div>
-            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HQovWu9wfZBnLgpt5k7BlUBqt_o4XyyVbyc2vg0tffnMuLqTvxn77jdU8k0bSIFXla1UNXH9GX5Pkyia_lxvHi7TYTlBlr0ytkaL4n-312QAjLEmFmiAX4J6FMdTeXBysN19XNxJP1fxx30rUtbDY2bysWp1aviFk0dFjFbFwr3PFg8lI82D4oXRiEwGT8XfQ">
-        </form>
+    <div class="col-9 p-2" id="divPartial">
     </div>
 </div>
+@section Scripts
+    {
+    <script>
+        let MemberID = 0;
+        async function GetMemberFileName() {
+            const response = await fetch(`@Url.Content("~/apiMembers")`)
+            const data = await response.json();
 
-</div>
+            let displayFileName = data.fphotoPath == null ? 'default.jpg' : data.fphotoPath;
+
+            ReloadPhoto(displayFileName)
+        }
+        function ReloadPhoto(displayFileName) {
+
+            let fphotoPath = `@Url.Content("~/img/Member/")${displayFileName}`
+
+            $("#imgMemberPhoto").attr("src", fphotoPath)
+        }
+
+        $('.btnUpload').on('click', function () {
+            $('#inputUpload').trigger('click');
+        })
+        const photo = document.querySelector("#inputUpload");
+        photo.addEventListener('change', async function () {
+            const files = photo.files
+            if (files.length == 0) {
+                GetMemberFileName()
+            }
+            else {
+                const formData = new FormData(document.formUploadPhoto);
+                const response = await fetch('@Url.Content("~/apiMembers/UploadPhoto")', {
+                    body: formData,
+                    method: 'POST'
+                });
+                const datas = await response.json();
+                if (datas.statusCode == 200) {
+                    Swal.fire(
+                        '更新成功!',
+                        '您成功更新了照片!',
+                        'success'
+                    )
+                    GetMemberFileName()
+                }
+            }
+        })
+
+
+
+        function loadPage(display) {
+            $('#divPartial').load(`@Url.Content("~/Members/")${display}`)
+        }
+
+        //將會員資料回傳至這裡
+        $('#info').click(function () {
+            $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
+        })
+
+
+
+    </script>
+}
