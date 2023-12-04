@@ -82,6 +82,20 @@ namespace prjMusicBetter.Controllers
 			}
 			return Json(pictures);
 		}
+        //===搜尋ArticlePic用ID===
+        public IActionResult QueryPicById(int? id)
+        {
+            if (id == null || _context.TArticlePictures == null)
+            {
+                return NotFound();
+            }
 
-	}
+            var pic = _context.TArticlePictures.Where(m => m.FArticleId == id);
+            if (pic == null)
+            {
+                return NotFound();
+            }
+            return Json(pic);
+        }
+    }
 }

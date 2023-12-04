@@ -137,5 +137,34 @@ namespace prjMusicBetter.Controllers
             ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
             return View();
         }
+        public IActionResult MemberPassword()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public IActionResult MemberPassword(MemberPasswordVM vm)
+        {
+            var result = new ApiResult();
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+                result = new ApiResult { StatusCode=500,StatusMessage=errors.FirstOrDefault() };
+                return Json(result);
+            }
+            try
+            {
+                int loginMemId = _userInfoService.GetMemberInfo().FMemberId;
+                _service.MemberPasswordReset(vm, loginMemId);
+                result = new ApiResult { StatusCode = 200, StatusMessage = "編輯資料成功!" };
+                return Json(result);
+
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult { StatusCode = 500, StatusMessage = ex.Message };
+                return Json(result);
+
+            }
+        }
     }
 }
