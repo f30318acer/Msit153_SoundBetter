@@ -28,6 +28,14 @@
 	</div>
 </section>
 <!-- Playlist section end -->
+<!-- PageButtom -->
+<section class="help-section spad pt-0">
+	<div class="container">
+		<div id="pageButtons" class="text-center">
+			<!--PageButtom-->
+		</div>
+	</div>
+</section>
 <!-- Help section end -->
 <section class="help-section spad pt-0">
 	<div class="container">
@@ -55,13 +63,18 @@
 @section Scripts{
 	<script>
 		const selStyle = document.querySelector('#selectStyle');
+		const pageButtonsContainer = $('#pageButtons');
+		const onePage = 8;
 
-		function load() {
+		function load(pageNumber) {
 			const divList = $('#divList')
 			$.getJSON('/apiTProjects/List', function (datas) {
 				console.log(datas);
+				//獲得限定頁面資料
+				const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
 				const docFrag = $(document.createDocumentFragment())
-				$.each(datas, function (index, item) {
+				$.each(limitdatas, function (index, item) {
 					const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
 					const card = $(
 						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
@@ -76,7 +89,7 @@
 				divList.html(docFrag)
 			})
 		}
-		load();
+		load(1);
 
 		//Style選擇器
 		async function loadStyle() {
@@ -86,5 +99,22 @@
 			selStyle.innerHTML = style.join("");
 		}
 		loadStyle();
+
+		//PageButtom
+		async function loadPage(){
+			const response = await fetch('@Url.Content("~/apiTProjects/List")');
+			const data = await response.json();
+			const dataCount = data.length;
+			const pageCount = Math.ceil(dataCount / onePage);
+			console.log(pageCount);
+			for (let i = 1; i <= pageCount; i++) {
+				const button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+				button.click(function () {
+					load(i);
+				});
+				pageButtonsContainer.append(button);
+			}
+		}
+		loadPage();
 	</script>
 }
