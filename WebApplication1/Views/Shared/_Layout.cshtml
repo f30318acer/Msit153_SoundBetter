@@ -107,65 +107,82 @@
     <!-- Header section end -->
     @RenderBody()
     <!-- Footer section -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-7 order-lg-2">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="footer-widget">
-                                @* <h2>關於我們</h2> *@
-                                <ul>
-                                    <li><a href="@Url.Action("aboutUS","Home")">創立故事</a></li>
-                                    <li><a href="@Url.Action("List","Article")">文章分享</a></li>
-                                    <li><a href="@Url.Action("List","Article")">音樂故事</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="footer-widget">
-                                @* <h2>常見問題</h2> *@
-                                <ul>
-                                    <li><a href="@Url.Action("aboutUS","Home")">關於我們</a></li>
-                                    <li><a href="@Url.Action("FAQ","Home")">常見問題</a></li>
-                                    <li><a href="@Url.Action("contactUS","Home")">聯絡我們</a></li>
-                                    <li><a href="@Url.Action("contactUS","Home")">加入我們</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="footer-widget">
-                                @* <h2></h2> *@
-                                <ul>
-                                    <li><a href="@Url.Action("Place","Place")">場地專區</a></li>
-                                    <li><a href="@Url.Action("Index","Class")">課程專區</a></li>
-                                    <li><a href="@Url.Action("TermOfTeacher","Home")">教學條款</a></li>
-                                    <li><a href="@Url.Action("Term","Home")">服務條款</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+    <footer id="footer" class="footer fs-6 bg-dark mt-3">
+        <div class="container mx-auto text-white row">
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">              
+                    關於SoundBetter
                 </div>
-                <div class="col-xl-6 col-lg-5 order-lg-1">
-                    @* <img src="img/logo.png" alt=""> *@
-                    <a href="@Url.Action("index","Home")" class="site-logo">
-                        <h2 style="color:#fc0254">Sound</h2>
-                        <h3 style="color:white">Better</h3>
-                    </a>
-                    <div class="copyright">                       
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> 版權所有 | SoundBetter音樂工作室 All Rights Reserved. <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href=" " target="_blank">MSIT153</a>                       
-                    </div>
-                    <div class="社群網站">
-                        <a href=""><i class="fa fa-instagram"></i></a>
-                        <a href=""><i class="fa fa-pinterest"></i></a>
-                        <a href=""><i class="fa fa-facebook"></i></a>
-                        <a href=""><i class="fa fa-twitter"></i></a>
-                        <a href=""><i class="fa fa-youtube"></i></a>
-                    </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("aboutUS","Home")">創立故事</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("List","Article")">文章分享</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("List","Article")">音樂故事</a></li>
+                </div>
+                <div class="copyright">
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> 版權所有 | SoundBetter音樂工作室 All Rights Reserved. <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href=" " target="_blank">MSIT153</a>
                 </div>
             </div>
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">
+                    <li><a href="@Url.Action("aboutUS","Home")">關於我們</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("FAQ","Home")">常見問題</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("contactUS","Home")">聯絡我們</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("contactUS","Home")">加入我們</a></li>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">
+                    <li><a href="@Url.Action("Place","Place")">場地專區</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("Index","Class")">課程專區</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("TermOfTeacher","Home")">教學條款</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("Term","Home")">服務條款</a></li>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">
+                    
+                    官方社群
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-facebook"></i></a>
+                    Facebook
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-pinterest"></i></a>
+                    Line
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-instagram"></i></a>
+                    Instagram
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-youtube"></i></a>
+                    Youtube
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-twitter"></i></a>
+                    Twitter                  
+                </div>
+            </div>          
         </div>
-    </footer>
+    </footer> 
     <!-- Footer section end -->
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/jquery.slicknav.min.js"></script>
