@@ -869,6 +869,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\error\" />
     <Folder Include="wwwroot\img\Article\ArticlePicture\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
