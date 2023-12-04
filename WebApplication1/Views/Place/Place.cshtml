@@ -9,14 +9,9 @@
     }
 
     #map {
-        height: 300px;
-        width: 100%;
+        height: 500px;
+        width: 500px;
         margin-bottom: 22px;
-    }
-
-    #geocode-input {
-        margin-bottom: 10px;
-        width: 100%;
     }
 </style>
 
@@ -26,8 +21,6 @@
         <select class="form-select" id="citySelect">
         </select>
         <br />
-        <input type="text" id="geocode-input" placeholder="Enter a location">
-        <button id="geocode-button" class="button button-primary">Geocode</button>
         <div id="map"></div>
         <br />
         <div id="divList" class="row playlist-area">
@@ -47,9 +40,39 @@
             if (cityval) {
                 url += `?fCityId=${cityval}`;
             }
+
+            // 清除之前的標記
+            if (marker) {
+                marker.setMap(null);
+            }
+
             $.getJSON(url, function (datas) {
-                const docFrag = $(document.createDocumentFragment())
-                $.each(datas, function (index, item) {
+                const docFrag = $(document.createDocumentFragment());
+                datas.forEach(item => {
+                    // 使用地址進行地理編碼
+                    geocoder.geocode({ address: item.fAddress }, (results, status) => {
+
+                        if (status === "OK") {
+                            const location = results[0].geometry.location;
+                            const marker = new google.maps.Marker({
+                                position: location,
+                                map: map,
+                                title: item.fSiteName
+                            });
+                            const infoWindow = new google.maps.InfoWindow({
+                                content: `<div><strong>${item.fSiteName}</strong><br>${item.fAddress}</div>`
+                            });
+
+                            marker.addListener('click', function () {
+                                infoWindow.open(map, marker);
+                            });
+                        } else if (status === "ZERO_RESULTS") {
+                            console.error("No results found for the provided address: " + item.fAddress);
+                        } else {
+                            console.error("Geocode was not successful for the following reason: " + status);
+                        }
+                    });
+
                     const card = $(
                         `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fCityId}">
                             <div class="playlist-item">
@@ -61,9 +84,9 @@
                          <br />
                          </a>`);
                     docFrag.append(card);
-                })
-                divList.html(docFrag)
-            })
+                });
+                divList.html(docFrag);
+            });
         }
 
         function loadPlace() {
@@ -112,7 +135,7 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 8,
-                center: { lat: -34.397, lng: 150.644 },
+                center: { lat: 25.0169012, lng: 121.1945493 },
                 mapTypeControl: false,
             });
             geocoder = new google.maps.Geocoder();
@@ -120,21 +143,6 @@
                 map,
             });
         }
-
-        function geocodeAddress() {
-            const address = document.getElementById("geocode-input").value;
-            geocoder.geocode({ address: address }, (results, status) => {
-                if (status === "OK") {
-                    map.setCenter(results[0].geometry.location);
-                    marker.setPosition(results[0].geometry.location);
-                    marker.setMap(map);
-                } else {
-                    alert("Geocode was not successful for the following reason: " + status);
-                }
-            });
-        }
-
-        document.getElementById("geocode-button").addEventListener("click", geocodeAddress);
 
         // 引入 Google Maps JavaScript API
         // const script = document.createElement('script');
