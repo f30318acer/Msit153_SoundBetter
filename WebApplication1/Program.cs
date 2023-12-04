@@ -7,8 +7,7 @@ using prjMusicBetter.Models.infra;
 
 
 var builder = WebApplication.CreateBuilder(args);
-//Asp.NET Core ¨Ï¥ÎEF Coreµù¥UDI
-builder.Services.AddDbContext<dbSoundBetterContext>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
