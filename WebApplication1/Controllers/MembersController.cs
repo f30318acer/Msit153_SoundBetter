@@ -82,13 +82,13 @@ namespace prjMusicBetter.Controllers
             {
                 FMemberEditVM vm = new FMemberEditVM()
                 {
-                    FMemberID = dto.FMemberID,
-                    FName = dto.FName,
-                    FUsername = dto.FUsername,
-                    FBirthday = dto.FBirthday,
-                    FEmail = dto.FEmail,
-                    FGender = dto.FGender,
-                    FPhone = dto.FPhone
+                    FMemberID = dto.fMemberID,
+                    FName = dto.fName,
+                    FUsername = dto.fUsername,
+                    FBirthday = dto.fBirthday,
+                    FEmail = dto.fEmail,
+                    FGender = dto.fGender,
+                    FPhone = dto.fPhone
                 };
                 return PartialView(vm);
             }

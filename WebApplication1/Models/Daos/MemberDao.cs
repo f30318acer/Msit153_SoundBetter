@@ -64,22 +64,21 @@ namespace prjMusicBetter.Models.Daos
         }
         public FMemberEditDto GetFMemberById(int id)
         {
-            FMemberEditDto dto = (from m in _context.TMembers
-                                  
+            FMemberEditDto mem = (from m in _context.TMembers
                                   where m.FMemberId== id//這裡不能只填ID 會抓不到
                                   select new FMemberEditDto
                                   {
-                                      FMemberID = m.FMemberId,
-                                      FPhotoPath = m.FPhotoPath,
-                                      FName = m.FName,
-                                      FPassword = m.FPassword,
-                                      FBirthday = Convert.ToDateTime(m.FBirthday).ToString("yyyy-MM-dd"),
-                                      FEmail = m.FEmail,
-                                      FPhone = m.FPhone,
-                                      FGender = (bool)m.FGender ? "女" : "男",
-                                      FUsername = m.FUsername,
+                                      fMemberID = m.FMemberId,
+                                      fPhotoPath = m.FPhotoPath,
+                                      fName = m.FName,
+                                      fPassword = m.FPassword,
+                                      fBirthday = Convert.ToDateTime(m.FBirthday).ToString("yyyy-MM-dd"),
+                                      fEmail = m.FEmail,
+                                      fPhone = m.FPhone,
+                                      fGender = m.FGender? "女":"男",
+                                      fUsername = m.FUsername,
                                   }).FirstOrDefault();
-            return dto;
+            return mem;
         }
         public void EditMember(FMemberEditVM vm)
         {
