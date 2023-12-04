@@ -1,19 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace prjMusicBetter.Models.ViewModels
 {
     public class MemberPasswordVM
     {
-        public int fMemberID { get; set; }
-        public string? fPassword { get; set; }
+        public int FMemberID { get; set; }
+        public string? Password { get; set; }
         [Display(Name = "舊密碼")]
         [Required(ErrorMessage = "{0}是必填欄位!")]
-        [DataType(DataType.Text)]
-        public string? OldfPassword { get; set; }
+        [DataType(DataType.Password)]
+        public string? OldPassword { get; set; }
         [Display(Name = "新密碼")]
         [Required(ErrorMessage = "{0}是必填欄位!")]
-        [DataType(DataType.Text)]
-        public string? NewfPassword { get; set; }
+        [DataType(DataType.Password)] 
+        public string? NewPassword { get; set; }
         [Display(Name = "確認密碼")]
         [Required(ErrorMessage = "尚未{0}!")]
         [DataType(DataType.Password)]

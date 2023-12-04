@@ -109,7 +109,7 @@ namespace prjMusicBetter.Models.Daos
         public void MemberPassword(MemberPasswordVM vm,int loginMemId)
         {
             var memberInDb = _context.TMembers.FirstOrDefault(m=>m.FMemberId==loginMemId);
-            memberInDb.FPassword = vm.fPassword;
+            memberInDb.FPassword = vm.NewPassword;
             _context.SaveChanges();
         }
     }
