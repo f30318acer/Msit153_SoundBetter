@@ -149,7 +149,7 @@
                     <h3 class="detail-title">授課導師</h3>
                     <div class="profile-wrapper">
                        @*<img src="~/img/Member/@(ViewBag.teacherimg)">*@
-                        <img src="~/img/@(ViewBag.teacherimg)">
+                        <img src="~/img/Member/@(ViewBag.teacherimg)">
                     </div>
                     <h2 class="teacher-name">@Model.FTeacher</h2>
                     @ViewBag.teacher
@@ -166,8 +166,10 @@
                 <h3 style="text-align: center">@Model.FStartdate</h3>
                 <h3 style="text-align: center">~</h3>
                 <h3 style="text-align: center">@Model.FEnddate</h3>
+                <h2 class="price">報名人數</h2>
+                <h3 style="text-align: center">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
                 <div>
-                    <form asp-controller="Class" asp-action="Createclass" method="get" style="text-align: center; margin: 20px auto;">
+                    <form asp-controller="Class" asp-action="Index" onsubmit="return checkQuota()" method="get" style="text-align: center; margin: 20px auto;">
                         <button name="createClass" class="btm">購買課程</button>
                     </form>
                 </div>
@@ -239,8 +241,19 @@
     <!-- Similar Songs section end -->
 </div>
 @section Scripts {
-    @*<script>
-        const selStyle = document.querySelector('#selectStyle');
+    <script>
+        function checkQuota() {
+        // 檢查是否符合課程名額條件
+        if (@Model.FCurrentStudent < @Model.FMaxStudent) {
+            // 符合條件，執行頁面跳轉
+            return true;
+        } else {
+            // 不符合條件，顯示提醒並阻止表單提交
+            alert("不好意思，課程名額已滿");
+            return false;
+        }
+    }
+        @*const selStyle = document.querySelector('#selectStyle');
 
         function load() {
             const divList = $('#title')
@@ -408,8 +421,8 @@
             const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);//要把取得的資料作什麼加工
             selStyle.innerHTML = style.join("");//加入到指定的位置
         }
-        loadStyle();//啟動
-    </script>*@
+        loadStyle();//啟動*@
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

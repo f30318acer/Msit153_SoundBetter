@@ -122,7 +122,7 @@
                     //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                            <a href="/Class/Viewclass?id=${item.fClassId}?@DateTime.Now.Ticks">
                                 <div class="playlist-item">
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <h5>${item.fClassName}</h5>
@@ -157,7 +157,7 @@
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                              <a href="/Class/Viewclass?id${datas['fClassId']}">
                                 <div class="playlist-item">
-                                            <img src="/img/classimg/${datas['fThumbnailPath']}" alt="">
+                                            <img src="/img/classimg/${datas['fThumbnailPath']}?@DateTime.Now.Ticks" alt="">
                                             <h5>${datas['fClassName']}</h5>
                                 </div>
                             </a>

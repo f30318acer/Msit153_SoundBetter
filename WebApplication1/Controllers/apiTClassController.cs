@@ -118,13 +118,26 @@ namespace prjMusicBetter.Controllers
 			return Content("錯誤");
 		}
 		//===修改===
-		public IActionResult Edit(int id, TClass project)
+		public IActionResult Edit(int id, TClass project, IFormFile formFile)
 		{
 			if (project != null)
 			{
 				try
 				{
-					_context.Update(project);
+					//圖片有改就存下並修改
+                    if (formFile != null)
+                    {
+                        string photoName = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
+                        project.FThumbnailPath = photoName;
+                        formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
+                    }
+                    //圖片沒改就沿用
+                    else
+                    {
+						string Path = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
+						project.FThumbnailPath = Path;
+                    }
+                    _context.Update(project);
 					_context.SaveChanges();
 					return Content("修改成功");
 				}
