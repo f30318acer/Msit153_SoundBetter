@@ -103,30 +103,41 @@ namespace prjMusicBetter.Controllers
 		{
 			if (project != null)
 			{
-				string strPath = Path.Combine(_host.WebRootPath, "img/classimg", formFile.FileName);
-				//                           (      根目錄      ,  指定的資料夾  ,     檔案名稱     )
-				//將檔案上傳到我指定的路徑
-				using (var fileStream = new FileStream(strPath, FileMode.Create))//(路徑,要做什麼)
-				{
-					formFile.CopyTo(fileStream);
-				}
+                if (formFile != null)
+                {
+                    string photoName = Guid.NewGuid().ToString() + ".jpg";
+                    project.FThumbnailPath = photoName;
+                    formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
+                }
 
-				project.FThumbnailPath = formFile.FileName;
-
-				_context.Add(project);
+                
+                _context.Add(project);
 				_context.SaveChanges();
 				return Content("新增成功");
 			}
 			return Content("錯誤");
 		}
 		//===修改===
-		public IActionResult Edit(int id, TClass project)
+		public IActionResult Edit(int id, TClass project, IFormFile formFile)
 		{
 			if (project != null)
 			{
 				try
 				{
-					_context.Update(project);
+					//圖片有改就存下並修改
+                    if (formFile != null)
+                    {
+                        string photoName = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
+                        project.FThumbnailPath = photoName;
+                        formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
+                    }
+                    //圖片沒改就沿用
+                    else
+                    {
+						string Path = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
+						project.FThumbnailPath = Path;
+                    }
+                    _context.Update(project);
 					_context.SaveChanges();
 					return Content("修改成功");
 				}

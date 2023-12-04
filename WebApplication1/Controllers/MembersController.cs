@@ -127,11 +127,21 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Memberclass(int? id)
-        {
-            var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher).Where(t => t.FTeacherId == id);
-            return View(await dbSoundBetterContext.ToListAsync());
-        }
+
+        //public async Task<IActionResult> Memberclass(int? id)
+		public IActionResult Memberclass()
+		{
+			//var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher).Where(t => t.FTeacherId == id);
+			//return View(await dbSoundBetterContext.ToListAsync());
+			//var tClass = await _context.TClasses.FindAsync(id);
+			//if (tClass == null)
+			//{
+			//	return NotFound();
+			//}
+			TMember member = _userInfoService.GetMemberInfo();
+            ViewBag.MemberId = member.FMemberId;
+			return View();
+		}
         public IActionResult Create()
         {
             ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");

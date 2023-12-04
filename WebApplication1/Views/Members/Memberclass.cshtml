@@ -59,8 +59,8 @@
 			</div>
 		</div>
 		<div class="clearfix"></div>
-		<div class="row playlist-area">
-			@foreach (var item in Model)
+		<div id ="divList" class="row playlist-area">
+			@*@foreach (var item in Model)
 			{
 				<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
 					<a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@item.FClassId">
@@ -70,8 +70,40 @@
 						</div>
 					</a>
 				</div>
-			}
+			}*@
+			<!--List內容-->
 		</div>
 	</div>
 </section>
 <!-- Playlist section end -->
+@section Scripts{
+	<script>
+		function load() {
+			const divList = $('#divList')
+			//讀取Json資料
+			$.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
+				console.log(datas);
+
+				//做出一個空的容器來存放div
+				const docFrag = $(document.createDocumentFragment())
+
+				//讀出每個Json物件
+				$.each(datas, function (index, item) {
+					//const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+					const card = $(
+						`<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+								<a href="/Class/Edit?id=${item.fClassId}">
+										<div class="playlist-item">
+											<img src="/img/classimg/${item.fThumbnailPath}?@DateTime.Now.Ticks" alt="">
+											<h5>${item.fClassName}</h5>
+										</div>
+									</a>
+								</div>`);
+					docFrag.append(card);//.append()將一筆div放入容器中
+				})
+				divList.html(docFrag)//.html()一次將全部的資料都上傳
+			})
+		}
+		load();
+	</script>
+}
