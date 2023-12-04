@@ -1,4 +1,4 @@
-﻿@model prjMusicBetter.Models.TSite
+@* @model prjMusicBetter.Models.TSite
 
 @{
     ViewData["Title"] = "Details";
@@ -44,7 +44,7 @@
                 </dt>
                 <dd class="col-sm-10">
                    @*  @Model.SiteTypeText *@
-                </dd>
+               @*  </dd>
                 <br />
                 <dt class="col-sm-2">
                     地址
@@ -77,7 +77,7 @@
                     場地圖片
                 </dt>
                 <br />
-                <dd class="col-sm-10" id="PlacePic">
+                <dd class="col-sm-10" id="PlacePic"> *@
                    @*  @if (Model.FSitePicture != null)
                     {
                         var sitePicture = Model.FSitePicture;
@@ -92,3 +92,28 @@
     </div>
     </div>
 </main>
+
+@section Scripts {
+    <script>
+        async function loadImage() {
+            try {
+                // 使用 Razor 語法獲取 SiteId 和 ImageData
+                const siteDetails = @Html.Raw(Json.Serialize(ViewData["SiteDetails"]));
+
+                // 創建 img 元素
+                const imgElement = document.createElement('img');
+
+                // 設置圖片的 src 為 Base64 字串
+                imgElement.src = `data:image/jpeg;base64,${siteDetails.ImageData}`;
+
+                // 將 img 元素添加到適當的位置，這裡使用 imgContainer 作為容器
+                document.querySelector('#imgContainer').appendChild(imgElement);
+            } catch (error) {
+                console.error('載入圖片時發生錯誤:', error);
+            }
+        }
+
+        // 在 Razor 頁面加載完成後調用 loadImage 函數
+        document.addEventListener('DOMContentLoaded', loadImage);
+    </script>
+} 

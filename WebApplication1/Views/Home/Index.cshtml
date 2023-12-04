@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 <!-- Hero section -->
@@ -19,7 +19,7 @@
 
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/hero-bg.png" alt="" >
+							<img src="~/img/hero-bg.png" alt="">
 						</div>
 					</div>
 				</div>
@@ -38,13 +38,13 @@
 					</div>
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/music_vj.png" alt="" >
+							<img src="~/img/music_vj.png" alt="">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="hs-item">
 			<div class="container">
 				<div class="row">
@@ -58,7 +58,7 @@
 					</div>
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/music_ongaku_kansyou.png" alt="" >
+							<img src="~/img/music_ongaku_kansyou.png" alt="">
 						</div>
 					</div>
 				</div>
@@ -77,7 +77,7 @@
 					</div>
 					<div class="col-lg-6">
 						<div class="hr-img">
-							<img src="~/img/music_band_visual.png" alt="" >
+							<img src="~/img/music_band_visual.png" alt="">
 						</div>
 					</div>
 				</div>
@@ -151,13 +151,14 @@
 				</div>
 			</div>
 			<div class="col-lg-6">
-				<p>我們的理念是做出讓每個人都感動的音樂，讓創作者們把靈感發揮極致。</p>
+				<p>我們的理念是</p>
+				<p>做出讓每個人都感動的音樂，讓創作者們把靈感發揮極致，讓表演者們把音樂詮釋極致。</p>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-3 col-sm-6">
 				<div class="concept-item">
-					<img src="~/img/concept/1.jpg" alt="">
+					<a href="@Url.Action("List","MusicShare")"><img src="~/img/concept/1.jpg" alt=""></a>
 					<h5>享受音樂</h5>
 				</div>
 			</div>
@@ -169,14 +170,14 @@
 			</div>
 			<div class="col-lg-3 col-sm-6">
 				<div class="concept-item">
-					<img src="~/img/concept/3.jpg" alt="">
+					<a href="@Url.Action("List","Project")"><img src="~/img/concept/3.jpg" alt=""></a>
 					<h5>創意混音</h5>
 				</div>
 			</div>
 			<div class="col-lg-3 col-sm-6">
 				<div class="concept-item">
-					<img src="~/img/concept/4.jpg" alt="">
-					<h5>現場直播</h5>
+					<a href="@Url.Action("index","Class")"><img src="~/img/concept/4.jpg" alt=""></a>
+					<h5>現場教學</h5>
 				</div>
 			</div>
 		</div>
@@ -189,20 +190,21 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="sub-text">
-					<h2>付費會員</h2>
+					<h2>註冊會員</h2>
 					<h3></h3>
 					<p></p>
 					<a href="@Url.Action("Register","Home")" class="site-btn">註冊</a>
+					<a href="@Url.Action("Login","Home")" class="site-btn sb-c2">登入</a>
 				</div>
 			</div>
 			<div class="col-lg-6">
 				<ul class="sub-list">
 					<li><img src="~/img/icons/check-icon.png" alt="">播放任何創作</li>
-					<li><img src="~/img/icons/check-icon.png" alt="">離線欣賞音樂</li>
-					<li><img src="~/img/icons/check-icon.png" alt="">沒有廣告干擾</li>
+					<li><img src="~/img/icons/check-icon.png" alt="">線上欣賞音樂</li>
 					<li><img src="~/img/icons/check-icon.png" alt="">隨時無限切換</li>
-					<li><img src="~/img/icons/check-icon.png" alt="">最高音質音樂</li>
-					<li><img src="~/img/icons/check-icon.png" alt="">隨時隨地播放</li>
+					<li><img src="~/img/icons/check-icon.png" alt="">享受最新創作</li>
+					<li><img src="~/img/icons/check-icon.png" alt="">參與執行專案</li>
+					<li><img src="~/img/icons/check-icon.png" alt="">租借演奏空間</li>
 				</ul>
 			</div>
 		</div>

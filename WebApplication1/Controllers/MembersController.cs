@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.Daos;
 using prjMusicBetter.Models.Dtos;
@@ -12,14 +13,17 @@ using prjMusicBetter.Models.ViewModels;
 
 namespace prjMusicBetter.Controllers
 {
-
+    [Authorize(Roles = "Member")]
     public class MembersController : Controller
     {
+       
         private readonly dbSoundBetterContext _context;
         private readonly UserInfoService _userInfoService;
         private readonly IWebHostEnvironment _environment;
         MemberService _service;
         MemberDao _memberDao;
+
+
 
 
         public MembersController(dbSoundBetterContext context, UserInfoService userInfoService, IWebHostEnvironment environment)
@@ -48,7 +52,7 @@ namespace prjMusicBetter.Controllers
                          }).FirstOrDefault();
             return View(photo);
         }
-        public IActionResult  MemberInfo()
+        public IActionResult MemberInfo()
         {
             TMember member = _userInfoService.GetMemberInfo();
             FMemberDto mem = (from m in _context.TMembers
@@ -71,10 +75,54 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-        public IActionResult ProfileEdit()
+        public IActionResult MemberInfoEdit(int id)
         {
-            return View();
+            var dto = _memberDao.GetFMemberById(id); 
+            if (dto != null)
+            {
+                FMemberEditVM vm = new FMemberEditVM()
+                {
+                    FMemberID = dto.FMemberID,
+                    FName = dto.FName,
+                    FUsername = dto.FUsername,
+                    FBirthday = dto.FBirthday,
+                    FEmail = dto.FEmail,
+                    FGender = dto.FGender,
+                    FPhone = dto.FPhone
+                };
+                return PartialView(vm);
+            }
+            else
+            {
+                // 處理 dto 為 null 的情況
+                // 比如重定向到錯誤頁面或顯示一個錯誤消息
+                return RedirectToAction("ErrorPage"); // 或者 return View("ErrorView");
+            }    
         }
+        [HttpPost]
+        public IActionResult MemberInfoEdit(FMemberEditVM vm)
+        {
+            var result = new ApiResult();
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+                result = new ApiResult { StatusCode = 500, StatusMessage = errors.FirstOrDefault() };
+                return Json(result);
+            }
+            var member = _context.TMembers.FirstOrDefault(m=>m.FMemberId == vm.FMemberID);
+            try
+            {
+                _service.FMemberEdit(vm);
+                result = new ApiResult { StatusCode = 200, StatusMessage = "編輯資料成功!" };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult { StatusCode = 500, StatusMessage = ex.Message };
+                return Json(result);
+            }
+        }
+        
         public IActionResult CoolPon()
         {
             return View();
