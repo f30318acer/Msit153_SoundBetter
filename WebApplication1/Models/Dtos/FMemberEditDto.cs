@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-
-
-namespace prjMusicBetter.Models.Dtos
+﻿namespace prjMusicBetter.Models.Dtos
 
 {
     public class FMemberEditDto
@@ -16,9 +12,5 @@ namespace prjMusicBetter.Models.Dtos
         public string FEmail { get; set; }
         public string? FGender { get; set; }
         public string? FBirthday { get; set; }
-        public string? FCreationTime {  get; set; }
-        public string FIntroduction { get; set; }
-        public int? FPermissionId { get; set; }
-
     }
 }

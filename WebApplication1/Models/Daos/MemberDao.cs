@@ -78,9 +78,6 @@ namespace prjMusicBetter.Models.Daos
                                       FPhone = m.FPhone,
                                       FGender = m.FGender ? "女" : "男",
                                       FUsername = m.FUsername,
-                                      FCreationTime = Convert.ToDateTime(m.FCreationTime).ToString("yyyy-MM-dd"),
-                                      FIntroduction = m.FIntroduction
-
                                   }).FirstOrDefault();
             return dto;
         }
