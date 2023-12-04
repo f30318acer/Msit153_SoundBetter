@@ -37,16 +37,31 @@
         </div>
         <div id="pagination-container"></div>
     </div>
+
+</section>
+<!-- 分頁按鈕區域 -->
+<section class="help-section spad pt-0">
+	<div class="container">
+		<div id="pageButtons" class="text-center">
+			<!--分頁按鈕位置-->
+		</div>
+	</div>
 </section>
 
 @section Scripts{
     <script>
-        function load() {
+        const pageButtonsContainer = $('#pageButtons');
+        const onePage = 8;
+
+        function load(pageNumber) {
             const divList = $('#divList')
             $.getJSON('/apiTArticle/List', function (datas) {
                 console.log(datas);
+                //獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
                 const docFrag = $(document.createDocumentFragment())
-                $.each(datas, function (index, item) {
+                $.each(limitdatas, function (index, item) {
                     const descriSub = item.fContent.length > 15 ? item.fContent.substring(0, 15) + '...' : item.fContent;
                     const card = $(
                         `<a  href="/Article/Details/${item.fArticleId}" class="mix col-lg-3 col-md-4 col-sm-6" >
@@ -62,6 +77,22 @@
                 divList.html(docFrag)
             })
         }
-        load();
+        load(1);
+	//分頁按鈕
+		async function loadPage(){
+			const response = await fetch('@Url.Content("~/apiTArticle/List")');
+			const data = await response.json();
+			const dataCount = data.length;
+			const pageCount = Math.ceil(dataCount / onePage);
+			console.log(pageCount);
+			for (let i = 1; i <= pageCount; i++) {
+				const button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+				button.click(function () {
+					load(i);
+				});
+				pageButtonsContainer.append(button);
+			}
+		}
+		loadPage();
     </script>
 }
