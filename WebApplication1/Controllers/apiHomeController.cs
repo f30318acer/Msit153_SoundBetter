@@ -22,7 +22,7 @@ namespace prjMusicBetter.Controllers
         {
             bool isLogin = HttpContext.User.Identity.IsAuthenticated? true: false;
 
-            return Json(IsLogin);
+            return Json(isLogin);
         }
         public IActionResult UpdateNav()
         {
