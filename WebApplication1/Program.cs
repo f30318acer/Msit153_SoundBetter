@@ -9,6 +9,7 @@ using prjMusicBetter.Models.infra;
 var builder = WebApplication.CreateBuilder(args);
 
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 //AspNetCore.Authentication 用戶驗證操作機制註冊DI
@@ -29,7 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
     option.AccessDeniedPath = new PathString("/Home/NoRole");
 
-    //option.ExpireTimeSpan = TimeSpan.FromDays(1);
+    option.ExpireTimeSpan = TimeSpan.FromDays(1);
 });
 
 var app = builder.Build();
