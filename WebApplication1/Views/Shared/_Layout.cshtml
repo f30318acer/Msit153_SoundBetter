@@ -101,56 +101,7 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
         </nav>
-=======
-        </div>
-        @*搜尋列*@
-        <input class="search" type="text" name="keywords" placeholder="樂器、老師、課程" />
-        @*這裡是各大功能*@
-        <ul class="main-menu">
-            @*找製作*@
-            @*<li><a href="index.html">找製作</a></li>*@
-            <li><a asp-area="" asp-controller="Project" asp-action="List">找製作</a></li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Vision">視覺效果</a></li>
-            @*找人才*@
-            @*<li><a href="blog.html">找人才</a></li>*@
-            @*找課程*@
-            @* <li><a href="blog.html">找課程</a></li>*@
-            <li><a asp-area="" asp-controller="Class" asp-action="Index">找課程</a></li>
-            @*找場地*@
-            <li><a asp-area="" asp-controller="Place" asp-action="Place">找場地</a></li>
-            @*音樂專區*@
-            <li><a asp-area="" asp-controller="Article" asp-action="List">音樂專區</a></li>
-
-            <ul class="sub-menu">
-                <li class="nav-item"></li>
-                @*<li><a href="playlist.html">專案專區</a></li>*@
-                @*<li><a href="contact.html">社群討論</a></li>*@
-                <li><a asp-area="" asp-controller="blog" asp-action="List">Blog</a></li>
-                @* <li><a href="contact.html">音樂專區</a></li>*@
-                <li><a asp-area="" asp-controller="MusicShare" asp-action="List">音樂專區</a></li>
-            </ul>
-            @*會員資訊*@
-            <li>
-                <a href="">會員資訊</a>
-                <ul class="sub-menu">
-                    <li class="nav-item">
-                        <a href="@Url.Content("~/Members/Index")" class="btn btn-light">會員簡介</a>
-
-                        <a href="@Url.Content("~/Members/ProfileEdit")" class="btn btn-light">修改個人資料</a>
-
-                        <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-light">課程管理</a>
-
-                        <a href="@Url.Action("Term","Home")" class="btn btn-light">服務條款</a>
-                    </li>
-                </ul>
-            </li> 
-            <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
-                <img src="~/img/header/shopping-cart.png" width="50px" class="shopping-cart-icon" />
-            </a>
-        </ul>
->>>>>>> 5e2ae08d76442578c6951d32f97a58a64573a8cd
     </header>
 
     <!-- Header section end -->
