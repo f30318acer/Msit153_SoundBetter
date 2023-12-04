@@ -24,8 +24,6 @@ namespace prjMusicBetter.Controllers
         MemberDao _memberDao;
 
 
-
-
         public MembersController(dbSoundBetterContext context, UserInfoService userInfoService, IWebHostEnvironment environment)
         {
             _context = context;
@@ -39,10 +37,10 @@ namespace prjMusicBetter.Controllers
         {
             ViewBag.Display = display;
             TMember member = _userInfoService.GetMemberInfo();
-            if (member == null)
-            {
-                return RedirectToAction("error");
-            }
+            //if (member == null)
+            //{
+            //    return RedirectToAction("error");
+            //}
             var photo = (from m in _context.TMembers
                          where m.FMemberId == member.FMemberId
                          select new FMemberDto
@@ -51,6 +49,8 @@ namespace prjMusicBetter.Controllers
                              FPhotoPath = m.FPhotoPath,
                          }).FirstOrDefault();
             return View(photo);
+
+
         }
         public IActionResult MemberInfo()
         {
