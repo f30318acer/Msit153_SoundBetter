@@ -87,6 +87,57 @@
     <a asp-action="Edit" asp-route-id="@Model?.FArticleId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<section class="similar-songs-section">
+    <div class="container-fluid">
+        <h3>你可能會想看的其他文章</h3>
+        @{
+            if (@Model.FArticleId < (ViewBag.AllClass - 2))
+            {
+                <div class="row playlist-area">
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 1)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.PrClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 2)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.SenClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row playlist-area">
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 1)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.PrClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 2)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.SenClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+<!-- Similar Songs section end -->
+
 @section Scripts{
     <script>
         const articleID = $("#articleId").val();
