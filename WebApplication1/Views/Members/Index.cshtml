@@ -148,12 +148,12 @@
         })
         //忘記密碼
         $('#password').click(function () {
-            $('#divPartial').load('@Url.Content("~/fmember/MemberPassword")')
+            $('#divPartial').load('@Url.Content("~/Members/MemberPassword")')
         })
         //忘記密碼
         $("#divPartial").on("click", ".btnPasswordCancel", function (event) {
             event.preventDefault()
-            $('#divPartial').load('@Url.Content("~/fmember/MemberInfo")')
+            $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
         })
     </script>
 }
