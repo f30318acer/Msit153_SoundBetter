@@ -8,10 +8,13 @@ using prjMusicBetter.Models.infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//AspNetCore.Authentication 用戶驗證操作機制註冊DI
 builder.Services.AddHttpContextAccessor();
-
+//自訂用戶登入資訊操作註冊DI
 builder.Services.AddScoped<UserInfoService>();
 
 //建立資料庫連接需要特別加這一段

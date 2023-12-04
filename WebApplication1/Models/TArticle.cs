@@ -25,7 +25,10 @@ public partial class TArticle
 
     public virtual TStyle FStyle { get; set; }
 
+   
     public virtual ICollection<TArticleFav> TArticleFavs { get; set; } = new List<TArticleFav>();
 
     public virtual ICollection<TArticlePicture> TArticlePictures { get; set; } = new List<TArticlePicture>();
+    
+
 }
