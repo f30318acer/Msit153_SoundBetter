@@ -22,8 +22,8 @@
 				<p id="styleName"></p>
 			</div>
 			<div class="col-lg-3 text-right">
-				<a href="~/project/applyconfirm" class="btn btn-danger btn-lg">應徵</a>
-				<button href="#" class="btn btn-warning btn-lg">追蹤製作</button>
+				<a href="~/project/applyconfirm" class="btn btn-danger btn-lg mr-2">應徵</a>
+                <button href="#" class="btn btn-warning btn-lg mr-2">追蹤製作</button>
 			</div>
 			<div class="col-lg-12">
 				<p>
@@ -33,106 +33,40 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="col-lg-6">
-			<div class="song-details-box">
-				<h3>製作專案Demo</h3>
-				<audio id="myAudio" controls>
-					<source src="~/ProjectDemo/03 -  500 Seconds Before Sunset.mp3" type="audio/mp3">
-					Your browser does not support the audio element.
-				</audio>
+		<div class="row">
+            <div class="col-lg-6">
+                <h3>製作專案Demo</h3>
+            </div>
+            <div class="col-lg-12">             
+                <div class="song-details-box">
+                    <!-- song -->
+                    <div class="song-item">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-12 col-md-5">
+                                <div class="song-info-box">
+                                    @*<img src="~/img/songs/1.jpg" alt="">*@
+                                    <div class="song-info text-right">
+                                        <h4>Project Demo01</h4>
+                                        <p>One Night in Ibiza</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-lg-12 col-md-7">
+                                <div class="single_player_container">
 
-				<button onclick="playPause()">播放/暂停</button>
-				<button onclick="stopAudio()">停止</button>
-				<!-- song -->
-				<div class="song-item">
-					<div class="row">
-						<div class="col-xl-5 col-lg-12 col-md-5">
-							<div class="song-info-box">
-								<img src="~/img/songs/1.jpg" alt="">
-								<div class="song-info">
-									<h4>Project Demo01</h4>
-									<p>One Night in Ibiza</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-7 col-lg-12 col-md-7">
-							<div class="single_player_container">
-								<div class="single_player">
-									<div class="jp-jplayer jplayer" data-ancestor=".jp_container_1" data-url="music-files/1.mp3"></div>
-									<div class="jp-audio jp_container_1" role="application" aria-label="media player">
-										<div class="jp-gui jp-interface">
+                                    <audio id="myAudio" controls style="width: 100%;">
+                                        <source src="~/ProjectDemo/03 -  500 Seconds Before Sunset.mp3" type="audio/mp3">
+                                        Your browser does not support the audio element.
+                                    </audio>
 
-											<!-- Player Controls -->
-											<div class="player_controls_box">
-												<button class="jp-prev player_button" tabindex="0"></button>
-												<button class="jp-play player_button" tabindex="0"></button>
-												<button class="jp-next player_button" tabindex="0"></button>
-												<button class="jp-stop player_button" tabindex="0"></button>
-											</div>
-											<!-- Progress Bar -->
-											<div class="player_bars">
-												<div class="jp-progress">
-													<div class="jp-seek-bar">
-														<div>
-															<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-														</div>
-													</div>
-												</div>
-												<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- song -->
-				<div class="song-item">
-					<div class="row">
-						<div class="col-xl-5 col-lg-12 col-md-5">
-							<div class="song-info-box">
-								<img src="~/img/songs/2.jpg" alt="">
-								<div class="song-info">
-									<h4>Project Demo02</h4>
-									<p>Dream in colors</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-7 col-lg-12 col-md-7">
-							<div class="single_player_container">
-								<div class="single_player">
-									<div class="jp-jplayer jplayer" data-ancestor=".jp_container_2" data-url="music-files/2.mp3"></div>
-									<div class="jp-audio jp_container_2" role="application" aria-label="media player">
-										<div class="jp-gui jp-interface">
-
-											<!-- Player Controls -->
-											<div class="player_controls_box">
-												<button class="jp-prev player_button" tabindex="0"></button>
-												<button class="jp-play player_button" tabindex="0"></button>
-												<button class="jp-next player_button" tabindex="0"></button>
-												<button class="jp-stop player_button" tabindex="0"></button>
-											</div>
-											<!-- Progress Bar -->
-											<div class="player_bars">
-												<div class="jp-progress">
-													<div class="jp-seek-bar">
-														<div>
-															<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-														</div>
-													</div>
-												</div>
-												<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</div>
+		
 	</div>
 	<div class="container">
 		<div class="row">
@@ -155,7 +89,7 @@
 <!-- Intro section end -->
 
 
-<div>
+@*<div>
     <h4>TProject</h4>
     <hr 
             @Html.DisplayFor(model => model.FDescription)
@@ -236,7 +170,7 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.FProjectId">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts{
 	<script>
