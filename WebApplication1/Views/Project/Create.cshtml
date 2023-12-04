@@ -18,12 +18,12 @@
                                     <div class="photo-button mb-3">
                                         <div class="photo-card mb-2 d-flex justify-content-center">
                                             <div class="photo">
-                                                <img src="~/img/playlist/13.jpg" style="border-radius:10px">
+                                                <img id="imgPreview" src="~/img/playlist/13.jpg" style="border-radius:10px; max-width: 400px; max-height: 400px;">
                                                 
                                             </div>
                                         </div>
                                         <div class="photo-upload mb-2 d-flex justify-content-center">
-                                            <input type="file" name="formFile" class="btn btn-primary" @*style="display: none;"*@>
+                                            <input type="file" id="imgFile" name="formFile" class="btn btn-primary" @*style="display: none;"*@>
                                             @*<input type="button" value="上傳照片" class="btn btn-primary">*@
                                         </div>
                                     </div>
@@ -39,7 +39,9 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案風格</label>
-                                            <select id="selectStyle" class="form-select" name="fStyleId"></select>
+                                            <div title="請選擇風格">
+                                                <select id="selectStyle" class="form-select" name="fStyleId"></select>
+                                            </div>                                            
                                         </div>
                                     </div>
 
@@ -98,6 +100,31 @@
         const url = '/apiTProjects/Create';
         const btn = document.querySelector('#buttonSend');
         const selStyle = document.querySelector('#selectStyle');
+        
+        //圖片預覽
+        var arrayBuffer;
+
+        $("#imgFile").bind("change", function () {
+            var file = this.files[0];
+            var allowType = "image.*";
+            if (file.type.match(allowType)) {
+                //預覽
+                var reader = new FileReader();
+                reader.onload = function () {
+                    arrayBuffer = this.result;
+                    var blob = new Blob([arrayBuffer], {
+                        type: "image/jpeg"
+                    });
+                    var urlCreator = window.URL || window.webkitURL;
+                    var imageURL = urlCreator.createObjectURL(blob);
+                    $("#imgPreview").attr("src", imageURL);
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+            else {
+                alert("不支援的檔案類型");
+            }
+        });
 
         //===
         btn.addEventListener('click', event => {
@@ -152,8 +179,11 @@
         async function loadStyle() {
             const response = await fetch('@Url.Content("~/apiTStyle/List")');
             const data = await response.json();
-            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
-            selStyle.innerHTML = style.join("");
+
+            const defaultOption = '<option>請選擇風格</option>';
+            const styleOptions = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+            styleOptions.unshift(defaultOption);
+            selStyle.innerHTML = styleOptions.join("");
         }
         loadStyle();
     </script>
