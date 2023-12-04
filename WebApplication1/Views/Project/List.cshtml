@@ -22,17 +22,17 @@
 		</div>
 		<div class="clearfix"></div>
 		<div id="divList" class="row playlist-area">
-			<!--List內容-->
+			<!--List內容位置-->
 		</div>
 		<div id="pagination-container"></div>
 	</div>
 </section>
 <!-- Playlist section end -->
-<!-- PageButtom -->
+<!-- 分頁按鈕區域 -->
 <section class="help-section spad pt-0">
 	<div class="container">
 		<div id="pageButtons" class="text-center">
-			<!--PageButtom-->
+			<!--分頁按鈕位置-->
 		</div>
 	</div>
 </section>
@@ -65,7 +65,7 @@
 		const selStyle = document.querySelector('#selectStyle');
 		const pageButtonsContainer = $('#pageButtons');
 		const onePage = 8;
-
+		//載入資料
 		function load(pageNumber) {
 			const divList = $('#divList')
 			$.getJSON('/apiTProjects/List', function (datas) {
@@ -100,7 +100,7 @@
 		}
 		loadStyle();
 
-		//PageButtom
+		//分頁按鈕
 		async function loadPage(){
 			const response = await fetch('@Url.Content("~/apiTProjects/List")');
 			const data = await response.json();
