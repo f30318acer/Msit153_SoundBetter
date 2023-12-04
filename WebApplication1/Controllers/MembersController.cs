@@ -176,5 +176,10 @@ namespace prjMusicBetter.Controllers
 
             }
         }
+        public IActionResult MemberMyKeep()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            return PartialView(member);
+        }
     }
 }
