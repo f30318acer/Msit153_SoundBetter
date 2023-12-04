@@ -9,25 +9,30 @@
 	<div class="container-fluid">
 		<div class="row mb-4">
 			<div class="section-title col-lg-3">
-				<h2>找專案</h2>
+				<h2>找製作</h2>
 			</div>
 			<div class="container col-lg-9">
 				<div class="text-right">
-					<select id="selectStyle" class="form-select"></select>
-					<input type="text" name="keywords" placeholder="專案" />
-					<button type="button" class="btn btn-secondary">搜尋</button>
-					<a href="~/Project/Create" type="button" class="btn btn-success">建立專案</a>
+					<select id="selectStyle" class="form-select mr-2"></select>
+					<input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字"class="mr-2"/>
+					<button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+					<a href="~/Project/Create" type="button" class="btn btn-success mr-2">建立專案</a>
 				</div>
 			</div>
 		</div>
 		<div class="clearfix"></div>
 		<div id="divList" class="row playlist-area">
-			<!--List內容-->
+			<!--List內容位置-->
 		</div>
 		<div id="pagination-container"></div>
 	</div>
+
+	<div id="pageButtons" class="text-center">
+		<!--分頁按鈕位置-->
+	</div>
 </section>
 <!-- Playlist section end -->
+
 <!-- Help section end -->
 <section class="help-section spad pt-0">
 	<div class="container">
@@ -55,13 +60,77 @@
 @section Scripts{
 	<script>
 		const selStyle = document.querySelector('#selectStyle');
+		const pageButtonsContainer = $('#pageButtons');
+		const onePage = 8;
 
-		function load() {
+		//Style選擇器
+		async function loadStyle() {
+			const response = await fetch('@Url.Content("~/apiTStyle/List")');
+			const data = await response.json();
+			const defaultOption = '<option value="100">請選擇風格</option>';
+			const styleOptions = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+			styleOptions.unshift(defaultOption);
+			selStyle.innerHTML = styleOptions.join("");
+		}
+		loadStyle();
+
+		//分頁按鈕
+		async function loadPage() {
+			const response = await fetch('@Url.Content("~/apiTProjects/List")');
+			const data = await response.json();
+			// 獲取所選風格的ID
+			const sId = $('#selectStyle').val();
+
+			// 根據所選風格篩選數據
+			let filteredData = data;
+			if (sId != 100) {
+				filteredData = data.filter(item => item.fStyleId == sId);
+			}
+
+			const dataCount = filteredData.length;
+			const pageCount = Math.ceil(dataCount / onePage);
+
+			// 清空現有按鈕
+			pageButtonsContainer.empty();
+			for (let i = 1; i <= pageCount; i++) {
+				let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+				button.click(function () {
+					load(i);
+				});
+				pageButtonsContainer.append(button);
+			}
+		}
+		loadPage();
+		//載入資料
+		function load(pageNumber) {
 			const divList = $('#divList')
+			const sId = $('#selectStyle').val();
+			const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+			//divList.empty();
+
 			$.getJSON('/apiTProjects/List', function (datas) {
-				console.log(datas);
+				
+				let filteredDatas = datas;
+
+				if(sId != 100) {
+					filteredDatas = datas.filter(item => {
+						// 在此添加筛选条件
+						return item.fStyleId == sId;
+					});
+				}
+				if (keyword) {
+					filteredDatas = filteredDatas.filter(item => {
+						// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+						return item.fDescription.includes(keyword) || item.fName.includes(keyword);
+					});
+				}
+				console.log(filteredDatas);
+
+				//獲得限定頁面資料
+				const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
 				const docFrag = $(document.createDocumentFragment())
-				$.each(datas, function (index, item) {
+				$.each(limitdatas, function (index, item) {
 					const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
 					const card = $(
 						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
@@ -76,15 +145,39 @@
 				divList.html(docFrag)
 			})
 		}
-		load();
 
-		//Style選擇器
-		async function loadStyle() {
-			const response = await fetch('@Url.Content("~/apiTStyle/List")');
-			const data = await response.json();
-			const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
-			selStyle.innerHTML = style.join("");
+		//第一次讀取
+		function firstLoad(pageNumber) {
+			const divList = $('#divList')
+			//divList.empty();
+
+			$.getJSON('/apiTProjects/List', function (datas) {
+
+				//獲得限定頁面資料
+				const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+				const docFrag = $(document.createDocumentFragment())
+				$.each(limitdatas, function (index, item) {
+					const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+					const card = $(
+						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
+									<div class="playlist-item">
+												<img src="/img/project/${item.fThumbnailPath}" alt = "" >
+										<h5>${item.fName}</h5>
+										<p>${descriSub}</p>
+									</div>
+								</a>`);
+					docFrag.append(card);
+				})
+				divList.html(docFrag)
+			})
 		}
-		loadStyle();
+		firstLoad(1);
+		//搜尋按鈕
+		$('#btnSearch').click(function () {			
+			load(1);
+			loadPage();
+			$('#txtKeyword').val('');
+		});		
 	</script>
 }

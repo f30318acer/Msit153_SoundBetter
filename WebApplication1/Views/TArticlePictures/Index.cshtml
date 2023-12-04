@@ -1,0 +1,41 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TArticlePicture>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FPicturePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FArticle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPicturePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FArticle.FArticleId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FArticlePictureId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FArticlePictureId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FArticlePictureId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

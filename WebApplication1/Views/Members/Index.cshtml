@@ -81,7 +81,7 @@
             </div>
             <div class=" border-bottom align-items-center d-flex">
                 <div class="btnOptions d-flex p-2 gap-3" id="password">
-                    <img class="d-flex w-25-h-25" src="/img/MyMemberphoto/myforgot.jpg" alt="">
+                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/myforgot.jpg")" alt="">
                     修改密碼
                 </div>
             </div>                   
@@ -146,8 +146,14 @@
         $('#info').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
         })
-
-
-
+        //忘記密碼
+        $('#password').click(function () {
+            $('#divPartial').load('@Url.Content("~/Members/MemberPassword")')
+        })
+        //忘記密碼
+        $("#divPartial").on("click", ".btnPasswordCancel", function (event) {
+            event.preventDefault()
+            $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
+        })
     </script>
 }

@@ -56,5 +56,17 @@ namespace prjMusicBetter.Models.Services
             }
             _dao.EditMember(vm);
         }
+        public void MemberPasswordReset(MemberPasswordVM vm,int loginMemId)
+        {
+            var originalPassword = _context.TMembers.FirstOrDefault(m => m.FMemberId == loginMemId);
+
+
+            if (originalPassword!=  null)
+            {
+                originalPassword.FPassword = vm.Password; // 确保这里正确地设置了新密码
+                _context.SaveChanges();
+            }
+            _dao.MemberPassword(vm,loginMemId);
+        }
     }
 }

@@ -78,9 +78,6 @@ namespace prjMusicBetter.Models.Daos
                                       FPhone = m.FPhone,
                                       FGender = (bool)m.FGender ? "女" : "男",
                                       FUsername = m.FUsername,
-                                      FCreationTime = Convert.ToDateTime(m.FCreationTime).ToString("yyyy-MM-dd"),
-                                      FIntroduction = m.FIntroduction
-
                                   }).FirstOrDefault();
             return dto;
         }
@@ -105,6 +102,12 @@ namespace prjMusicBetter.Models.Daos
             member.FPhone = vm.FPhone;
             _context.SaveChanges();
 
+        }
+        public void MemberPassword(MemberPasswordVM vm,int loginMemId)
+        {
+            var memberInDb = _context.TMembers.FirstOrDefault(m=>m.FMemberId==loginMemId);
+            memberInDb.FPassword = vm.NewPassword;
+            _context.SaveChanges();
         }
     }
 }

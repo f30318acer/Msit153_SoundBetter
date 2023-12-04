@@ -1,0 +1,157 @@
+﻿@model prjMusicBetter.Models.TArticle
+
+@{
+    ViewData["Title"] = "Details";
+}
+<input type="hidden" value="@Html.DisplayFor(model => model.FArticleId)" id="articleId" />
+<!-- Blog section -->
+<section class="blog-section spad">
+    <div class="container">
+        <!-- Blog post -->
+        <div class="blog-item">
+            <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="" width="1200">
+            <div class="blog-date">2019年2月8日</div>
+            <h3>@Html.DisplayFor(model => model.FTitle)</h3>
+        </div>
+
+        <!-- Blog post -->
+        <div class="blog-item">
+            <img id="pic2"  alt="" width="1200">
+            <p>
+                @Html.DisplayFor(model => model.FContent)
+            </p>
+        </div>
+
+        <div class="blog-item">
+            <img id="pic3" alt="" width="1200">
+
+        </div>
+
+        <!-- Blog post -->
+
+        <div class="site-pagination">
+            <a href="#" class="active">01.</a>
+            <a href="#">02.</a>
+            <a href="#">03.</a>
+            <a href="#">04.</a>
+        </div>
+    </div>
+</section>
+<!-- Blog section end -->
+
+<h1>Details</h1>
+
+<div>
+    <h4>TArticle</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FContent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FContent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FUpdateTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FUpdateTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FTitle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FTitle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPhotoPath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPhotoPath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FMember)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FMember.FMemberId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FStyle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FStyle.FStyleId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FArticleId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<section class="similar-songs-section">
+    <div class="container-fluid">
+        <h3>你可能會想看的其他文章</h3>
+        @{
+            if (@Model.FArticleId < (ViewBag.AllClass - 2))
+            {
+                <div class="row playlist-area">
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 1)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.PrClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 2)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.SenClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row playlist-area">
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 1)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.PrClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
+                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 2)">
+                            <div class="playlist-item">
+                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
+                                <h5>@ViewBag.SenClass</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+<!-- Similar Songs section end -->
+
+@section Scripts{
+    <script>
+        const articleID = $("#articleId").val();
+
+        $.getJSON(`/apiTArticle/QueryPicById/${articleID}`, function (datas) {
+            console.log(datas);
+            //$('#pic2').attr('src', `~/img/Article /${datas}`)
+            
+            for (let i = 0; i < datas.length; i++) {
+                const x = datas[i]['fPicturePath']
+                console.log(x);
+                // 根據索引區分資料，這裡假設 index 為 0 的資料放入 #div1，index 為 1 的資料放入 #div2
+                $(`#pic${i + 2}`).attr('src', `/img/Article/ArticlePicture/${x}`);
+            }
+        })
+    </script>
+}

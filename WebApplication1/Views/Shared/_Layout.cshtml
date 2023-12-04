@@ -26,133 +26,162 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
     <!-- Header section -->
-    <header class="header-section clearfix">
-        <a href="@Url.Action("index","Home")" class="site-logo">
-            @* <img src="img/logo.png" alt=""> *@
-            <h2 style="color:#fc0254">Sound</h2>
-            <h3 style="color:white">Better</h3>
-        </a>
-
-        <div class="header-right">
-
-            <div class="user-panel"> 
-                 @* <a href="#" class="hr-btn">Help</a> *@
-                @*登入功能*@
-                <li class="d-flex align-items-center mx-2">
-                <img src="~/img/header/user.png" class="circle-size-35" width="40px" />
-
-                <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a>
-                </li>
+    <header class="sticky-top">
+        <nav class="navbar shadow navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark  box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <div class="nav-logo">
+                        <h2 style="color:#fc0254">Sound</h2>
+                    </div>
+                    <div class="nav-logo-en">
+                        <h3 style="color:white">Better</h3>
+                    </div>
+                </a>
+                <button class="navbar-toggler bg-black" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon text-white"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 gap-3">
+                        <li class="nav-item">
+                            <a class="nav-text nav-link text-white" href="@Url.Content("~/Project/List")">找製作</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white nav-text" href="@Url.Content("~/Home/Vision")">視覺效果</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white nav-text" href="@Url.Content("~/Class/Index")">找課程</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Place" asp-action="Place">找場地</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Article" asp-action="List">音樂專區</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Members" asp-action="Index">會員資訊</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-2 mx-3">
+                        <div class="d-flex align-items-center gap-2 p-1 bg-white rounded-3 mx-2">
+                            <div class="width-170px">
+                                <input type="text" class="form-control border-0" id="inputKeyword" placeholder="請輸入關鍵字" />
+                            </div>
+                            <div class="divKeyword cursor-pointer">
+                                <div class="width-30px">
+                                    <img src="~/img/header/loupe.png" width="20px" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown" id="memberIcon">
+                                    <button class="btn btn-dark" data-bs-toggle="dropdown">
+                                        <img src="~/img/header/user.png" class="circle-size-35" width="15px" />
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark" id="empList">
+                                        <li class="d-flex align-items-center mx-2">
+                                            <img src="/img/icons/help_icon.png" class="width-16px" width="15px    />
+                                            <a class="dropdown-item fs-12px" href="#">幫助中心</a>
+                                        </li>
+                                        <li class="d-flex align-items-center mx-2">
+                                            <img src="/img/icons/login.png" class="width-16px" width="15px" />
+                                            <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="nav-icon mx-3">
+                            @*   <a class="position-relative" id="collectItems" href="@Url.Content("~/fmember/index?display=MemberMyKeep")">
+                            <img src="~/img/header/like.png" width="15"/>
+                            </a> *@
+                        </div>
+                        <a asp-action="index" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
+                            <img src="~/img/header/shopping-cart.png" width="15" />
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-        @*搜尋列*@
-        <input class="search" type="text" name="keywords" placeholder="樂器、老師、課程" />
-        @*這裡是各大功能*@
-        <ul class="main-menu">
-            @*找製作*@
-            @*<li><a href="index.html">找製作</a></li>*@
-            <li><a asp-area="" asp-controller="Project" asp-action="List">找製作</a></li>
-            <li><a asp-area="" asp-controller="Home" asp-action="Vision">視覺效果</a></li>
-            @*找人才*@
-            @*<li><a href="blog.html">找人才</a></li>*@
-            @*找課程*@
-            @* <li><a href="blog.html">找課程</a></li>*@
-            <li><a asp-area="" asp-controller="Class" asp-action="Index">找課程</a></li>
-            @*找場地*@
-            <li><a asp-area="" asp-controller="Place" asp-action="Place">找場地</a></li>
-            @*音樂專區*@
-            <li><a asp-area="" asp-controller="Article" asp-action="List">音樂專區</a></li>
-
-            <ul class="sub-menu">
-                <li class="nav-item"></li>
-                @*<li><a href="playlist.html">專案專區</a></li>*@
-                @*<li><a href="contact.html">社群討論</a></li>*@
-                <li><a asp-area="" asp-controller="blog" asp-action="List">Blog</a></li>
-                @* <li><a href="contact.html">音樂專區</a></li>*@
-                <li><a asp-area="" asp-controller="MusicShare" asp-action="List">音樂專區</a></li>
-            </ul>
-            @*會員資訊*@
-            <li>
-                <a href="">會員資訊</a>
-                <ul class="sub-menu">
-                    <li class="nav-item">
-                        <a href="@Url.Content("~/Members/Index")" class="btn btn-light">會員簡介</a>
-
-                        <a href="@Url.Content("~/Members/ProfileEdit")" class="btn btn-light">修改個人資料</a>
-
-                        <a href="@Url.Content("~/Members/Memberclass")" class="btn btn-light">課程管理</a>
-                    </li>
-                </ul>
-            </li> 
-            <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
-                <img src="~/img/header/shopping-cart.png" width="50px" class="shopping-cart-icon" />
-            </a>
-        </ul>
+        </nav>
     </header>
+
     <!-- Header section end -->
     @RenderBody()
     <!-- Footer section -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-7 order-lg-2">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="footer-widget">
-                                @* <h2>關於我們</h2> *@
-                                <ul>
-                                    <li><a href="@Url.Action("aboutUS","Home")">創立故事</a></li>
-                                    <li><a href="@Url.Action("List","Article")">文章分享</a></li>
-                                    <li><a href="@Url.Action("List","Article")">音樂故事</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="footer-widget">
-                                @* <h2>常見問題</h2> *@
-                                <ul>
-                                    <li><a href="@Url.Action("aboutUS","Home")">關於我們</a></li>
-                                    <li><a href="@Url.Action("FAQ","Home")">常見問題</a></li>
-                                    <li><a href="@Url.Action("Index","Class")">課程專區</a></li>
-                                    <li><a href="@Url.Action("contactUS","Home")">聯絡我們</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="footer-widget">
-                                @* <h2></h2> *@
-                                <ul>
-                                    <li><a href="@Url.Action("JoinUS","Home")">加入我們</a></li>
-                                    <li><a href="@Url.Action("Partner","Home")">合作夥伴</a></li>
-                                    <li><a href="@Url.Action("TermOfTeacher","Home")">教學條款</a></li>
-                                    <li><a href="@Url.Action("Term","Home")">服務條款</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+    <footer id="footer" class="footer fs-6 bg-dark mt-3">
+        <div class="container mx-auto text-white row">
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">
+                    關於SoundBetter
                 </div>
-                <div class="col-xl-6 col-lg-5 order-lg-1">
-                    @* <img src="img/logo.png" alt=""> *@
-                    <a href="@Url.Action("index","Home")" class="site-logo">
-                        <h2 style="color:#fc0254">Sound</h2>
-                        <h3 style="color:white">Better</h3>
-                    </a>
-                    <div class="copyright">                       
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> 版權所有 | SoundBetter音樂工作室 All Rights Reserved. <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href=" " target="_blank">MSIT153</a>                       
-                    </div>
-                    <div class="社群網站">
-                        <a href=""><i class="fa fa-instagram"></i></a>
-                        <a href=""><i class="fa fa-pinterest"></i></a>
-                        <a href=""><i class="fa fa-facebook"></i></a>
-                        <a href=""><i class="fa fa-twitter"></i></a>
-                        <a href=""><i class="fa fa-youtube"></i></a>
-                    </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("aboutUS","Home")">創立故事</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("List","Article")">文章分享</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("List","Article")">音樂故事</a></li>
+                </div>
+                <div class="copyright">
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> 版權所有 | SoundBetter音樂工作室 All Rights Reserved. <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href=" " target="_blank">MSIT153</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">
+                    <li><a href="@Url.Action("aboutUS","Home")">關於我們</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("FAQ","Home")">常見問題</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("contactUS","Home")">聯絡我們</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("contactUS","Home")">加入我們</a></li>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">
+                    <li><a href="@Url.Action("Place","Place")">場地專區</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("Index","Class")">課程專區</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("TermOfTeacher","Home")">教學條款</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("Term","Home")">服務條款</a></li>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <div class="lh-1 fw-bold fs-4 my-3">
+
+                    官方社群
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-facebook"></i></a>
+                    Facebook
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-pinterest"></i></a>
+                    Line
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-instagram"></i></a>
+                    Instagram
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-youtube"></i></a>
+                    Youtube
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <a href=""><i class="fa fa-twitter"></i></a>
+                    Twitter
                 </div>
             </div>
         </div>
@@ -163,40 +192,125 @@
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/mixitup.min.js"></script>
     <script src="~/js/main.js"></script>
-  
-  @await RenderSectionAsync("Scripts", required: false)
 
-</body>
-</html>
-  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
+    <script>
 
-<script>
-   
+        AOS.init();
 
-    CheckLogin()
+        CheckLogin()
 
-    async function CheckLogin() 
-    {
-        const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`)
-        const isLogin = await response.json();
+        async function CheckLogin() {
+            const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`)
+            const isLogin = await response.json();
+            if (isLogin) {
+                const response = await fetch(`@Url.Content("~/apiHome/UpdateNav")`)
+                const dto = await response.json();
+                const { datas, role } = dto;
 
-        if (isLogin) {
-            const response = await fetch(`@Url.Content("~/apiHome/UpdateNav")`)
-            const dto = await response.json();
+                if (role == "Member") {
+                    let str = "";
+                    str += `<ul class="navbar-nav">
+                                                   <li class="nav-item dropdown" id="memberIcon">
+                                                      <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> `;
+                    if (datas.photoPath != null) {
+                        str += `<img src="@Url.Content("~/img/Member/")${datas.photoPath" class="circle - size - 35" />`
+                    }
+                    else {
+                        str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
 
-            const { datas, role } = dto;
+                    }
+                    str += `</button>
+                                            <ul class="dropdown-menu dropdown-menu-dark">
+                                                <li class="d-flex align-items-center mx-2">
+                                                    <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
+                                                    <a class="dropdown-item fs-12px" href="@Url.Content("~/Members/index?display=MemberInfo")">會員資料</a>
+                                                </li>
 
-            if (role == "Member") {
-                let str = "";
-                str += `<ul class>`
+                                                // <li class="d-flex align-items-center mx-2">
+                                                //     <img src="@Url.Content("~/images/background/shopping-list.png")" class="width-16px" />
+                                                //     <a class="dropdown-item fs-12px" href="@Url.Content("~/Members/index?display=MemberOrder")">訂單查詢</a>
+                                                // </li>
+
+                                                // <li class="d-flex align-items-center mx-2">
+                                                //     <img src="@Url.Content("~/images/header/like.png")" class="width-16px" />
+                                                //     <a class="dropdown-item fs-12px" href="@Url.Content("~/fmember/index?display=MemberMyKeep")">我的收藏</a>
+                                                // </li>
+
+                                                <li class="d-flex align-items-center mx-2">
+                                                    <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
+                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>`;
+
+                    $("#memberIcon").html(str)
+                   
+                } else {
+                    let str = "";
+                    str += `<ul class="navbar-nav">
+                                                   <li class="nav-item dropdown" id="memberIcon">
+                                                   <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
+                    if (datas.photoPath != null) {
+                        str += `<img src="@Url.Content("~/images/uploads/Employee/")${datas.photoPath}" class="circle-size-35" />`
+                    }
+                    else {
+                        str += `<img src="@Url.Content("~/images/header/user.png")" class="circle-size-35" />`
+
+                    }
+                    str += `</button>
+                                                                                            <ul class="dropdown-menu dropdown-menu-dark">
+                                                                                                <li class="d-flex align-items-center mx-2">
+                                                                                                    <img src="@Url.Content("~/images/header/user.png")" class="width-16px" />
+                                                                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
+                                                                                                </li>
+                                                                                                <li class="d-flex align-items-center mx-2">
+                                                                                                    <img src="@Url.Content("~/images/icon/logout.png")" class="width-16px" />
+                                                                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>`;
+
+                    $("#memberIcon").html(str)
+                    
+
+                    }
+                    else
+                    {                    
+                    let str = "";
+                    str += `<ul class="navbar-nav">
+                                                                <li class="nav-item dropdown" id="memberIcon">
+                                                                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
+                    if (datas.photoPath != null) {
+                        str += `<img src="@Url.Content("~/uploads/")${datas.photoPath}" class="circle-size-35" />`
+                    }
+                    else {
+                        str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
+                    }
+                    str += `</button>
+                                                            <ul class="dropdown-menu dropdown-menu-dark">
+                                                                <li class="d-flex align-items-center mx-2">
+                                                                    <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
+                                                                    <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
+                                                                </li>
+                                                                <li class="d-flex align-items-center mx-2">
+                                                                            <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
+                                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>`;
+
+                    $("#memberIcon").html(str)
+                }
             }
         }
-    }
+    </script>
 
-</script>
-
-@if (TempData["AlertLogin"] != null)
+    @if (TempData["AlertLogin"] != null)
     {
         <script>
             Swal.fire({
@@ -220,4 +334,8 @@
             })
         </script>
     }
+    @await RenderSectionAsync("Scripts", required: false)
 
+</body>
+
+</html>
