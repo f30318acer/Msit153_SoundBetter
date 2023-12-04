@@ -64,16 +64,11 @@ namespace prjMusicBetter.Controllers
                                   FBirthday = Convert.ToDateTime(m.FBirthday).ToString("yyyy-MM-dd"),
                                   FEmail = m.FEmail,
                                   FPhone = m.FPhone,
-                                  FGender = (bool)m.FGender ? "男" : "女",
+                                  FGender = m.FGender ? "男" : "女",
                                   FPassword = m.FPassword,
                                   FPhotoPath = m.FPhotoPath,
                               }).FirstOrDefault();
             return PartialView(mem);
-        }
-
-        public IActionResult Profile()
-        {
-            return View();
         }
         public IActionResult MemberInfoEdit(int id)
         {
