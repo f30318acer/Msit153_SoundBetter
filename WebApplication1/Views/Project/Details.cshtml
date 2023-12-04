@@ -36,6 +36,13 @@
 		<div class="col-lg-6">
 			<div class="song-details-box">
 				<h3>製作專案Demo</h3>
+				<audio id="myAudio" controls>
+					<source src="~/ProjectDemo/03 -  500 Seconds Before Sunset.mp3" type="audio/mp3">
+					Your browser does not support the audio element.
+				</audio>
+
+				<button onclick="playPause()">播放/暂停</button>
+				<button onclick="stopAudio()">停止</button>
 				<!-- song -->
 				<div class="song-item">
 					<div class="row">
