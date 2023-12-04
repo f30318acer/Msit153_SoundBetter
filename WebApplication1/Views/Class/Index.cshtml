@@ -76,6 +76,9 @@
             <!--List內容-->
         </div>
     </div>
+    <div id="pageButtons" class="text-center">
+        <!--分頁按鈕位置-->
+    </div>
 </section>
 <!-- Playlist section end -->
 <!-- Help section end -->
@@ -107,22 +110,27 @@
 @section Scripts{
     <script>
         const selStyle = document.querySelector('#selectStyle');
+        const pageButtonsContainer = $('#pageButtons');//分頁按鈕位置
+        const onePage = 8;//一頁要有幾個課程
 
-        function load() {
+        function firstLoad(pageNumber) {
             const divList = $('#divList')
             //讀取Json資料
             $.getJSON('/apiTClass/List', function (datas) {
                 console.log(datas);
 
+                //獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
                 //做出一個空的容器來存放div
                 const docFrag = $(document.createDocumentFragment())
 
                 //讀出每個Json物件
-                $.each(datas, function (index, item) {
+                $.each(limitdatas, function (index, item) {
                     //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                            <a href="/Class/Viewclass?id=${item.fClassId}?@DateTime.Now.Ticks">
+                                            <a href="/Class/Viewclass?id=${item.fClassId}">
                                 <div class="playlist-item">
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <h5>${item.fClassName}</h5>
@@ -134,7 +142,81 @@
                 divList.html(docFrag)//.html()一次將全部的資料都上傳
             })
         }
-        load();
+        firstLoad(1);
+
+        //載入資料
+        function load(pageNumber) {
+            const divList = $('#divList')
+            //const sId = $('#selectStyle').val();
+            //const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+            //divList.empty();
+
+            $.getJSON('/apiTClass/List', function (datas) {
+
+                let filteredDatas = datas;
+
+                //if (sId != 100) {
+                //    filteredDatas = datas.filter(item => {
+                //        // 在此添加筛选条件
+                //        return item.fStyleId == sId;
+                //    });
+                //}
+                //if (keyword) {
+                //    filteredDatas = filteredDatas.filter(item => {
+                //        // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+                //        return item.fDescription.includes(keyword) || item.fName.includes(keyword);
+                //    });
+                //}
+                //console.log(filteredDatas);
+
+                //獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                const docFrag = $(document.createDocumentFragment())
+                $.each(limitdatas, function (index, item) {
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                                    <a href="/Class/Viewclass?id=${item.fClassId}">
+                                        <div class="playlist-item">
+                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                            <h5>${item.fClassName}</h5>
+                                        </div>
+                                    </a>
+                                </div>`);
+                    docFrag.append(card);
+                })
+                divList.html(docFrag)
+            })
+        }
+
+
+        //分頁按鈕
+        async function loadPage() {
+            const response = await fetch('@Url.Content("~/apiTClass/List")');
+            const data = await response.json();
+            // 獲取所選風格的ID
+            //const sId = $('#selectStyle').val();
+
+            // 根據所選風格篩選數據
+            let filteredData = data;
+            //if (sId != 100) {
+            //    filteredData = data.filter(item => item.fStyleId == sId);
+            //}
+
+            const dataCount = filteredData.length;
+            const pageCount = Math.ceil(dataCount / onePage);
+
+            // 清空現有按鈕
+            pageButtonsContainer.empty();
+            for (let i = 1; i <= pageCount; i++) {
+                let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+                button.click(function () {
+                    load(i);
+                });
+                pageButtonsContainer.append(button);
+            }
+        }
+        loadPage();
 
         //Style選擇器
         async function loadStyle() {
