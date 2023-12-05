@@ -66,6 +66,8 @@
                     <div class=" marquee text-white">
                         <marquee bgcolor="gray" hspace="30" scrollamount="5"> 輸入優惠代碼:9478   即可課程優惠減免10%。</marquee>
                     </div>
+                   
+
                     <div>
                       
                         <a href="/Home/Loginout">登出</a>1
@@ -280,7 +282,7 @@
 
                     $("#memberIcon").html(str)
                     
-
+                   
                     }
                     else
                     {  
@@ -339,6 +341,7 @@
             })
         </script>
     }
+    CheckLogin()
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
