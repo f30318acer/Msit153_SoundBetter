@@ -33,6 +33,8 @@ public partial class TProject
 
     public int? FSkillId { get; set; }
 
+    public string FDemoFilePath { get; set; }
+
     public virtual TMember FMember { get; set; }
 
     public virtual TSkill FProject { get; set; }

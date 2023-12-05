@@ -640,6 +640,7 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FBudget)
                 .HasColumnType("money")
                 .HasColumnName("fBudget");
+            entity.Property(e => e.FDemoFilePath).HasColumnName("fDemoFilePath");
             entity.Property(e => e.FDescription).HasColumnName("fDescription");
             entity.Property(e => e.FDescription2).HasColumnName("fDescription2");
             entity.Property(e => e.FEnddate)
