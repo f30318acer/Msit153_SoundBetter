@@ -16,6 +16,7 @@
         background: #fc0254;
         float: right;
     }
+
     .flex-container {
         display: flex;
         justify-content: space-between;
@@ -48,7 +49,7 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label asp-for="FDescription" class="control-label">課程說明:</label>
-                    <input asp-for="FDescription" class="form-control" />
+                    <input asp-for="FDescription" class="form-control" style="height: 150px; resize: vertical; overflow-y: auto;" onkeydown="preventEnterSubmit(event)"/>
                     <span asp-validation-for="FDescription" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-6">
@@ -171,6 +172,17 @@
                 });
             }
         });
+
+
+        // 換行///////////////////////
+
+        function preventEnterSubmit(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const textarea = event.target;
+            textarea.value += '\n'; // 在按下 Enter 時插入換行符
+        }
+    }
     </script>
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
