@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
             //建立用戶身分宣告
             var claims = new List<Claim>
             {
-                //new Claim(ClaimTypes.Name,member.FName),
+                new Claim(ClaimTypes.Name,member.FName),
                 new Claim("fMemberID",member.FMemberId.ToString()),
                 new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),     
             };
@@ -113,7 +113,7 @@ namespace WebApplication1.Controllers
 
             //確定登入完後提供 歡迎回來 登入者fUserName
 
-            TempData["AlertLogin"] = $"歡迎回來,{member.FName}!";
+            TempData["AlertLogin"] = member.FName;
 
             //依據用戶角色重定向倒不同頁面
             if (member.FPermissionId == 1)
