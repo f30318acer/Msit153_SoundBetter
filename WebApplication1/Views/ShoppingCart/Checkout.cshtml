@@ -70,111 +70,109 @@
                            
                             <label class="radio">
                                 <input type="radio" name='type' value='lovecode' id="entercode"> 手動輸入愛心碼
-                                <input type="text" id="domestic-card-csv">
+                                <input type="text" id="txt-enter-code">
                             </label>
-
-                            <label class="radio">
-                                <input type="radio" name='type' value='lovecode' id="entercode">  聯合勸募協會
-                                <input type="text" id="domestic-card-csv">
+                           
+                            <label class="radio" style="text-align:right">
+                                <input type="radio" name='type' value='lovecode' id="entercode"> 聯合勸募協會
+                                <input type="text" id="lovecode" value="7505" disabled="disabled"  >
                             </label>
                         </div>
                         
                     </div>
 
                     <div id='aboard-credit-form' style="display: none;" class="form">
-                        <div class="text-center">
-                            <h3>使用國外信用卡</h3>
-                        </div>
+                      
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">國外信用卡卡號</span>
-                            </div>
-                            <input type="text" class="form-control" id="aboard-card-no">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">月</span>
-                            </div>
-                            <input type="text" class="form-control" id="aboard-card-month" placeholder="輸入月份">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">年</span>
-                            </div>
-                            <input type="text" class="form-control" id="aboard-card-year" placeholder="輸入年">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text">末三碼</label>
-                            </div>
-                            <input type="text" class="form-control" id="aboard-card-csv" placeholder="輸入末三碼">
-                        </div>
-                        <div class="form-group">
-                            <span style="color: #fc3762;" id="aboard-card-error"></span>
-                        </div>
-                        <div class="form-group">
-                            <button type="button" id="aboard-submmit" class="btn btn-info">確認送出</button>
-                        </div>
+                          
+                                <div class="select-outer-block">
+                                    <span>發票形式:</span>
+                                    <label>電子發票</label>
+                              
+                                  <div>
+                                    <span>收件人地址</span>
+                                    <input type="text" id="address">
+                                  </div>
+                                
+                                </div>                    
+                                  
+                       </div>
                     </div>
 
                     <div id='atm-form' style="display: none;">
-                        <div class="text-center">
-                            <h3>使用ATM轉帳</h3>
-                            <p>轉帳資訊，如下</p>
-                            <p>XXXXXXXXXXXX</p>
-                            <p>XXXXXXXXXXXX</p>
-                            <p>XXXXXXXXXXXX</p>
+                        <div class="tax-id-area">                    
+                            <p>輸入統一編號資料</p>                    
+                            <div class="tax-id-list-content">                     
+                                <p>買受人</p>                      
+                                <input type="text" class="input-buyer" name="icompany" value="">                    
+                            </div>            
+                            
+                            <div class="tax-id-list-content">                      
+                                <p>統一編號</p>                      
+                                <input type="text" class="input-taxid" name="icompany-code" value="">                    
+                            </div>       
+
+                            <div class="tax-id-list-content">
+                                <p>收件地址</p>
+                                <input type="text" class="input-taxid" name="icompany-address" value="">
+                            </div>
+
                         </div>
+      
                     </div>
+
+                    <div>
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">付款方式</h4>
+
+                        <div class="my-3">
+                            <div class="form-check">
+                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                                <label class="form-check-label" for="credit">信用卡</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                                <label class="form-check-label" for="debit">Visa金融卡</label>
+                            </div>
+
+                        </div>
+
+                        <div class="row gy-3">
+                            <div class="col-md-6">
+                                <label for="cc-name" class="form-label">姓名</label>
+                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cc-number" class="form-label">信用卡號碼</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="cc-expiration" class="form-label">到期日</label>
+                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                    </div>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">結帳</button>
                     
+
+                   
                 </div>
-
-          <hr class="my-4">
-
-          <h4 class="mb-3">付款方式</h4>
-
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-              <label class="form-check-label" for="credit">信用卡</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="debit">Visa金融卡</label>
-            </div>
-            
-          </div>
-
-          <div class="row gy-3">
-            <div class="col-md-6">
-              <label for="cc-name" class="form-label">姓名</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required>
-            </div>
-
-            <div class="col-md-6">
-              <label for="cc-number" class="form-label">信用卡號碼</label>
-              <input type="text" class="form-control" id="cc-number" placeholder="" required>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-expiration" class="form-label">到期日</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-cvv" class="form-label">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-            </div>
-          </div>
-
-
-
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">結帳</button>
-
-      </div>
-    </div>
+        </div>
+        </div>
   </main>
 
   <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-    <p class="mb-1">&copy; 2017–2023 Company Name</p>
+    <p class="mb-1">&copy; 2017–2023 SoundBetter</p>
     <ul class="list-inline">
       <li class="list-inline-item"><a href="#">Privacy</a></li>
       <li class="list-inline-item"><a href="#">Terms</a></li>

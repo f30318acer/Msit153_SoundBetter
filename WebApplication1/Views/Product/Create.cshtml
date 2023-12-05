@@ -3,19 +3,20 @@
 }
 
 <section class="section">
-    <div class="row">
+   
+
+       
         <div class="col-lg-12">
 
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Datatables</h5>
-                    <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to convert to a datatable. Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p>
+            <div class="card-body" style="text-align: right;">
+                    <h5 class="card-title">作品管理</h5>
+               
 
-                    <!-- Table with stripped rows -->
-                    <!-- Table with stripped rows -->
-                    <table class="table datatable">
+                <table class="table datatable" style="width: 100%;">
+                        
                         <thead>
-                            <tr>
+                        <tr style="text-align:left;">
                                 <th><b>作品</b></th>
                                 <th>創作者</th>
                                 <th>風格</th>
@@ -24,56 +25,81 @@
                                 
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Unity Pugh</td>
-                                <td>9958</td>
-                                <td>Curicó</td>
-                                <td>2005/02/11</td>
-                                <td>37%</td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <button type="button" class="btn btn-warning">修改</button>
-                                        <button type="button" class="btn btn-danger">刪除</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                            <tr>
+                        @*資料列及修改作品*@
+                    <tbody >
+
+                        <tr style="text-align:left;">
                                 <td>Theodore Duran</td>
                                 <td>8971</td>
                                 <td>Dhanbad</td>
                                 <td>1999/04/07</td>
                                 <td>97%</td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <button type="button" class="btn btn-warning">修改</button>
-                                        <button type="button" class="btn btn-danger">刪除</button>
+                            <td >
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#WorkModal" data-bs-whatever="Workmdo">修改</button>
+
+                                    <div class="modal fade" id="WorkModal" tabindex="-1" aria-labelledby="WorjModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="EditWork">修改作品</h1>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="mb-3">
+                                                            <label for="recipient-name" class="col-form-label">作品:</label>
+                                                            <input type="text" class="form-control" id="work">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="recipient-name" class="col-form-label">創作者:</label>
+                                                            <input type="text" class="form-control" id="creator">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="inputstyle" class="form-label">風格</label>
+                                                            <select id="inputStyle" class="form-select">
+                                                                <option selected="">Choose...</option>
+                                                                <option>...</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="row mb-3">
+                                                            <label for="upload" class="form-label">上傳檔案</label>
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" type="file" id="formFile">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-3">
+                                                            <label for="upload" class="form-label">上傳圖片</label>
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" type="file" id="formFile">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            <label  class="col-sm-2 col-form-label">作品描述</label>
+                                                            <textarea class="form-control" style="height: 100px"></textarea>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">確認</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Kylie Bishop</td>
-                                <td>3147</td>
-                                <td>Norman</td>
-                                <td>2005/09/08</td>
-                                <td>63%</td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <button type="button" class="btn btn-warning">修改</button>
-                                        <button type="button" class="btn btn-danger">刪除</button>
-                                    </div>
+                                    <button type="button" class="btn btn-danger">刪除</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <!-- End Table with stripped rows -->
+                <button type="button" class="btn btn-danger">新增作品</button>
 
+                <div >
+                </div>
                 </div>
             </div>
-
-         
-
         </div>
-    </div>
+    
 </section>
