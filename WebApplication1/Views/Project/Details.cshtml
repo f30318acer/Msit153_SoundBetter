@@ -7,85 +7,139 @@
 <!-- Intro section -->
 <input type="hidden" id="styleId" value="@Html.DisplayFor(model => model.FStyleId)" />
 <input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
+<input type="hidden" id="budget" value="@Html.DisplayFor(model => model.FBudget)" />
+<input type="hidden" id="pID" value="@Html.DisplayFor(model => model.FProjectId)" />
 
 <section class="intro-section spad">
-
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3">
-				<div class="playlist-item">
-					<img src="~/img/project/@Html.DisplayFor(model => model.FThumbnailPath)" alt="">
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<h2>@Html.DisplayFor(model => model.FName)</h2>				
-				<p id="styleName"></p>
-			</div>
-			<div class="col-lg-3 text-right">
-				<a href="~/project/applyconfirm" class="btn btn-danger btn-lg mr-2">應徵</a>
-                <button href="#" class="btn btn-warning btn-lg mr-2">追蹤製作</button>
-			</div>
-			<div class="col-lg-12">
-				<p>
-					@Html.DisplayFor(model => model.FDescription)
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row">
-            <div class="col-lg-6">
-                <h3>製作專案Demo</h3>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-3">
+                <div class="playlist-item">
+                    <img src="~/img/project/@Html.DisplayFor(model => model.FThumbnailPath)" alt="">
+                </div>
             </div>
-            <div class="col-lg-12">             
-                <div class="song-details-box">
-                    <!-- song -->
-                    <div class="song-item">
-                        <div class="row">
-                            <div class="col-xl-5 col-lg-12 col-md-5">
-                                <div class="song-info-box">
-                                    @*<img src="~/img/songs/1.jpg" alt="">*@
-                                    <div class="song-info text-right">
-                                        <h4>Project Demo01</h4>
-                                        <p>One Night in Ibiza</p>
+            <div class="col-lg-6">
+                <div>
+                    <h2>@Html.DisplayFor(model => model.FName)</h2>
+                </div>
+                <div class="mb-2"></div>
+                <div class="">
+                    <h5 id="styleName"></h5>
+                    <div class="mb-2"></div>
+                    <h5 id="budgetDisplay"></h5>
+                </div>
+                
+            </div>
+            <div class="col-lg-3 text-right">
+                <a href="~/project/applyconfirm" class="btn btn-danger btn-lg mr-2">應徵</a>
+                <button href="#" class="btn btn-warning btn-lg mr-2">追蹤製作</button>
+            </div>
+            <div class="col-lg-10">
+                <p>
+                    @Html.DisplayFor(model => model.FDescription)
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+	                    
+	                    <div class="container">
+		                    <div class="row">
+                                <div class="col-lg-6">
+                                    <h3>製作專案Demo</h3>
+                                </div>
+                                <div class="col-lg-12">             
+                                    <div class="song-details-box">
+                                        <!-- song -->
+                                        <div class="song-item">
+                                            <div class="row">
+                                                <div class="col-xl-5 col-lg-12 col-md-5">
+                                                    <div class="song-info-box">
+                                                        @*<img src="~/img/songs/1.jpg" alt="">*@
+                                                        <div class="song-info text-right">
+                                                            <h4>Project Demo01</h4>
+                                                            <p>One Night in Ibiza</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-7 col-lg-12 col-md-7">
+                                                    <div class="single_player_container" >
+
+                                                        <audio id="myAudio" controls style="width: 100%;">
+                                                            <source src="~/ProjectDemo/03 -  500 Seconds Before Sunset.mp3" type="audio/mp3">
+                                                            Your browser does not support the audio element.
+                                                        </audio>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-7 col-lg-12 col-md-7">
-                                <div class="single_player_container">
-
-                                    <audio id="myAudio" controls style="width: 100%;">
-                                        <source src="~/ProjectDemo/03 -  500 Seconds Before Sunset.mp3" type="audio/mp3">
-                                        Your browser does not support the audio element.
-                                    </audio>
-
-                                </div>
-                            </div>
-                        </div>
+		                    </div>
+		
+	                    </div>
+	                    <div class="container">
+		                    <div class="row">
+			                    <div class="col-lg-3">
+				                    <h3>製作專長需求</h3>
+			                    </div>
+			                    <div class="col-lg-12">
+				                    <p>
+					                    @Html.DisplayFor(model => model.FDescription2)
+				                    </p>
+			                    </div>
+		                    </div>
+	                    </div>
+	                    <div class="container">
+		                    <div class="row" id="memberInfo">
+		                    </div>
+	                    </div>
                     </div>
                 </div>
             </div>
-		</div>
-		
-	</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3">
-				<h3>製作專長需求</h3>
-			</div>
-			<div class="col-lg-12">
-				<p>
-					@Html.DisplayFor(model => model.FDescription2)
-				</p>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row" id="memberInfo">
-		</div>
-	</div>
-
+        </div>
+    </div>
+    <button class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#addModal">修改專案</button>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">修改專案 <span></span></h5>
+                @*      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>*@
+                @*<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">取消</button>*@
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" name="id" id="fProjectId" value="@Html.DisplayFor(model => model.FProjectId)">
+                    <div class="form-group">
+                        <label for="fName">專案名稱</label>
+                        <input type="text" class="form-control" id="fName" name="fName"
+                               value="@Html.DisplayFor(model => model.FName)">
+                    </div>
+                    <div class="form-group">
+                        <label for="FBudget">預算</label>
+                        <input type="text" class="form-control" id="fBudget" name="fBudget" value="@Html.DisplayFor(model => model.FBudget)">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 關閉</button>
+                <button type="button" class="btn btn-primary" id="buttonSend"><i class="bi bi-send-check-fill"></i> 送出 </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Intro section end -->
 
 
@@ -176,12 +230,14 @@
 	<script>
 		const styleId = $('#styleId').val();
 		const memberId = $('#memberId').val();
-
+        const projectID = $('#pID').val();
+        
+        //取得風格資訊
 		$.getJSON(`/apiTStyle/QueryById/${styleId}`, function (datas) {
 			console.log(datas);
 			$('#styleName').html(`製作風格 : ${datas[0].fName}`);
 		})
-
+        //取得會員資訊
 		$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
 			console.log(datas);
 			$('#memberInfo').html(`
@@ -193,5 +249,24 @@
 				</div>
 				`);
 		})
+        //預算去小數點
+        const budget = $('#budget').val();
+        var roundedBudget = Math.floor(budget);
+        $('#budgetDisplay').html(`預算 : ${roundedBudget}`);
+
+        //修改資料
+        $('#buttonSend').click(function () {
+            const formData = new FormData(document.querySelector('#editForm'));
+            fetch('@Url.Content("~/apiTProjects/Edit")' + '/' + projectID, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("修改成功");
+                    //location.href = '@Url.Content("~/home/members")';
+                }
+            })
+        })
 	</script>
 }

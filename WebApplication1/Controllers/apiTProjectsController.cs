@@ -109,29 +109,40 @@ namespace prjSoundBetterApi.Controllers
             return Content("錯誤");
         }
         //===修改===
-        public IActionResult Edit(int id, TProject project)
+        [HttpPost]
+        public IActionResult Edit(int id, TProject pIn)
         {
-            if (project != null)
+            TProject pDb = _context.TProjects.FirstOrDefault(p => p.FProjectId == id);
+
+            if (pDb != null)
             {
-                try
-                {
-                    _context.Update(project);
-                    _context.SaveChanges();
-                    return Content("修改成功");
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TProjectExists(project.FProjectId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                pDb.FName = pIn.FName;
+                pDb.FBudget = pIn.FBudget;
+                _context.SaveChanges();
+                return Content("修改成功");
             }
             return Content("錯誤");
+            //if (pIn != null)
+            //{
+            //    try
+            //    {
+            //        _context.Update(pIn);
+            //        _context.SaveChanges();
+            //        return Content("修改成功");
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!TProjectExists(pIn.FProjectId))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //}
+            //return Content("錯誤");
         }
         //===刪除===
         public IActionResult Delete(int id)
