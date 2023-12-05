@@ -2,16 +2,18 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 
 namespace prjMusicBetter.Controllers
 {
     public class ClassController : Controller
     {
         private readonly dbSoundBetterContext _context;
-
-        public ClassController(dbSoundBetterContext context)
+        private readonly UserInfoService _userInfoService;
+        public ClassController(dbSoundBetterContext context, UserInfoService userInfoService)
         {
             _context = context;
+            _userInfoService = userInfoService;//抓使用者
         }
         /*=======課程首頁===============*/
         public IActionResult Index()
@@ -65,6 +67,9 @@ namespace prjMusicBetter.Controllers
             var Introduction = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
             ViewBag.teacher = Introduction;//教師自述
 
+            var teacherimg = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FPhotoPath).SingleOrDefault();
+            ViewBag.teacherimg = teacherimg;//教師自述
+
             return View(tClass);
 		}
 
@@ -75,6 +80,8 @@ namespace prjMusicBetter.Controllers
 
         public IActionResult Create()
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            ViewBag.MemberId = member.FMemberId;
             /*ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId");
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");*/
             return View();
@@ -93,5 +100,31 @@ namespace prjMusicBetter.Controllers
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
             return View(tClass);
         }*/
+
+
+
+
+
+        /*=======修改課程===============*/
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.TClasses == null)
+            {
+                return NotFound();
+            }
+
+            var tClass = await _context.TClasses.FindAsync(id);
+            if (tClass == null)
+            {
+                return NotFound();
+            }
+            ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
+            ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
+
+            ViewBag.SiteId = tClass.FSiteId;//原本的地址
+
+            return View(tClass);
+        }
     }
 }

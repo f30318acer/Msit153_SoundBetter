@@ -3,14 +3,14 @@
 {
     public class FMemberEditDto
     {
-        public int FMemberID { get; set; }
-        public string? FPhotoPath { get; set; }
-        public string FUsername { get; set; }
-        public string FName { get; set; }
-        public string FPassword { get; set; }
-        public string FPhone { get; set; }
-        public string FEmail { get; set; }
-        public string? FGender { get; set; }
-        public string? FBirthday { get; set; }
+        public int fMemberID { get; set; }
+        public string? fPhotoPath { get; set; }
+        public string fUsername { get; set; }
+        public string fName { get; set; }
+        public string fPassword { get; set; }
+        public string fPhone { get; set; }
+        public string fEmail { get; set; }
+        public string? fGender { get; set; }
+        public string? fBirthday { get; set; }
     }
 }

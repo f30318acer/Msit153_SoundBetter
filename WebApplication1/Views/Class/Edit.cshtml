@@ -1,0 +1,178 @@
+﻿@model prjMusicBetter.Models.TClass
+@using prjMusicBetter.Models
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    .btm {
+        height: 60px;
+        min-width: 167px;
+        right: 0;
+        top: 0;
+        border: none;
+        border-radius: 80px;
+        color: #fff;
+        font-size: 15px;
+        background: #fc0254;
+        float: right;
+    }
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+<section class="contact-section">
+    <div class="container-fluid">
+        <div class="contact-warp">
+            <div class="section-title mb-0">
+                <div class="flex-container">
+                    <h2>修改課程內容</h2>
+                    <button id="deleteButton" name="deleteButton" class="btm">刪除課程</button>
+                </div>
+            </div>
+            <form id="classForm" method="post" class="contact-from col-lg-8">
+                <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="FClassId" />
+                <input type="hidden" asp-for="FTeacherId" />
+                <div class="form-group col-md-6">
+                    <label asp-for="FClassName" class="control-label">課程名稱:</label>
+                    <input asp-for="FClassName" class="form-control" />
+                    <span asp-validation-for="FClassName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="FPrice" class="control-label">單堂價格:</label>
+                    <input asp-for="FPrice" class="form-control" />
+                    <span asp-validation-for="FPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label asp-for="FDescription" class="control-label">課程說明:</label>
+                    <input asp-for="FDescription" class="form-control" />
+                    <span asp-validation-for="FDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="FStartdate" class="control-label">開始日期:</label>
+                    <input asp-for="FStartdate" class="form-control" />
+                    <span asp-validation-for="FStartdate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="FEnddate" class="control-label">結束日期:</label>
+                    <input asp-for="FEnddate" class="form-control" />
+                    <span asp-validation-for="FEnddate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label asp-for="FSiteId" class="control-label">上課地點:</label>
+                    <select asp-for="FSiteId" class="form-control" id="fSiteName" asp-items="@ViewBag.FSiteId"></select>
+                    <input type="hidden" id="fSiteID" name="fSiteID" value="@Model.FSiteId" />
+                    <span asp-validation-for="FSiteId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label asp-for="FThumbnailPath" class="control-label">圖片:</label>
+                    @*<input asp-for="FThumbnailPath" type="file" class="form-control" />*@
+                    <input type="file" id="formFile" name="formFile" accept="image/*" />
+                    <span asp-validation-for="FThumbnailPath" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="FMaxStudent" class="control-label">課程人數:</label>
+                    <input asp-for="FMaxStudent" class="form-control" />
+                    <span asp-validation-for="FMaxStudent" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="FCurrentStudent" />
+                <div class="form-group col-md-12">
+                    <input id="buttonSubmit" type="submit" value="Save" class="btn btn-primary" />
+                </div>
+                </form>
+            </form>
+        </div>
+    </div>
+</section>
+
+ @section Scripts {
+    <script>
+        const SiteID = document.querySelector('#fSiteID');
+        const SiteName = document.querySelector('#fSiteName');
+
+
+        // 獲取TSites資料///////////////////////
+        function load() {
+            
+            fetch('@Url.Content("~/Place/List")')
+                .then(response => response.json())
+                .then(data => {
+                    const selectElement = document.getElementById('fSiteName');
+            // 清除所有已有的選項
+            while (selectElement.firstChild) {
+                selectElement.removeChild(selectElement.firstChild);
+            }
+                    data.forEach(site => {
+                        const option = document.createElement('option');
+                        option.value = String(site.fSiteId);  // 使用fSiteID作為值
+                        option.text = site.fSiteName; // 顯示fSiteName
+                        selectElement.appendChild(option);
+                        console.log(option);
+                    });
+                    // 設定初始值
+            selectElement.value = SiteID.value;
+                    // 添加 change 事件監聽器，當選擇改變時觸發
+                    selectElement.addEventListener('change', function() {
+                    // 將隱藏的 fSiteID 更新為所選擇的 fSiteID
+                        SiteID.value = selectElement.value;
+                    });
+                });
+        }
+        load();
+
+
+
+        // 上傳資料///////////////////////
+        const btn = document.querySelector('#buttonSubmit');
+
+        btn.addEventListener('click', event => {
+
+            event.preventDefault();//不讓submit運作
+
+            //傳整個Form的資料
+            const formData = new FormData(document.querySelector('#classForm'));
+
+            fetch('@Url.Content("~/apiTClass/Edit")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("修改成功");
+                        location.href = '@Url.Content("~/Members/Memberclass")';
+                    }
+                })
+        })
+
+
+
+        // 刪除課程///////////////////////
+
+        document.getElementById('deleteButton').addEventListener('click', function () {
+            var result = confirm("確定要刪除課程嗎？");
+
+            if (result) {
+                // 如果用戶確認刪除，則執行刪除操作
+                var classId = @Model.FClassId; // 使用 Razor 語法獲取課程 ID
+                fetch('@Url.Action("Delete", "apiTClass")/' + classId, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("課程刪除成功");
+                        location.href = '@Url.Content("~/Members/Memberclass")';
+                        // 這裡可以重定向到某個頁面或執行其他操作
+                    } else {
+                        alert("課程刪除失敗");
+                    }
+                });
+            }
+        });
+    </script>
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+}

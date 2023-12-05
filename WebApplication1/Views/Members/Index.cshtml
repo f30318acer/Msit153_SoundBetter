@@ -95,7 +95,7 @@
     <script>
         let MemberID = 0;
         async function GetMemberFileName() {
-            const response = await fetch(`@Url.Content("~/apiMembers")`)
+            const response = await fetch(`@Url.Content("~/apiMembers/GetFMemberPhoto")`)
             const data = await response.json();
 
             let displayFileName = data.fphotoPath == null ? 'default.jpg' : data.fphotoPath;
@@ -136,12 +136,15 @@
             }
         })
 
+        $(document).ready(function () {
+            const display = $("#display").val();
+            loadPage(display)
+        })
 
 
         function loadPage(display) {
             $('#divPartial').load(`@Url.Content("~/Members/")${display}`)
         }
-
         //將會員資料回傳至這裡
         $('#info').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
@@ -150,7 +153,17 @@
         $('#password').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/MemberPassword")')
         })
-        //忘記密碼
+      
+        $("#divPartial").on("click", ".btnEdit", function (event) {
+            event.preventDefault()
+            let id = $(this).data("id");
+            $('#divPartial').load(`@Url.Content("~/Members/MemberInfoEdit/")${id}`)
+        })
+        $("#divPartial").on("click", ".btnEditCancel", function (event) {
+            event.preventDefault()
+            $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
+        })
+  //忘記密碼
         $("#divPartial").on("click", ".btnPasswordCancel", function (event) {
             event.preventDefault()
             $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')

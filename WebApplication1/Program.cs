@@ -26,6 +26,7 @@ builder.Services.AddDbContext<dbSoundBetterContext>(
 //登入cookie 要加這一段才能使用
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
+    //未登入時會自動移轉到此網頁
     option.LoginPath = new PathString("/Home/Login");
 
     option.AccessDeniedPath = new PathString("/Home/NoRole");

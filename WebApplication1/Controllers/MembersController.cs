@@ -64,16 +64,11 @@ namespace prjMusicBetter.Controllers
                                   FBirthday = Convert.ToDateTime(m.FBirthday).ToString("yyyy-MM-dd"),
                                   FEmail = m.FEmail,
                                   FPhone = m.FPhone,
-                                  FGender = (bool)m.FGender ? "男" : "女",
+                                  FGender = m.FGender ? "男" : "女",
                                   FPassword = m.FPassword,
                                   FPhotoPath = m.FPhotoPath,
                               }).FirstOrDefault();
             return PartialView(mem);
-        }
-
-        public IActionResult Profile()
-        {
-            return View();
         }
         public IActionResult MemberInfoEdit(int id)
         {
@@ -82,13 +77,13 @@ namespace prjMusicBetter.Controllers
             {
                 FMemberEditVM vm = new FMemberEditVM()
                 {
-                    FMemberID = dto.FMemberID,
-                    FName = dto.FName,
-                    FUsername = dto.FUsername,
-                    FBirthday = dto.FBirthday,
-                    FEmail = dto.FEmail,
-                    FGender = dto.FGender,
-                    FPhone = dto.FPhone
+                    FMemberID = dto.fMemberID,
+                    FName = dto.fName,
+                    FUsername = dto.fUsername,
+                    FBirthday = dto.fBirthday,
+                    FEmail = dto.fEmail,
+                    FGender = dto.fGender,
+                    FPhone = dto.fPhone
                 };
                 return PartialView(vm);
             }
@@ -127,11 +122,21 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Memberclass(int? id)
-        {
-            var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher).Where(t => t.FTeacherId == id);
-            return View(await dbSoundBetterContext.ToListAsync());
-        }
+
+        //public async Task<IActionResult> Memberclass(int? id)
+		public IActionResult Memberclass()
+		{
+			//var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher).Where(t => t.FTeacherId == id);
+			//return View(await dbSoundBetterContext.ToListAsync());
+			//var tClass = await _context.TClasses.FindAsync(id);
+			//if (tClass == null)
+			//{
+			//	return NotFound();
+			//}
+			TMember member = _userInfoService.GetMemberInfo();
+            ViewBag.MemberId = member.FMemberId;
+			return View();
+		}
         public IActionResult Create()
         {
             ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
@@ -165,6 +170,11 @@ namespace prjMusicBetter.Controllers
                 return Json(result);
 
             }
+        }
+        public IActionResult MemberMyKeep()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            return PartialView(member);
         }
     }
 }

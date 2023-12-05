@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
             //建立用戶身分宣告
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name,member.FUsername),
+                new Claim(ClaimTypes.Name,member.FName),
                 new Claim("fMemberID",member.FMemberId.ToString()),
                 new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),     
             };
@@ -112,7 +112,8 @@ namespace WebApplication1.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal);
 
             //確定登入完後提供 歡迎回來 登入者fUserName
-            TempData["AlertLogin"] = $"歡迎回來,{member.FUsername}!";
+
+            TempData["AlertLogin"] = member.FName;
 
             //依據用戶角色重定向倒不同頁面
             if (member.FPermissionId == 1)
@@ -122,7 +123,9 @@ namespace WebApplication1.Controllers
             else
             {
                 //一般會員重定向到首頁
+                
                 return RedirectToAction("index", "Home");
+                
             }
         }
 
@@ -154,6 +157,7 @@ namespace WebApplication1.Controllers
          }
 
         //============================================
+        //已登入用戶名稱
         [Authorize]
         public IActionResult Test()
         {
@@ -162,7 +166,7 @@ namespace WebApplication1.Controllers
         
         public IActionResult NoLogin()
         {
-            return View();
+            return View("尚未登入");
         }
         //會員登出功能
         public async Task<IActionResult> Loginout()
