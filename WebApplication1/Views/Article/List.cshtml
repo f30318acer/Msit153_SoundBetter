@@ -147,7 +147,7 @@
 						`<a  href="/Article/Details/${item.fArticleId}" class="mix col-lg-3 col-md-4 col-sm-6" >
 							<div class="playlist-item">
 												   <img src="/img/Article/${item.fPhotoPath}" alt = "" >
-								<h5>${item.fTiltle}</h5>
+								<h5>${item.fTitle}</h5>
 								<p>${descriSub}</p>
 							</div>
 						</a>`);
@@ -187,7 +187,7 @@
 		//搜尋按鈕
 		$('#btnSearch').click(function () {		
 			//讀取條件篩選後第一頁,重新讀取分頁頁碼
-			   (1);
+			  load(1);
 			loadPage();
 			//$('#txtKeyword').val('');
 		});		
