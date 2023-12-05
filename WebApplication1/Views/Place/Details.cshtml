@@ -6,6 +6,7 @@
 <input type="hidden" id="fSiteId" value="@Html.DisplayFor(model => model.FSiteId)" />
 <input type="hidden" id="fMemberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="fCityId" value="@Html.DisplayFor(model => model.FCityId)" />
+<input type="hidden" id="fSiteType" value="@Html.DisplayFor(model => model.FSiteType)"/>
 
 <div id="time" style="display: none;"></div>
 
@@ -23,10 +24,10 @@
                 <div class="contact-warp">
                     <div class="section-title mb-0">
                         <h3>@Html.DisplayFor(model => model.FSiteName)</h3>
+                        <div class="mr-2"></div>
                     </div>
                     <br />
-                    <ul>
-                        <li style="font-size: 20px">@Html.DisplayFor(model => model.FSiteType)</li>
+                    <ul>                        
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FAddress)</li>
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FPhone)</li>
                     </ul>
@@ -373,9 +374,9 @@
                 }
             });
         }
-        // const script = document.createElement('script');
-        // script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDpJq9VUwOC98iybSUuQggk04ir2ev31aM&libraries=places&callback=initMap';
-        // script.defer = true;
-        // document.head.appendChild(script);
+         const script = document.createElement('script');
+         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDpJq9VUwOC98iybSUuQggk04ir2ev31aM&libraries=places&callback=initMap';
+         script.defer = true;
+         document.head.appendChild(script);
     </script>
 }

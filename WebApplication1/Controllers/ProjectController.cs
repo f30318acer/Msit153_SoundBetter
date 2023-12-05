@@ -25,6 +25,7 @@ namespace prjMusicBetter.Controllers
 		}		
 		public async Task<IActionResult> Details(int? id)
 		{
+
 			if (id == null || _context.TProjects == null)
 			{
 				return NotFound();
