@@ -111,7 +111,7 @@
 			$.getJSON('/apiTProjects/List', function (datas) {
 				
 				let filteredDatas = datas;
-
+				//風格條件塞選
 				if(sId != 100) {
 					filteredDatas = datas.filter(item => {
 						// 在此添加筛选条件
