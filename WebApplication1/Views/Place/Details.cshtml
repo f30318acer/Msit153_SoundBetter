@@ -356,13 +356,11 @@
             $('input[type="checkbox"]').each(function () {
                 const checkbox = $(this); // 取得當前迴圈中的 checkbox
                 const value = checkbox.val();
-                console.log(`Checkbox value before: ${value}`);
                 if (checkbox.prop('checked')) {
                     checkbox.val(3);
                 } else {
                     checkbox.val(value);
                 }
-                console.log(`Checkbox value after: ${checkbox.val()}`);
             });
 
             const formData = new FormData(document.querySelector('#editForm'));
