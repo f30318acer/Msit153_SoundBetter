@@ -6,34 +6,8 @@
 <input type="hidden" id="fSiteId" value="@Html.DisplayFor(model => model.FSiteId)" />
 <input type="hidden" id="fMemberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="fCityId" value="@Html.DisplayFor(model => model.FCityId)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonAfternoon" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonNight" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMidnight" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fTuesMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fTuesAfternoon" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
-<input type="hidden" id="fMonMorning" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" />
+
+<div id="time" style="display: none;"></div>
 
 <section class="contact-section">
     <div class="container-fluid">
@@ -94,7 +68,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" name="" id="period1">
+                                                <input class="form-check-input" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" name="" id="period1">
                                                 <label class="form-check-label" for="period1">
                                                     上午
                                                 </label>
@@ -102,7 +76,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period2">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonAfternoon)" name="" id="period2">
                                                 <label class="form-check-label" for="period2">
                                                     下午
                                                 </label>
@@ -110,7 +84,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period3">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonNight)" name="" id="period3">
                                                 <label class="form-check-label" for="period3">
                                                     晚上
                                                 </label>
@@ -118,7 +92,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period4">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMidnight)" name="" id="period4">
                                                 <label class="form-check-label" for="period4">
                                                     半夜
                                                 </label>
@@ -131,7 +105,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" name="" id="period5">
+                                                <input class="form-check-input" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesMorning)" name="" id="period5">
                                                 <label class="form-check-label" for="period5">
                                                     上午
                                                 </label>
@@ -139,7 +113,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period6">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesAfternoon)" name="" id="period6">
                                                 <label class="form-check-label" for="period6">
                                                     下午
                                                 </label>
@@ -147,7 +121,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period7">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesNight)" name="" id="period7">
                                                 <label class="form-check-label" for="period7">
                                                     晚上
                                                 </label>
@@ -155,7 +129,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period8">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesMidnight)" name="" id="period8">
                                                 <label class="form-check-label" for="period8">
                                                     半夜
                                                 </label>
@@ -168,7 +142,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" name="" id="period9">
+                                                <input class="form-check-input" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedMorning)" name="" id="period9">
                                                 <label class="form-check-label" for="period9">
                                                     上午
                                                 </label>
@@ -176,7 +150,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period10">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedAfternoon)" name="" id="period10">
                                                 <label class="form-check-label" for="period10">
                                                     下午
                                                 </label>
@@ -184,7 +158,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period11">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedNight)" name="" id="period11">
                                                 <label class="form-check-label" for="period11">
                                                     晚上
                                                 </label>
@@ -192,7 +166,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period12">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedMidnight)" name="" id="period12">
                                                 <label class="form-check-label" for="period12">
                                                     半夜
                                                 </label>
@@ -205,7 +179,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" name="" id="period13">
+                                                <input class="form-check-input" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurMorning)" name="" id="period13">
                                                 <label class="form-check-label" for="period13">
                                                     上午
                                                 </label>
@@ -213,7 +187,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period14">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurAfternoon)" name="" id="period14">
                                                 <label class="form-check-label" for="period14">
                                                     下午
                                                 </label>
@@ -221,7 +195,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period15">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurNight)" name="" id="period15">
                                                 <label class="form-check-label" for="period15">
                                                     晚上
                                                 </label>
@@ -229,7 +203,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period16">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurMidnight)" name="" id="period16">
                                                 <label class="form-check-label" for="period16">
                                                     半夜
                                                 </label>
@@ -242,7 +216,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" name="" id="period17">
+                                                <input class="form-check-input" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriMorning)" name="" id="period17">
                                                 <label class="form-check-label" for="period17">
                                                     上午
                                                 </label>
@@ -250,7 +224,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period18">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriAfternoon)" name="" id="period18">
                                                 <label class="form-check-label" for="period18">
                                                     下午
                                                 </label>
@@ -258,7 +232,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period19">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriNight)" name="" id="period19">
                                                 <label class="form-check-label" for="period19">
                                                     晚上
                                                 </label>
@@ -266,7 +240,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period20">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriMidnight)" name="" id="period20">
                                                 <label class="form-check-label" for="period20">
                                                     半夜
                                                 </label>
@@ -279,7 +253,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" name="" id="period21">
+                                                <input class="form-check-input" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatMorning)" name="" id="period21">
                                                 <label class="form-check-label" for="period21">
                                                     上午
                                                 </label>
@@ -287,7 +261,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period22">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatAfternoon)" name="" id="period22">
                                                 <label class="form-check-label" for="period22">
                                                     下午
                                                 </label>
@@ -295,7 +269,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period23">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatNight)" name="" id="period23">
                                                 <label class="form-check-label" for="period23">
                                                     晚上
                                                 </label>
@@ -303,7 +277,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period24">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatMidnight)" name="" id="period24">
                                                 <label class="form-check-label" for="period24">
                                                     半夜
                                                 </label>
@@ -316,7 +290,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" name="" id="period25">
+                                                <input class="form-check-input" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunMorning)" name="" id="period25">
                                                 <label class="form-check-label" for="period25">
                                                     上午
                                                 </label>
@@ -324,7 +298,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period26">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunAfternoon)" name="" id="period26">
                                                 <label class="form-check-label" for="period26">
                                                     下午
                                                 </label>
@@ -332,7 +306,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period27">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunNight)" name="" id="period27">
                                                 <label class="form-check-label" for="period27">
                                                     晚上
                                                 </label>
@@ -340,7 +314,7 @@
                                         </div>
                                         <div class="col mt-auto mb-auto">
                                             <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="" name="" id="period28">
+                                                <input class="form-check-input " type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunMidnight)" name="" id="period28">
                                                 <label class="form-check-label" for="period28">
                                                     半夜
                                                 </label>
@@ -366,12 +340,18 @@
 @section Scripts
 {
     <script>
-        const fMonMorning = $('#fMonMorning').val();
+
         function loadPlacePeriod() {
-            if (fMonMorning == 1 || fMonMorning == 3)
-                document.getElementById("period1").disabled = true;
+            $('input[type="checkbox"]').each(function () {
+                const checkbox = $(this); // 取得當前迴圈中的 checkbox
+                const value = checkbox.val(); // 從 checkbox 的 value 取得值
+
+                if (value == 1 || value == 3)
+                    checkbox.prop('disabled', true);
+            });
         }
         loadPlacePeriod();
+
         function initMap() {
             var geocoder = new google.maps.Geocoder();
             var address = "@Html.DisplayFor(model => model.FAddress)"; // 替換為實際場地的地址

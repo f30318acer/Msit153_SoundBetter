@@ -2,16 +2,19 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 
 namespace prjMusicBetter.Controllers
 {
     public class ArticleController : Controller
     {
         private readonly dbSoundBetterContext _context;
+        private readonly UserInfoService _userInfoService;
 
-        public ArticleController(dbSoundBetterContext context)
+        public ArticleController(dbSoundBetterContext context, UserInfoService userInfoService)
         {
             _context = context;
+            _userInfoService = userInfoService;
         }
         public IActionResult List()
         {
