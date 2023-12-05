@@ -49,9 +49,7 @@
                         <li class="nav-item">
                             <a class="nav-text nav-link text-white" href="@Url.Content("~/Project/List")">找製作</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white nav-text" href="@Url.Content("~/Home/Vision")">視覺效果</a>
-                        </li>
+                      
                         <li class="nav-item">
                             <a class="nav-link text-white nav-text" href="@Url.Content("~/Class/Index")">找課程</a>
                         </li>
@@ -108,7 +106,7 @@
                             <img src="~/img/header/like.png" width="15"/>
                             </a> *@
                         </div>
-                        <a asp-action="index" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
+                        <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
                             <img src="~/img/header/shopping-cart.png" width="15" />
                         </a>
                     </div>
