@@ -26,7 +26,7 @@ namespace prjMusicBetter.Controllers
             return View();
         }
         public async Task<IActionResult> Details(int? id)
-        {
+        { 
             if (id == null || _context.TArticles == null)
             {
                 return NotFound();
@@ -40,11 +40,42 @@ namespace prjMusicBetter.Controllers
             {
                 return NotFound();
             }
+        
+            if (id <= (_context.TArticles.Count() - 2))
+            {
+                var Prearticle = _context.TArticles.Where(t => t.FArticleId == (id + 1)).Select(t => t.FTitle).SingleOrDefault();
+                ViewBag.PrArticle = Prearticle;//下一個課程名稱
+                var PrePath = _context.TArticles.Where(t => t.FArticleId == (id + 1)).Select(t => t.FPhotoPath).SingleOrDefault();
+                ViewBag.PrePath = PrePath;//下一個課程圖片位址
+                var Senarticle = _context.TArticles.Where(t => t.FArticleId == (id + 2)).Select(t => t.FTitle).SingleOrDefault();
+                ViewBag.SenArticle = Senarticle;//下下一個課程名稱
+                var SenPath = _context.TArticles.Where(t => t.FArticleId == (id + 2)).Select(t => t.FPhotoPath).SingleOrDefault();
+                ViewBag.SenPath = SenPath;//下下一個課程圖片位址
+            }
+            else
+            {
+                var Prearticle = _context.TArticles.Where(t => t.FArticleId == (id - 1)).Select(t => t.FTitle).SingleOrDefault();
+                ViewBag.PrArticle = Prearticle;//上一個課程名稱
+                var PrePath = _context.TArticles.Where(t => t.FArticleId == (id - 1)).Select(t => t.FPhotoPath).SingleOrDefault();
+                ViewBag.PrePath = PrePath;//上一個課程圖片位址
+                var Senarticle = _context.TArticles.Where(t => t.FArticleId == (id - 2)).Select(t => t.FTitle).SingleOrDefault();
+                ViewBag.SenArticle = Senarticle;//上上一個課程名稱
+                var SenPath = _context.TArticles.Where(t => t.FArticleId == (id - 2)).Select(t => t.FPhotoPath).SingleOrDefault();
+                ViewBag.SenPath = SenPath;//上一個課程圖片位址
+            }
+            ViewBag.AllArticle = _context.TArticles.Count();//有多少課程
+
+
 
             return View(tArticle);
+          
         }
         public async Task<IActionResult> ViewArticle(int? id)
         {
+            if (id == null || _context.TArticles == null)
+            {
+                return NotFound();
+            }
             var tArticle = await _context.TArticles.FindAsync(id);
             if (tArticle == null)
             {
@@ -72,7 +103,7 @@ namespace prjMusicBetter.Controllers
                 var SenPath = _context.TArticles.Where(t => t.FArticleId == (id - 2)).Select(t => t.FPhotoPath).SingleOrDefault();
                 ViewBag.SenPath = SenPath;//上一個課程圖片位址
             }
-            ViewBag.AllClass = _context.TArticles.Count();//有多少課程
+            ViewBag.AllArticle = _context.TArticles.Count();//有多少課程
 
             
 
