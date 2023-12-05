@@ -111,13 +111,14 @@
 			$.getJSON('/apiTProjects/List', function (datas) {
 				
 				let filteredDatas = datas;
-				//風格條件塞選
+				//風格條件篩選
 				if(sId != 100) {
 					filteredDatas = datas.filter(item => {
 						// 在此添加筛选条件
 						return item.fStyleId == sId;
 					});
 				}
+				//關鍵字篩選
 				if (keyword) {
 					filteredDatas = filteredDatas.filter(item => {
 						// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
