@@ -174,10 +174,11 @@
 		}
 		firstLoad(1);
 		//搜尋按鈕
-		$('#btnSearch').click(function () {			
+		$('#btnSearch').click(function () {		
+			//讀取條件篩選後第一頁,重新讀取分頁頁碼
 			load(1);
 			loadPage();
-			$('#txtKeyword').val('');
+			//$('#txtKeyword').val('');
 		});		
 	</script>
 }
