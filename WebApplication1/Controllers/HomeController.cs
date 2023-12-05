@@ -32,6 +32,10 @@ namespace WebApplication1.Controllers
         MemberDao _dao;
         MemberService _service;
 
+        string googleAccount = "";
+        string googleEmail = "";
+
+
 
         public HomeController(dbSoundBetterContext context,ILogger<HomeController> logger,IWebHostEnvironment environment ,UserInfoService userInfoService)
         {
@@ -79,6 +83,17 @@ namespace WebApplication1.Controllers
             }
             else
             {
+                IEnumerable<TMember> q = null;
+
+                if(_context.TMembers.FirstOrDefault(m=>m.FEmail ==payload.Email) == null)
+                {
+                    TempData["googleAccount"]=payload.Name.ToString();
+                    TempData["googleEmail"]=payload.Email.ToString();
+
+                    return RedirectToAction("index");
+                }
+               
+
                 //驗證成功，取使用者資訊內容
                 ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
                 ViewData["Msg"] += "Email:" + payload.Email + "<br>";
@@ -112,6 +127,7 @@ namespace WebApplication1.Controllers
                 {
                     return null;
                 }
+
 
                 // 驗證憑證
                 IConfiguration Config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
