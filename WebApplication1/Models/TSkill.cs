@@ -19,6 +19,8 @@ public partial class TSkill
 
     public virtual TSkillCategory FSkillCategory { get; set; }
 
+    public virtual ICollection<TClass> TClasses { get; set; } = new List<TClass>();
+
     public virtual ICollection<TMemberSkill> TMemberSkills { get; set; } = new List<TMemberSkill>();
 
     public virtual TProject TProject { get; set; }
