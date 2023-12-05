@@ -105,7 +105,7 @@ namespace WebApplication1.Controllers
                 new Claim("fMemberID",member.FMemberId.ToString()),
                 new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),     
             };
-            var identity=new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
+            ClaimsIdentity identity =new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
             var principal =new ClaimsPrincipal(identity);
 
             //執行登入
