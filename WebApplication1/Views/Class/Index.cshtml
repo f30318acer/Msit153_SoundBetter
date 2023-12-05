@@ -33,29 +33,9 @@
     <div class="container-fluid">
         <div class="section-title">
             <h2>課程專區</h2>
-            @*<div class="container-fluid filter-row-container py-4 py-xl-2 px-4 px-lg-5 ddd">
-                <div class="filter-row row">
-                    <div class="my-2 d-xl-inline-block me-2">
-                        <select class="form-select se" id="web-city-filter"><option value="default" selected="">選擇縣市</option><option value="1">基隆市</option><option value="2">臺北市</option><option value="3">新北市</option><option value="4">桃園市</option><option value="5">新竹市</option><option value="6">臺中市</option><option value="7">臺南市</option><option value="8">嘉義市</option><option value="9">高雄市</option><option value="10">新竹縣</option><option value="11">苗栗縣</option><option value="12">彰化縣</option><option value="13">南投縣</option><option value="14">雲林縣</option><option value="15">嘉義縣</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option></select>
-                    </div>
-                    <div class="my-2 d-xl-inline-block me-2">
-                        <select id="selectStyle" class="form-select se"></select>
-                    </div>
-                    <div class="my-2 d-xl-inline-block me-2">
-                        <select class="form-select se" id="web-type-filter"><option value="default" selected="">場地類型</option><option value="1">會議</option><option value="2">派對</option><option value="3">聚會</option><option value="4">私人談話</option><option value="5">課程講座</option><option value="6">運動</option><option value="7">工作</option><option value="8">展覽</option><option value="9">音樂/表演</option><option value="10">拍照/攝影</option><option value="11">美容</option><option value="12">烹飪</option><option value="13">儲物</option><option value="14">發表會</option><option value="15">親子活動</option><option value="16">婚禮</option><option value="17">其他</option></select>
-                    </div>
-                    <div class="my-2 d-xl-inline-block me-2">
-                        <input class="date-filter se" id="web-date-filter" placeholder="活動日期" type="hidden" value="2023-11-15"><input class="date-filter form-control input" placeholder="活動日期" tabindex="0" type="text" readonly="readonly">
-                    </div>
-                    <form class="search-form">
-                        <input type="text" id="courseName" placeholder="輸入課程名稱">
-                        <button id="button1" class="btn btn-primary">找尋課程</button>
-                    </form>
-                </div>
-            </div>*@
             <div class="container col-lg-12 ddd">
                 <div class="text-right ">
-                    <select id="selectStyle" class="form-select mr-2"></select>
+                    <select id="selectSkill" class="form-select mr-2"></select>
                     <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
                     <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
                     <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
@@ -64,17 +44,6 @@
         </div>
         <div class="clearfix"></div>
         <div id="divList" class="row playlist-area">
-            @*@foreach (var item in Model)
-            {
-            <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@item.FClassId">
-            <div class="playlist-item">
-            <img src="~/img/classimg/1.jpg" alt="">
-            <h5>@Html.DisplayFor(modelItem => item.FClassName)</h5>
-            </div>
-            </a>
-            </div>
-            }*@
             <!--List內容-->
         </div>
     </div>
@@ -100,8 +69,8 @@
             <div class="col-lg-6">
                 <div class="d-flex h-100 align-items-end">
                     <form class="search-form">
-                        <input type="text" placeholder="輸入課程名稱">
-                        <button>找尋課程</button>
+                        <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
+                        <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
                     </form>
                 </div>
             </div>
@@ -111,7 +80,7 @@
 <!-- Help section end -->
 @section Scripts{
     <script>
-        const selStyle = document.querySelector('#selectStyle');
+        const selStyle = document.querySelector('#selectSkill');
         const pageButtonsContainer = $('#pageButtons');//分頁按鈕位置
         const onePage = 8;//一頁要有幾個課程
 
@@ -134,7 +103,7 @@
                     //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                            <a href="/Class/Viewclass?id=${item.fClassId}">
                                 <div class="playlist-item">
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <h5>${item.fClassName}</h5>
@@ -151,42 +120,45 @@
         //載入資料
         function load(pageNumber) {
             const divList = $('#divList')
-            //const sId = $('#selectStyle').val();
-            //const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+            const sId = $('#selectSkill').val();
+            const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
             //divList.empty();
 
             $.getJSON('/apiTClass/List', function (datas) {
 
-                //let filteredDatas = datas;
+                let filteredDatas = datas;
 
-                //if (sId != 100) {
-                //    filteredDatas = datas.filter(item => {
-                //        // 在此添加筛选条件
-                //        return item.fStyleId == sId;
-                //    });
-                //}
-                //if (keyword) {
-                //    filteredDatas = filteredDatas.filter(item => {
-                //        // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
-                //        return item.fDescription.includes(keyword) || item.fName.includes(keyword);
-                //    });
-                //}
-                //console.log(filteredDatas);
+                if (sId != 0) {
+                    filteredDatas = datas.filter(item => {
+                        // 在此添加筛选条件
+                        return item.fSkillId == sId;
+                    });
+                }
+                //關鍵字篩選
+				if (keyword) {
+					filteredDatas = filteredDatas.filter(item => {
+						// 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+						return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
+					});
+				}
+				console.log(filteredDatas);
+
+                dataCount = filteredDatas.length;
 
                 //獲得限定頁面資料
-                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+                const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
 
                 const docFrag = $(document.createDocumentFragment())
                 $.each(limitdatas, function (index, item) {
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                                    <a href="/Class/Viewclass?id=${item.fClassId}">
-                                        <div class="playlist-item">
-                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                            <h5>${item.fClassName}</h5>
-                                        </div>
-                                    </a>
-                                </div>`);
+                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                <div class="playlist-item">
+                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                    <h5>${item.fClassName}</h5>
+                                </div>
+                            </a>
+                        </div>`);
                     docFrag.append(card);
                 })
                 divList.html(docFrag)
@@ -199,13 +171,21 @@
             const response = await fetch('@Url.Content("~/apiTClass/List")');
             const data = await response.json();
             // 獲取所選風格的ID
-            //const sId = $('#selectStyle').val();
+            const sId = $('#selectStyle').val();
+            const keyword = $('#txtKeyword').val();
 
             // 根據所選風格篩選數據
             let filteredData = data;
-            //if (sId != 100) {
-            //    filteredData = data.filter(item => item.fStyleId == sId);
-            //}
+            if (sId != 100) {
+                filteredData = data.filter(item => item.fSkillId == sId);
+            }
+            //關鍵字篩選
+			if (keyword != '') {
+				filteredData = filteredData.filter(item => {
+					// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+					return item.fDescription.includes(keyword) || item.fName.includes(keyword);
+				});
+			}
 
             const dataCount = filteredData.length;//有幾筆資料
             const pageCount = Math.ceil(dataCount / onePage);//有幾頁
@@ -222,38 +202,24 @@
         }
         loadPage();
 
-        //Style選擇器
+        //Skill選擇器
         async function loadStyle() {
-            const response = await fetch('@Url.Content("~/apiTStyle/List")');//從哪裡取得
-            const data = await response.json();//接收回傳的資料
-            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);//要把取得的資料作什麼加工
-            selStyle.innerHTML = style.join("");//加入到指定的位置
-        }
+			const response = await fetch('@Url.Content("~/apiTSkills/OnlyIdName")');//從哪裡取得
+			const data = await response.json();//接收回傳的資料
+			const defaultOption = '<option value="0">請選擇類別</option>';
+			const styleOptions = data.map(s => `<option value="${s.fSkillId}">${s.fName}</option>`);//要把取得的資料作什麼加工
+			styleOptions.unshift(defaultOption);
+			selStyle.innerHTML = styleOptions.join("");//加入到指定的位置
+		}
         loadStyle();//啟動
 
         //搜尋按鈕
-        $('#button1').click(function () {
-            event.preventDefault(); // 阻止表单的默认提交行为
-            const divList = $('#divList')
-            const courseId = document.getElementById('courseName').value//輸入框
-            $.getJSON(`/apiTClass/QueryById/?id=${courseId}`, function (datas) {
-                const docId = $(document.createDocumentFragment());
-                if (datas && datas['fClassId'] && datas['fThumbnailPath'] && datas['fClassName']) {
-                    const card = $(
-                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                             <a href="/Class/Viewclass?id${datas['fClassId']}">
-                                <div class="playlist-item">
-                                            <img src="/img/classimg/${datas['fThumbnailPath']}?@DateTime.Now.Ticks" alt="">
-                                            <h5>${datas['fClassName']}</h5>
-                                </div>
-                            </a>
-                        </div>`);
-                    docId.append(card);//.append()將div放入容器中
-                }
-                divList.empty()
-                divList.append(docId)//.append()將全部的資料都上傳
-            })
-        })
+       $('#btnSearch').click(function () {		
+			//讀取條件篩選後第一頁,重新讀取分頁頁碼
+			load(1);
+			loadPage();
+			//$('#txtKeyword').val('');
+		});		
 
         //判斷是否登入
         async function CheckLoginAndNavigate() {
