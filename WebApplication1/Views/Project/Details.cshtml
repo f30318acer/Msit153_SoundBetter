@@ -51,6 +51,7 @@
 		                    <div class="row">
                                 <div class="col-lg-6">
                                     <h3>製作專案Demo</h3>
+                                    <div class="mb-2"></div>
                                 </div>
                                 <div class="col-lg-12">             
                                     <div class="song-details-box">
@@ -61,7 +62,7 @@
                                                     <div class="song-info-box">
                                                         @*<img src="~/img/songs/1.jpg" alt="">*@
                                                         <div class="song-info text-right">
-                                                            <h4>Project Demo01</h4>
+                                                            <h4>@Html.DisplayFor(model => model.FDemoFilePath)</h4>
                                                             <p>One Night in Ibiza</p>
                                                         </div>
                                                     </div>
@@ -70,7 +71,7 @@
                                                     <div class="single_player_container" >
 
                                                         <audio id="myAudio" controls style="width: 100%;">
-                                                            <source src="~/ProjectDemo/03 -  500 Seconds Before Sunset.mp3" type="audio/mp3">
+                                                            <source src="~/ProjectDemo/@Html.DisplayFor(model => model.FDemoFilePath)" type="audio/mp3">
                                                             Your browser does not support the audio element.
                                                         </audio>
 
@@ -104,13 +105,13 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#addModal">修改專案</button>
+    <button id="btnEdit" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#addModal">修改專案</button>
 </section>
 
 <!-- Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">修改專案 <span></span></h5>
@@ -122,18 +123,51 @@
             <div class="modal-body">
                 <form id="editForm">
                     <input type="hidden" name="id" id="fProjectId" value="@Html.DisplayFor(model => model.FProjectId)">
-                    <div class="form-group">
-                        <label for="fName">專案名稱</label>
-                        <input type="text" class="form-control" id="fName" name="fName"
-                               value="@Html.DisplayFor(model => model.FName)">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 230px;">
+                                    <img id="imgPreview" style="height: 200px;" alt="">
+                                </div>
+                                <div style="display: flex; justify-content: center; align-items: center;">
+                                    <input type="file" id="imgFile" name="formFilePhoto" @*class="btn btn-secondary"*@ @*style="display: none;"*@>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fName">製作名稱</label>
+                                <input type="text" class="form-control" id="fName" name="fName">
+                            </div>
+                            <div class="form-group">
+                                <label for="FBudget">預算</label>
+                                <input type="text" class="form-control" id="fBudget" name="fBudget">
+                            </div>
+                            <div class="form-group">
+                                <label for="FBudget">風格</label>
+                                <select id="selectStyle" class="form-select" name="fStyleId"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="FBudget">製作期限</label>
+                                <input type="datetime-local" class="form-control" id="fEnddate" name="fEnddate">
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="FBudget">製作描述</label>
+                                <textarea class="form-control" id="fDescription" name="fDescription" style="height: 200px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="FBudget">專長需求</label>
+                                <textarea class="form-control" id="fDescription2" name="fDescription2" style="height: 200px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="FBudget">上傳Demo</label>
+                                <input type="file" id="demoFile" name="formFileDemo" @*style="display: none;"*@>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="FBudget">預算</label>
-                        <input type="text" class="form-control" id="fBudget" name="fBudget" value="@Html.DisplayFor(model => model.FBudget)">
-                    </div>
-                    <div class="form-group">
-                        <label for="FBudget">預算</label>
-                        <se
+                        
                     </div>
                 </form>
             </div>
@@ -258,6 +292,59 @@
         var roundedBudget = Math.floor(budget);
         $('#budgetDisplay').html(`預算 : ${roundedBudget}`);
 
+        //Style選擇器
+        const selStyle = document.querySelector('#selectStyle');
+        async function loadStyle() {
+            const response = await fetch('@Url.Content("~/apiTStyle/List")');
+            const data = await response.json();
+
+            const defaultOption = '<option>請選擇風格</option>';
+            const styleOptions = data.map(s => `<option id="styOpt${s.fStyleId}" value="${s.fStyleId}">${s.fName}</option>`);
+            styleOptions.unshift(defaultOption);
+            selStyle.innerHTML = styleOptions.join("");
+
+            document.getElementById(`styOpt${styleId}`).selected = true;
+        }
+        
+        //按下修改按鈕
+        $('#btnEdit').click(function () {
+            loadStyle();
+            //幫彈出視窗填入資料
+            $.getJSON(`/apiTProjects/QueryById/${projectID}`, function (datas) {
+                console.log(datas);
+                $('#fName').val(datas.fName);
+                $('#fBudget').val(datas.fBudget);
+                $('#fEnddate').val(datas.fEnddate);
+                $('#fDescription').text(datas.fDescription);
+                $('#fDescription2').text(datas.fDescription2);
+                $('#imgPreview').attr('src', `/img/project/${datas.fThumbnailPath}`);
+            })
+        })
+        //圖片預覽
+        var arrayBuffer;
+
+        $("#imgFile").bind("change", function () {
+            var file = this.files[0];
+            var allowType = "image.*";
+            if (file.type.match(allowType)) {
+                //預覽
+                var reader = new FileReader();
+                reader.onload = function () {
+                    arrayBuffer = this.result;
+                    var blob = new Blob([arrayBuffer], {
+                        type: "image/jpeg"
+                    });
+                    var urlCreator = window.URL || window.webkitURL;
+                    var imageURL = urlCreator.createObjectURL(blob);
+                    $("#imgPreview").attr("src", imageURL);
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+            else {
+                alert("不支援的檔案類型");
+            }
+        });
+
         //修改資料
         $('#buttonSend').click(function () {
             const formData = new FormData(document.querySelector('#editForm'));
@@ -268,7 +355,10 @@
             .then(response => {
                 if (response.ok) {
                     alert("修改成功");
-                    //location.href = '@Url.Content("~/home/members")';
+                    location.href = '@Url.Content("~/Project/Details/")' + projectID;
+                }
+                else{
+                    alert("連線失敗");
                 }
             })
         })
