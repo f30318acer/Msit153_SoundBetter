@@ -243,6 +243,7 @@ public partial class dbSoundBetterContext : DbContext
                 .HasColumnType("money")
                 .HasColumnName("fPrice");
             entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
+            entity.Property(e => e.FSkillId).HasColumnName("fSkillID");
             entity.Property(e => e.FStartdate)
                 .HasColumnType("datetime")
                 .HasColumnName("fStartdate");
@@ -254,6 +255,10 @@ public partial class dbSoundBetterContext : DbContext
             entity.HasOne(d => d.FSite).WithMany(p => p.TClasses)
                 .HasForeignKey(d => d.FSiteId)
                 .HasConstraintName("FK_tClass_tSite");
+
+            entity.HasOne(d => d.FSkill).WithMany(p => p.TClasses)
+                .HasForeignKey(d => d.FSkillId)
+                .HasConstraintName("FK_tClass_tSkill");
 
             entity.HasOne(d => d.FTeacher).WithMany(p => p.TClasses)
                 .HasForeignKey(d => d.FTeacherId)
@@ -640,6 +645,7 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FBudget)
                 .HasColumnType("money")
                 .HasColumnName("fBudget");
+            entity.Property(e => e.FDemoFilePath).HasColumnName("fDemoFilePath");
             entity.Property(e => e.FDescription).HasColumnName("fDescription");
             entity.Property(e => e.FDescription2).HasColumnName("fDescription2");
             entity.Property(e => e.FEnddate)

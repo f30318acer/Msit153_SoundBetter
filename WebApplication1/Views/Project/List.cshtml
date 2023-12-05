@@ -78,13 +78,21 @@
 		async function loadPage() {
 			const response = await fetch('@Url.Content("~/apiTProjects/List")');
 			const data = await response.json();
-			// 獲取所選風格的ID
+			// 篩選條件
 			const sId = $('#selectStyle').val();
+			const keyword = $('#txtKeyword').val();
 
 			// 根據所選風格篩選數據
 			let filteredData = data;
 			if (sId != 100) {
 				filteredData = data.filter(item => item.fStyleId == sId);
+			}
+			//關鍵字篩選
+			if (keyword != '') {
+				filteredData = filteredData.filter(item => {
+					// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+					return item.fDescription.includes(keyword) || item.fName.includes(keyword);
+				});
 			}
 
 			const dataCount = filteredData.length;
@@ -126,6 +134,8 @@
 					});
 				}
 				console.log(filteredDatas);
+
+				dataCount = filteredDatas.length;
 
 				//獲得限定頁面資料
 				const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);

@@ -29,7 +29,11 @@ public partial class TClass
 
     public int? FCurrentStudent { get; set; }
 
+    public int? FSkillId { get; set; }
+
     public virtual TSite FSite { get; set; }
+
+    public virtual TSkill FSkill { get; set; }
 
     public virtual TMember FTeacher { get; set; }
 

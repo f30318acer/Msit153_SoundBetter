@@ -21,7 +21,8 @@
         <select class="form-select" id="citySelect">
         </select>
         <br />
-        <div id="map"></div>
+        <br />
+        <div id="map" style="border-radius: 20px; border:solid; border-color:gray"></div>
         <br />
         <div id="divList" class="row playlist-area">
             <!--List內容-->
@@ -112,7 +113,7 @@
                     const card = $(
                         `<a class="mix col-lg-4 col-md-5 col-sm-7" href="/Place/Details/${item.fSiteId}">
                                     <div class="playlist-item">
-                                        <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb">
+                                        <img src="/img/${item.fPicturePath}" alt = "" class="ss-thumb" style="border: solid; border-color: gray">
                                         <h5>${item.fSiteName}</h5>
                                         <h5>${item.fCity}</h5>
                                         <h5>@Model${item.fSiteTypeText}</h5>

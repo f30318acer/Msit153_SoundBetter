@@ -3,15 +3,12 @@
     ViewData["Title"] = "Index";
 }
 <style>
+    /*粉色底線*/
     .ddd {
         border-bottom: 2px solid #fc0254;
     }
 
-    .se {
-        background: #fc0254;
-        color: #fff;
-    }
-
+    /*粉色按鈕*/
     .btm {
         height: 60px;
         min-width: 167px;
@@ -25,9 +22,10 @@
         float: right;
     }
 
-    .form-container {
-        float: right;
-        margin: 10px;
+    /*留空白用的*/
+    .container.ddd {
+        padding-top: 20px; /* 設置上邊距擴展的像素值 */
+        padding-bottom: 20px; /* 設置下邊距擴展的像素值 */
     }
 </style>
 <!-- Playlist section -->
@@ -35,10 +33,7 @@
     <div class="container-fluid">
         <div class="section-title">
             <h2>課程專區</h2>
-            <form asp-controller="Class" asp-action="Create" method="get" class="form-container">
-                <button name="createClass" class="btm">新建課程</button>
-            </form>
-            <div class="container-fluid filter-row-container py-4 py-xl-2 px-4 px-lg-5 ddd">
+            @*<div class="container-fluid filter-row-container py-4 py-xl-2 px-4 px-lg-5 ddd">
                 <div class="filter-row row">
                     <div class="my-2 d-xl-inline-block me-2">
                         <select class="form-select se" id="web-city-filter"><option value="default" selected="">選擇縣市</option><option value="1">基隆市</option><option value="2">臺北市</option><option value="3">新北市</option><option value="4">桃園市</option><option value="5">新竹市</option><option value="6">臺中市</option><option value="7">臺南市</option><option value="8">嘉義市</option><option value="9">高雄市</option><option value="10">新竹縣</option><option value="11">苗栗縣</option><option value="12">彰化縣</option><option value="13">南投縣</option><option value="14">雲林縣</option><option value="15">嘉義縣</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option></select>
@@ -54,9 +49,16 @@
                     </div>
                     <form class="search-form">
                         <input type="text" id="courseName" placeholder="輸入課程名稱">
-                        @*<input type="button" class="btn btn-primary" value="找尋課程" />*@
-                        <button id="button1">找尋課程</button>
+                        <button id="button1" class="btn btn-primary">找尋課程</button>
                     </form>
+                </div>
+            </div>*@
+            <div class="container col-lg-12 ddd">
+                <div class="text-right ">
+                    <select id="selectStyle" class="form-select mr-2"></select>
+                    <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
+                    <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+                    <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
                 </div>
             </div>
         </div>
@@ -87,7 +89,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="section-title mb-0 pb-4">
-                    <h2>找不到合適的課程嗎？ </h2>
+                    <h3>找不到合適的課程嗎？ </h3>
                 </div>
                 <p>
                     想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
@@ -120,6 +122,8 @@
                 console.log(datas);
 
                 //獲得限定頁面資料
+                //slice(a,b) 陣列datas第a項到第b項的所有資料
+                //這裡是第0項到第8項
                 const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
 
                 //做出一個空的容器來存放div
@@ -153,7 +157,7 @@
 
             $.getJSON('/apiTClass/List', function (datas) {
 
-                let filteredDatas = datas;
+                //let filteredDatas = datas;
 
                 //if (sId != 100) {
                 //    filteredDatas = datas.filter(item => {
@@ -203,15 +207,15 @@
             //    filteredData = data.filter(item => item.fStyleId == sId);
             //}
 
-            const dataCount = filteredData.length;
-            const pageCount = Math.ceil(dataCount / onePage);
+            const dataCount = filteredData.length;//有幾筆資料
+            const pageCount = Math.ceil(dataCount / onePage);//有幾頁
 
             // 清空現有按鈕
             pageButtonsContainer.empty();
             for (let i = 1; i <= pageCount; i++) {
                 let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
                 button.click(function () {
-                    load(i);
+                    load(i);//加載第i頁
                 });
                 pageButtonsContainer.append(button);
             }
@@ -250,5 +254,19 @@
                 divList.append(docId)//.append()將全部的資料都上傳
             })
         })
+
+        //判斷是否登入
+        async function CheckLoginAndNavigate() {
+            const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
+            const isLogin = await response.json();
+
+            if (isLogin) {
+                // 如果已登錄，導航到 ClassController/Create
+                window.location.href = "@Url.Action("Create", "Class")";
+            } else {
+                // 如果未登錄，導航到 Home/Login
+                window.location.href = "@Url.Action("Login", "Home")";
+            }
+        }
     </script>
 }
