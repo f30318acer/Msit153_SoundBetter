@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -110,39 +111,33 @@ namespace prjSoundBetterApi.Controllers
         }
         //===修改===
         [HttpPost]
-        public IActionResult Edit(int id, TProject pIn)
+        public IActionResult Edit(int id, TProject? pIn, IFormFile? formFilePhoto,IFormFile? formFileDemo)
         {
             TProject pDb = _context.TProjects.FirstOrDefault(p => p.FProjectId == id);
 
-            if (pDb != null)
+            if (pDb != null && pIn != null)
             {
                 pDb.FName = pIn.FName;
                 pDb.FBudget = pIn.FBudget;
+                pDb.FEnddate = pIn.FEnddate;
+                pDb.FStyleId = pIn.FStyleId;
+                pDb.FDescription = pIn.FDescription;
+                pDb.FDescription2 = pIn.FDescription2;
+                if (formFilePhoto != null)
+                {
+                    string photoName = pDb.FThumbnailPath;
+                    formFilePhoto.CopyTo(new FileStream(_enviro.WebRootPath + "/img/project/" + photoName, FileMode.Create));
+                }
+                if (formFileDemo != null)
+                {
+                    string DemoName = "Demo_"+ pDb.FProjectId + ".mp3";
+                    pDb.FDemoFilePath = DemoName;
+                    formFileDemo.CopyTo(new FileStream(_enviro.WebRootPath + "/ProjectDemo/" + DemoName, FileMode.Create));
+                }
                 _context.SaveChanges();
                 return Content("修改成功");
             }
             return Content("錯誤");
-            //if (pIn != null)
-            //{
-            //    try
-            //    {
-            //        _context.Update(pIn);
-            //        _context.SaveChanges();
-            //        return Content("修改成功");
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!TProjectExists(pIn.FProjectId))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //}
-            //return Content("錯誤");
         }
         //===刪除===
         public IActionResult Delete(int id)
