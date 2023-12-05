@@ -37,21 +37,21 @@ namespace prjMusicBetter.Controllers
 			return Json(tProject);
 		}
 		//===List_Status===
-		//public IActionResult QueryByStatus(int? id)//StatusId
-		//{
-		//	if (id == null || _context.TClasses == null)
-		//	{
-		//		return NotFound();
-		//	}
+		public IActionResult QueryBySkillID(int? id)
+		{
+			if (id == null || _context.TClasses == null)
+			{
+				return NotFound();
+			}
 
-		//	var tProject = _context.TClasses.Where(m => m.FProjectStatusId == id);
-		//	if (tProject == null)
-		//	{
-		//		return NotFound();
-		//	}
-		//	return Json(tProject);
-		//}
-		//===搜尋===
+			var tProject = _context.TClasses.Where(m => m.FSkillId == id);
+			if (tProject == null)
+			{
+				return NotFound();
+			}
+			return Json(tProject);
+		}
+		//===搜尋id===
 		public IActionResult QueryById(int? id)
 		{
 			if (id == null || _context.TClasses == null)
@@ -108,6 +108,10 @@ namespace prjMusicBetter.Controllers
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
                     project.FThumbnailPath = photoName;
                     formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
+                }
+				else
+				{
+                    project.FThumbnailPath = "class_bg.jpg";
                 }
 
                 
