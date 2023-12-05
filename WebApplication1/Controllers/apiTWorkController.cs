@@ -7,15 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 
 namespace prjSoundBetterApi.Controllers
 {
     public class apiTWorkController : Controller
     {
         private readonly dbSoundBetterContext _context;
-        public apiTWorkController(dbSoundBetterContext context)
+        private readonly UserInfoService _userInfoService;
+        public apiTWorkController(dbSoundBetterContext context, UserInfoService userInfoService)
         {
             _context = context;
+            _userInfoService = userInfoService;
         }
         //===List_All===
         public IActionResult List()

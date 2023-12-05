@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 using WebApplication1.Models;
 
 namespace prjSoundBetterApi.Controllers
@@ -16,10 +17,12 @@ namespace prjSoundBetterApi.Controllers
     {
         private readonly dbSoundBetterContext _context;
         private IWebHostEnvironment _enviro = null;
-        public apiTProjectsController(IWebHostEnvironment p, dbSoundBetterContext context)
+        private readonly UserInfoService _userInfoService;
+        public apiTProjectsController(IWebHostEnvironment p, dbSoundBetterContext context, UserInfoService userInfoService)
         {
             _context = context;
             _enviro = p;
+            _userInfoService = userInfoService;
         }
         //===List_All===
         public IActionResult List()
