@@ -136,7 +136,9 @@
         <div class="wave-player-warp">
             <div class="wave-player-info">
                 <h2>@Model.FClassName</h2>
-                <h4 style="color:gray;">類型：配樂</h4>
+                <h4 style="color:gray;">類型：@ViewBag.skillname</h4>
+                <h4 style="color:gray;">場地：@ViewBag.SiteName</h4>
+                <h4 style="color:gray;">地點：@ViewBag.Address </h4>
             </div>
         </div>
     </div>
@@ -168,7 +170,7 @@
                 <h2 class="price">報名人數</h2>
                 <h3 style="text-align: center">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
                 <div>
-                    <form asp-controller="Class" asp-action="Index" onsubmit="return checkQuota()" method="get" style="text-align: center; margin: 20px auto;">
+                    <form asp-controller="ShoppingCart" asp-action="List" onsubmit="return checkQuota()" method="get" style="text-align: center; margin: 20px auto;">
                         <button name="createClass" class="btm">購買課程</button>
                     </form>
                 </div>
@@ -191,50 +193,9 @@
     <section class="similar-songs-section">
         <div class="container-fluid">
             <h3>你可能會想看的其他課程</h3>
-            @{
-                if (@Model.FClassId < (ViewBag.AllClass - 2))
-                {
-                    <div class="row playlist-area">
-                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 1)">
-                                <div class="playlist-item">
-                                    <img src="/img/classimg/@(ViewBag.PrePath)" alt="">
-                                    <h5>@ViewBag.PrClass</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId + 2)">
-                                <div class="playlist-item">
-                                    <img src="~/img/classimg/@(ViewBag.SenPath)" alt="">
-                                    <h5>@ViewBag.SenClass</h5>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="row playlist-area">
-                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 1)">
-                                <div class="playlist-item">
-                                    <img src="/img/classimg/@(ViewBag.PrePath)" alt="">
-                                    <h5>@ViewBag.PrClass</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@(Model.FClassId - 2)">
-                                <div class="playlist-item">
-                                    <img src="~/img/classimg/@(ViewBag.SenPath)" alt="">
-                                    <h5>@ViewBag.SenClass</h5>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                }
-            }
+            <div id="divList" class="row playlist-area">
+            <!--List內容-->
+            </div>
         </div>
     </section>
     <!-- Similar Songs section end -->
@@ -252,175 +213,41 @@
             return false;
         }
     }
-        @*const selStyle = document.querySelector('#selectStyle');
 
-        function load() {
-            const divList = $('#title')
-            const Id = @ViewBag.Id
+    function firstLoad(pageNumber) {
+            const divList = $('#divList')
             //讀取Json資料
-                $.getJSON(`/apiTClass/QueryById?id=${datas['fClassID']}`, function (datas) {
+            const SkillId = @Model.FSkillId
+            console.log(SkillId);
+            $.getJSON(`/apiTClass/QueryBySkillID?id=${SkillId}`, function (datas) {
                 console.log(datas);
+
+                //獲得限定頁面資料
+                //slice(a,b) 陣列datas第a項到第b項的所有資料
+                //這裡是第0項到第4項
+                const limitdatas = datas.slice(0, 4);
 
                 //做出一個空的容器來存放div
                 const docFrag = $(document.createDocumentFragment())
 
-                const card = $(
-                    `
-                                     <div class="player-box">
-                                        <div class="tarck-thumb-warp">
-                                            <div class="tarck-thumb">
-                                                        <img src="/img/classimg/${datas['fThumbnailPath']}.jpg" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="wave-player-warp">
-                                            <div class="wave-player-info">
-                                                        <h2>${datas['fClassName']}</h2>
-                                                <h4 style="color:gray;">類型：配樂</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    `);
-                docId.append(card);//.append()將div放入容器中
-
+                //讀出每個Json物件
+                $.each(limitdatas, function (index, item) {
+                    //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                <div class="playlist-item">
+                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                    <h5>${item.fClassName}</h5>
+                                </div>
+                            </a>
+                        </div>`);
+                    docFrag.append(card);//.append()將一筆div放入容器中
+                })
                 divList.html(docFrag)//.html()一次將全部的資料都上傳
             })
-
-
-            const bodydiv = $('#bodydiv')
-            //讀取Json資料
-            $.getJSON(`/apiTClass/QueryById?id=${datas['fClassID']}`, function (datas) {
-                console.log(datas);
-
-                //做出一個空的容器來存放div
-                const docbody = $(document.createDocumentFragment())
-
-                const card2 = $(
-                    `
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="detail-block">
-                                       <a href="/Members/Profile1?id${datas['fTeacherID']}">
-                                            <h3 class="detail-title">授課導師</h3>
-                                            <div class="profile-wrapper">
-                                                        <img src="/img/Member/@ViewBag.TeacherPhoto" alt="Julianna">
-                                            </div>
-                                                   <h2 class="teacher-name">@ViewBag.TeacherName </h2>
-        @ViewBag.teacher
-                                            <span class="teacher-seemore"><span class="glyphicon glyphicon-triangle-right"></span>點此看更多老師資訊</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="detail-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                                        <h3 class="detail-title">課程資訊</h3>
-                                        <h2 class="price">價格</h2>
-                                        <h2 style="text-align: center">${datas['fPrice']}/每堂</h2>
-                                        <h2 class="price">日期</h2>
-                                        <h2 style="text-align: center">${datas['fStartdate']}</h2>
-                                        <h2 style="text-align: center">~</h2>
-                                        <h2 style="text-align: center">${datas['fEnddate']}</h2>
-                                        <div>
-                                            <form asp-controller="Class" asp-action="Createclass" method="get" style="text-align: center; margin: 20px auto;">
-                                                <button name="createClass" class="btm">購買課程</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Songs details section -->
-                            <section class="songs-details-section">
-                                <div class="detail-block">
-                                    <h3 class="detail-title">課程簡介</h3>
-                                    <span class="detail-wrapper">
-                                        ${datas['fDescription']}
-                                    </span>
-                                </div>
-                            </section>
-                                            `);
-                docbody.append(card2);//.append()將div放入容器中
-
-                bodydiv.html(docbody)//.html()一次將全部的資料都上傳
-            })
-
-
-
-
-            const divorder = $('#order')
-            //讀取Json資料
-            $.getJSON(`/apiTClass/QueryById?id=${datas['fClassID']}`, function (datas) {
-                console.log(datas);
-
-                //做出一個空的容器來存放div
-                const docorder = $(document.createDocumentFragment())
-
-                const card3 = $(
-                    `
-                                                     <section class="similar-songs-section">
-                        <div class="container-fluid">
-                            <h3>你可能會想看的其他課程</h3>
-                @@{
-                                    if ( ${datas['fClassID']} < (ViewBag.AllClass - 2))
-                    {
-                                            <div class="row playlist-area">
-                                                <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                                                    <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@@(${datas['fClassID']} + 1)">
-                                                        <div class="playlist-item">
-                                                            <img src="/img/classimg/2.jpg" alt="">
-                                                            <h5>@ViewBag.PrClass</h5>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                                                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@@(${datas['fClassID']} + 2)">
-                                                        <div class="playlist-item">
-                                                            <img src="~/img/classimg/3.jpg" alt="">
-                                                            <h5>@ViewBag.SenClass</h5>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                    }
-                    else
-                    {
-                                            <div class="row playlist-area">
-                                                <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                                                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@@(${datas['fClassID']} - 1)">
-                                                        <div class="playlist-item">
-                                                            <img src="/img/classimg/2.jpg" alt="">
-                                                            <h5>@ViewBag.PrClass</h5>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                                                            <a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@@(${datas['fClassID']} - 2)">
-                                                        <div class="playlist-item">
-                                                            <img src="~/img/classimg/3.jpg" alt="">
-                                                            <h5>@ViewBag.SenClass</h5>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                    }
-                }
-                        </div>
-                    </section>
-                                            `);
-                docorder.append(card3);//.append()將div放入容器中
-
-                divorder.html(docorder)//.html()一次將全部的資料都上傳
-            })
         }
-        load();
-
-        //Style選擇器
-        async function loadStyle() {
-            const response = await fetch('@Url.Content("~/apiTStyle/List")');//從哪裡取得
-            const data = await response.json();//接收回傳的資料
-            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);//要把取得的資料作什麼加工
-            selStyle.innerHTML = style.join("");//加入到指定的位置
-        }
-        loadStyle();//啟動*@
+        firstLoad(1);
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

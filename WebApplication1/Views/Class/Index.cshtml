@@ -36,7 +36,7 @@
             <div class="container col-lg-12 ddd">
                 <div class="text-right ">
                     <select id="selectSkill" class="form-select mr-2"></select>
-                    <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
+                    <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value=""/>
                     <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
                     <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
                 </div>
@@ -69,8 +69,8 @@
             <div class="col-lg-6">
                 <div class="d-flex h-100 align-items-end">
                     <form class="search-form">
-                        <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
-                        <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+                        <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value=""/>
+                    <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
                     </form>
                 </div>
             </div>
@@ -162,6 +162,24 @@
                     docFrag.append(card);
                 })
                 divList.html(docFrag)
+
+
+                if(dataCount == 0){
+                    const docFrag = $(document.createDocumentFragment())
+                    const card = $(
+                        `<div class="col-lg-6">
+                            <div class="section-title mb-0 pb-4 container-fluid">
+                                <h3>找不到合適的課程嗎？ </h3>
+                            </div>
+                            <p>
+                                想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
+                                我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
+                                線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
+                            </p>
+                        </div>`);
+                    docFrag.append(card);
+                    divList.html(docFrag);
+                }
             })
         }
 
@@ -171,25 +189,27 @@
             const response = await fetch('@Url.Content("~/apiTClass/List")');
             const data = await response.json();
             // 獲取所選風格的ID
-            const sId = $('#selectStyle').val();
+            const sId = $('#selectSkill').val();
             const keyword = $('#txtKeyword').val();
 
             // 根據所選風格篩選數據
             let filteredData = data;
-            if (sId != 100) {
+            console.log(filteredData);
+            if (sId != 0) {
                 filteredData = data.filter(item => item.fSkillId == sId);
             }
             //關鍵字篩選
 			if (keyword != '') {
 				filteredData = filteredData.filter(item => {
-					// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
-					return item.fDescription.includes(keyword) || item.fName.includes(keyword);
+					// 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+						return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
 				});
 			}
-
+            console.log(filteredData);
             const dataCount = filteredData.length;//有幾筆資料
+            console.log(filteredData.length);
             const pageCount = Math.ceil(dataCount / onePage);//有幾頁
-
+            console.log(pageCount);
             // 清空現有按鈕
             pageButtonsContainer.empty();
             for (let i = 1; i <= pageCount; i++) {

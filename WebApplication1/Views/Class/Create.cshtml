@@ -3,6 +3,18 @@
 @{
     ViewData["Title"] = "Create";
 }
+<style>
+    #fDescription {
+    height: 200px; /* 設定合適的高度，你可以根據需要調整 */
+    resize: vertical; /* 允許垂直調整大小 */
+    overflow-y: auto; /* 在高度不足時顯示垂直滾動條 */
+    }
+    /*留空白用的*/
+    .pad {
+        padding-top: 20px; /* 設置上邊距擴展的像素值 */
+        padding-bottom: 20px; /* 設置下邊距擴展的像素值 */
+    }
+</style>
 <!-- Contact section -->
 <section class="contact-section">
     <div class="container-fluid">
@@ -13,11 +25,11 @@
             <form id="classForm" method="post" class="contact-from col-lg-8" onsubmit="return validateForm()">
                 <div class="row">
                     <input type="hidden" id="fTeacherID" name="fTeacherID" value="@ViewBag.MemberId" />
-                    <div class="col-md-6">
+                    <div class="col-md-6 pad">
                         <label for="fClassName">課程名稱:</label>
                         <input type="text" id="fClassName" name="fClassName" required />
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 pad">
                         <label for="fPrice">單堂價格:</label>
                         <input type="number" id="fPrice" name="fPrice" required />
                     </div>
@@ -33,18 +45,26 @@
                         <label for="fEnddate">結束日期:</label>
                         <input type="datetime-local" id="fEnddate" name="fEnddate" required />
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 pad">
                         <label for="fSiteID">上課地點:</label>
                         <input type="hidden" id="fSiteID" name="fSiteID" value="1" />
                         <select id="fSiteName" name="fSiteName" required></select><br />
+                    </div>
+                    <div class="col-md-12 pad">
                         <label for="formFile">圖片:</label>
                         <input type="file" id="formFile" name="formFile" accept="image/*" />
+                    </div>
+                    <div class="col-md-12 pad">
                         <label for="fMaxStudent">課程人數:</label>
                         <input type="text" id="fMaxStudent" name="fMaxStudent" required value="0"/>
-                        <input type="hidden" id="FCurrentStudent" name="FCurrentStudent" value="0" />
+                    </div>
+                    <input type="hidden" id="FCurrentStudent" name="FCurrentStudent" value="0" />
+                    <div class="col-md-12 pad">
                         <label for="fSkillID">課程類型:</label>
                         <input type="hidden" id="fSkillID" name="fSkillID" value="1" />
                         <select id="fName" name="fName" required></select><br />
+                    </div>
+                    <div class="col-md-12 pad">
                         <button id="buttonSubmit" type="submit" class="btm">確定建立</button>
                     </div>
                 </div>

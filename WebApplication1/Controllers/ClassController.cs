@@ -23,6 +23,7 @@ namespace prjMusicBetter.Controllers
             return View();
         }
 
+
         /*=======課程內頁===============*/
 
         public async Task<IActionResult> Viewclass(int? id)
@@ -41,73 +42,81 @@ namespace prjMusicBetter.Controllers
             ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
 
-
-            if (tClass != null)
+            
+            
+            /*if (id <= (_context.TClasses.Count() - 2))
             {
-                
-                if (id <= (_context.TClasses.Count() - 2))
+                var nextClass = _context.TClasses
+                    .Where(t => t.FClassId > tClass.FClassId)
+                    .OrderBy(t => t.FClassId)
+                    .FirstOrDefault();
+
+                if (nextClass != null)
                 {
-                    var nextClass = _context.TClasses
-                        .Where(t => t.FClassId > tClass.FClassId)
-                        .OrderBy(t => t.FClassId)
-                        .FirstOrDefault();
-
-                    if (nextClass != null)
-                    {
-                        ViewBag.PrClass = nextClass.FClassName; // 下一個課程名稱
-                        ViewBag.PrePath = nextClass.FThumbnailPath; // 下一個課程圖片位址
-                    }
-
-                    var secondNextClass = _context.TClasses
-                        .Where(t => t.FClassId > tClass.FClassId)
-                        .OrderBy(t => t.FClassId)
-                        .Skip(1)
-                        .FirstOrDefault();
-
-                    if (secondNextClass != null)
-                    {
-                        ViewBag.SenClass = secondNextClass.FClassName; // 下下一個課程名稱
-                        ViewBag.SenPath = secondNextClass.FThumbnailPath; // 下下一個課程圖片位址
-                    }
+                    ViewBag.PrClass = nextClass.FClassName; // 下一個課程名稱
+                    ViewBag.PrePath = nextClass.FThumbnailPath; // 下一個課程圖片位址
                 }
-                else
+
+                var secondNextClass = _context.TClasses
+                    .Where(t => t.FClassId > tClass.FClassId)
+                    .OrderBy(t => t.FClassId)
+                    .Skip(1)
+                    .FirstOrDefault();
+
+                if (secondNextClass != null)
                 {
-                    var prevClass = _context.TClasses
-                        .Where(t => t.FClassId < tClass.FClassId)
-                        .OrderByDescending(t => t.FClassId)
-                        .FirstOrDefault();
-
-                    if (prevClass != null)
-                    {
-                        ViewBag.PrClass = prevClass.FClassName; // 上一個課程名稱
-                        ViewBag.PrePath = prevClass.FThumbnailPath; // 上一個課程圖片位址
-                    }
-
-                    var secondPrevClass = _context.TClasses
-                        .Where(t => t.FClassId < tClass.FClassId)
-                        .OrderByDescending(t => t.FClassId)
-                        .Skip(1)
-                        .FirstOrDefault();
-
-                    if (secondPrevClass != null)
-                    {
-                        ViewBag.SenClass = secondPrevClass.FClassName; // 上上一個課程名稱
-                        ViewBag.SenPath = secondPrevClass.FThumbnailPath; // 上上一個課程圖片位址
-                    }
+                    ViewBag.SenClass = secondNextClass.FClassName; // 下下一個課程名稱
+                    ViewBag.SenPath = secondNextClass.FThumbnailPath; // 下下一個課程圖片位址
                 }
             }
+            else
+            {
+                var prevClass = _context.TClasses
+                    .Where(t => t.FClassId < tClass.FClassId)
+                    .OrderByDescending(t => t.FClassId)
+                    .FirstOrDefault();
+
+                if (prevClass != null)
+                {
+                    ViewBag.PrClass = prevClass.FClassName; // 上一個課程名稱
+                    ViewBag.PrePath = prevClass.FThumbnailPath; // 上一個課程圖片位址
+                }
+
+                var secondPrevClass = _context.TClasses
+                    .Where(t => t.FClassId < tClass.FClassId)
+                    .OrderByDescending(t => t.FClassId)
+                    .Skip(1)
+                    .FirstOrDefault();
+
+                if (secondPrevClass != null)
+                {
+                    ViewBag.SenClass = secondPrevClass.FClassName; // 上上一個課程名稱
+                    ViewBag.SenPath = secondPrevClass.FThumbnailPath; // 上上一個課程圖片位址
+                }
+            }*/
             ViewBag.AllClass = _context.TClasses.Count();//有多少課程
+
+            ViewBag.SkillId = tClass.FSkillId;//類型
 
             var Introduction = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
             ViewBag.teacher = Introduction;//教師自述
 
             var teacherimg = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FPhotoPath).SingleOrDefault();
-            ViewBag.teacherimg = teacherimg;//教師自述
+            ViewBag.teacherimg = teacherimg;//教師圖片
+
+            var skillname = _context.TSkills.Where(t => t.FSkillId == tClass.FSkillId).Select(t => t.FName).SingleOrDefault();
+            ViewBag.skillname = skillname;//類型
+
+            var SiteName = _context.TSites.Where(t => t.FSiteId == tClass.FSiteId).Select(t => t.FSiteName).SingleOrDefault();
+            ViewBag.SiteName = SiteName;//場地
+
+            var Address = _context.TSites.Where(t => t.FSiteId == tClass.FSiteId).Select(t => t.FAddress).SingleOrDefault();
+            ViewBag.Address = Address;//地點
 
             return View(tClass);
 		}
 
-
+        
 
 
         /*=======新增課程===============*/
