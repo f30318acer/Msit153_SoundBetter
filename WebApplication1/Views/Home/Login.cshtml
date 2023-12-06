@@ -54,13 +54,26 @@
                                             @*登入平台*@
                                             <div class="p-2">                                               
                                                 @Html.ActionLink("註冊", "Register", "Home", "", new { @class = "btn btn-outline-dark" })
-                                                <input type="submit" value="登入" id="Login" class="btn btn-dark fw-bold" />
-                                               
-                                               
+                                                <input type="submit" value="登入" id="Login" class="btn btn-dark fw-bold" />                                                                                            
                                             </div>
+                                            <script src="https://accounts.google.com/gsi/client" async defer></script>
+                                            <div id="g_id_onload"
+                                                 data-client_id="221032663442-n37m49mvle1prt4lk6d3rnc6689kp1k1.apps.googleusercontent.com"
+                                                 data-login_uri="https://localhost:7078/Home/"
+                                                 data-auto_prompt="false">
+                                            </div>
+                                            <div class="g_id_signin"
+                                                 data-type="standard"
+                                                 data-size="large"
+                                                 data-theme="filled_blue"
+                                                 data-text="sign_in_with"
+                                                 data-shape="rectangular"
+                                                 data-logo_alignment="left">
+                                            </div>
+
                                             <div class="  container col-12">
                                                 <div class=" p-2 col-12">
-                                                    <input type="button" class="btn btn-outline-secondary" value="DemoEmployee" id="DemoEmployee" />
+                                                    <input type="button" class="btn btn-outline-secondary" value="DemoMember" id="DemoMember" />
                                                     <input type="button" class="btn btn-outline-secondary" value="DemoAdministrator" id="DemoAdministrator" />
                                                 </div> 
                                             </div>
@@ -103,7 +116,7 @@
 @section Scripts{
     <script>
         //一般會員登入 目前還沒設任何功能
-        $('#DemoEmployee').on('click', function () {
+        $('#DemoMember').on('click', function () {
             let email = "gaytony@gmail.com"
             $('#inputEmail').val(email)
             $('#inputPassword').val("123")

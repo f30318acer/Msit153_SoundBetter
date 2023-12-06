@@ -169,5 +169,24 @@ namespace prjMusicBetter.Controllers
             TMember member = _userInfoService.GetMemberInfo();
             return PartialView(member);
         }
+        public IActionResult Friends()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+
+            // 查询数据库以获取会员的好友列表数据
+            var friendList = _context.TMemberRelations.Where
+                (m => m.FMemberId == member.FMemberId && m.FMemberRelationStatusId == 1)
+                .Select(m => m.FMemberRelationId).ToList();
+
+            var viewModel = new FriendsViewModel
+            {
+                Member = member,
+               
+
+
+            };
+
+            return View(viewModel);
+        }
     }
 }

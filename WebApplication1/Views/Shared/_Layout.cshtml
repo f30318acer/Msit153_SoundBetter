@@ -65,12 +65,7 @@
                     </ul>
                     <div class=" marquee text-white">
                         <marquee bgcolor="gray" hspace="30" scrollamount="5"> 輸入優惠代碼:9478   即可課程優惠減免10%。</marquee>
-                    </div>
-                    <div>
-                      
-                        <a href="/Home/Loginout">登出</a>1
-
-                    </div>
+                    </div>             
                     <div class="d-flex align-items-center gap-2 mx-3">
                         <div class="d-flex align-items-center gap-2 p-1 bg-white rounded-3 mx-2">
                             <div class="width-170px">
@@ -95,8 +90,20 @@
                                         </li>
                                         <li class="d-flex align-items-center mx-2">
                                             <img src="/img/icons/login.png" class="width-16px" width="15px" />
-                                            <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a>
+
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <a class="dropdown-item fs-12px"  asp-action="Loginout" asp-controller="Home">登出</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item fs-12px"  asp-action="Login" asp-controller="Home">登入/註冊</a>
+                                            }
+                                            @* <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a> *@
                                         </li>
+
+                                      
+
                                     </ul>
                                 </li>
                             </ul>
@@ -157,6 +164,9 @@
                 </div>
                 <div class="lh-1 my-3 fs-12px">
                     <li><a href="@Url.Action("Index","Class")">課程專區</a></li>
+                </div>
+                <div class="lh-1 my-3 fs-12px">
+                    <li><a href="@Url.Action("List","MemberPage")">會員清單</a></li>
                 </div>
                 <div class="lh-1 my-3 fs-12px">
                     <li><a href="@Url.Action("TermOfTeacher","Home")">教學條款</a></li>
@@ -280,7 +290,7 @@
 
                     $("#memberIcon").html(str)
                     
-
+                   
                     }
                     else
                     {  
@@ -339,6 +349,7 @@
             })
         </script>
     }
+    CheckLogin()
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

@@ -66,6 +66,47 @@ namespace Music_matchmaking_platform.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Edit(int fSiteID, TSitePeriod? pIn)
+        {
+            TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == fSiteID);
+          
+            if (pDb != null && pIn != null)
+            {
+                pDb.FMonMorning = pIn.FMonMorning;
+                pDb.FMonAfternoon = pIn.FMonAfternoon;
+                pDb.FMonNight = pIn.FMonNight;
+                pDb.FMonMidnight = pIn.FMonMidnight;
+                pDb.FTuesMorning = pIn.FTuesMorning;
+                pDb.FTuesAfternoon = pIn.FTuesAfternoon;
+                pDb.FTuesNight = pIn.FTuesNight;
+                pDb.FTuesMidnight = pIn.FTuesMidnight;
+                pDb.FWedMorning = pIn.FWedMorning;
+                pDb.FWedAfternoon = pIn.FWedAfternoon;
+                pDb.FWedNight = pIn.FWedNight;
+                pDb.FWedMidnight = pIn.FWedMidnight;
+                pDb.FThurMorning = pIn.FThurMorning;
+                pDb.FThurAfternoon = pIn.FThurAfternoon;
+                pDb.FThurNight = pIn.FThurNight;
+                pDb.FThurMidnight = pIn.FThurMidnight;
+                pDb.FFriMorning = pIn.FFriMorning;
+                pDb.FFriAfternoon = pIn.FFriAfternoon;
+                pDb.FFriNight = pIn.FFriNight;
+                pDb.FFriMidnight = pIn.FFriMidnight;
+                pDb.FSatMorning = pIn.FSatMorning;
+                pDb.FSatAfternoon = pIn.FSatAfternoon;
+                pDb.FSatNight = pIn.FSatNight;
+                pDb.FSatMidnight = pIn.FSatMidnight;
+                pDb.FSunMorning = pIn.FSunMorning;
+                pDb.FSunAfternoon = pIn.FSunAfternoon;
+                pDb.FSunNight = pIn.FSunNight;
+                pDb.FSunMidnight = pIn.FSunMidnight;
+
+                _context.SaveChanges();
+                return Content("修改成功");
+            }
+            return Content("錯誤");
+        }
         public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null || _context.TSites == null)
