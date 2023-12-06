@@ -134,24 +134,8 @@ namespace prjMusicBetter.Controllers
         {
             TMember member = _userInfoService.GetMemberInfo();
             ViewBag.MemberId = member.FMemberId;
-            /*ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId");
-            ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");*/
             return View();
         }
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FClassId,FTeacherId,FClassName,FPrice,FDescription,FStartdate,FEnddate,FSiteId,FThumbnailPath")] TClass tClass)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tClass);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
-            ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
-            return View(tClass);
-        }*/
 
 
 

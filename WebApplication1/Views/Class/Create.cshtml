@@ -51,6 +51,14 @@
                         <select id="fSiteName" name="fSiteName" required></select><br />
                     </div>
                     <div class="col-md-12 pad">
+                        <label for="fOnLine">上課方式:</label>
+                        <input type="hidden" id="fOnLine" name="fOnLine" value="0" />
+                        <select id="fifOnLine" name="fifOnLine" required>
+                            <option value="0">實體課程</option>
+                            <option value="1">線上課程</option>
+                        </select><br />
+                    </div>
+                    <div class="col-md-12 pad">
                         <label for="formFile">圖片:</label>
                         <input type="file" id="formFile" name="formFile" accept="image/*" />
                     </div>
@@ -87,6 +95,20 @@
 
         const SkillID = document.querySelector('#fSkillID');
         const SkillName = document.querySelector('#fName');
+
+        var selectedValue = $('#fifOnLine').val();
+        $('#fifOnLine').on('change', function () {
+            // 获取当前选择的选项的 value
+            var selectedValue = $(this).val();
+
+            // 更新隐藏字段的值
+            $('#fOnLine').val(selectedValue);
+
+            // 输出选项的 value 到控制台（可选）
+            console.log('Selected Value:', selectedValue);
+        });
+
+
 
         function load() {
             // 獲取TSites資料

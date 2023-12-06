@@ -167,14 +167,13 @@
     <div class="row">
         <div class="col-md-6">
             <div class="detail-block">
-                <a asp-area="" asp-controller="Members" asp-action="Profile1">
+                <a href="@Url.Content("~/MemberPage/Details")/@Model.FTeacherId">
                     <h3 class="detail-title">授課導師</h3>
                     <div class="profile-wrapper">
                         <img src="~/img/Member/@(ViewBag.teacherimg)">
                     </div>
                     <h2 class="teacher-name">@(ViewBag.Name)</h2>
                     <div class="teacher-info">
-                        @ViewBag.teacher
                         <p>@ViewBag.teacher</p>
                     </div>
                     <span class="teacher-seemore"><span class="glyphicon glyphicon-triangle-right"></span>點此看更多老師資訊</span>
