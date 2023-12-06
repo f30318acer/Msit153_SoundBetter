@@ -102,10 +102,10 @@
                 .then(response => response.json())
                 .then(data => {
                     const selectElement = document.getElementById('fSiteName');
-            // 清除所有已有的選項
-            while (selectElement.firstChild) {
-                selectElement.removeChild(selectElement.firstChild);
-            }
+                    // 清除所有已有的選項
+                    while (selectElement.firstChild) {
+                        selectElement.removeChild(selectElement.firstChild);
+                    }
                     data.forEach(site => {
                         const option = document.createElement('option');
                         option.value = String(site.fSiteId);  // 使用fSiteID作為值
@@ -114,7 +114,7 @@
                         console.log(option);
                     });
                     // 設定初始值
-            selectElement.value = SiteID.value;
+                    selectElement.value = SiteID.value;
                     // 添加 change 事件監聽器，當選擇改變時觸發
                     selectElement.addEventListener('change', function() {
                     // 將隱藏的 fSiteID 更新為所選擇的 fSiteID

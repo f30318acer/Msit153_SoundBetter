@@ -42,8 +42,14 @@ namespace prjMusicBetter.Controllers
             ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
 
-            
-            
+            var classClick = _context.TClassClicks.FirstOrDefault(c => c.FClassId == id);
+            if (classClick != null)
+            {
+                classClick.FClick++;//點閱數+1
+            }
+            // 保存變更到資料庫
+            await _context.SaveChangesAsync();
+
             /*if (id <= (_context.TClasses.Count() - 2))
             {
                 var nextClass = _context.TClasses
@@ -98,6 +104,9 @@ namespace prjMusicBetter.Controllers
 
             ViewBag.SkillId = tClass.FSkillId;//類型
 
+            var Name = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FName).SingleOrDefault();
+            ViewBag.Name = Name;//教師自述
+
             var Introduction = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
             ViewBag.teacher = Introduction;//教師自述
 
@@ -125,24 +134,8 @@ namespace prjMusicBetter.Controllers
         {
             TMember member = _userInfoService.GetMemberInfo();
             ViewBag.MemberId = member.FMemberId;
-            /*ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId");
-            ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");*/
             return View();
         }
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FClassId,FTeacherId,FClassName,FPrice,FDescription,FStartdate,FEnddate,FSiteId,FThumbnailPath")] TClass tClass)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tClass);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
-            ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
-            return View(tClass);
-        }*/
 
 
 
@@ -168,6 +161,12 @@ namespace prjMusicBetter.Controllers
             ViewBag.SiteId = tClass.FSiteId;//原本的地址
 
             return View(tClass);
+        }
+
+        public IActionResult classFav(int? id)
+        {
+            var classfav = _context.TClassFavs.Where(m => m.FClassId == id).Select(t => t.FMemberId);
+            return Json(classfav);//這堂課有誰喜歡
         }
     }
 }
