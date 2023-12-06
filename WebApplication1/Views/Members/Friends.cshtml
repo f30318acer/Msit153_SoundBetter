@@ -1,0 +1,100 @@
+﻿@model prjMusicBetter.Models.ViewModels.FriendsViewModel
+
+
+
+<div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
+    商品收藏
+            <table class="table table-striped align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>使用者姓名</th>
+                        <th>姓名</th>
+                        <th>密碼</th>
+                        <th>電話號碼</th>
+                        <th>信箱</th>
+                        <th>性別</th>
+                        <th>生日</th>
+                       
+                       
+                        <th>照片</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="memberTable">
+                    @foreach (var item in Model.Friends)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FUsername)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FPassword)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FPhone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FGender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FBirthday)
+                            </td>       
+                           
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
+                                {
+                                    <img src="@Url.Content("~/img/" + item.FPhotoPath)" alt="Coupon Image" style="width:100px; height:auto;" />
+
+                                }
+                                else
+                                {
+                                    @:No Image
+                                }
+                                @Html.DisplayFor(modelItem => item.FPhotoPath)
+                            </td>
+                           @*  <td hidden>
+                                @Html.DisplayFor(modelItem => item.FPermission)
+                            </td> *@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+<div class="container ">
+    <div class="m-3 fs-3 fw-bold  border-bottom py-4 ">商品收藏</div>
+    <div class="mx-5">
+        <div class="mx-auto d-flex flex-md-wrap " id="divCollectProduct">
+            <h2>@Model.Member.FUsername 的好友名單</h2>
+        </div>
+        <div>
+            <ul>
+                @foreach (var friend in Model.Friends)
+                {
+                    <li>@friend.FUsername</li>
+                    <li>@friend.FPhotoPath</li>
+                }
+            </ul>
+        </div>
+        @* <div class="mx-auto d-flex flex-md-wrap " id="divCollectProduct">
+            <h2>@Model.Member.FUsername 的黑名單</h2>
+
+            <ul>
+                @foreach (var blacklisted in Model.BlackList)
+                {
+                    <li>@blacklisted.FUsername</li>
+             
+                }
+            </ul>
+        </div> *@
+    </div>
+</div>

@@ -4,6 +4,7 @@ using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
+using prjMusicBetter.Models.ViewModels;
 
 
 var builder = WebApplication.CreateBuilder(args);

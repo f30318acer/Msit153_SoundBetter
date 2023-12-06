@@ -67,40 +67,40 @@ namespace Music_matchmaking_platform.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Edit(int id, TSitePeriod? pIn)
+        public IActionResult Edit(TSitePeriod? pIn)
         {
-            TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == id);
-
+            TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == pIn.FSiteId);
+          
             if (pDb != null && pIn != null)
             {
-                pDb.FMonMorning = pIn.FMonMorning.Value;
-                pDb.FMonAfternoon = pIn.FMonAfternoon.Value;
-                pDb.FMonNight = pIn.FMonNight.Value;
-                pDb.FMonMidnight = pIn.FMonMidnight.Value;
-                pDb.FTuesMorning = pIn.FTuesMorning.Value;
-                pDb.FTuesAfternoon = pIn.FTuesAfternoon.Value;
-                pDb.FTuesNight = pIn.FTuesNight.Value;
-                pDb.FTuesMidnight = pIn.FTuesMidnight.Value;
-                pDb.FWedMorning = pIn.FWedMorning.Value;
-                pDb.FWedAfternoon = pIn.FWedAfternoon.Value;
-                pDb.FWedNight = pIn.FWedNight.Value;
-                pDb.FWedMidnight = pIn.FWedMidnight.Value;
-                pDb.FThurMorning = pIn.FThurMorning.Value;
-                pDb.FThurAfternoon = pIn.FThurAfternoon.Value;
-                pDb.FThurNight = pIn.FThurNight.Value;
-                pDb.FThurMidnight = pIn.FThurMidnight.Value;
-                pDb.FFriMorning = pIn.FFriMorning.Value;
-                pDb.FFriAfternoon = pIn.FFriAfternoon.Value;
-                pDb.FFriNight = pIn.FFriNight.Value;
-                pDb.FFriMidnight = pIn.FFriMidnight.Value;
-                pDb.FSatMorning = pIn.FSatMorning.Value;
-                pDb.FSatAfternoon = pIn.FSatAfternoon.Value;
-                pDb.FSatNight = pIn.FSatNight.Value;
-                pDb.FSatMidnight = pIn.FSatMidnight.Value;
-                pDb.FSunMorning = pIn.FSunMorning.Value;
-                pDb.FSunAfternoon = pIn.FSunAfternoon.Value;
-                pDb.FSunNight = pIn.FSunNight.Value;
-                pDb.FSunMidnight = pIn.FSunMidnight.Value;
+                pDb.FMonMorning = pIn.FMonMorning;
+                pDb.FMonAfternoon = pIn.FMonAfternoon;
+                pDb.FMonNight = pIn.FMonNight;
+                pDb.FMonMidnight = pIn.FMonMidnight;
+                pDb.FTuesMorning = pIn.FTuesMorning;
+                pDb.FTuesAfternoon = pIn.FTuesAfternoon;
+                pDb.FTuesNight = pIn.FTuesNight;
+                pDb.FTuesMidnight = pIn.FTuesMidnight;
+                pDb.FWedMorning = pIn.FWedMorning;
+                pDb.FWedAfternoon = pIn.FWedAfternoon;
+                pDb.FWedNight = pIn.FWedNight;
+                pDb.FWedMidnight = pIn.FWedMidnight;
+                pDb.FThurMorning = pIn.FThurMorning;
+                pDb.FThurAfternoon = pIn.FThurAfternoon;
+                pDb.FThurNight = pIn.FThurNight;
+                pDb.FThurMidnight = pIn.FThurMidnight;
+                pDb.FFriMorning = pIn.FFriMorning;
+                pDb.FFriAfternoon = pIn.FFriAfternoon;
+                pDb.FFriNight = pIn.FFriNight;
+                pDb.FFriMidnight = pIn.FFriMidnight;
+                pDb.FSatMorning = pIn.FSatMorning;
+                pDb.FSatAfternoon = pIn.FSatAfternoon;
+                pDb.FSatNight = pIn.FSatNight;
+                pDb.FSatMidnight = pIn.FSatMidnight;
+                pDb.FSunMorning = pIn.FSunMorning;
+                pDb.FSunAfternoon = pIn.FSunAfternoon;
+                pDb.FSunNight = pIn.FSunNight;
+                pDb.FSunMidnight = pIn.FSunMidnight;
 
                 _context.SaveChanges();
                 return Content("修改成功");
