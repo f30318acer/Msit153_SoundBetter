@@ -44,6 +44,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tClassClick]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tClassFav]",
          "ObjectType": 0
       },
