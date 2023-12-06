@@ -58,5 +58,27 @@ namespace prjMusicBetter.Controllers
             var dbSoundBetterContext = _context.TMembers;
             return Json(dbSoundBetterContext);
         }
+        //===GetMemberSkill===
+        public IActionResult GetMemberSkill(int id)
+        {
+            var dbSoundBetterContext = from s in _context.TMemberSkills
+                                       join n in _context.TSkills
+                                       on s.FSkillId equals n.FSkillId
+                                       where s.FMemberId == id
+                                       select new { FSkillId=s.FSkillId, FName=n.FName, FYearExp=s.FYearExp, FDescription=s.FDescription };
+            return Json(dbSoundBetterContext.ToArray());
+        }
+        //===GetMemberClass===
+        public IActionResult GetMemberClass(int id)
+        {
+            var dbSoundBetterContext = _context.TClasses.Where(c => c.FTeacherId == id);
+            return Json(dbSoundBetterContext);
+        }
+        //===GetMemberWorks===
+        public IActionResult GetMemberWorks(int id)
+        {
+            var dbSoundBetterContext = _context.TWorks.Where(c => c.FMemberId == id);
+            return Json(dbSoundBetterContext);
+        }
     }
 }
