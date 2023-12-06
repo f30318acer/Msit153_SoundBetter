@@ -8,11 +8,9 @@ namespace Music_matchmaking_platform.Controllers
     public class PlaceController : Controller
     {
 		private readonly dbSoundBetterContext _context;
-		private readonly IWebHostEnvironment _environment;
-		public PlaceController(dbSoundBetterContext context, IWebHostEnvironment environment)
+		public PlaceController(dbSoundBetterContext context)
 		{
 			_context = context;
-			_environment = environment;
 		}
 		public IActionResult List()
 		{
@@ -57,11 +55,8 @@ namespace Music_matchmaking_platform.Controllers
 					fPicturePath = t.FPicture,
 					fCityId = t.FCityId
 				});
-				return Json(query);
-        }
-		public IActionResult PlaceDetail()
-        {
-            return View();
+
+			return Json(query);
         }
         public IActionResult Place()
         {
@@ -81,6 +76,7 @@ namespace Music_matchmaking_platform.Controllers
 			var tSite = await _context.TSites
 				.Include(t => t.FCity)
 				.Include(t => t.FMember)
+				.Include(t => t.TSitePeriods)
 				.FirstOrDefaultAsync(t => t.FSiteId == id);
 
 			if (tSite == null)

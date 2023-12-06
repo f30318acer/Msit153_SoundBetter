@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 
 namespace prjMusicBetter.Controllers
 {
     public class ProjectController : Controller
     {
 		private readonly dbSoundBetterContext _context;
-		public ProjectController(dbSoundBetterContext context)
+        private readonly UserInfoService _userInfoService;
+        public ProjectController(dbSoundBetterContext context, UserInfoService userInfoService)
 		{
 			_context = context;
-		}
+            _userInfoService = userInfoService;
+
+        }
 		public IActionResult List()
         {
             return View();
@@ -21,6 +25,7 @@ namespace prjMusicBetter.Controllers
 		}		
 		public async Task<IActionResult> Details(int? id)
 		{
+
 			if (id == null || _context.TProjects == null)
 			{
 				return NotFound();

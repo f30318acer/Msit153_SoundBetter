@@ -65,10 +65,5 @@ namespace prjMusicBetter.Controllers
                 return Json(result);
             }
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }

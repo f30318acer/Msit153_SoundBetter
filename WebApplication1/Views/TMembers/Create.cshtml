@@ -20,8 +20,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body">
-                     
+                    <div class="card-body">                 
                         <div class="datatable-container">
                             <table class="table">
                                 <div class="row">
@@ -29,63 +28,63 @@
                                         <form asp-action="Create">
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                             <div class="form-group">
-                                                <label asp-for="FUsername" class="control-label"></label>
+                                                <label asp-for="FUsername" class="control-label">使用者姓名</label>
                                                 <input asp-for="FUsername" class="form-control" />
                                                 <span asp-validation-for="FUsername" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FName" class="control-label"></label>
+                                                <label asp-for="FName" class="control-label">姓名</label>
                                                 <input asp-for="FName" class="form-control" />
                                                 <span asp-validation-for="FName" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FPassword" class="control-label"></label>
+                                                <label asp-for="FPassword" class="control-label">密碼</label>
                                                 <input asp-for="FPassword" class="form-control" />
                                                 <span asp-validation-for="FPassword" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FPhone" class="control-label"></label>
+                                                <label asp-for="FPhone" class="control-label">電話</label>
                                                 <input asp-for="FPhone" class="form-control" />
                                                 <span asp-validation-for="FPhone" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FEmail" class="control-label"></label>
+                                                <label asp-for="FEmail" class="control-label">電子信箱</label>
                                                 <input asp-for="FEmail" class="form-control" />
                                                 <span asp-validation-for="FEmail" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FGender" class="control-label"></label>
+                                                <label asp-for="FGender" class="control-label">性別</label>
                                                 <input asp-for="FGender" class="form-control" />
                                                 <span asp-validation-for="FGender" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FBirthday" class="control-label"></label>
+                                                <label asp-for="FBirthday" class="control-label">生日</label>
                                                 <input asp-for="FBirthday" class="form-control" />
                                                 <span asp-validation-for="FBirthday" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FCreationTime" class="control-label"></label>
+                                                <label asp-for="FCreationTime" class="control-label">創立時間</label>
                                                 <input asp-for="FCreationTime" class="form-control" />
                                                 <span asp-validation-for="FCreationTime" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FIntroduction" class="control-label"></label>
+                                                <label asp-for="FIntroduction" class="control-label">自我介紹</label>
                                                 <input asp-for="FIntroduction" class="form-control" />
                                                 <span asp-validation-for="FIntroduction" class="text-danger"></span>
                                             </div>
-                                            <div class="form-group">
-                                                <label asp-for="FPermissionId" class="control-label"></label>
+                                            <div class="form-group" >
+                                                <label asp-for="FPermissionId" class="control-label">等級</label>
                                                 <select asp-for="FPermissionId" class="form-control" asp-items="ViewBag.FPermissionId"></select>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FPhotoPath" class="control-label"></label>
+                                                <label asp-for="FPhotoPath" class="control-label">照片</label>
                                                 <input asp-for="FPhotoPath" class="form-control" />
                                                 <span asp-validation-for="FPhotoPath" class="text-danger"></span>
                                             </div>
                                             <br />
                                             <div class="form-group">
                                                 <input type="submit" value="確定新增" class="btn btn-primary" onclick="return confirmCreate();" />|
-                                                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                                <a asp-action="Index" class="btn btn-primary">首頁</a>
                                             </div>
                                         </form>
                                     </div>
@@ -97,13 +96,13 @@
             </div>
         </div>
     </section>
-    <form asp-action="Create" method="post" enctype="multipart/form-data">
+    @* <form asp-action="Create" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label asp-for="FPhotoPath" class="control-label"></label>
             <input type="file" asp-for="FPhotoPath" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">保存</button>
-    </form>
+    </form> *@
 </main>
 
 <script>

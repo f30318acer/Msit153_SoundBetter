@@ -6,6 +6,9 @@
 <input type="hidden" id="fSiteId" value="@Html.DisplayFor(model => model.FSiteId)" />
 <input type="hidden" id="fMemberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="fCityId" value="@Html.DisplayFor(model => model.FCityId)" />
+<input type="hidden" id="fSiteType" value="@Html.DisplayFor(model => model.FSiteType)"/>
+
+<div id="time" style="display: none;"></div>
 
 <section class="contact-section">
     <div class="container-fluid">
@@ -13,18 +16,18 @@
             <div class="col-lg-6 p-0">
                 <!-- Map -->
                 <div style="height: 50%">
-                    <img src="~/img/@Html.DisplayFor(model => model.FPicture)" class="img-fluid" alt="" style="border: solid; height: 100%; width: 100%">
+                    <img src="~/img/@Html.DisplayFor(model => model.FPicture)" class="img-fluid" alt="" style="border: solid; height: 100%; width: 100%; border-radius: 20px; border-color:gray">
                 </div>
-                <div style="height: 50%" id="map"></div>
+                <div style="height: 50%; border-radius:20px; border:solid; border-color: gray" id="map"></div>
             </div>
             <div class="col-lg-6 p-0">
                 <div class="contact-warp">
                     <div class="section-title mb-0">
                         <h3>@Html.DisplayFor(model => model.FSiteName)</h3>
+                        <div class="mb-3"></div>
                     </div>
                     <br />
-                    <ul>
-                        <li style="font-size: 20px">@Html.DisplayFor(model => model.FSiteType)</li>
+                    <ul>                        
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FAddress)</li>
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FPhone)</li>
                     </ul>
@@ -48,10 +51,10 @@
                                 <h2 class="mb-0">
                                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         <div class="d-flex align-items-center justify-content-center ">
-                                            <div class=" imgcontainer d-flex align-items-center justify-content-center col-6">
+                                            <div class=" imgcontainer d-flex align-items-center justify-content-center col-4">
                                                 <img src="~/img/clock.png" alt="" width="20%" height="20%">
                                             </div>
-                                            <div class="textgroup text-left col-6">
+                                            <div class="textgroup text-left col-8">
                                                 <h4 class="fs18">請問您要預約什麼時段？<br />（無法點選表示該時段已被預約）</h4>
                                             </div>
                                         </div>
@@ -60,38 +63,40 @@
                             </div>
                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
+                                    <form asp-action="Edit">
+                                        <input type="hidden" asp-for="FSiteId" />
                                     <div class="row mt-6 border-bottom">
                                         <div class="col mt-auto mb-auto">
                                             <p class="mt-xl-3 fs16">星期一</p>
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Y1" name="Hours1" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMorning)" name="fMonMorning" id="fMonMorning">
+                                                <label class="form-check-label" for="period1">
                                                     上午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonAfternoon)" name="fMonAfternoon" id="fMonAfternoon">
+                                                <label class="form-check-label" for="period2">
                                                     下午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonNight)" name="fMonNight" id="fMonNight">
+                                                <label class="form-check-label" for="period3">
                                                     晚上
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FMonMidnight)" name="fMonMidnight" id="fMonMidnight">
+                                                <label class="form-check-label" for="period4">
                                                     半夜
                                                 </label>
                                             </div>
@@ -102,33 +107,33 @@
                                             <p class="mt-xl-3 fs16">星期二</p>
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Y1" name="Hours1" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesMorning)" name="fTuesMorning" id="fTuesMorning">
+                                                <label class="form-check-label" for="period5">
                                                     上午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesAfternoon)" name="fTuesAfternoon" id="fTuesAfternoon">
+                                                <label class="form-check-label" for="period6">
                                                     下午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesNight)" name="fTuesNight" id="fTuesNight">
+                                                <label class="form-check-label" for="period7">
                                                     晚上
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FTuesMidnight)" name="fTuesMidnight" id="fTuesMidnight">
+                                                <label class="form-check-label" for="period8">
                                                     半夜
                                                 </label>
                                             </div>
@@ -139,33 +144,33 @@
                                             <p class="mt-xl-3 fs16">星期三</p>
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Y1" name="Hours1" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedMorning)" name="fWedMorning" id="fWedMorning">
+                                                <label class="form-check-label" for="period9">
                                                     上午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedAfternoon)" name="fWedAfternoon" id="fWedAfternoon">
+                                                <label class="form-check-label" for="period10">
                                                     下午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedNight)" name="fWedNight" id="fWedNight">
+                                                <label class="form-check-label" for="period11">
                                                     晚上
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FWedMidnight)" name="fWedMidnight" id="fWedMidnight">
+                                                <label class="form-check-label" for="period12">
                                                     半夜
                                                 </label>
                                             </div>
@@ -176,33 +181,33 @@
                                             <p class="mt-xl-3 fs16">星期四</p>
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Y1" name="Hours1" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurMorning)" name="fThurMorning" id="fThurMorning">
+                                                <label class="form-check-label" for="period13">
                                                     上午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurAfternoon)" name="fThurAfternoon" id="fThurAfternoon">
+                                                <label class="form-check-label" for="period14">
                                                     下午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurNight)" name="fThurNight" id="fThurNight">
+                                                <label class="form-check-label" for="period15">
                                                     晚上
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FThurMidnight)" name="fThurMidnight" id="fThurMidnight">
+                                                <label class="form-check-label" for="period16">
                                                     半夜
                                                 </label>
                                             </div>
@@ -213,33 +218,33 @@
                                             <p class="mt-xl-3 fs16">星期五</p>
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Y1" name="Hours1" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriMorning)" name="fFriMorning" id="fFriMorning">
+                                                <label class="form-check-label" for="period17">
                                                     上午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriAfternoon)" name="fFriAfternoon" id="fFriAfternoon">
+                                                <label class="form-check-label" for="period18">
                                                     下午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriNight)" name="fFriNight" id="fFriNight">
+                                                <label class="form-check-label" for="period19">
                                                     晚上
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FFriMidnight)" name="fFriMidnight" id="fFriMidnight">
+                                                <label class="form-check-label" for="period20">
                                                     半夜
                                                 </label>
                                             </div>
@@ -250,33 +255,33 @@
                                             <p class="mt-xl-3 fs16">星期六</p>
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Y1" name="Hours1" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatMorning)" name="fSatMorning" id="fSatMorning">
+                                                <label class="form-check-label" for="period21">
                                                     上午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatAfternoon)" name="fSatAfternoon" id="fSatAfternoon">
+                                                <label class="form-check-label" for="period22">
                                                     下午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatNight)" name="fSatNight" id="fSatNight">
+                                                <label class="form-check-label" for="period23">
                                                     晚上
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSatMidnight)" name="fSatMidnight" id="fSatMidnight">
+                                                <label class="form-check-label" for="period24">
                                                     半夜
                                                 </label>
                                             </div>
@@ -287,44 +292,45 @@
                                             <p class="mt-xl-3 fs16">星期日</p>
                                         </div>
                                         <div class="col mt-auto mb-auto justify-content-between">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="Y1" name="Hours1" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunMorning)" name="fSunMorning" id="fSunMorning">
+                                                <label class="form-check-label" for="period25">
                                                     上午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunAfternoon)" name="fSunAfternoon" id="fSunAfternoon">
+                                                <label class="form-check-label" for="period26">
                                                     下午
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunNight)" name="fSunNight" id="fSunNight">
+                                                <label class="form-check-label" for="period27">
                                                     晚上
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col mt-auto mb-auto">
-                                            <div class="form-check">
-                                                <input class="form-check-input " type="checkbox" value="hr1" name="Hours1" id="flexRadioDefault1hr">
-                                                <label class="form-check-label" for="flexRadioDefault1hr">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="checkbox" value="@Html.DisplayFor(model => model.TSitePeriods.FirstOrDefault().FSunMidnight)" name="fSunMidnight" id="fSunMidnight">
+                                                <label class="form-check-label" for="period28">
                                                     半夜
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <br />
-                    <button class="site-btn">預約</button>
+                    <button class="site-btn" id="btnReserve">預約</button>
                     <div>
                         <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
                         <a asp-action="Index">Back to List</a>
@@ -338,6 +344,31 @@
 @section Scripts
 {
     <script>
+
+        function loadPlacePeriod() {
+            $('input[type="checkbox"]').each(function () {
+                const checkbox = $(this); // 取得當前迴圈中的 checkbox
+                const value = checkbox.val(); // 從 checkbox 的 value 取得值
+
+                if (value == 1 || value == 3)
+                    checkbox.prop('disabled', true);
+            });
+        }
+        loadPlacePeriod();
+
+        const btn = document.querySelector('#btnReserve');
+
+        btn.addEventListener('click', function () {
+            $('input[type="checkbox"]').each(function () {
+                const checkbox = $(this); // 取得當前迴圈中的 checkbox
+                const value = checkbox.val(); // 從 checkbox 的 value 取得值
+
+                if (checkbox.prop('checked', true))
+                    value = 3;
+                
+            });
+        })
+
         function initMap() {
             var geocoder = new google.maps.Geocoder();
             var address = "@Html.DisplayFor(model => model.FAddress)"; // 替換為實際場地的地址
@@ -359,9 +390,9 @@
                 }
             });
         }
-        // const script = document.createElement('script');
-        // script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDpJq9VUwOC98iybSUuQggk04ir2ev31aM&libraries=places&callback=initMap';
-        // script.defer = true;
-        // document.head.appendChild(script);
+         //const script = document.createElement('script');
+         //script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDpJq9VUwOC98iybSUuQggk04ir2ev31aM&libraries=places&callback=initMap';
+         //script.defer = true;
+         //document.head.appendChild(script);
     </script>
 }
