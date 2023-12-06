@@ -67,10 +67,10 @@ namespace Music_matchmaking_platform.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Edit(int id, TSitePeriod? pIn)
+        public IActionResult Edit(TSitePeriod? pIn)
         {
-            TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == id);
-
+            TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == pIn.FSiteId);
+          
             if (pDb != null && pIn != null)
             {
                 pDb.FMonMorning = pIn.FMonMorning;

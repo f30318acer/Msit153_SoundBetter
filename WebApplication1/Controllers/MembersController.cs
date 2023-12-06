@@ -169,5 +169,33 @@ namespace prjMusicBetter.Controllers
             TMember member = _userInfoService.GetMemberInfo();
             return PartialView(member);
         }
+        public async Task<IActionResult> Friends()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if(member==null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            // 假設狀態ID為1代表好友，為2代表黑名單
+            var friendIds = await _context.TMemberRelations.Where(x=>x.FMemberId==member.FMemberId && x.FMemberRelationStatusId==1)
+                .Select(x=>x.FMemberRelationId).ToListAsync();
+
+            var friends = await _context.TMembers.Where(m=>friendIds.Contains(m.FMemberId)).ToListAsync();
+
+
+            var blackListIds = await _context.TMemberRelations.Where(x => x.FMemberId == member.FMemberId && x.FMemberRelationStatusId == 2)
+                .Select(x => x.FMemberRelationId).ToListAsync();
+
+            var blackList = await _context.TMembers.Where(m => blackListIds.Contains(m.FMemberId)).ToListAsync();
+
+            var viewModel = new FriendsViewModel
+            {
+                Member = member,
+                Friends = friends,
+                BlackList = blackList
+            };
+            return PartialView(viewModel);
+        }
     }
 }

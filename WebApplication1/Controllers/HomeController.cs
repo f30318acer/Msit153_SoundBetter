@@ -37,18 +37,18 @@ namespace WebApplication1.Controllers
 
 
 
-        public HomeController(dbSoundBetterContext context,ILogger<HomeController> logger,IWebHostEnvironment environment ,UserInfoService userInfoService)
+        public HomeController(dbSoundBetterContext context, ILogger<HomeController> logger, IWebHostEnvironment environment, UserInfoService userInfoService)
         {
             _logger = logger;
             _context = context;
             _userInfoService = userInfoService;
-            _environment = environment;            
+            _environment = environment;
             _dao = new MemberDao(_context, _environment);
             _service = new MemberService(_context, _environment);
         }
-       
+
         public IActionResult Index()
-        { 
+        {
             return View();
         }
         public IActionResult BackgroundIndex()
@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
         /// 驗證 Google 登入授權
         /// </summary>
         /// <returns></returns>
-        public IActionResult ValidGoogleLogin()
+        public async Task<IActionResult> ValidGoogleLogin()
         {
             string? formCredential = Request.Form["credential"]; //回傳憑證
             string? formToken = Request.Form["g_csrf_token"]; //回傳令牌
@@ -76,23 +76,35 @@ namespace WebApplication1.Controllers
 
             // 驗證 Google Token
             GoogleJsonWebSignature.Payload? payload = VerifyGoogleToken(formCredential, formToken, cookiesToken).Result;
-            if (payload == null)
+            if (payload != null)
             {
                 // 驗證失敗
-                ViewData["Msg"] = "驗證 Google 授權失敗";
-            }
-            else
-            {
-                IEnumerable<TMember> q = null;
-
-                if(_context.TMembers.FirstOrDefault(m=>m.FEmail ==payload.Email) == null)
+                //ViewData["Msg"] = "驗證 Google 授權失敗";
+                var member = _context.TMembers.FirstOrDefault(m => m.FEmail == payload.Email);
+                if (member == null)
                 {
-                    TempData["googleAccount"]=payload.Name.ToString();
-                    TempData["googleEmail"]=payload.Email.ToString();
-
-                    return RedirectToAction("index");
+                    member = new TMember { FEmail = payload.Email };
+                    _context.TMembers.Add(member);
+                    _context.SaveChanges();
                 }
-               
+
+                // 建立用戶身份宣告
+                var claims = new List<Claim>
+                {
+                 new Claim(ClaimTypes.Email, member.FEmail),
+                 new Claim("fMemberID", member.FMemberId.ToString()),
+                 new Claim(ClaimTypes.Role, member.FPermissionId == 1 ? "Administrator" : "Member"),
+                };
+                // 執行登入
+                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+
+                //執行登入
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+
+                // 重定向到適當頁面
+                return RedirectToAction("Index");
 
                 //驗證成功，取使用者資訊內容
                 ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
@@ -100,8 +112,11 @@ namespace WebApplication1.Controllers
                 ViewData["Msg"] += "Name:" + payload.Name + "<br>";
                 ViewData["Msg"] += "Picture:" + payload.Picture;
             }
-
-            return View();
+            else
+            {
+                // 驗證失敗的處理
+                return RedirectToAction("Login");
+            }
         }
 
         /// <summary>
@@ -209,13 +224,13 @@ namespace WebApplication1.Controllers
             {
                 new Claim(ClaimTypes.Name,member.FName),
                 new Claim("fMemberID",member.FMemberId.ToString()),
-                new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),     
+                new Claim(ClaimTypes.Role,member.FPermissionId==1 ? "Administrator":"Member"),
             };
-            ClaimsIdentity identity =new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal =new ClaimsPrincipal(identity);
+            ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
 
             //執行登入
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             //確定登入完後提供 歡迎回來 登入者fUserName
 
@@ -229,9 +244,9 @@ namespace WebApplication1.Controllers
             else
             {
                 //一般會員重定向到首頁
-                
+
                 return RedirectToAction("index", "Home");
-                
+
             }
         }
 
@@ -256,11 +271,11 @@ namespace WebApplication1.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("","新增失敗,"+ex.Message);
+                ModelState.AddModelError("", "新增失敗," + ex.Message);
                 return View(vm);
             }
             return RedirectToAction("Index");
-         }
+        }
 
         //============================================
         //已登入用戶名稱
@@ -269,7 +284,7 @@ namespace WebApplication1.Controllers
         {
             return Content(_userInfoService.GetMemberInfo().FName);
         }
-        
+
         public IActionResult NoLogin()
         {
             return View("尚未登入");
