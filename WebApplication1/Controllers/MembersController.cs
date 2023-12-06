@@ -200,6 +200,8 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+        public async Task<IActionResult> blackList()
+        {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
