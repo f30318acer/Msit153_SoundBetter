@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewData["Title"] = "List";
+}
+
+<!-- Playlist section -->
+<section class="playlist-section spad">
+	<div class="container-fluid">
+		<div class="row mb-4">
+			<div class="section-title col-lg-3">
+				<h2>會員清單</h2>
+			</div>
+			<div class="container col-lg-9">
+				<div class="text-right">
+					<select id="selectStyle" class="form-select mr-2"><!--風格選擇器位置-->
+						<option value="100">所有會員</option>
+						<option value="1">普通會員</option>
+						<option value="2">管理員</option>
+						<option value="3">停權會員</option>
+						</select>
+					<input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
+					<button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+					<a href="~/Project/Create" type="button" class="btn btn-success mr-2">建立專案</a>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div id="divList" class="row playlist-area">
+			<!--List內容位置-->
+		</div>
+		<div id="pagination-container"></div>
+	</div>
+
+	<div id="pageButtons" class="text-center">
+		<!--分頁按鈕位置-->
+	</div>
+</section>
+<!-- Playlist section end -->
+<!-- Help section end -->
+<section class="help-section spad pt-0">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="section-title mb-0 pb-4">
+					<h2>Need Help to find music? </h2>
+				</div>
+				<p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+			</div>
+			<div class="col-lg-6">
+				<div class="d-flex h-100 align-items-end">
+					<form class="search-form">
+						<input type="text" placeholder="Hit it">
+						<button>Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<a href=""></a>
+<!-- Help section end -->
+@section Scripts{
+	<script>
+		const selStyle = document.querySelector('#selectStyle');
+		const pageButtonsContainer = $('#pageButtons');
+		const onePage = 16;
+
+		//Style選擇器
+		//async function loadStyle() {
+		//	const response = await fetch('@Url.Content("~/apiTStyle/List")');
+		//	const data = await response.json();
+		//	const defaultOption = '<option value="100">請選擇風格</option>';
+		//	const styleOptions = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+		//	styleOptions.unshift(defaultOption);
+		//	selStyle.innerHTML = styleOptions.join("");
+		//}
+		//loadStyle();
+
+		//分頁按鈕
+		async function loadPage() {
+			const response = await fetch('@Url.Content("~/MemberPage/ListAll")');
+			const data = await response.json();
+			// 篩選條件
+			const sId = $('#selectStyle').val();
+			const keyword = $('#txtKeyword').val();
+
+			// 根據所選風格篩選數據
+			let filteredData = data;
+			if (sId != 100) {
+				filteredData = data.filter(item => item.fPermissionId == sId);
+			}
+			//關鍵字篩選
+			if (keyword != '') {
+				filteredData = filteredData.filter(item => {
+					// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+					return item.fIntroduction.includes(keyword) || item.fUsername.includes(keyword);
+				});
+			}
+
+			const dataCount = filteredData.length;
+			const pageCount = Math.ceil(dataCount / onePage);
+
+			// 清空現有按鈕
+			pageButtonsContainer.empty();
+			for (let i = 1; i <= pageCount; i++) {
+				let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+				button.click(function () {
+					load(i);
+				});
+				pageButtonsContainer.append(button);
+			}
+		}
+		loadPage();
+		//載入資料
+		function load(pageNumber) {
+			const divList = $('#divList')
+			const sId = $('#selectStyle').val();
+			const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+			//divList.empty();
+
+			$.getJSON('/MemberPage/ListAll', function (datas) {
+
+				let filteredDatas = datas;
+				//風格條件篩選
+				if (sId != 100) {
+					filteredDatas = datas.filter(item => {
+						// 在此添加筛选条件
+						return item.fPermissionId == sId;
+					});
+				}
+				//關鍵字篩選
+				if (keyword) {
+					filteredDatas = filteredDatas.filter(item => {
+						// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+						return item.fIntroduction.includes(keyword) || item.fUsername.includes(keyword);
+					});
+				}
+				console.log(filteredDatas);
+
+				dataCount = filteredDatas.length;
+
+				//獲得限定頁面資料
+				const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+				const docFrag = $(document.createDocumentFragment())
+				$.each(limitdatas, function (index, item) {
+					const descriSub = item.fIntroduction.length > 15 ? item.fIntroduction.substring(0, 15) + '...' : item.fIntroduction;
+					const card = $(
+						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fMemberId}">
+							<div class="row playlist-item">
+								<div class="col-3">
+									<img src="/img/Member/${item.fPhotoPath}" alt = "" >
+								</div>
+								<div class="col-6">
+									<h5>${item.fUsername}</h5>
+									<p>${descriSub}</p>
+								</div>
+							</div>
+						</a>`);
+					docFrag.append(card);
+				})
+				divList.html(docFrag)
+			})
+		}
+
+		//第一次讀取
+		function firstLoad(pageNumber) {
+			const divList = $('#divList')
+			//divList.empty();
+
+			$.getJSON('/MemberPage/ListAll', function (datas) {
+
+				//獲得限定頁面資料
+				const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+				const docFrag = $(document.createDocumentFragment())
+				$.each(limitdatas, function (index, item) {
+					const descriSub = item.fIntroduction.length > 15 ? item.fIntroduction.substring(0, 15) + '...' : item.fIntroduction;
+					const card = $(
+						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fMemberId}">
+							<div class="row playlist-item">
+								<div class="col-3">
+									<img src="/img/Member/${item.fPhotoPath}" alt = "" >
+								</div>
+								<div class="col-6">
+									<h5>${item.fUsername}</h5>
+									<p>${descriSub}</p>
+								</div>
+							</div>
+						</a>`);
+					docFrag.append(card);
+				})
+				divList.html(docFrag)
+			})
+		}
+		firstLoad(1);
+		//搜尋按鈕
+		$('#btnSearch').click(function () {
+			//讀取條件篩選後第一頁,重新讀取分頁頁碼
+			load(1);
+			loadPage();
+			//$('#txtKeyword').val('');
+		});
+	</script>
+}
+
