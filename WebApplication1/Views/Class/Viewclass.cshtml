@@ -41,6 +41,7 @@
         margin: 20px 0;
         margin-bottom: 10px;
         text-align: left;
+        max-width: 300px;
     }
 
     .title-container {
@@ -138,6 +139,12 @@
         max-height: 100%;
         margin-bottom: 100px; /* 加入底部間距，防止與下方文字疊在一起 */
     }
+
+    .teacher-info {
+        max-width: 500px; /* 根据需要调整最大宽度 */
+        /*word-wrap: break-word;  允许单词内换行 */
+        overflow-wrap: break-word; /* 允许单词内换行，兼容性更好的属性 */
+    }
 </style>
 <section id="title" class="player-section" style="background-image: url('/img/classimg/class_bg.jpg');">
     <div class="player-box">
@@ -166,7 +173,10 @@
                         <img src="~/img/Member/@(ViewBag.teacherimg)">
                     </div>
                     <h2 class="teacher-name">@(ViewBag.Name)</h2>
-                    @ViewBag.teacher
+                    <div class="teacher-info">
+                        @ViewBag.teacher
+                        <p>@ViewBag.teacher</p>
+                    </div>
                     <span class="teacher-seemore"><span class="glyphicon glyphicon-triangle-right"></span>點此看更多老師資訊</span>
                 </a>
             </div>

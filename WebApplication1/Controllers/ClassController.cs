@@ -178,5 +178,11 @@ namespace prjMusicBetter.Controllers
 
             return View(tClass);
         }
+
+        public IActionResult classFav(int? id)
+        {
+            var classfav = _context.TClassFavs.Where(m => m.FClassId == id).Select(t => t.FMemberId);
+            return Json(classfav);//這堂課有誰喜歡
+        }
     }
 }

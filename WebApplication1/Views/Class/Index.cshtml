@@ -191,7 +191,7 @@
             const divList = $('#divList')
             //讀取Json資料
             $.getJSON('/apiTClass/List', function (datas) {
-                //console.log(datas);
+                console.log(datas);
 
                 //獲得限定頁面資料
                 //slice(a,b) 陣列datas第a項到第b項的所有資料
@@ -201,15 +201,14 @@
                 //做出一個空的容器來存放div
                 const docFrag = $(document.createDocumentFragment())
 
-                //讀出每個Json物件
                 $.each(limitdatas, function (index, item) {
-                    console.log(item);
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                             <a href="/Class/Viewclass?id=${item.fClassId}">
                                 <div>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                    <img src="/img/classimg/notlove.PNG" style="position: absolute; top: 0; right: 0; width: 20px; height: 20px;"/>
                                 </div>
                                 <div>
                                     <div class="ClassName">
@@ -223,9 +222,9 @@
                                 </div>
                             </a>
                         </div>`);
-                    docFrag.append(card);//.append()將一筆div放入容器中
+                    docFrag.append(card);
                 })
-                divList.html(docFrag)//.html()一次將全部的資料都上傳
+                divList.html(docFrag)
             })
         }
         firstLoad(1);
@@ -254,7 +253,7 @@
 						return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
 					});
 				}
-				console.log(filteredDatas);
+				//console.log(filteredDatas);
 
                 dataCount = filteredDatas.length;
 
@@ -265,23 +264,24 @@
                 $.each(limitdatas, function (index, item) {
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                             <a href="/Class/Viewclass?id=${item.fClassId}">
-                                 <div>
-                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                     <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
-                                 </div>
-                                 <div>
-                                     <div class="ClassName">
-                                         <h5>${item.fClassName}</h5>
-                                     </div>
-                                     <p>${item.fDescription}</p>
-                                 </div>
-                                 <div>
-                                     <h5>導師：${item.fTeacherNmae}</h5>
-                                     <p>點閱數：${item.fClick}</p>
-                                 </div>
-                             </a>
-                         </div>`);
+                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                <div>
+                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                    <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                    <img src="/img/classimg/notlove.PNG" style="position: absolute; top: 0; right: 0; width: 20px; height: 20px;"/>
+                                </div>
+                                <div>
+                                    <div class="ClassName">
+                                        <h5>${item.fClassName}</h5>
+                                    </div>
+                                    <p>${item.fDescription}</p>
+                                </div>
+                                <div>
+                                    <h5>導師：${item.fTeacherNmae}</h5>
+                                    <p>點閱數：${item.fClick}</p>
+                                </div>
+                            </a>
+                        </div>`);
                     docFrag.append(card);
                 })
                 divList.html(docFrag)
@@ -317,7 +317,6 @@
 
             // 根據所選風格篩選數據
             let filteredData = data;
-            console.log(filteredData);
             if (sId != 0) {
                 filteredData = data.filter(item => item.fSkillId == sId);
             }
@@ -328,11 +327,8 @@
 						return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
 				});
 			}
-            console.log(filteredData);
             const dataCount = filteredData.length;//有幾筆資料
-            console.log(filteredData.length);
             const pageCount = Math.ceil(dataCount / onePage);//有幾頁
-            console.log(pageCount);
             // 清空現有按鈕
             pageButtonsContainer.empty();
             for (let i = 1; i <= pageCount; i++) {

@@ -32,8 +32,8 @@ namespace prjMusicBetter.Controllers
                                            fDescription = s.FDescription,
                                            fOnLine = s.FOnLine,
                                            fClick = c.FClick,
-                                           fTeacherNmae = m.FName
-                                       }; ;
+                                           fTeacherNmae = m.FName,
+                                       };
 			return Json(dbSoundBetterContext);
 		}
 		//===用MemberID搜尋===
