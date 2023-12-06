@@ -142,26 +142,34 @@
         </div>
         <div class="wave-player-warp">
             <div class="row wave-player-info">
-                <div class="col-12">
+                <div class="col-10">
                     <h2>@Model.FUsername</h2>
                     <div class="mb-3"></div>
                     <h5 id="txtskill" style="color:gray;"></h5>
                     <h4 style="color:gray;"></h4>
                     <div class="mb-3"></div>
                     <p>@Html.DisplayFor(model => model.FIntroduction)</p>
-                </div>                                          
+                </div> 
+                <div class="col-2">
+                    
+                        <button class="btn btn-primary">追蹤老師</button>
+                        <div class="mb-2"></div>
+                        <button class="btn btn-danger">幹他媽媽</button>
+                                     
+                </div>
             </div>
         </div>
     </div>
 </section>
 <div id="bodydiv" class="container body-container">
     <div class="row">
-        <div class="col-6">
+        <div class="col-5">
             <div class="detail-block">               
                 <h3 class="detail-title">發表作品</h3>
                 <div id="divWorkList" class="row playlist-area"><!--作品List--></div>
             </div>
         </div>
+        <div class="col-1"></div>
         <div class="col-6">
             <div class="detail-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
                 <h3 class="detail-title">教學課程</h3>
@@ -251,7 +259,7 @@
             $.getJSON(`/MemberPage/GetMemberWorks/${memID}`, function (datas) {
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item) {
-                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const descriSub = item.fDescription.length > 20 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                     const card = $(`
                         <div class="col-12 song-item" style="margin: 0;">
                             <div class="row">
@@ -266,7 +274,7 @@
                                 <div class="col-12">
                                      <div class="single_player_container" style="margin: 0;">
                                         <audio id="myAudio" controls style="width: 100%;">
-                                            <source src="~/works/${item.fFilePath}" type="audio/mp3">
+                                            <source src="/works/${item.fFilePath}" type="audio/mp3">
                                             Your browser does not support the audio element.
                                         </audio>
                                     </div>
