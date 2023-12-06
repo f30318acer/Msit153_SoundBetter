@@ -2,42 +2,44 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace prjMusicBetter.Models;
 
 public partial class TClass
 {
-    [DisplayName("班級ID")]
     public int FClassId { get; set; }
-    [DisplayName("老師ID")]
+
     public int? FTeacherId { get; set; }
-    [DisplayName("課程名稱")]
+
     public string FClassName { get; set; }
-    [DisplayName("價格")]
+
     public decimal? FPrice { get; set; }
-    [DisplayName("課程描述")]
+
     public string FDescription { get; set; }
-    [DisplayName("課程起始日")]
+
     public DateTime? FStartdate { get; set; }
-    [DisplayName("課程結束日")]
+
     public DateTime? FEnddate { get; set; }
-    [DisplayName("場地ID")]
+
     public int? FSiteId { get; set; }
-    [DisplayName("照片")]
+
     public string FThumbnailPath { get; set; }
-    [DisplayName("最大人數")]
+
     public int? FMaxStudent { get; set; }
-    [DisplayName("現在人數")]
+
     public int? FCurrentStudent { get; set; }
-    [DisplayName("技能ID")]
+
     public int? FSkillId { get; set; }
-    [DisplayName("場地")]
+
+    public int? FOnLine { get; set; }
+
     public virtual TSite FSite { get; set; }
-    [DisplayName("技能名稱")]
+
     public virtual TSkill FSkill { get; set; }
-    [DisplayName("老師")]
+
     public virtual TMember FTeacher { get; set; }
+
+    public virtual ICollection<TClassClick> TClassClicks { get; set; } = new List<TClassClick>();
 
     public virtual ICollection<TClassFav> TClassFavs { get; set; } = new List<TClassFav>();
 

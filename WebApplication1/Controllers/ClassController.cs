@@ -42,8 +42,14 @@ namespace prjMusicBetter.Controllers
             ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
 
-            
-            
+            var classClick = _context.TClassClicks.FirstOrDefault(c => c.FClassId == id);
+            if (classClick != null)
+            {
+                classClick.FClick++;//點閱數+1
+            }
+            // 保存變更到資料庫
+            await _context.SaveChangesAsync();
+
             /*if (id <= (_context.TClasses.Count() - 2))
             {
                 var nextClass = _context.TClasses
@@ -97,6 +103,9 @@ namespace prjMusicBetter.Controllers
             ViewBag.AllClass = _context.TClasses.Count();//有多少課程
 
             ViewBag.SkillId = tClass.FSkillId;//類型
+
+            var Name = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FName).SingleOrDefault();
+            ViewBag.Name = Name;//教師自述
 
             var Introduction = _context.TMembers.Where(t => t.FMemberId == tClass.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
             ViewBag.teacher = Introduction;//教師自述

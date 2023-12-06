@@ -18,7 +18,22 @@ namespace prjMusicBetter.Controllers
 		//===全部課程的資料===
 		public IActionResult List()
 		{
-			var dbSoundBetterContext = _context.TClasses;
+			var dbSoundBetterContext = from s in _context.TClasses
+									   join c in  _context.TClassClicks
+									   on s.FClassId equals c.FClassId
+                                       join m in _context.TMembers
+                                       on s.FTeacherId equals m.FMemberId
+                                       select new
+                                       {
+                                           fClassId = s.FClassId,
+                                           fClassName = s.FClassName,
+                                           fThumbnailPath = s.FThumbnailPath,
+                                           fSkillId = s.FSkillId,
+                                           fDescription = s.FDescription,
+                                           fOnLine = s.FOnLine,
+                                           fClick = c.FClick,
+                                           fTeacherNmae = m.FName
+                                       }; ;
 			return Json(dbSoundBetterContext);
 		}
 		//===用MemberID搜尋===

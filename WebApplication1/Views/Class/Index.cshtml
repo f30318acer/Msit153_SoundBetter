@@ -27,6 +27,100 @@
         padding-top: 20px; /* 設置上邊距擴展的像素值 */
         padding-bottom: 20px; /* 設置下邊距擴展的像素值 */
     }
+
+    .mix {
+        position: relative;
+        overflow: hidden;
+        margin: 10px 0; /* 上下留白 */
+    }
+
+        .mix a {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none; /* 避免超連結的下劃線 */
+        }
+
+        .mix div {
+            position: relative;
+            background-color: white;
+            color: black;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .mix img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px; /* 添加圓角效果，根據需要調整 */
+        }
+
+        .mix span {
+            background-color: white;
+            color: black;
+            padding: 5px;
+            border: 1px solid #fc0254; /* 粉框 */
+            border-radius: 5px; /* 添加圓角效果，根據需要調整 */
+        }
+
+        .mix h5, .mix p {
+            text-align: center;
+            margin: 5px 0; /* 上下留白 */
+        }
+
+        .mix p {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+            color: #888;
+            margin: 0;
+            display: block;
+            height: 75%;
+            font-size: 0.8em;
+        }
+
+    .ClassName{
+        margin: 0px auto;
+        margin-bottom: 5px;
+        text-align: center;
+        overflow: hidden;
+        height: 25px;
+        width: 90%;
+        line-height: 25px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+
+    .genres {
+        position: relative; /* 設置相對定位，讓內部元素可以使用絕對定位相對於這個容器 */
+    }
+
+        .genres div {
+            position: relative; /* 設置相對定位，讓內部元素可以使用絕對定位相對於這個容器 */
+        }
+
+        .genres span {
+            position: absolute; /* 設置絕對定位 */
+            bottom: 0; /* 距離底部的距離 */
+            right: 0; /* 距離右邊的距離 */
+            background-color: white;
+            color: black;
+            padding: 5px;
+            border: 1px solid #fc0254; /* 粉框 */
+        }
+
+        /* 調整其他樣式以避免重疊 */
+        .genres h5, .genres p, .genres span {
+            z-index: 1; /* 設置 z-index，確保文字和 span 在同一層次 */
+        }
 </style>
 <!-- Playlist section -->
 <section class="playlist-section spad">
@@ -44,6 +138,15 @@
         </div>
         <div class="clearfix"></div>
         <div id="divList" class="row playlist-area">
+            @*<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                <a href="/Class/Viewclass?id=${item.fClassId}">
+                    <div class="playlist-item">
+                        <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                        <span>${item.fClick}</span>
+                        <h5>${item.fClassName}</h5>
+                    </div>
+                </a>
+            </div>*@
             <!--List內容-->
         </div>
     </div>
@@ -69,8 +172,8 @@
             <div class="col-lg-6">
                 <div class="d-flex h-100 align-items-end">
                     <form class="search-form">
-                        <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value=""/>
-                    <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+                        @*<input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value=""/>
+                    <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>*@
                     </form>
                 </div>
             </div>
@@ -88,7 +191,7 @@
             const divList = $('#divList')
             //讀取Json資料
             $.getJSON('/apiTClass/List', function (datas) {
-                console.log(datas);
+                //console.log(datas);
 
                 //獲得限定頁面資料
                 //slice(a,b) 陣列datas第a項到第b項的所有資料
@@ -100,13 +203,23 @@
 
                 //讀出每個Json物件
                 $.each(limitdatas, function (index, item) {
-                    //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    console.log(item);
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                             <a href="/Class/Viewclass?id=${item.fClassId}">
-                                <div class="playlist-item">
+                                <div>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                    <h5>${item.fClassName}</h5>
+                                    <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                </div>
+                                <div>
+                                    <div class="ClassName">
+                                        <h5>${item.fClassName}</h5>
+                                    </div>
+                                    <p>${item.fDescription}</p>
+                                </div>
+                                <div>
+                                    <h5>導師：${item.fTeacherNmae}</h5>
+                                    <p>點閱數：${item.fClick}</p>
                                 </div>
                             </a>
                         </div>`);
@@ -152,13 +265,23 @@
                 $.each(limitdatas, function (index, item) {
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                            <a href="/Class/Viewclass?id=${item.fClassId}">
-                                <div class="playlist-item">
-                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                    <h5>${item.fClassName}</h5>
-                                </div>
-                            </a>
-                        </div>`);
+                             <a href="/Class/Viewclass?id=${item.fClassId}">
+                                 <div>
+                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                     <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                 </div>
+                                 <div>
+                                     <div class="ClassName">
+                                         <h5>${item.fClassName}</h5>
+                                     </div>
+                                     <p>${item.fDescription}</p>
+                                 </div>
+                                 <div>
+                                     <h5>導師：${item.fTeacherNmae}</h5>
+                                     <p>點閱數：${item.fClick}</p>
+                                 </div>
+                             </a>
+                         </div>`);
                     docFrag.append(card);
                 })
                 divList.html(docFrag)

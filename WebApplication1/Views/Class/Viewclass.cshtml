@@ -125,6 +125,19 @@
         text-align: center;
         clear: both;
     }
+
+    .teacher-profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 水平居中 */
+        text-align: center; /* 文字水平居中 */
+    }
+
+    .profile-wrapper {
+        max-width: 100%;
+        max-height: 100%;
+        margin-bottom: 100px; /* 加入底部間距，防止與下方文字疊在一起 */
+    }
 </style>
 <section id="title" class="player-section" style="background-image: url('/img/classimg/class_bg.jpg');">
     <div class="player-box">
@@ -152,7 +165,7 @@
                     <div class="profile-wrapper">
                         <img src="~/img/Member/@(ViewBag.teacherimg)">
                     </div>
-                    <h2 class="teacher-name">@Model.FTeacher</h2>
+                    <h2 class="teacher-name">@(ViewBag.Name)</h2>
                     @ViewBag.teacher
                     <span class="teacher-seemore"><span class="glyphicon glyphicon-triangle-right"></span>點此看更多老師資訊</span>
                 </a>
