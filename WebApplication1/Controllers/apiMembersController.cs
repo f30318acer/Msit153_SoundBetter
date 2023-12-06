@@ -5,6 +5,7 @@ using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
 using prjMusicBetter.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace prjMusicBetter.Controllers
 {
@@ -65,5 +66,25 @@ namespace prjMusicBetter.Controllers
                 return Json(result);
             }
         }
+        public async Task<IActionResult> SearchMembers(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                return BadRequest("Search string is required.");
+            }
+            var members = await _context.TMembers.Where(m => m.FName.Contains(searchString)
+                 || m.FEmail.Contains(searchString)
+                 || m.FPhone.Contains(searchString))
+                 .Select(m => new FMemberDto
+                 {
+                     FMemberID = m.FMemberId,
+                     FName = m.FName,
+                     FEmail = m.FEmail,
+                     FPhone = m.FPhone,
+                 }).ToListAsync();
+            return Ok(members);
+        }
+
+
     }
 }

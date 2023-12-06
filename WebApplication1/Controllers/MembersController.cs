@@ -169,30 +169,51 @@ namespace prjMusicBetter.Controllers
             TMember member = _userInfoService.GetMemberInfo();
             return PartialView(member);
         }
-        public async Task<IActionResult> Friends()
+        public async Task<IActionResult> Friends(string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
             TMember member = _userInfoService.GetMemberInfo();
             if(member==null)
             {
                 return RedirectToAction("Login", "Home");
-            }
+            }           
 
             // 假設狀態ID為1代表好友，為2代表黑名單
             var friendIds = await _context.TMemberRelations.Where(x=>x.FMemberId==member.FMemberId && x.FMemberRelationStatusId==1)
-                .Select(x=>x.FMemberRelationId).ToListAsync();
+                .Select(x=>x.FRelationMemberId).ToListAsync();
 
             var friends = await _context.TMembers.Where(m=>friendIds.Contains(m.FMemberId)).ToListAsync();
 
 
-            var blackListIds = await _context.TMemberRelations.Where(x => x.FMemberId == member.FMemberId && x.FMemberRelationStatusId == 2)
-                .Select(x => x.FMemberRelationId).ToListAsync();
-
-            var blackList = await _context.TMembers.Where(m => blackListIds.Contains(m.FMemberId)).ToListAsync();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                friends = friends.Where(s => s.FName.Contains(searchString)
+                                  || s.FEmail.Contains(searchString)
+                                  || s.FPhone.Contains(searchString)).ToList();
+            }
 
             var viewModel = new FriendsViewModel
             {
                 Member = member,
                 Friends = friends,
+                
+            };
+            return PartialView(viewModel);
+        }
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            var blackListIds = await _context.TMemberRelations.Where(x => x.FMemberId == member.FMemberId && x.FMemberRelationStatusId == 2)
+             .Select(x => x.FRelationMemberId).ToListAsync();
+
+            var blackList = await _context.TMembers.Where(m => blackListIds.Contains(m.FMemberId)).ToListAsync();
+
+            var viewModel = new FriendsViewModel
+            {
+                Member = member,            
                 BlackList = blackList
             };
             return PartialView(viewModel);
