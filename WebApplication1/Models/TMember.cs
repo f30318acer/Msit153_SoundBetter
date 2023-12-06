@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace prjMusicBetter.Models;
 
@@ -10,29 +9,28 @@ public partial class TMember
 {
     public int FMemberId { get; set; }
 
-    [DisplayName("使用者姓名")]
     public string FUsername { get; set; }
-    [DisplayName("姓名")]
+
     public string FName { get; set; }
-    [DisplayName("密碼")]
+
     public string FPassword { get; set; }
-    [DisplayName("電話")]
+
     public string FPhone { get; set; }
-    [DisplayName("電子信箱")]
+
     public string FEmail { get; set; }
-    [DisplayName("性別")]
-    public bool FGender { get; set; }
-    [DisplayName("生日")]
+
+    public bool? FGender { get; set; }
+
     public DateTime? FBirthday { get; set; }
-    [DisplayName("創立時間")]
+
     public DateTime? FCreationTime { get; set; }
-    [DisplayName("自我介紹")]
+
     public string FIntroduction { get; set; }
-    [DisplayName("等級")]
+
     public int? FPermissionId { get; set; }
-    [DisplayName("照片")]
+
     public string FPhotoPath { get; set; }
-    [DisplayName("等級")]
+
     public virtual TMemberPromission FPermission { get; set; }
 
     public virtual ICollection<TApplicationRecord> TApplicationRecords { get; set; } = new List<TApplicationRecord>();

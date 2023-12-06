@@ -2,24 +2,23 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace prjMusicBetter.Models;
 
 public partial class TCoupon
 {
     public int FCouponId { get; set; }
-    [DisplayName("優惠內容")]
+
     public string FCouponContent { get; set; }
-    [DisplayName("優惠代碼")]
+
     public string FCouponCode { get; set; }
-    [DisplayName("優惠描述")]
+
     public string FDescription { get; set; }
-    [DisplayName("優惠起始日")]
+
     public DateTime? FStartdate { get; set; }
-    [DisplayName("優惠結束日")]
+
     public DateTime? FEnddate { get; set; }
-    [DisplayName("照片")]
+
     public string FPicture { get; set; }
 
     public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
