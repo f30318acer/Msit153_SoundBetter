@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace prjMusicBetter.Controllers
 {
-   
+
     public class FriendsController : Controller
     {
         private readonly UserInfoService _userInfoService;
@@ -17,14 +17,20 @@ namespace prjMusicBetter.Controllers
             _userInfoService = userInfoService;
             _context = context;
         }
-        public IActionResult Index (int memberId)
+        public async Task<IActionResult> Index(int memberId)
         {
 
-            List<TMember> members =await _context.TMemberRelations.
-                Where(m=>m.FMemberId == memberId && m.FMemberRelationStatusId==1).
-                Select(m=>m.FRelationMemberId).ToListAsync();
-            return View(members);
-            
+            var friendsList = await _context.TMemberRelations.
+                Where(m => m.FMemberId == memberId && m.FMemberRelationStatusId == 1).
+                Select(m => m.FRelationMemberId)
+                .ToListAsync();
+
+            var friendMembers = await _context.TMembers
+               .Where(m => friendsList.Contains(m.FMemberId)) // 这里假设 Id 是成员的唯一标识符
+               .ToListAsync();
+
+            return View(friendMembers);
+
         }
     }
 }

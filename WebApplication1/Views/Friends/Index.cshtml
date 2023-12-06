@@ -1,15 +1,13 @@
 ﻿@model IEnumerable<prjMusicBetter.Models.TMember>
 
-    ViewData["Title"] = "Index";
-}
 
-<h1>Index</h1>
 <h2>好友列表</h2>
 
 <ul>
     @foreach (var friend in Model)
     {
-        <li>@friend.FUsername</li>
+       <li>@friend.FUsername</li>
+     
         // ... 其他顯示資訊
     }
 </ul>
