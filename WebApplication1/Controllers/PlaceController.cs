@@ -70,7 +70,7 @@ namespace Music_matchmaking_platform.Controllers
         public IActionResult Edit(int fSiteID, TSitePeriod? pIn)
         {
             TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == fSiteID);
-            Console.WriteLine($"Received data: {pIn}");
+          
             if (pDb != null && pIn != null)
             {
                 pDb.FMonMorning = pIn.FMonMorning;

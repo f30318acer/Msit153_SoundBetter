@@ -181,7 +181,7 @@ namespace prjMusicBetter.Controllers
             var viewModel = new FriendsViewModel
             {
                 Member = member,
-                Friends = friendList
+               
 
 
             };
