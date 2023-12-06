@@ -67,9 +67,9 @@ namespace Music_matchmaking_platform.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Edit(int fSiteID, TSitePeriod? pIn)
+        public IActionResult Edit(TSitePeriod? pIn)
         {
-            TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == fSiteID);
+            TSitePeriod pDb = _context.TSitePeriods.FirstOrDefault(p => p.FSiteId == pIn.FSiteId);
           
             if (pDb != null && pIn != null)
             {
@@ -103,7 +103,7 @@ namespace Music_matchmaking_platform.Controllers
                 pDb.FSunMidnight = pIn.FSunMidnight;
 
                 _context.SaveChanges();
-                return Content("修改成功");
+                return Content("場地預約成功");
             }
             return Content("錯誤");
         }

@@ -42,6 +42,11 @@
                 <input asp-for="FAddress" class="form-control" />
                 <span asp-validation-for="FAddress" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="FPicture" class="control-label">圖片</label>
+                <img id="imgPreview" src="~/img/playlist/13.jpg" style="border-radius:10px; max-width: 400px; max-height: 400px;">
+                <input asp-for="FPicture" class="form-control btn btn-success" type="file" id="imgFile" name="formFile"/>
+            </div>
             <br />
             <div class="form-group">
                 <input type="submit" value="新增場地" class="btn btn-primary" />
@@ -54,3 +59,31 @@
     <a asp-action="Index">返回上一頁</a>
 </div>
 </main>
+
+@section Scripts{
+    <script>
+        var arrayBuffer;
+
+        $("#imgFile").bind("change", function () {
+            var file = this.files[0];
+            var allowType = "image.*";
+            if (file.type.match(allowType)) {
+                //預覽
+                var reader = new FileReader();
+                reader.onload = function () {
+                    arrayBuffer = this.result;
+                    var blob = new Blob([arrayBuffer], {
+                        type: "image/jpeg"
+                    });
+                    var urlCreator = window.URL || window.webkitURL;
+                    var imageURL = urlCreator.createObjectURL(blob);
+                    $("#imgPreview").attr("src", imageURL);
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+            else {
+                alert("不支援的檔案類型");
+            }
+        });
+    </script>
+}

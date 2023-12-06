@@ -1,0 +1,373 @@
+﻿@model prjMusicBetter.Models.TMember
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    .body-container {
+        width: 80%;
+        max-width: 1100px;
+        margin: auto;
+        padding: 0;
+    }
+
+    .container {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .course-title {
+        margin: 10px auto;
+        margin-left: 20px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .detail-block {
+        margin-bottom: 10px;
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        color: #555;
+        text-align: center;
+    }
+
+    .detail-title {
+        font-weight: bolder;
+        border-bottom: 2px solid #fc0254;
+        padding-bottom: 10px;
+        margin: 20px 0;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .title-container {
+        position: relative;
+        background: #FFF;
+        padding: 15px;
+        border-radius: 0 0 3px 3px;
+    }
+
+    .course-container {
+        width: 80%;
+        margin: 50px auto 20px auto;
+        overflow: hidden;
+    }
+
+    section {
+        background-size: auto;
+    }
+
+    .teacher-title {
+        font-size: 18px;
+        color: #888;
+    }
+
+    .profile-wrapper {
+        width: 150px;
+        height: 150px;
+        margin: 10px auto;
+    }
+
+    .teacher-name {
+        text-align: center;
+        font-size: 22px;
+        color: #555;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .teacher-intro {
+        text-align: left;
+        display: none;
+        margin: 20px;
+        color: #555;
+        white-space: pre-wrap;
+    }
+
+    .teacher-seemore {
+        text-align: center;
+        display: block;
+        margin: 20px;
+    }
+
+    .songs-details-section {
+        padding: 50px 38px 50px;
+        background: #f9fcfd;
+    }
+
+    .teacher-profile-container {
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .price {
+        text-align: center;
+        font-size: 22px;
+        color: #555;
+        font-weight: bold;
+        margin: 50px auto 30px auto;
+    }
+
+    .btm {
+        height: 60px;
+        min-width: 167px;
+        right: 0;
+        top: 0;
+        border: none;
+        border-radius: 80px;
+        color: #fff;
+        font-size: 15px;
+        background: #fc0254;
+        text-align: center;
+        clear: both;
+    }
+
+    p {
+        word-wrap: break-word;
+    }
+</style>
+<input id="memID" type="hidden" value="@Html.DisplayFor(model => model.FMemberId)" />
+
+<section id="title" class="player-section" style="background-image: url('/img/classimg/class_bg.jpg');">
+    <div class="player-box">
+        <div class="tarck-thumb-warp">
+            <div class="tarck-thumb">
+                <img alt="輕鬆學配樂！" src="~/img/Member/@Model.FPhotoPath" width="300px" height="300px">
+            </div>
+        </div>
+        <div class="wave-player-warp">
+            <div class="row wave-player-info">
+                <div class="col-10">
+                    <h2>@Model.FUsername</h2>
+                    <div class="mb-3"></div>
+                    <h5 id="txtskill" style="color:gray;"></h5>
+                    <h4 style="color:gray;"></h4>
+                    <div class="mb-3"></div>
+                    <p>@Html.DisplayFor(model => model.FIntroduction)</p>
+                </div> 
+                <div class="col-2">
+                    
+                        <button class="btn btn-primary">追蹤老師</button>
+                        <div class="mb-2"></div>
+                        <button class="btn btn-danger">幹他媽媽</button>
+                                     
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="bodydiv" class="container body-container">
+    <div class="row">
+        <div class="col-5">
+            <div class="detail-block">               
+                <h3 class="detail-title">發表作品</h3>
+                <div id="divWorkList" class="row playlist-area"><!--作品List--></div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-6">
+            <div class="detail-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <h3 class="detail-title">教學課程</h3>
+                <div id ="divClassList" class="row playlist-area"><!--課程List--></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Songs details section -->
+    <section class="songs-details-section">
+        <div class="detail-block">
+            <h3 class="detail-title">聯絡資訊</h3>
+            <span class="detail-wrapper">
+                @Model.FIntroduction
+            </span>
+        </div>
+    </section>
+</div>
+<div id="order" class="course-container">
+    <!-- Similar Songs section -->
+    <section class="similar-songs-section">
+        <div class="container-fluid">
+            <h3>你可能會想看的其他課程</h3>
+            <div id="divList" class="row playlist-area">
+            <!--List內容-->
+            </div>
+        </div>
+    </section>
+    <!-- Similar Songs section end -->
+</div>
+
+
+@section Scripts {
+    <script>
+
+        const divClassList = $('#divClassList')
+        const divWorkList = $('#divWorkList')
+        const memID = $('#memID').val();
+        var skillName = '';
+
+        function loadInfo(){
+            $.getJSON(`/MemberPage/GetMemberSkill/${memID}`, function (datas) {
+                $.each(datas, function (index, item) {
+                    console.log(item);
+                    skillName = skillName + `${item.fName}${item.fYearExp}年經驗 / `;
+                })
+                console.log(skillName);
+                $('#txtskill').html(`技能 : ${skillName}`)
+            })            
+        }
+        loadInfo();
+
+        //取得課程資訊
+        function classList(){
+            $.getJSON(`/MemberPage/GetMemberClass/${memID}`,function(datas){
+                console.log(datas);
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item){
+                    const nameSub = item.fClassName.length > 10 ? item.fClassName.substring(0, 8) + '...' : item.fClassName;
+                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(
+                        `<a class="mix col-12" href="/Class/ViewClass/${item.fClassId}" style="background-color:#F0F0F0;border-radius: 20px;"">
+                            <div class="mb-2"></div>
+                                <div class="row playlist-item" style="margin: 0;">
+                                    <div class="col-3">
+                                         <img src="/img/classimg/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="mb-3"></div>
+                                        <h5>${nameSub}</h5>
+                                        <p>${descriSub}</p>
+                                    </div>
+                                </div>
+                            <div class="mb-2"></div>
+                        </a>
+                        <div class="col-12 mb-3"></div>
+                        `);
+                    docFrag.append(card);
+                })
+                divClassList.html(docFrag)
+            })
+        }
+        classList();
+
+        //取得作品
+        function workList() {
+            $.getJSON(`/MemberPage/GetMemberWorks/${memID}`, function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    const descriSub = item.fDescription.length > 20 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(`
+                        <div class="col-12 song-item" style="margin: 0;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="song-info-box">
+                                        <div class="song-info ">
+                                            <h4>${item.fWorkName}</h4>
+                                             <p>${descriSub}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                     <div class="single_player_container" style="margin: 0;">
+                                        <audio id="myAudio" controls style="width: 100%;">
+                                            <source src="/works/${item.fFilePath}" type="audio/mp3">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                    docFrag.append(card);
+                })
+                divWorkList.html(docFrag);
+            })
+        }
+        workList();
+    </script>
+    @{
+        //await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+@*<div>
+    <h4>TMember</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FUsername)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FUsername)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPassword)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPassword)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPhone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPhone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FEmail)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FEmail)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FGender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FGender)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FBirthday)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FBirthday)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FCreationTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FCreationTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FIntroduction)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FIntroduction)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPhotoPath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPhotoPath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FPermission)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FPermission.FPromissionId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FMemberId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+*@

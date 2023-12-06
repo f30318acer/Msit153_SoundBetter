@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prjMusicBetter.Models.ViewModels;
 
 namespace prjMusicBetter.Controllers
 {
@@ -11,6 +12,11 @@ namespace prjMusicBetter.Controllers
         public IActionResult Checkout()
         {
             return View();
+        }
+		[HttpPost]
+        public IActionResult List(ShoppingCartVM vm)
+        {
+            return RedirectToAction("Checkout");
         }
     }
 }
