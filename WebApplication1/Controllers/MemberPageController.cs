@@ -74,5 +74,11 @@ namespace prjMusicBetter.Controllers
             var dbSoundBetterContext = _context.TClasses.Where(c => c.FTeacherId == id);
             return Json(dbSoundBetterContext);
         }
+        //===GetMemberWorks===
+        public IActionResult GetMemberWorks(int id)
+        {
+            var dbSoundBetterContext = _context.TWorks.Where(c => c.FMemberId == id);
+            return Json(dbSoundBetterContext);
+        }
     }
 }

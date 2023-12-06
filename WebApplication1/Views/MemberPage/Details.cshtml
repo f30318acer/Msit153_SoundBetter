@@ -156,23 +156,16 @@
 </section>
 <div id="bodydiv" class="container body-container">
     <div class="row">
-        <div class="col-md-6">
-            <div class="detail-block">
-                <a asp-area="" asp-controller="Members" asp-action="Profile1">
-                    <h3 class="detail-title">發表作品</h3>
-                    <div class="profile-wrapper">
-                        <img src="~/img/Member/@(ViewBag.teacherimg)">
-                    </div>
-                    <h2 class="teacher-name">@Model.FUsername</h2>
-                    @ViewBag.teacher
-                    <span class="teacher-seemore"><span class="glyphicon glyphicon-triangle-right"></span>點此看更多老師資訊</span>
-                </a>
+        <div class="col-6">
+            <div class="detail-block">               
+                <h3 class="detail-title">發表作品</h3>
+                <div id="divWorkList" class="row playlist-area"><!--作品List--></div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-6">
             <div class="detail-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
                 <h3 class="detail-title">教學課程</h3>
-                <div id ="divList" class="row playlist-area"></div>
+                <div id ="divClassList" class="row playlist-area"><!--課程List--></div>
             </div>
         </div>
     </div>
@@ -204,7 +197,8 @@
 @section Scripts {
     <script>
 
-        const divList = $('#divList')
+        const divClassList = $('#divClassList')
+        const divWorkList = $('#divWorkList')
         const memID = $('#memID').val();
         var skillName = '';
 
@@ -233,24 +227,59 @@
                             <div class="mb-2"></div>
                                 <div class="row playlist-item" style="margin: 0;">
                                     <div class="col-3">
-                                                    <img src="/img/classimg/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
+                                         <img src="/img/classimg/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
                                     </div>
                                     <div class="col-9">
-                                            <div class="mb-3"></div>
+                                        <div class="mb-3"></div>
                                         <h5>${nameSub}</h5>
                                         <p>${descriSub}</p>
-
-                                     </div>
+                                    </div>
                                 </div>
                             <div class="mb-2"></div>
-                                </a><div class="col-12 mb-3"></div>
+                        </a>
+                        <div class="col-12 mb-3"></div>
                         `);
                     docFrag.append(card);
                 })
-                divList.html(docFrag)
+                divClassList.html(docFrag)
             })
         }
         classList();
+
+        //取得作品
+        function workList() {
+            $.getJSON(`/MemberPage/GetMemberWorks/${memID}`, function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(`
+                        <div class="col-12 song-item" style="margin: 0;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="song-info-box">
+                                        <div class="song-info ">
+                                            <h4>${item.fWorkName}</h4>
+                                             <p>${descriSub}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                     <div class="single_player_container" style="margin: 0;">
+                                        <audio id="myAudio" controls style="width: 100%;">
+                                            <source src="~/works/${item.fFilePath}" type="audio/mp3">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                    docFrag.append(card);
+                })
+                divWorkList.html(docFrag);
+            })
+        }
+        workList();
     </script>
     @{
         //await Html.RenderPartialAsync("_ValidationScriptsPartial");
