@@ -169,6 +169,7 @@ namespace prjMusicBetter.Controllers
             TMember member = _userInfoService.GetMemberInfo();
             return PartialView(member);
         }
+
         public async Task<IActionResult> Friends(string searchString)
         {
             ViewData["CurrentFilter"] = searchString;

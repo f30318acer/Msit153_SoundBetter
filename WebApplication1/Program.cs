@@ -5,6 +5,7 @@ using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
+using CoreMVC_SignalR_Chat.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,8 @@ builder.Services.AddDbContext<dbSoundBetterContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("dbSoundBetterConnection")
 ));
+
+builder.Services.AddSignalR();
 
 //登入cookie 要加這一段才能使用
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
@@ -59,6 +62,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapControllerRoute(
     name: "default",

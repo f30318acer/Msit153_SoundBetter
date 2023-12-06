@@ -66,23 +66,25 @@ namespace prjMusicBetter.Controllers
                 return Json(result);
             }
         }
-        public async Task<IActionResult> SearchMembers(string searchString)
+        [HttpGet]
+        public IActionResult QueryByMember(string fName)//MemberId
         {
-            if (string.IsNullOrEmpty(searchString))
+            if (string.IsNullOrEmpty(fName))
             {
-                return BadRequest("Search string is required.");
+                return Json(new { success = false, message = "Name is null or empty" });
+
             }
-            var members = await _context.TMembers.Where(m => m.FName.Contains(searchString)
-                 || m.FEmail.Contains(searchString)
-                 || m.FPhone.Contains(searchString))
-                 .Select(m => new FMemberDto
-                 {
-                     FMemberID = m.FMemberId,
-                     FName = m.FName,
-                     FEmail = m.FEmail,
-                     FPhone = m.FPhone,
-                 }).ToListAsync();
-            return Ok(members);
+
+            var member = _context.TMembers.Where(m => m.FName.Contains(fName)).ToList();
+            if (!member.Any())
+            {
+                return Json(new { success = false, message = "No members found" });
+
+            }
+
+            return Json(new { success = true, data = member });
+
+
         }
 
 
