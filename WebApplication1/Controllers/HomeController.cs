@@ -19,8 +19,6 @@ using prjMusicBetter.Models.Services;
 using Google.Apis.Auth;
 
 
-
-
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
@@ -55,10 +53,7 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public IActionResult Vision()
-        {
-            return View();
-        }
+        
         public IActionResult Privacy()
         {
             return View();
