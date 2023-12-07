@@ -47,12 +47,29 @@ namespace prjMusicBetter.Controllers
 				return NotFound();
 			}
 
-			var tProject = _context.TClasses.Where(m => m.FTeacherId == id);
-			if (tProject == null)
+			//var tProject = _context.TClasses.Where(m => m.FTeacherId == id);
+			var dbSoundBetterContext = from s in _context.TClasses
+									   join c in _context.TClassClicks
+									   on s.FClassId equals c.FClassId
+									   join m in _context.TMembers
+									   on s.FTeacherId equals m.FMemberId
+									   where s.FTeacherId == id
+									   select new
+									   {
+										   fClassId = s.FClassId,
+										   fClassName = s.FClassName,
+										   fThumbnailPath = s.FThumbnailPath,
+										   fSkillId = s.FSkillId,
+										   fDescription = s.FDescription,
+										   fOnLine = s.FOnLine,
+										   fClick = c.FClick,
+										   fTeacherNmae = m.FName,
+									   };
+			if (dbSoundBetterContext == null)
 			{
 				return NotFound();
 			}
-			return Json(tProject);
+			return Json(dbSoundBetterContext);
 		}
 		//===List_Status===
 		public IActionResult QueryBySkillID(int? id)

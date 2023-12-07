@@ -223,27 +223,6 @@
                     checkIfFavorite(item.fClassId, isFavorite => {
                         const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
 
-                        //const card = $(
-                        //    `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                        //                <a href="/Class/Viewclass?id=${item.fClassId}">
-                        //                    <div>
-                        //                        <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                        //                        <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
-                        //                        <img src="${loveImgSrc}" class="favorite-icon" data-classid="${item.fClassId}" style="position: absolute; top: 0; right: 0; width: 20px; height: 20px;"/>
-                        //                    </div>
-                        //                    <div>
-                        //                        <div class="ClassName">
-                        //                            <h5>${item.fClassName}</h5>
-                        //                        </div>
-                        //                        <p>${item.fDescription}</p>
-                        //                    </div>
-                        //                    <div>
-                        //                        <h5>導師：${item.fTeacherNmae}</h5>
-                        //                        <p>點閱數：${item.fClick}</p>
-                        //                    </div>
-                        //                </a>
-                        //            </div>`
-                        //);
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                  <a href="/Class/Viewclass?id=${item.fClassId}">
