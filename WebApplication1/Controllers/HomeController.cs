@@ -171,7 +171,10 @@ namespace WebApplication1.Controllers
             }
             return payload;
         }
-
+        public IActionResult Login1()
+        {
+            return View();
+        }
 
 
         public IActionResult Login()
