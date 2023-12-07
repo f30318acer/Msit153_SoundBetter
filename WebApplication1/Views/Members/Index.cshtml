@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="myKeep">
+                <div class="btnOptions d-flex p-2 gap-3" id="myMemberCoupon">
                     <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
                     我的優惠券
                     @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
@@ -172,6 +172,13 @@
         $('#myBlackList').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/blackList")')
         })
+        //將會員資料(優惠券)回傳至這裡
+
+        $('#myMemberCoupon').click(function () {
+            $('#divPartial').load('@Url.Content("~/Members/MemberCoupon")')
+        })
+
+
         //忘記密碼
         $('#password').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/MemberPassword")')
