@@ -37,9 +37,6 @@ namespace prjMusicBetter.Controllers
                                            fClick = c.FClick,
                                            fTeacherNmae = m.FName,
                                        };
-            TMember member = _userInfoService.GetMemberInfo();
-            var classfav = _context.TClassFavs.Where(m => m.FMemberId == member.FMemberId).Select(t => t.FClassId);
-            ViewBag.classfav = classfav;//我喜歡哪些課
             return Json(dbSoundBetterContext);
 		}
 		//===用MemberID搜尋===
@@ -104,10 +101,21 @@ namespace prjMusicBetter.Controllers
                     project.FThumbnailPath = "class_bg.jpg";
                 }
 
-                
+
+                // 新增 TClass 資料
                 _context.Add(project);
-				_context.SaveChanges();
-				return Content("新增成功");
+                _context.SaveChanges();
+
+                // 新增 TClassClicks 資料
+                TClassClick classClick = new TClassClick
+                {
+                    FClassId = project.FClassId, // 使用 TClass 資料的 FClassId
+                    FClick = 0
+                };
+
+                _context.Add(classClick);
+                _context.SaveChanges();
+                return Content("新增成功");
 			}
 			return Content("錯誤");
 		}
