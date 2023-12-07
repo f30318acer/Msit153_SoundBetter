@@ -234,7 +234,7 @@ namespace WebApplication1.Controllers
             //依據用戶角色重定向倒不同頁面
             if (member.FPermissionId == 1)
             {
-                return RedirectToAction("index", "Bghome");
+                return RedirectToAction("index", "BgHome");
             }
             else
             {
