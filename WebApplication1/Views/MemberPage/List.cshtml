@@ -144,14 +144,14 @@
 
 				const docFrag = $(document.createDocumentFragment())
 				$.each(limitdatas, function (index, item) {
-					const descriSub = item.fIntroduction.length > 15 ? item.fIntroduction.substring(0, 15) + '...' : item.fIntroduction;
+					const descriSub = item.fIntroduction.length > 10 ? item.fIntroduction.substring(0, 10) + '...' : item.fIntroduction;
 					const card = $(
 						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/MemberPage/Details/${item.fMemberId}">
 							<div class="row playlist-item">
 								<div class="col-3">
 									<img src="/img/Member/${item.fPhotoPath}" alt = "" >
 								</div>
-								<div class="col-6">
+								<div class="col-9 text-left">
 									<h5>${item.fUsername}</h5>
 									<p>${descriSub}</p>
 								</div>
@@ -175,14 +175,14 @@
 
 				const docFrag = $(document.createDocumentFragment())
 				$.each(limitdatas, function (index, item) {
-					const descriSub = item.fIntroduction.length > 15 ? item.fIntroduction.substring(0, 15) + '...' : item.fIntroduction;
+					const descriSub = item.fIntroduction.length > 10 ? item.fIntroduction.substring(0, 10) + '...' : item.fIntroduction;
 					const card = $(
 						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/MemberPage/Details/${item.fMemberId}">
 							<div class="row playlist-item">
 								<div class="col-3">
 									<img src="/img/Member/${item.fPhotoPath}" alt = "" >
 								</div>
-								<div class="col-6">
+										<div class="col-9 text-left">
 									<h5>${item.fUsername}</h5>
 									<p>${descriSub}</p>
 								</div>

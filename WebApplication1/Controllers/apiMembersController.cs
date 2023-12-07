@@ -5,6 +5,7 @@ using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
 using prjMusicBetter.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace prjMusicBetter.Controllers
 {
@@ -65,5 +66,27 @@ namespace prjMusicBetter.Controllers
                 return Json(result);
             }
         }
+        [HttpGet]
+        public IActionResult QueryByMember(string fName)//MemberId
+        {
+            if (string.IsNullOrEmpty(fName))
+            {
+                return Json(new { success = false, message = "Name is null or empty" });
+
+            }
+
+            var member = _context.TMembers.Where(m => m.FName.Contains(fName)).ToList();
+            if (!member.Any())
+            {
+                return Json(new { success = false, message = "No members found" });
+
+            }
+
+            return Json(new { success = true, data = member });
+
+
+        }
+
+
     }
 }

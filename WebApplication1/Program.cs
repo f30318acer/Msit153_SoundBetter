@@ -5,6 +5,12 @@ using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
+using CoreMVC_SignalR_Chat.Hubs;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +29,10 @@ builder.Services.AddDbContext<dbSoundBetterContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("dbSoundBetterConnection")
 ));
+
+//建立聊天室連接需要特別加這一段
+builder.Services.AddSignalR();
+
 
 //登入cookie 要加這一段才能使用
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
@@ -44,6 +54,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseRouting();
+
+
 //================= AspNetCore.Authentication 用戶登入驗證操作機制使用=====
 //執行順序不能顛倒不然驗證功能會無法正常工作。
 app.UseCookiePolicy();
@@ -53,12 +67,17 @@ app.UseAuthorization();
 
 
 
-app.UseHttpsRedirection();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    // ... 其他端點配置 ...
+});
 app.UseStaticFiles();
 
-app.UseRouting();
 
-app.UseAuthorization();
+//app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapControllerRoute(
     name: "default",

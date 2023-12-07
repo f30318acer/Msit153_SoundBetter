@@ -19,8 +19,6 @@ using prjMusicBetter.Models.Services;
 using Google.Apis.Auth;
 
 
-
-
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
@@ -55,10 +53,7 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public IActionResult Vision()
-        {
-            return View();
-        }
+        
         public IActionResult Privacy()
         {
             return View();
@@ -107,10 +102,10 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
 
                 //驗證成功，取使用者資訊內容
-                ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
-                ViewData["Msg"] += "Email:" + payload.Email + "<br>";
-                ViewData["Msg"] += "Name:" + payload.Name + "<br>";
-                ViewData["Msg"] += "Picture:" + payload.Picture;
+                //ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
+                //ViewData["Msg"] += "Email:" + payload.Email + "<br>";
+                //ViewData["Msg"] += "Name:" + payload.Name + "<br>";
+                //ViewData["Msg"] += "Picture:" + payload.Picture;
             }
             else
             {

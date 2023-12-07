@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        #page-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        #content-wrap {
+            flex: 1;
+        }
+
+        .footer {
+            background: #333; /* Footer 背景色 */
+            color: white; /* Footer 文字色 */
+            padding: 20px 0; /* Footer 內距 */
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+        }
+
+        .row {
+            margin-bottom: 20px;
+        }
+
+        #SelfID {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        #IDList, #Content {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .list-group {
+            margin-bottom: 5px;
+            border: 3px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #sendButton {
+            width: 100%;
+        }
+
+        .li {
+            background-color: gray
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-8">
+            <h2>公開匿名聊天室</h2>
+            <h4>個人 ID: <span id="SelfID"></span></h4>
+            <div class="mb-4">
+                <label for="message" class="form-label">發送訊息</label>
+                <input type="text" class="form-control" id="message">
+            </div>
+            <div class="mb-5">
+                <label for="sendToID" class="form-label">指定 ID</label>
+                <input type="text" class="form-control" id="sendToID">
+            </div>
+            <button type="button" class="btn btn-primary" id="sendButton">傳送訊息</button>
+        </div>
+        <div class="col-4">
+            <h4>連線 ID 列表</h4>
+            <ul class="list-group" id="IDList">
+            </ul>
+        </div>
+    </div>
+    <div id="page-container">
+        <div id="content-wrap">
+            <h3>聊天內容</h3>
+            <ul class="list-group" id="Content">
+            </ul>
+        </div>
+    </div>
+    <div class="footer"></div>
+</body>
+</html>
+
+
+    @section scripts {
+        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+        <script>
+            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+            //與Server建立連線
+            connection.start().then(function () {
+                console.log("Hub 連線完成");
+                //呼叫後端方法以獲取會員 ID
+                connection.invoke("GetMemberId").then(function (memberId) {
+                    // 使用從後端獲取的會員 ID
+                    $('#SelfID').html(memberId);
+                });
+
+            }).catch(function (err) {
+                alert('連線錯誤: ' + err.toString());
+            });
+
+            // 更新連線 ID 列表事件
+            connection.on("UpdList", function (jsonList) {
+                var list = JSON.parse(jsonList);
+                $("#IDList li").remove();
+                for (i = 0; i < list.length; i++) {
+                    $("#IDList").append($("<li></li>").attr("class", "list-group-item").text(list[i]));
+                }
+            });
+
+            // 更新用戶個人連線 ID 事件
+            connection.on("UpdSelfID", function (id) {
+                $('#SelfID').html(id);
+            });
+
+            // 更新聊天內容事件
+            connection.on("UpdContent", function (msg) {
+                $("#Content").append($("<li></li>").attr("class", "list-group-item").text(msg));
+            });
+
+            //傳送訊息
+            $('#sendButton').on('click', function () {
+                let selfID = $('#SelfID').html();
+                let message = $('#message').val();
+                let sendToID = $('#sendToID').val();
+                connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
+                    alert('傳送錯誤: ' + err.toString());
+                });
+            });
+        </script>
+
+
+    }

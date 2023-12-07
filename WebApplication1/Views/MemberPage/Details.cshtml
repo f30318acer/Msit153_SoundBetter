@@ -131,9 +131,9 @@
         word-wrap: break-word;
     }
 </style>
-<input id="memID" type="hidden" value="@Html.DisplayFor(model => model.FMemberId)" />
+<input id="memID" type="hidden" value="@Model.FMemberId" />
 
-<section id="title" class="player-section" style="background-image: url('/img/classimg/class_bg.jpg');">
+<section id="title" class="player-section" style="background-image: url('/img/playlist/img3.jpg');">
     <div class="player-box">
         <div class="tarck-thumb-warp">
             <div class="tarck-thumb">
@@ -163,15 +163,16 @@
 </section>
 <div id="bodydiv" class="container body-container">
     <div class="row">
-        <div class="col-5">
+        <div class="col-6">
             <div class="detail-block">               
                 <h3 class="detail-title">發表作品</h3>
                 <div id="divWorkList" class="row playlist-area"><!--作品List--></div>
             </div>
+            <div id="divArticleList" class="detail-block"></div>
         </div>
         <div class="col-1"></div>
-        <div class="col-6">
-            <div class="detail-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+        <div class="col-5">
+            <div class="detail-block">
                 <h3 class="detail-title">教學課程</h3>
                 <div id ="divClassList" class="row playlist-area"><!--課程List--></div>
             </div>
@@ -180,25 +181,16 @@
 
     <!-- Songs details section -->
     <section class="songs-details-section">
-        <div class="detail-block">
-            <h3 class="detail-title">聯絡資訊</h3>
-            <span class="detail-wrapper">
-                @Model.FIntroduction
-            </span>
+        <div class="row detail-block">
+            <h3 class="col-12 detail-title">聯絡資訊</h3>
+            <div class="col-12 text-left">
+                <div class="mb-4"></div>
+                <h5>聯絡電話:@Model.FPhone</h5> 
+                <div class="mb-3"></div>
+                <h5>電子郵件:@Model.FEmail</h5>
+            </div>         
         </div>
     </section>
-</div>
-<div id="order" class="course-container">
-    <!-- Similar Songs section -->
-    <section class="similar-songs-section">
-        <div class="container-fluid">
-            <h3>你可能會想看的其他課程</h3>
-            <div id="divList" class="row playlist-area">
-            <!--List內容-->
-            </div>
-        </div>
-    </section>
-    <!-- Similar Songs section end -->
 </div>
 
 
@@ -207,6 +199,7 @@
 
         const divClassList = $('#divClassList')
         const divWorkList = $('#divWorkList')
+        const divArticleList = $('#divArticleList')
         const memID = $('#memID').val();
         var skillName = '';
 
@@ -231,7 +224,7 @@
                     const nameSub = item.fClassName.length > 10 ? item.fClassName.substring(0, 8) + '...' : item.fClassName;
                     const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                     const card = $(
-                        `<a class="mix col-12" href="/Class/ViewClass/${item.fClassId}" style="background-color:#F0F0F0;border-radius: 20px;"">
+                        `<a class="mix col-12" href="/Class/ViewClass/${item.fClassId}" style="background-color:#F0F0F0;border-radius: 20px;">
                             <div class="mb-2"></div>
                                 <div class="row playlist-item" style="margin: 0;">
                                     <div class="col-3">
@@ -288,6 +281,43 @@
             })
         }
         workList();
+
+        //取得文章資訊
+        function ArtiList() {
+            $.getJSON(`/MemberPage/GetMemberArticle/${memID}`, function (datas) {
+                console.log(datas);
+                if (datas.length != 0)
+                {
+                    const docFrag = $(document.createDocumentFragment())
+                    const title = '<h3 class="detail-title">發表文章</h3>';
+
+                    $.each(datas, function (index, item) {
+                        const nameSub = item.fTitle.length > 10 ? item.fTitle.substring(0, 8) + '...' : item.fTitle;
+                        const descriSub = item.fContent.length > 15 ? item.fContent.substring(0, 15) + '...' : item.fContent;
+                        const card = $(
+                            `<a class="mix col-12" href="/Article/Details/${item.fArticleId}" >
+                                <div class="mb-2"></div>
+                                    <div class="row playlist-item" style="margin: 0;">
+                                        <div class="col-3">
+                                            <img src="/img/classimg/${item.fPhotoPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
+                                        </div>
+                                        <div class="col-9">
+                                            <div class="mb-3"></div>
+                                            <h5>${nameSub}</h5>
+                                            <p>${descriSub}</p>
+                                        </div>
+                                    </div>
+                                <div class="mb-2"></div>
+                            </a>
+                            <div class="col-12 mb-3"></div>
+                            `);
+                        docFrag.append(card);
+                    })
+                    divArticleList.html(title).append(docFrag)
+                }   
+            })
+        }
+        ArtiList();
     </script>
     @{
         //await Html.RenderPartialAsync("_ValidationScriptsPartial");
