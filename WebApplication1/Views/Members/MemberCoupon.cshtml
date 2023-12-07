@@ -1,0 +1,41 @@
+﻿@model prjMusicBetter.Models.ViewModels.MemberCouponVM;
+@{
+    ViewData["Title"] = "MemberCoupon";
+}
+
+<h1>MemberCoupon</h1>
+
+<div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
+    <h2>@Model.Member.FUsername 的優惠券</h2>
+        <div id="searchResults"></div>
+        <div class="d-flex align-items-center">
+        <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")">
+            <input type="text" name="searchTerm" id="search" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+        </div>
+            <table class="table table-striped align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>優惠券名稱</th>                    
+                        <th>描述</th>
+                        <th>有效期限</th>
+                        <th>有效期限</th>
+                        <th>照片</th>            
+                    </tr>
+                </thead>
+                <tbody id="memberTable">
+                    @foreach (var coupon in Model.Coupons)
+                    {
+                    <tr>
+                    <td>@Html.DisplayFor(modelItem => coupon.FCouponContent)</td>
+                    <td>@Html.DisplayFor(modelItem => coupon.FDescription) <!-- 描述 --></td>
+                    <td>@Html.DisplayFor(modelItem => coupon.FStartdate) <!-- 有效期限 --></td>
+                    <td>@Html.DisplayFor(modelItem => coupon.FEnddate) <!-- 有效期限 --></td>
+                    <td>@Html.DisplayFor(modelItem => coupon.FPicture) <!-- 有效期限 --></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+</div>
