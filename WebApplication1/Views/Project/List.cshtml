@@ -61,7 +61,7 @@
 	<script>
 		const selStyle = document.querySelector('#selectStyle');
 		const pageButtonsContainer = $('#pageButtons');
-		const onePage = 8;
+		const onePage = 12;
 
 		//Style選擇器
 		async function loadStyle() {
@@ -117,10 +117,9 @@
 			//divList.empty();
 
 			$.getJSON('/apiTProjects/List', function (datas) {
-				
 				let filteredDatas = datas;
 				//風格條件篩選
-				if(sId != 100) {
+				if (sId != 100) {
 					filteredDatas = datas.filter(item => {
 						// 在此添加筛选条件
 						return item.fStyleId == sId;
@@ -139,22 +138,30 @@
 
 				//獲得限定頁面資料
 				const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+				const docFrag = $(document.createDocumentFragment());
 
-				const docFrag = $(document.createDocumentFragment())
-				$.each(limitdatas, function (index, item) {
-					const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-					const card = $(
-						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
-							<div class="playlist-item">
-										<img src="/img/project/${item.fThumbnailPath}" alt = "" >
-								<h5>${item.fName}</h5>
-								<p>${descriSub}</p>
-							</div>
-						</a>`);
-					docFrag.append(card);
-				})
-				divList.html(docFrag)
-			})
+				(async function () {
+					for (const item of limitdatas) {
+						await LoadMemberInfo(item.fMemberId);
+						console.log(item.fProjectId); // 在這裡處理 memberName
+						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
+								<div class="playlist-item">
+									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
+									<h5>${item.fName}</h5>
+									<p style="margin:0px">製作人:${memberName}</p>
+									<p>${descriSub}</p>
+								</div>
+							</a>`);
+						docFrag.append(card);
+					}
+
+					// 更新 divList
+					divList.html(docFrag);
+				})();
+			});
+
+			
 		}
 
 		//第一次讀取
@@ -163,27 +170,45 @@
 			//divList.empty();
 
 			$.getJSON('/apiTProjects/List', function (datas) {
-
 				//獲得限定頁面資料
 				const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+				const docFrag = $(document.createDocumentFragment());
 
-				const docFrag = $(document.createDocumentFragment())
-				$.each(limitdatas, function (index, item) {
-					const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-					const card = $(
-						`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
-									<div class="playlist-item">
-												<img src="/img/project/${item.fThumbnailPath}" alt = "" >
-										<h5>${item.fName}</h5>
-										<p>${descriSub}</p>
-									</div>
-								</a>`);
-					docFrag.append(card);
-				})
-				divList.html(docFrag)
-			})
+				(async function () {
+					for (const item of limitdatas) {
+						await LoadMemberInfo(item.fMemberId);
+						console.log(item.fProjectId); // 在這裡處理 memberName
+						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
+								<div class="playlist-item">
+									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
+									<h5>${item.fName}</h5>
+									<p style="margin: 0;">製作人:${memberName}</p>
+									<p>${descriSub}</p>
+								</div>
+							</a>`);
+						docFrag.append(card);
+					}
+
+					// 更新 divList
+					divList.html(docFrag);
+				})();
+			});
 		}
 		firstLoad(1);
+
+		//讀取會員資料
+		let memberName;
+		function LoadMemberInfo(memberId){
+			return new Promise(function (resolve) {
+				$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
+					memberName = datas.fUsername;
+					resolve();
+				});
+			});
+		}
+		
+		
 		//搜尋按鈕
 		$('#btnSearch').click(function () {		
 			//讀取條件篩選後第一頁,重新讀取分頁頁碼

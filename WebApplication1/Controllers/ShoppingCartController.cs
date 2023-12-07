@@ -13,10 +13,10 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-		[HttpPost]
-        public IActionResult List(ShoppingCartVM vm)
-        {
-            return RedirectToAction("Checkout");
-        }
+		//[HttpPost]
+  //      public IActionResult List(ShoppingCartVM vm)
+  //      {
+  //          return RedirectToAction("Checkout");
+  //      }
     }
 }
