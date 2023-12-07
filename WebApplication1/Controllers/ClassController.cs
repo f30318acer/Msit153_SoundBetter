@@ -18,6 +18,11 @@ namespace prjMusicBetter.Controllers
         /*=======課程首頁===============*/
         public IActionResult Index()
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member != null)
+            {
+                ViewBag.MemberId = member.FMemberId;
+            }
             /*var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher);
             return View(await dbSoundBetterContext.ToListAsync());*/
             return View();
@@ -161,12 +166,6 @@ namespace prjMusicBetter.Controllers
             ViewBag.SiteId = tClass.FSiteId;//原本的地址
 
             return View(tClass);
-        }
-
-        public IActionResult classFav(int? id)
-        {
-            var classfav = _context.TClassFavs.Where(m => m.FClassId == id).Select(t => t.FMemberId);
-            return Json(classfav);//這堂課有誰喜歡
         }
     }
 }

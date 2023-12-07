@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 using System.Formats.Asn1;
 
 namespace prjMusicBetter.Controllers
@@ -9,11 +10,13 @@ namespace prjMusicBetter.Controllers
 	{
 		private readonly IWebHostEnvironment _host;
 		private readonly dbSoundBetterContext _context;
-		public apiTClassController(IWebHostEnvironment host, dbSoundBetterContext context)
+        private readonly UserInfoService _userInfoService;
+        public apiTClassController(IWebHostEnvironment host, dbSoundBetterContext context, UserInfoService userInfoService)
 		{
 			_host = host;
 			_context = context;
-		}
+            _userInfoService = userInfoService;//抓使用者
+        }
 
 		//===全部課程的資料===
 		public IActionResult List()
@@ -34,7 +37,10 @@ namespace prjMusicBetter.Controllers
                                            fClick = c.FClick,
                                            fTeacherNmae = m.FName,
                                        };
-			return Json(dbSoundBetterContext);
+            TMember member = _userInfoService.GetMemberInfo();
+            var classfav = _context.TClassFavs.Where(m => m.FMemberId == member.FMemberId).Select(t => t.FClassId);
+            ViewBag.classfav = classfav;//我喜歡哪些課
+            return Json(dbSoundBetterContext);
 		}
 		//===用MemberID搜尋===
 		public IActionResult QueryByMember(int? id)//MemberId
@@ -194,5 +200,18 @@ namespace prjMusicBetter.Controllers
 		{
 			return (_context.TClasses?.Any(e => e.FClassId == id)).GetValueOrDefault();
 		}
-	}
+
+        public IActionResult classFav(int? id)
+        {
+            var classfav = _context.TClassFavs.Where(m => m.FClassId == id).Select(t => t.FMemberId);
+            return Json(classfav);//這堂課有誰喜歡
+        }
+
+        public IActionResult FavQueryById()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var classfav = _context.TClassFavs.Where(m => m.FMemberId == member.FMemberId);
+            return Json(classfav);//我喜歡哪些課
+        }
+    }
 }
