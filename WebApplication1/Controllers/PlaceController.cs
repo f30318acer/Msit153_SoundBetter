@@ -103,7 +103,7 @@ namespace Music_matchmaking_platform.Controllers
                 pDb.FSunMidnight = pIn.FSunMidnight;
 
                 _context.SaveChanges();
-                return Content("修改成功");
+                return Content("場地預約成功");
             }
             return Content("錯誤");
         }
