@@ -85,37 +85,6 @@ namespace prjMusicBetter.Controllers
 			{
 				return NotFound();
             }
-
-            /*var SiteId = _context.TSites.Where(t => t.FSiteId == tProject.FSiteId).Select(t => t.FSiteName).SingleOrDefault();
-            ViewBag.FSiteId = SiteId;//地點名稱
-
-            var TName = _context.TMembers.Where(t => t.FMemberId == tProject.FTeacherId).Select(t => t.FName).SingleOrDefault();
-            ViewBag.TeacherName = TName;//教師名稱
-
-            var TPhotoPath = _context.TMembers.Where(t => t.FMemberId == tProject.FTeacherId).Select(t => t.FPhotoPath).SingleOrDefault();
-            ViewBag.TeacherPhoto = TPhotoPath;//教師照片
-
-            var Introduction = _context.TMembers.Where(t => t.FMemberId == tProject.FTeacherId).Select(t => t.FIntroduction).SingleOrDefault();
-            ViewBag.teacher = Introduction;//教師自述
-
-            if (id <= (_context.TClasses.Count() - 2))
-            {
-                var Preclass = _context.TClasses.Where(t => t.FClassId == (id + 1)).Select(t => t.FClassName).SingleOrDefault();
-                ViewBag.PrClass = Preclass;//下一個課程名稱
-                var Senclass = _context.TClasses.Where(t => t.FClassId == (id + 2)).Select(t => t.FClassName).SingleOrDefault();
-                ViewBag.SenClass = Senclass;//下下一個課程名稱
-            }
-            else
-            {
-                var Preclass = _context.TClasses.Where(t => t.FClassId == (id - 1)).Select(t => t.FClassName).SingleOrDefault();
-                ViewBag.PrClass = Preclass;//上一個課程名稱
-                var Senclass = _context.TClasses.Where(t => t.FClassId == (id - 2)).Select(t => t.FClassName).SingleOrDefault();
-                ViewBag.SenClass = Senclass;//上上一個課程名稱
-            }
-            ViewBag.AllClass = _context.TClasses.Count();//有多少課程
-
-
-            ViewBag.Id = id;//id*/
             return Json(tProject);
 		}
 		//===新增===
@@ -212,6 +181,37 @@ namespace prjMusicBetter.Controllers
             TMember member = _userInfoService.GetMemberInfo();
             var classfav = _context.TClassFavs.Where(m => m.FMemberId == member.FMemberId);
             return Json(classfav);//我喜歡哪些課
+        }
+
+        // POST: apiTClassFavs/Create
+        [HttpPost]
+        public async Task<IActionResult> CreateFav(int classId)
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var memberId = member.FMemberId;
+            var tClassFav = new TClassFav { FClassId = classId, FMemberId = memberId };
+
+            _context.TClassFavs.Add(tClassFav);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // POST: apiTClassFavs/Delete
+        [HttpPost]
+        public async Task<IActionResult> DeleteFav(int classId)
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var memberId = member.FMemberId;
+            var tClassFav = await _context.TClassFavs.FirstOrDefaultAsync(f => f.FClassId == classId && f.FMemberId == memberId);
+
+            if (tClassFav != null)
+            {
+                _context.TClassFavs.Remove(tClassFav);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
         }
     }
 }

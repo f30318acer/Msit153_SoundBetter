@@ -121,6 +121,18 @@
         .genres h5, .genres p, .genres span {
             z-index: 1; /* 設置 z-index，確保文字和 span 在同一層次 */
         }
+
+    .favorite-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        background-size: cover; /* 調整圖片大小以填滿按鈕 */
+        border: none;
+        background-color: transparent; /* 移除按鈕背景色 */
+        cursor: pointer;
+    }
 </style>
 <!-- Playlist section -->
 <section class="playlist-section spad">
@@ -205,26 +217,49 @@
                     checkIfFavorite(item.fClassId, isFavorite => {
                         const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
 
+                        //const card = $(
+                        //    `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                        //                <a href="/Class/Viewclass?id=${item.fClassId}">
+                        //                    <div>
+                        //                        <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                        //                        <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                        //                        <img src="${loveImgSrc}" class="favorite-icon" data-classid="${item.fClassId}" style="position: absolute; top: 0; right: 0; width: 20px; height: 20px;"/>
+                        //                    </div>
+                        //                    <div>
+                        //                        <div class="ClassName">
+                        //                            <h5>${item.fClassName}</h5>
+                        //                        </div>
+                        //                        <p>${item.fDescription}</p>
+                        //                    </div>
+                        //                    <div>
+                        //                        <h5>導師：${item.fTeacherNmae}</h5>
+                        //                        <p>點閱數：${item.fClick}</p>
+                        //                    </div>
+                        //                </a>
+                        //            </div>`
+                        //);
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                        <a href="/Class/Viewclass?id=${item.fClassId}">
-                                            <div>
-                                                <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                                <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
-                                                <img src="${loveImgSrc}" style="position: absolute; top: 0; right: 0; width: 20px; height: 20px;"/>
-                                            </div>
-                                            <div>
-                                                <div class="ClassName">
-                                                    <h5>${item.fClassName}</h5>
-                                                </div>
-                                                <p>${item.fDescription}</p>
-                                            </div>
-                                            <div>
-                                                <h5>導師：${item.fTeacherNmae}</h5>
-                                                <p>點閱數：${item.fClick}</p>
-                                            </div>
-                                        </a>
-                                    </div>`
+                                 <a href="/Class/Viewclass?id=${item.fClassId}">
+                                     <div>
+                                         <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                         <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                     </div>
+                                     <div>
+                                         <div class="ClassName">
+                                             <h5>${item.fClassName}</h5>
+                                         </div>
+                                         <p>${item.fDescription}</p>
+                                     </div>
+                                     <div>
+                                         <h5>導師：${item.fTeacherNmae}</h5>
+                                         <p>點閱數：${item.fClick}</p>
+                                     </div>
+                                 </a>
+                                 <button class="favorite-button" data-classid="${item.fClassId}">
+                                     <img src="${loveImgSrc}" class="favorite-icon" style="width: 30px; height: 30px;" />
+                                 </button>
+                             </div>`
                         );
                         resolve(card);
                     });
@@ -280,7 +315,10 @@
         //}
 
 
+        
         //載入資料
+
+
         function load(pageNumber) {
             const divList = $('#divList')
             const sId = $('#selectSkill').val();
@@ -322,24 +360,26 @@
 
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                            <a href="/Class/Viewclass?id=${item.fClassId}">
-                                                <div>
-                                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                                    <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
-                                                    <img src="${loveImgSrc}" style="position: absolute; top: 0; right: 0; width: 20px; height: 20px;"/>
-                                                </div>
-                                                <div>
-                                                    <div class="ClassName">
-                                                        <h5>${item.fClassName}</h5>
-                                                    </div>
-                                                    <p>${item.fDescription}</p>
-                                                </div>
-                                                <div>
-                                                    <h5>導師：${item.fTeacherNmae}</h5>
-                                                    <p>點閱數：${item.fClick}</p>
-                                                </div>
-                                            </a>
-                                        </div>`
+                                <a href="/Class/Viewclass?id=${item.fClassId}">
+                                    <div>
+                                        <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                        <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                    </div>
+                                    <div>
+                                        <div class="ClassName">
+                                            <h5>${item.fClassName}</h5>
+                                        </div>
+                                        <p>${item.fDescription}</p>
+                                    </div>
+                                    <div>
+                                        <h5>導師：${item.fTeacherNmae}</h5>
+                                        <p>點閱數：${item.fClick}</p>
+                                    </div>
+                                </a>
+                                <button class="favorite-button" data-classid="${item.fClassId}">
+                                     <img src="${loveImgSrc}" class="favorite-icon" style="width: 30px; height: 30px;" />
+                                </button>
+                            </div>`
                         );
                         resolve(card);
                     });
@@ -353,15 +393,15 @@
                             const docFrag = $(document.createDocumentFragment());
                             const card = $(
                                 `<div class="col-lg-6">
-                                                    <div class="section-title mb-0 pb-4 container-fluid">
-                                                        <h3>找不到合適的課程嗎？ </h3>
-                                                    </div>
-                                                    <p>
-                                                        想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
-                                                        我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
-                                                        線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
-                                                    </p>
-                                                </div>`
+                                    <div class="section-title mb-0 pb-4 container-fluid">
+                                        <h3>找不到合適的課程嗎？ </h3>
+                                    </div>
+                                    <p>
+                                        想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
+                                        我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
+                                        線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
+                                    </p>
+                                </div>`
                             );
                             docFrag.append(card);
                             divList.html(docFrag);
@@ -442,6 +482,57 @@
                 // 如果未登錄，導航到 Home/Login
                 window.location.href = "@Url.Action("Login", "Home")";
             }
+        }
+
+
+        $(document).on('click', '.favorite-button', function () {
+            // 獲取點擊的按鈕的 data-classid
+            const button = $(this);
+            const classId = button.data('classid');
+
+            // 獲取按鈕內的圖片元素
+            const img = button.find('.favorite-icon');
+            const src = img.attr('src');
+
+            // 根據 src 的不同調用不同的 API
+            if (src === '/img/classimg/notlove.PNG') {
+                console.log("新增");
+                createFavorite(classId, img);
+            } else if (src === '/img/classimg/love.PNG') {
+                console.log("刪除");
+                deleteFavorite(classId, img);
+            }
+        });
+        // 新增 createFavorite 函數
+        function createFavorite(classId, img) {
+            // 呼叫 apiTClassFavs/Create 方法新增一筆 TClassFav 資料
+            $.ajax({
+                url: `/apiTClass/CreateFav?classId=${classId}`,
+                method: 'POST',
+                success: function () {
+                    // 成功後更新圖片的 src
+                    img.attr('src', '/img/classimg/love.PNG');
+                },
+                error: function () {
+                    console.error('Error creating favorite.');
+                }
+            });
+        }
+
+        // 新增 deleteFavorite 函數
+        function deleteFavorite(classId, img) {
+            // 呼叫 apiTClassFavs/Delete 方法刪除一筆 TClassFav 資料
+            $.ajax({
+                url: `/apiTClass/DeleteFav?classId=${classId}`,
+                method: 'POST',
+                success: function () {
+                    // 成功後更新圖片的 src
+                    img.attr('src', '/img/classimg/notlove.PNG');
+                },
+                error: function () {
+                    console.error('Error deleting favorite.');
+                }
+            });
         }
     </script>
 }
