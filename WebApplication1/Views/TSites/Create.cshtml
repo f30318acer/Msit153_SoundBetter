@@ -44,9 +44,11 @@
             </div>
             <div class="form-group">
                 <label class="control-label">圖片</label>
-                <img id="imgPreview" src="https://miro.medium.com/v2/resize:fit:2700/1*TmKyEbnyhKvgKsDB4-3JlA.gif" style="border-radius:10px; max-width: 400px; max-height: 400px;">
+                <img id="imgPreview" src="https://miro.medium.com/v2/resize:fit:2700/1*TmKyEbnyhKvgKsDB4-3JlA.gif" style="width: 500px; height: 300px;">
                 <input class="form-control btn btn-success" type="file" id="imgFile" name="formFile" />
-                <div id="croppie-container" style="width: 400px; height: 400px;"></div>
+                <br />
+                <div id="croppie-container"></div>
+                <br /><br />
                 <input type="button" id="crop_img" class="btn btn-info" value="裁剪圖片" />
             </div>
             <br />
@@ -66,13 +68,13 @@
     <script>
         var croppieInstance = $("#croppie-container").croppie({
             viewport: {
-                width: 200,
-                height: 200,
+                width: 500,
+                height: 300,
                 type: 'square'
             },
             boundary: {
-                width: 400,
-                height: 400
+                width: 500,
+                height: 500
             }
         });
 
