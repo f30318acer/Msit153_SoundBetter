@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace CoreMVC_SignalR_Chat.Hubs
 {
+
     public class ChatHub : Hub
     {
         // 用戶連線 ID 列表

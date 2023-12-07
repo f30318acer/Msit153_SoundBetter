@@ -9,7 +9,8 @@ using CoreMVC_SignalR_Chat.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI;
-
+using System.Net.Mail;
+using System.Net;
 
 
 
