@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FSiteName" class="control-label">場地名稱</label>
@@ -43,9 +43,9 @@
                 <span asp-validation-for="FAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FPicture" class="control-label">圖片</label>
+                <label class="control-label">圖片</label>
                 <img id="imgPreview" src="https://miro.medium.com/v2/resize:fit:2700/1*TmKyEbnyhKvgKsDB4-3JlA.gif" style="border-radius:10px; max-width: 400px; max-height: 400px;">
-                <input asp-for="FPicture" class="form-control btn btn-success" type="file" id="imgFile" name="formFile" />
+                <input class="form-control btn btn-success" type="file" id="imgFile" name="formFile" />
             </div>
             <br />
             <div class="form-group">

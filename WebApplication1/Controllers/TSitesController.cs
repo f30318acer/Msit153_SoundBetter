@@ -61,27 +61,6 @@ namespace prjMusicBetter.Controllers
         }
 
         // POST: TSites/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("FSiteId,FSiteName,FMemberId,FPhone,FSiteType,FCityId,FAddress,FPicture")] TSite tSite, IFormFile formFile)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (formFile != null)
-        //        {
-        //            string photoName = $"place{tSite.FSiteId}.jpg";
-        //            tSite.FPicture = photoName;
-        //            formFile.CopyTo(new FileStream(_environment.WebRootPath + "/img/Place/" + photoName, FileMode.Create));
-        //        }
-        //        _context.Add(tSite);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(tSite);
-        //}
-
         [HttpPost]
         public IActionResult Create(TSite? tSite, IFormFile formFile)
         {
@@ -89,13 +68,16 @@ namespace prjMusicBetter.Controllers
             {
                 if (formFile != null)
                 {
+                    _context.Add(tSite);
+                    _context.SaveChanges();
+
                     string photoName = $"place{tSite.FSiteId}.jpg";
                     tSite.FPicture = photoName;
                     formFile.CopyTo(new FileStream(_environment.WebRootPath + "/img/Place/" + photoName, FileMode.Create));
+
+                    _context.SaveChanges();
+                    return Content("新增成功");
                 }
-                _context.Add(tSite);
-                _context.SaveChanges();
-                return Content("新增成功");
             }
             return Content("錯誤");
         }
