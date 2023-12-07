@@ -55,6 +55,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRouting();
 
 
 //================= AspNetCore.Authentication 用戶登入驗證操作機制使用=====
@@ -66,10 +67,13 @@ app.UseAuthorization();
 
 
 
-app.UseHttpsRedirection();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    // ... 其他端點配置 ...
+});
 app.UseStaticFiles();
 
-app.UseRouting();
 
 //app.UseAuthorization();
 
