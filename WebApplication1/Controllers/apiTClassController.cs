@@ -184,7 +184,10 @@ namespace prjMusicBetter.Controllers
 			var project = _context.TClasses.Where(c => c.FClassId == id).FirstOrDefault();
 			if (project != null)
 			{
-				_context.TClasses.Remove(project);
+                // 刪除 TClassClick 中符合條件的資料
+                var relatedClicks = _context.TClassClicks.Where(click => click.FClassId == project.FClassId).ToList();
+                _context.TClassClicks.RemoveRange(relatedClicks);
+                _context.TClasses.Remove(project);
 				_context.SaveChanges();
 				return Content("刪除成功");
 			}

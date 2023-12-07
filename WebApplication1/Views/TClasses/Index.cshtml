@@ -4,6 +4,23 @@
     ViewData["Title"] = "Index";
     Layout = "_Layout2";
 }
+<style>
+    .table > thead > * > * {
+        background-color: lightskyblue;
+    }
+
+    .btn {
+        border-radius: 10px;
+        background-color: lightgreen;
+    }
+
+    .truncate-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px; /*設定最大寬度，根據實際需求調整 */
+    }
+</style>
 <main id="main" class="main">
 <h1>課程管理</h1>
 <p>
@@ -13,28 +30,40 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FClassName)
+                課程名稱
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FPrice)
+                單堂價格
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FDescription)
+                課程說明
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FStartdate)
+                開始日期
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FEnddate)
+                結束日期
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FThumbnailPath)
+                圖片名稱
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FSite)
+                地點ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FTeacher)
+                教師ID
+            </th>
+            <th>
+                最大人數
+            </th>
+            <th>
+                目前人數
+            </th>
+            <th>
+                課程類型
+            </th>
+            <th>
+                上課方式
             </th>
             <th></th>
         </tr>
@@ -49,7 +78,9 @@
                 @Html.DisplayFor(modelItem => item.FPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FDescription)
+                <div class="truncate-text">
+                    @Html.DisplayFor(modelItem => item.FDescription)
+                </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FStartdate)
@@ -58,7 +89,9 @@
                 @Html.DisplayFor(modelItem => item.FEnddate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FThumbnailPath)
+                <div class="truncate-text">
+                    @Html.DisplayFor(modelItem => item.FThumbnailPath)
+                </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FSite.FSiteId)
@@ -67,9 +100,21 @@
                 @Html.DisplayFor(modelItem => item.FTeacher.FMemberId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FClassId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FClassId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FClassId">Delete</a>
+                @Html.DisplayFor(modelItem => item.FMaxStudent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FCurrentStudent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSkill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FOnLine)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FClassId" class="btn">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FClassId" class="btn">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FClassId" class="btn">Delete</a>
             </td>
         </tr>
 }

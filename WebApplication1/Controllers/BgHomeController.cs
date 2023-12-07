@@ -18,13 +18,6 @@ namespace prjMusicBetter.Controllers
         public IActionResult Index()
 		{
 			return View();
-		}
-		public IActionResult actionResult()
-		{
-
-           
-            return View(data)
-        }
-       
+		}	 
     }
 }

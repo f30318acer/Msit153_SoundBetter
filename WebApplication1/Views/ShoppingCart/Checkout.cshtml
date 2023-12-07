@@ -50,17 +50,17 @@
                 <div class="container card mt-3">
                     <div class="form-group mt-3 mb-3">
                         <label class="radio">
-                            <input type="radio" name='type' value='domestic-credit' id="pay-by-domestic-credit" checked='checked'> 捐贈發票
+                            <input type="radio" name='type' value='Donate-invoice' id="pay-Donate-invoice" checked='checked'> 捐贈發票
                         </label>
                         <label class="radio">
-                            <input type="radio" name='type' value='aboard-credit' id="pay-by-aboard-credit"> 不捐贈發票
+                            <input type="radio" name='type' value='No-invoice' id="pay-No-invoice"> 不捐贈發票
                         </label>
                         <label class="radio">
-                            <input type="radio" name='type' value='atm' id="pay-by-atm"> 統編
+                            <input type="radio" name='type' value='tax-ID-number' id="pay-tax-ID-number"> 統編
                         </label>
                     </div>
 
-                    <div id='domestic-credit-form' class="form">
+                    <div id='Donate-invoice-form' class="form">
 
                         <div class="input-group mb-3">
                         </div>
@@ -79,7 +79,7 @@
 
                     </div>
 
-                    <div id='aboard-credit-form' style="display: none;" class="form">
+                    <div id='No-invoice-form' style="display: none;" class="form">
 
                         <div class="input-group mb-3">
 
@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    <div id='atm-form' style="display: none;">
+                    <div id='tax-ID-number-form' style="display: none;">
                         <div class="tax-id-area">
                             <p>輸入統一編號資料</p>
                             <div class="tax-id-list-content">
@@ -112,7 +112,7 @@
 
                             <div class="tax-id-list-content">
                                 <p>收件地址</p>
-                                <input type="text" class="input-taxid" name="icompany-address" value="">
+                                <input type="text" class="input-address" name="icompany-address" value="">
                             </div>
 
                         </div>
@@ -186,20 +186,20 @@
 <script>
     $('input[type=radio][name="type"]').on('change', function () {
         switch ($(this).val()) {
-            case 'domestic-credit':
-                $("#domestic-credit-form").show()
-                $("#aboard-credit-form").hide()
-                $("#atm-form").hide()
+            case 'Donate-invoice':
+                $("#Donate-invoice-form").show()
+                $("#No-invoice-form").hide()
+                $("#tax-ID-number-form").hide()
                 break
-            case 'aboard-credit':
-                $("#domestic-credit-form").hide()
-                $("#aboard-credit-form").show()
-                $("#atm-form").hide()
+            case 'No-invoice':
+                $("#Donate-invoice-form").hide()
+                $("#No-invoice-form").show()
+                $("#tax-ID-number-form").hide()
                 break
-            case 'atm':
-                $("#domestic-credit-form").hide()
-                $("#aboard-credit-form").hide()
-                $("#atm-form").show()
+            case 'tax-ID-number':
+                $("#Donate-invoice-form").hide()
+                $("#No-invoice-form").hide()
+                $("#tax-ID-number-form").show()
                 break
         }
     })
