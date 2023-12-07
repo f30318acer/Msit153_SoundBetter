@@ -46,6 +46,8 @@
                 <label class="control-label">圖片</label>
                 <img id="imgPreview" src="https://miro.medium.com/v2/resize:fit:2700/1*TmKyEbnyhKvgKsDB4-3JlA.gif" style="border-radius:10px; max-width: 400px; max-height: 400px;">
                 <input class="form-control btn btn-success" type="file" id="imgFile" name="formFile" />
+                <div id="croppie-container" style="width: 400px; height: 400px;"></div>
+                <input type="button" id="crop_img" class="btn btn-info" value="裁剪圖片" />
             </div>
             <br />
             <div class="form-group">
@@ -62,7 +64,41 @@
 
 @section Scripts{
     <script>
-        var arrayBuffer;
+        var croppieInstance = $("#croppie-container").croppie({
+            viewport: {
+                width: 200,
+                height: 200,
+                type: 'square'
+            },
+            boundary: {
+                width: 400,
+                height: 400
+            }
+        });
+
+        // var arrayBuffer;
+
+        // $("#imgFile").bind("change", function () {
+        //     var file = this.files[0];
+        //     var allowType = "image.*";
+        //     if (file.type.match(allowType)) {
+        //         //預覽
+        //         var reader = new FileReader();
+        //         reader.onload = function () {
+        //             arrayBuffer = this.result;
+        //             var blob = new Blob([arrayBuffer], {
+        //                 type: "image/jpeg"
+        //             });
+        //             var urlCreator = window.URL || window.webkitURL;
+        //             var imageURL = urlCreator.createObjectURL(blob);
+        //             $("#imgPreview").attr("src", imageURL);
+        //         };
+        //         reader.readAsArrayBuffer(this.files[0]);
+        //     }
+        //     else {
+        //         alert("不支援的檔案類型");
+        //     }
+        // });
 
         $("#imgFile").bind("change", function () {
             var file = this.files[0];
@@ -70,20 +106,27 @@
             if (file.type.match(allowType)) {
                 //預覽
                 var reader = new FileReader();
-                reader.onload = function () {
-                    arrayBuffer = this.result;
-                    var blob = new Blob([arrayBuffer], {
-                        type: "image/jpeg"
+                reader.onload = function (e) {
+                    // 在這裡將圖片綁定到 Croppie 實例
+                    croppieInstance.croppie('bind', {
+                        url: e.target.result
                     });
-                    var urlCreator = window.URL || window.webkitURL;
-                    var imageURL = urlCreator.createObjectURL(blob);
-                    $("#imgPreview").attr("src", imageURL);
                 };
-                reader.readAsArrayBuffer(this.files[0]);
+                reader.readAsDataURL(file);
             }
             else {
                 alert("不支援的檔案類型");
             }
+        });
+        $("#crop_img").on("click", function () {
+            // 在這裡處理裁剪圖片的邏輯
+            croppieInstance.croppie('result', {
+                type: 'canvas',
+                size: 'original'
+            }).then(function (result) {
+                // 在這裡將裁剪後的圖片顯示在 imgPreview 中
+                $("#imgPreview").attr("src", result);
+            });
         });
     </script>
 }

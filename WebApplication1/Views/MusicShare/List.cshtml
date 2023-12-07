@@ -1,8 +1,137 @@
-﻿
+﻿@model prjMusicBetter.Models.TWork
+
 @{
     ViewData["Title"] = "List";
 }
 
+<style>
+    .body-container {
+        width: 80%;
+        max-width: 1100px;
+        margin: auto;
+        padding: 0;
+    }
+
+    .container {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .course-title {
+        margin: 10px auto;
+        margin-left: 20px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .detail-block {
+        margin-bottom: 10px;
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        color: #555;
+        text-align: center;
+    }
+
+    .detail-title {
+        font-weight: bolder;
+        border-bottom: 2px solid #fc0254;
+        padding-bottom: 10px;
+        margin: 20px 0;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .title-container {
+        position: relative;
+        background: #FFF;
+        padding: 15px;
+        border-radius: 0 0 3px 3px;
+    }
+
+    .course-container {
+        width: 80%;
+        margin: 50px auto 20px auto;
+        overflow: hidden;
+    }
+
+    section {
+        background-size: auto;
+    }
+
+    .teacher-title {
+        font-size: 18px;
+        color: #888;
+    }
+
+    .profile-wrapper {
+        width: 150px;
+        height: 150px;
+        margin: 10px auto;
+    }
+
+    .teacher-name {
+        text-align: center;
+        font-size: 22px;
+        color: #555;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .teacher-intro {
+        text-align: left;
+        display: none;
+        margin: 20px;
+        color: #555;
+        white-space: pre-wrap;
+    }
+
+    .teacher-seemore {
+        text-align: center;
+        display: block;
+        margin: 20px;
+    }
+
+    .songs-details-section {
+        padding: 50px 38px 50px;
+        background: #f9fcfd;
+    }
+
+    .teacher-profile-container {
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .price {
+        text-align: center;
+        font-size: 22px;
+        color: #555;
+        font-weight: bold;
+        margin: 50px auto 30px auto;
+    }
+
+    .btm {
+        height: 60px;
+        min-width: 167px;
+        right: 0;
+        top: 0;
+        border: none;
+        border-radius: 80px;
+        color: #fff;
+        font-size: 15px;
+        background: #fc0254;
+        text-align: center;
+        clear: both;
+    }
+
+    p {
+        word-wrap: break-word;
+    }
+
+</style>
 <!-- Category section -->
 <section class="category-section spad">
 	<div class="container-fluid">
@@ -60,520 +189,101 @@
 <!-- Category section end -->
 <!-- Songs section  -->
 <section class="songs-section">
-	<div class="container">
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/1.jpg" alt="">
-						<div class="song-info">
-							<h4>Forever Love</h4>
-							<p>王力宏</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_1" data-url="music-files/1.mp3"></div>
-							<div class="jp-audio jp_container_1" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
+	<div class="  container"/>
+            <div class="row">
+                <!--  new song -->
+                <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                    <div class="mb-2"></div>
+                    <div class="row playlist-item" style="margin: 0;">
+                        <div class="col-2" style="margin:0px">
+                            <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;">
+                        </div>
+                        <div class="col-3" style="margin:0px">
+                            <p>member name</p>
+                        </div>
+                        <div class="col-7">
+                            <p>稻香</p>
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                    </div>
+                    <div class="mb-2"></div>
+                </div>
+                @*   END*@
+        <div class=" col-12 mb-2"></div>
+                <!--  new song -->
+                <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                    <div class="mb-2"></div>
+                    <div class="row playlist-item" style="margin: 0;">
+                        <div class="col-2" style="margin:0px">
+                            <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;">
+                        </div>
+                        <div class="col-10" style="margin:0px">
+                            <div class="row">
+                                <div class="col-12 mb-4"></div>
+                                <div class="col-12 text-center">
+                                    <div class="row">
+                                <div class="col-10">  <h5>稻香</h5></div>
+                                <div class="col-2"></div>
+                                    </div>
 
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-									<!-- Progress Bar -->
-									<div class="player_bars">
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
+                            <p style="margin:0px">member name</p>
+                                </div>
+                                <div class="col-12">
+                                    <audio controls style="width:100%">
+                                        <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                    </audio>
+                            </div>                  
+                </div>
+        </div>
+                       
+                        
+                    </div>
+                    <div class="mb-2"></div>
+                </div>
+                @*   END*@
+        <div class=" col-12 mb-2"></div>
+                <!--  new song -->
+                <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                    <div class="mb-2"></div>
+                    <div class="row playlist-item" style="margin: 0;">
+                        <div class="col-2" style="margin:0px">
+                            <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;">
+                        </div>
+                        <div class="col-3" style="margin:0px">
+                            <p>member name</p>
+                        </div>
+                        <div class="col-7">
+                            <p>稻香</p>
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                    </div>
+                    <div class="mb-2"></div>
+                </div>
+                @*   END*@
+        <div class="  col-12 mb-2"></div>
+                <!--  new song -->
+                <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                    <div class="mb-2"></div>
+                    <div class="row playlist-item" style="margin: 0;">
+                        <div class="col-2" style="margin:0px">
+                            <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;">
+                        </div>
+                        <div class="col-3" style="margin:0px">
+                            <p>member name</p>
+                        </div>
+                        <div class="col-7">
+                            <p>稻香</p>
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                    </div>
+                    <div class="  col-12 mb-2"></div>
+                </div>
+                @*   END*@
 		</div>
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/2.jpg" alt="">
-						<div class="song-info">
-							<h4>七里香</h4>
-							<p>周杰倫</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_2" data-url="music-files/2.mp3"></div>
-							<div class="jp-audio jp_container_2" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
-
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-
-									<!-- Progress Bar -->
-									<div class="player_bars">
-
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/3.jpg" alt="">
-						<div class="song-info">
-							<h4>楓</h4>
-							<p>周杰倫</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_3" data-url="music-files/3.mp3"></div>
-							<div class="jp-audio jp_container_3" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
-
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-
-									<!-- Progress Bar -->
-									<div class="player_bars">
-
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/4.jpg" alt="">
-						<div class="song-info">
-							<h4>稻香</h4>
-							<p>周杰倫</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_4" data-url="music-files/4.mp3"></div>
-							<div class="jp-audio jp_container_4" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
-
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-
-									<!-- Progress Bar -->
-									<div class="player_bars">
-
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/5.jpg" alt="">
-						<div class="song-info">
-							<h4>雨愛</h4>
-							<p>楊丞琳</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_5" data-url="music-files/5.mp3"></div>
-							<div class="jp-audio jp_container_5" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
-
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-
-									<!-- Progress Bar -->
-									<div class="player_bars">
-
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/6.jpg" alt="">
-						<div class="song-info">
-							<h4>失憶的金魚</h4>
-							<p>楊丞琳</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_6" data-url="music-files/6.mp3"></div>
-							<div class="jp-audio jp_container_6" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
-
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-
-									<!-- Progress Bar -->
-									<div class="player_bars">
-
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/7.jpg" alt="">
-						<div class="song-info">
-							<h4>大城小愛</h4>
-							<p>王力宏</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_7" data-url="music-files/7.mp3"></div>
-							<div class="jp-audio jp_container_7" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
-
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-
-									<!-- Progress Bar -->
-									<div class="player_bars">
-
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- song -->
-		<div class="song-item">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="song-info-box">
-						<img src="~/img/songs/8.jpg" alt="">
-						<div class="song-info">
-							<h4>唯一</h4>
-							<p>王力宏</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single_player_container">
-						<div class="single_player">
-							<div class="jp-jplayer jplayer" data-ancestor=".jp_container_8" data-url="music-files/8.mp3"></div>
-							<div class="jp-audio jp_container_8" role="application" aria-label="media player">
-								<div class="jp-gui jp-interface">
-
-									<!-- Player Controls -->
-									<div class="player_controls_box">
-										<button class="jp-prev player_button" tabindex="0"></button>
-										<button class="jp-play player_button" tabindex="0"></button>
-										<button class="jp-next player_button" tabindex="0"></button>
-										<button class="jp-stop player_button" tabindex="0"></button>
-									</div>
-
-									<!-- Progress Bar -->
-									<div class="player_bars">
-
-										<div class="jp-progress">
-											<div class="jp-seek-bar">
-												<div>
-													<div class="jp-play-bar"><div class="jp-current-time" role="timer" aria-label="time">0:00</div></div>
-												</div>
-											</div>
-										</div>
-										<div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-									</div>
-								</div>
-								<div class="jp-no-solution">
-									<span>Update Required</span>
-									To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<div class="songs-links">
-						<a href=""><img src="~/img/icons/p-1.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-2.png" alt=""></a>
-						<a href=""><img src="~/img/icons/p-3.png" alt=""></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="site-pagination pt-5 mt-5">
-			<a href="#" class="active">01.</a>
-			<a href="#">02.</a>
-			<a href="#">03.</a>
-			<a href="#">04.</a>
-		</div>
-	</div>
-</section>
-<!-- Songs section end -->
-<!-- Blog section -->@*
-<section class="blog-section spad">
-	<div class="container">
-		<div class="section-title">
-            <h2>好文分享</h2>
-		</div>
-		<!-- Blog post -->
-
-		<div class="blog-item">
-			<img src="~/img/blog/11.jpg" alt="">
-			<div class="blog-date">April 14, 2019</div>
-			<h3>#最近在聽什麼歌；獨立音樂歌單再＋５，我在這些專輯裡找到了棲身之地</h3>
-			<div class="blog-meta">by <a href="">Alan Smith</a> in <a href="">Music</a></div>
-			<p>
-				音樂的奇幻力量，是儘管我們素味平生，卻能透過旋律、歌詞共鳴出生命中的心境與經歷。那些挖掘內心的創作者，歌唱著最深處的自己；每一句歌詞、每一個音符都代表著他們一路走來的生命。台灣獨立樂團，各個唱出屬於自己的旋律，在他們的創作中，一定能找到適合你的棲身之地。
-			
-			</p>
-			
-		</div>
-		<!-- Blog post -->
-		<div class="blog-item">
-			<img src="~/img/blog/22.jpg" alt="">
-			<div class="blog-date">April 14, 2019</div>
-			<h3>玫瑰墓樂團 用生命來寫歌 用音樂來說故事</h3>
-			<div class="blog-meta">by <a href="">Alan Smith</a> in <a href="">Music</a></div>
-			<p>
-				即使近三年疫情不斷的衝擊全國性的藝文團體，玫瑰墓近三年，不自辦演出，卻獲邀完成全國170多場的演出，創下台灣藝文團體的奇蹟，在各地造成旋風式的影響與震撼，好評破表!
-
-				因應新冠肺炎疫情襲擊全球，造成慘重傷亡暨各行業重大災損，留下無比沉重的心靈負荷及陰影，故由【玫瑰墓樂團】籌劃此公益音樂演講活動。用醫療上的真實故事，化成一串串音符，一首首曲目，來詮釋醫倫，歌頌生命，答謝所有醫療幕後英雄.
-			</p>
-		</div>
-		<!-- Blog post -->
-		<div class="blog-item">
-			<img src="~/img/blog/3.jpg" alt="">
-			<div class="blog-date">April 14, 2019</div>
-			<h3>十年自學吉他心得:談那些自學會遇到的障礙，以及一定要知道的事</h3>
-			<div class="blog-meta">by <a href="">Alan Smith</a> in <a href="">Music</a></div>
-			<p>
-				我在大學一年級的時候加入吉他社，那個時候跟著社團的社課學了一年的吉他，之後繼續留在吉他社當幹部，而當幹部以後其實就沒有社課可以上了，只有偶爾會有一些講座類的活動，畢業後當替代役時有短暫找老師學了兩三個月，之後又恢復自學的狀態，目前主要是透過一些教材和線上課程來繼續學習，偶爾會拍一些吉他影片放在YouTube上，以下就幾個重點心得和大家分享:
-
-				一、自學路上有哪些障礙? 如何突破?
-				二、即使是自學也不能忽略的東西
-				三、學習的體悟
-			</p>
-		</div>
-		<div class="site-pagination">
-			<a href="#" class="active">01.</a>
-			<a href="#">02.</a>
-			<a href="#">03.</a>
-			<a href="#">04.</a>
-		</div>
-	</div>
-</section>*@
+        </section>

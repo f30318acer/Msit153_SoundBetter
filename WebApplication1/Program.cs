@@ -9,7 +9,9 @@ using CoreMVC_SignalR_Chat.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI;
-
+using System.Net.Mail;
+using System.Net;
+using prjMusicBetter.Models.Services;
 
 
 
@@ -29,6 +31,9 @@ builder.Services.AddDbContext<dbSoundBetterContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("dbSoundBetterConnection")
 ));
+
+//Chart.js
+builder.Services.AddScoped<MemberDataService>();
 
 //建立聊天室連接需要特別加這一段
 builder.Services.AddSignalR();

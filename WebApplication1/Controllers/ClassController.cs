@@ -18,6 +18,16 @@ namespace prjMusicBetter.Controllers
         /*=======課程首頁===============*/
         public IActionResult Index()
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                // 處理會員資料不存在的情況，導向登入頁面
+                return RedirectToAction("Login", "Home"); // 導向登入頁面
+            }
+            if (member != null)
+            {
+                ViewBag.MemberId = member.FMemberId;
+            }
             /*var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher);
             return View(await dbSoundBetterContext.ToListAsync());*/
             return View();
@@ -28,6 +38,12 @@ namespace prjMusicBetter.Controllers
 
         public async Task<IActionResult> Viewclass(int? id)
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                // 處理會員資料不存在的情況，導向登入頁面
+                return RedirectToAction("Login", "Home"); // 導向登入頁面
+            }
             await _context.SaveChangesAsync();
             if (id == null || _context.TClasses == null)
             {
@@ -133,6 +149,11 @@ namespace prjMusicBetter.Controllers
         public IActionResult Create()
         {
             TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                // 處理會員資料不存在的情況，導向登入頁面
+                return RedirectToAction("Login", "Home"); // 導向登入頁面
+            }
             ViewBag.MemberId = member.FMemberId;
             return View();
         }
@@ -161,12 +182,6 @@ namespace prjMusicBetter.Controllers
             ViewBag.SiteId = tClass.FSiteId;//原本的地址
 
             return View(tClass);
-        }
-
-        public IActionResult classFav(int? id)
-        {
-            var classfav = _context.TClassFavs.Where(m => m.FClassId == id).Select(t => t.FMemberId);
-            return Json(classfav);//這堂課有誰喜歡
         }
     }
 }

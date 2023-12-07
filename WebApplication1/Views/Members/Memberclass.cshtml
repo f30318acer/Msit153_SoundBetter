@@ -3,60 +3,155 @@
 	ViewData["Title"] = "Memberclass";
 }
 <style>
-	.ddd {
-		border-bottom: 2px solid #fc0254;
-	}
+    /*粉色底線*/
+    .ddd {
+        border-bottom: 2px solid #fc0254;
+    }
 
-	.btm {
-		height: 60px;
-		min-width: 167px;
-		right: 0;
-		top: 0;
-		border: none;
-		border-radius: 80px;
-		color: #fff;
-		font-size: 15px;
-		background: #fc0254;
-		float: right;
-	}
+    /*粉色按鈕*/
+    .btm {
+        height: 60px;
+        min-width: 167px;
+        right: 0;
+        top: 0;
+        border: none;
+        border-radius: 80px;
+        color: #fff;
+        font-size: 15px;
+        background: #fc0254;
+        float: right;
+    }
 
-	.title {
-		display: inline-block;
-		margin: 10px;
-		vertical-align: middle;
-	}
+    /*留空白用的*/
+    .container.ddd {
+        padding-top: 20px; /* 設置上邊距擴展的像素值 */
+        padding-bottom: 20px; /* 設置下邊距擴展的像素值 */
+    }
 
-	.form-container {
-		float: right;
-		margin: 10px;
-	}
+    .mix {
+        position: relative;
+        overflow: hidden;
+        margin: 10px 0; /* 上下留白 */
+    }
 
-	.title-container {
-		display: flex;
-	}
+        .mix a {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none; /* 避免超連結的下劃線 */
+        }
 
-	.section-title {
-		min-width: 100%; /* 或者您認為適合的最小寬度值 */
-	}
+        .mix div {
+            position: relative;
+            background-color: white;
+            color: black;
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
 
+        .mix img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px; /* 添加圓角效果，根據需要調整 */
+        }
+
+        .mix span {
+            background-color: white;
+            color: black;
+            padding: 5px;
+            border: 1px solid #fc0254; /* 粉框 */
+            border-radius: 5px; /* 添加圓角效果，根據需要調整 */
+        }
+
+        .mix h5, .mix p {
+            text-align: center;
+            margin: 5px 0; /* 上下留白 */
+        }
+
+        .mix p {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+            color: #888;
+            margin: 0;
+            display: block;
+            height: 75%;
+            font-size: 0.8em;
+        }
+
+    .ClassName {
+        margin: 0px auto;
+        margin-bottom: 5px;
+        text-align: center;
+        overflow: hidden;
+        height: 25px;
+        width: 90%;
+        line-height: 25px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+
+    .genres {
+        position: relative; /* 設置相對定位，讓內部元素可以使用絕對定位相對於這個容器 */
+    }
+
+        .genres div {
+            position: relative; /* 設置相對定位，讓內部元素可以使用絕對定位相對於這個容器 */
+        }
+
+        .genres span {
+            position: absolute; /* 設置絕對定位 */
+            bottom: 0; /* 距離底部的距離 */
+            right: 0; /* 距離右邊的距離 */
+            background-color: white;
+            color: black;
+            padding: 5px;
+            border: 1px solid #fc0254; /* 粉框 */
+        }
+
+        /* 調整其他樣式以避免重疊 */
+        .genres h5, .genres p, .genres span {
+            z-index: 1; /* 設置 z-index，確保文字和 span 在同一層次 */
+        }
+
+        .genres img {
+            width: 100%; /* 設定寬度為 100% */
+            height: 200px; /* 設定高度為 200 像素，可以根據需要調整 */
+            object-fit: cover; /* 保持原始比例並填滿指定的大小 */
+        }
+
+    .favorite-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60px;
+        height: 50px;
+        background-size: cover; /* 調整圖片大小以填滿按鈕 */
+        border: none;
+        background-color: transparent; /* 移除按鈕背景色 */
+        cursor: pointer;
+    }
 </style>
 <section class="playlist-section spad">
 	<div class="container-fluid">
-		<div class="section-title">
-			<div class="section-title">
-				<h2 class="title">我的課程</h2>
-				<form asp-controller="Class" asp-action="Create" method="get" class="form-container">
-					<button name="createClass" class="btm">新建課程</button>
-				</form>
-			</div>
-			<div class="container-fluid filter-row-container d-flex align-items-center ddd py-4 py-xl-2 px-4 px-lg-5">
-				<div class="filter-row">
-					<form class="search-form">
-						<input type="text" placeholder="輸入課程名稱">
-						<button>找尋課程</button>
-					</form>
-				</div>
-			</div>
+        <div class="section-title">
+            <h2 class="title">我的課程</h2>
+            <div class="container col-lg-12 ddd">
+                <div class="text-right ">
+                    <select id="selectSkill" class="form-select mr-2"></select>
+                    <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
+                    <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+                    <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
+                </div>
+            </div>
 		</div>
 		<div class="clearfix"></div>
 		<div id ="divList" class="row playlist-area">
@@ -73,37 +168,202 @@
 			}*@
 			<!--List內容-->
 		</div>
+        <div id="pageButtons" class="text-center">
+            <!--分頁按鈕位置-->
+        </div>
 	</div>
 </section>
 <!-- Playlist section end -->
 @section Scripts{
 	<script>
-		function load() {
-			const divList = $('#divList')
-			//讀取Json資料
-			$.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
-				console.log(datas);
+		//function load() {
+		//	const divList = $('#divList')
+		//	//讀取Json資料
+		//	$.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
+		//		console.log(datas);
 
-				//做出一個空的容器來存放div
-				const docFrag = $(document.createDocumentFragment())
+		//		//做出一個空的容器來存放div
+		//		const docFrag = $(document.createDocumentFragment())
 
-				//讀出每個Json物件
-				$.each(datas, function (index, item) {
-					//const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-					const card = $(
-						`<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-								<a href="/Class/Edit?id=${item.fClassId}">
-										<div class="playlist-item">
-											<img src="/img/classimg/${item.fThumbnailPath}?@DateTime.Now.Ticks" alt="">
-											<h5>${item.fClassName}</h5>
-										</div>
-									</a>
-								</div>`);
-					docFrag.append(card);//.append()將一筆div放入容器中
-				})
-				divList.html(docFrag)//.html()一次將全部的資料都上傳
-			})
-		}
-		load();
+		//		//讀出每個Json物件
+		//		$.each(datas, function (index, item) {
+		//			//const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+		//			const card = $(
+		//				`<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+  //                                   <a href="/Class/Edit?id=${item.fClassId}">
+		//						 <div>
+		//							 <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+		//							 <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+		//						 </div>
+		//						 <div>
+		//							 <div class="ClassName">
+		//								 <h5>${item.fClassName}</h5>
+		//							 </div>
+		//							 <p>${item.fDescription}</p>
+		//						 </div>
+		//						 <div>
+		//							 <h5>導師：${item.fTeacherNmae}</h5>
+		//							 <p>點閱數：${item.fClick}</p>
+		//						 </div>
+		//					 </a>
+		//				</div>`);
+		//			docFrag.append(card);//.append()將一筆div放入容器中
+		//		})
+		//		divList.html(docFrag)//.html()一次將全部的資料都上傳
+		//	})
+		//}
+		//load();
+
+        const selStyle = document.querySelector('#selectSkill');
+        const pageButtonsContainer = $('#pageButtons');//分頁按鈕位置
+        const onePage = 8;//一頁要有幾個課程
+        const MemberId = @ViewBag.MemberId;
+
+        function firstLoad(pageNumber) {
+            const divList = $('#divList');
+            //讀取Json資料
+            $.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
+                console.log(datas);
+
+                // 獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                // 做出一個空的容器來存放div
+                const docFrag = $(document.createDocumentFragment());
+
+                $.each(limitdatas, function (index, item) {
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                            <a href="/Class/Edit?id=${item.fClassId}">
+                                        <div>
+                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                            <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                        </div>
+                                        <div>
+                                            <div class="ClassName">
+                                                <h5>${item.fClassName}</h5>
+                                            </div>
+                                            <p>${item.fDescription}</p>
+                                        </div>
+                                        <div>
+                                            <h5>導師：${item.fTeacherNmae}</h5>
+                                            <p>點閱數：${item.fClick}</p>
+                                        </div>
+                                    </a>
+                                </div>`
+                    );
+                    docFrag.append(card);
+                });
+
+                divList.html(docFrag);
+            });
+        }
+        firstLoad(1);
+
+        function load(pageNumber) {
+            const divList = $('#divList')
+            const sId = $('#selectSkill').val();
+            const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+
+
+            //讀取Json資料
+            $.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
+                console.log(datas);
+
+                // 獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+                //dataCount = filteredDatas.length;
+
+                //做出一個空的容器來存放div
+                const docFrag = $(document.createDocumentFragment())
+
+                $.each(limitdatas, function (index, item) {
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                    <a href="/Class/Edit?id=${item.fClassId}">
+                                <div>
+                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                    <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                </div>
+                                <div>
+                                    <div class="ClassName">
+                                        <h5>${item.fClassName}</h5>
+                                    </div>
+                                    <p>${item.fDescription}</p>
+                                </div>
+                                <div>
+                                    <h5>導師：${item.fTeacherNmae}</h5>
+                                    <p>點閱數：${item.fClick}</p>
+                                </div>
+                            </a>
+                        </div>`
+                    );
+                    docFrag.append(card);
+                });
+                divList.html(docFrag)//.html()一次將全部的資料都上傳
+            });
+        };
+
+
+        //分頁按鈕
+        async function loadPage() {
+            const Id = @(ViewBag.MemberId)
+            const url = `@Url.Content("~/apiTClass/QueryByMember/?id=${Id}")`;
+            const response = await fetch('../../../apiTClass/QueryByMember/?id=@(ViewBag.MemberId)');
+            const data = await response.json();
+            console.log(data);
+            // 獲取所選風格的ID
+            const sId = $('#selectSkill').val();
+            const keyword = $('#txtKeyword').val();
+
+            // 根據所選風格篩選數據
+            let filteredData = data;
+            if (sId != 0) {
+                filteredData = data.filter(item => item.fSkillId == sId);
+            }
+            //關鍵字篩選
+            if (keyword != '') {
+                filteredData = filteredData.filter(item => {
+                    // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+                    return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
+                });
+            }
+            const dataCount = filteredData.length;//有幾筆資料
+            const pageCount = Math.ceil(dataCount / onePage);//有幾頁
+            // 清空現有按鈕
+            pageButtonsContainer.empty();
+            for (let i = 1; i <= pageCount; i++) {
+                let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+                button.click(function () {
+                    load(i);//加載第i頁
+                });
+                pageButtonsContainer.append(button);
+            }
+        }
+        loadPage();
+
+        //Skill選擇器
+        async function loadStyle() {
+            const response = await fetch('@Url.Content("~/apiTSkills/OnlyIdName")');//從哪裡取得
+            const data = await response.json();//接收回傳的資料
+            const defaultOption = '<option value="0">請選擇類別</option>';
+            const styleOptions = data.map(s => `<option value="${s.fSkillId}">${s.fName}</option>`);//要把取得的資料作什麼加工
+            styleOptions.unshift(defaultOption);
+            selStyle.innerHTML = styleOptions.join("");//加入到指定的位置
+        }
+        loadStyle();//啟動
+
+        //搜尋按鈕
+        $('#btnSearch').click(function () {
+            //讀取條件篩選後第一頁,重新讀取分頁頁碼
+            load(1);
+            loadPage();
+            //$('#txtKeyword').val('');
+        });
+
+        //跑到新建頁面
+        async function CheckLoginAndNavigate() {
+                window.location.href = "@Url.Action("Create", "Class")";
+        }
 	</script>
 }
