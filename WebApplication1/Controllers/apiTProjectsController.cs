@@ -107,6 +107,7 @@ namespace prjSoundBetterApi.Controllers
                 project.FStartdate = now;
                 project.FProjectStatusId = 1;
                 project.FSiteId = 1;
+                project.FSkillId = 1;
                 _context.Add(project);
                 _context.SaveChanges();
                 return Content("新增成功");
