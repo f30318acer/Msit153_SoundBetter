@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 
 namespace prjMusicBetter.Controllers
 {
     public class TClassesController : Controller
     {
         private readonly dbSoundBetterContext _context;
-
-        public TClassesController(dbSoundBetterContext context)
+        private readonly UserInfoService _userInfoService;
+        public TClassesController(dbSoundBetterContext context, UserInfoService userInfoService)
         {
             _context = context;
+            _userInfoService = userInfoService;//抓使用者
         }
 
         // GET: TClasses
@@ -48,6 +50,9 @@ namespace prjMusicBetter.Controllers
         // GET: TClasses/Create
         public IActionResult Create()
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            ViewBag.MemberId = member.FMemberId;
+
             ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId");
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");
             return View();
