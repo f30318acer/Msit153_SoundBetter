@@ -295,10 +295,7 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
-
-
-
+       
         public IActionResult FAQ()
         {
             return View();

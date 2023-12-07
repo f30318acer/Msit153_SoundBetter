@@ -95,20 +95,16 @@
                                         </li>
                                         <li class="d-flex align-items-center mx-2">
                                             <img src="/img/icons/login.png" class="width-16px" width="15px" />
-
                                             @if (User.Identity.IsAuthenticated)
                                             {
-                                                <a class="dropdown-item fs-12px"  asp-action="Loginout" asp-controller="Home">登出</a>
+                                                <a class="dropdown-item"  asp-action="Loginout" asp-controller="Home">登出</a>
+                                                <a class="dropdown-item" asp-controller="Members" asp-action="Index">會員資訊</a>
                                             }
                                             else
-                                            {
-                                                <a class="dropdown-item fs-12px"  asp-action="Login" asp-controller="Home">登入/註冊</a>
-                                            }
-                                            @* <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a> *@
-                                        </li>
-
-                                      
-
+                                            {                                                                        
+                                                <a class="dropdown-item fs-12px"  asp-action="Login" asp-controller="Home">登入/註冊</a>                              
+                                            }                                         
+                                        </li>                                    
                                     </ul>
                                 </li>
                             </ul>
