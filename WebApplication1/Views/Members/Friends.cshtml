@@ -1,62 +1,72 @@
 ﻿@model prjMusicBetter.Models.ViewModels.FriendsViewModel
 
 
-<div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
-    <h2>@Model.Member.FUsername 的好友名單</h2>
-    <div id="searchResults"></div>
-    <div class="d-flex align-items-center">
-        <form id="searchForm" method="get" action="@Url.Action("Friends", "Members")">
-            <input type="text" name="searchTerm" id="search" placeholder="Search...">
-            <button type="submit">Search</button>
-        </form>
+<style>
+    tr:hover {
+        color: coral;
+    }
+    td 
+    {
+        border-radius: 5px
+    }
+</style>
 
-    </div>
 
-            <table class="table table-striped align-middle text-center">
-                <thead>
-                    <tr>
-                        <th>姓名</th>                    
-                        <th>電話號碼</th>
-                        <th>信箱</th>
-                        <th>性別</th>
-                        <th>生日</th>                                             
-                        <th>照片</th>                
-                    </tr>
-                </thead>
-                <tbody id="memberTable">
-                    @foreach (var item in Model.Friends)
-                    {
-                        <tr>                          
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FName)
-                            </td>                          
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FPhone)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FEmail)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FGender)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FBirthday)
-                            </td>                               
-                            <td>
-                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
-                                {
-                                    <img src="@Url.Content("~/img/" + item.FPhotoPath)" alt="Coupon Image" style="width:100px; height:auto;" />
-                                }
-                                else
-                                {
-                                    @:No Image
-                                }                         
-                                
-                            </td>                  
-                        </tr>
-                    }
-                </tbody>
-            </table>
+<body>
+    <div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
+        <h2>@Model.Member.FUsername 的好友名單</h2>
+        <div id="searchResults"></div>
+        <div class="d-flex align-items-center">
+            <form id="searchForm" method="get" action="@Url.Action("Friends", "Members")">
+                <input type="text" name="searchTerm" id="search" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
         </div>
-</div>
+
+        <table class="table table-striped align-middle text-center ">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>電話號碼</th>
+                    <th>信箱</th>
+                    <th>性別</th>
+                    <th>生日</th>
+                    <th>照片</th>
+                </tr>
+            </thead>
+            <tbody id="memberTable">
+                @foreach (var item in Model.Friends)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FPhone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FEmail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FGender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FBirthday)
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.FPhotoPath))
+                            {
+                                <img src="@Url.Content("~/img/" + item.FPhotoPath)" alt="Coupon Image" style="width:100px; height:auto;" />
+                            }
+                            else
+                            {
+                                @:No Image
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
 

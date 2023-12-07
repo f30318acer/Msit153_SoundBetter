@@ -1,9 +1,22 @@
 ﻿@model prjMusicBetter.Models.ViewModels.FriendsViewModel
 
-
-
+<style>
+    tr:hover 
+    {
+        color: coral;
+    }
+    
+</style>
+<body>
 <div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
     <h2>@Model.Member.FUsername 的黑名單</h2>
+        <div id="searchResults"></div>
+        <div class="d-flex align-items-center">
+            <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")">
+                <input type="text" name="searchTerm" id="search" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
             <table class="table table-striped align-middle text-center">
                 <thead>
                     <tr>
@@ -51,3 +64,4 @@
             </table>
         </div>
 </div>
+</body>
