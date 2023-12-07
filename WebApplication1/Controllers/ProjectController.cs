@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
@@ -15,7 +16,8 @@ namespace prjMusicBetter.Controllers
             _userInfoService = userInfoService;
 
         }
-		public IActionResult List()
+        [Authorize(Roles = "Member")]
+        public IActionResult List()
         {
             return View();
         }
