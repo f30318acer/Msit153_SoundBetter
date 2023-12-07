@@ -6,7 +6,7 @@
 
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
-    var chartData = @Html.Raw(Json.Serialize()); // 将 C# 对象转换为 JSON
+    
 
     var labels = chartData.map(d => d.Label);
     var dataPoints = chartData.map(d => d.Value);

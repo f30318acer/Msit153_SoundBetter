@@ -16,16 +16,16 @@ namespace prjMusicBetter.Controllers
 		{
 			return View();
 		}
-        public List<ChartDataModel> GetMemberStatistics()
-        {
-            return _context.TMembers
-                       .GroupBy(m => m.FCreationTime.Year)
-                       .Select(g => new ChartDataModel
-                       {
-                           Label = g.Key.ToString(),
-                           Value = g.Count()
-                       })
-                       .ToList(); ;
-        }
+        //public List<ChartDataModel> GetMemberStatistics()
+        //{
+        //    return _context.TMembers
+        //               .GroupBy(m => m.FCreationTime.Year)
+        //               .Select(g => new ChartDataModel
+        //               {
+        //                   Label = g.Key.ToString(),
+        //                   Value = g.Count()
+        //               })
+        //               .ToList(); ;
+        //}
 }
 }
