@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using prjMusicBetter.Models;
+using prjMusicBetter.Models.infra;
 
 namespace prjMusicBetter.Controllers
 {
@@ -19,21 +23,21 @@ namespace prjMusicBetter.Controllers
             return View();
         }
 
-        public IActionResult update()
+        public IActionResult upload()
         { return View(); }
         //[HttpPost]
-        //public IActionResult update(HttpPostedFileBase film)
+        //public IActionResult upload(TVision v)
         //{
         //    string fileName = "";
 
-        //    if (film != null)
+        //    if (v != null)
         //    {
 
-        //        if (film.ContentLength > 0)
+        //        if (v. > 0)
         //            fileName = Path.GetFileName(film.Content);
         //        var path = Path.Combine
         //        (Server.MapPath("~/Vision/film"), fileName);
-        //        film.SaveAs(path);
+        //        v.SaveAs(path);
 
         //    }
 

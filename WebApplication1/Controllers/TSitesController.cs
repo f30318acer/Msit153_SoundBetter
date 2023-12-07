@@ -55,19 +55,37 @@ namespace prjMusicBetter.Controllers
         // GET: TSites/Create
         public IActionResult Create()
         {
-            ViewData["FCity"] = new SelectList(_context.TCities, "FCity", "FCity");
-            ViewData["FName"] = new SelectList(_context.TMembers, "FName", "FName");
+            ViewData["FCity"] = new SelectList(_context.TCities, "FCityId", "FCity");
+            ViewData["FName"] = new SelectList(_context.TMembers, "FMemberId", "FName");
             return View();
         }
 
         // POST: TSites/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("FSiteId,FSiteName,FMemberId,FPhone,FSiteType,FCityId,FAddress,FPicture")] TSite tSite, IFormFile formFile)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (formFile != null)
+        //        {
+        //            string photoName = $"place{tSite.FSiteId}.jpg";
+        //            tSite.FPicture = photoName;
+        //            formFile.CopyTo(new FileStream(_environment.WebRootPath + "/img/Place/" + photoName, FileMode.Create));
+        //        }
+        //        _context.Add(tSite);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tSite);
+        //}
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FSiteId,FSiteName,FMemberId,FPhone,FSiteType,FCityId,FAddress")] TSite tSite, IFormFile formFile)
+        public IActionResult Create(TSite? tSite, IFormFile formFile)
         {
-            if (ModelState.IsValid)
+            if (tSite != null)
             {
                 if (formFile != null)
                 {
@@ -76,12 +94,11 @@ namespace prjMusicBetter.Controllers
                     formFile.CopyTo(new FileStream(_environment.WebRootPath + "/img/Place/" + photoName, FileMode.Create));
                 }
                 _context.Add(tSite);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.SaveChanges();
+                return Content("新增成功");
             }
-            return View(tSite);
+            return Content("錯誤");
         }
-
         // GET: TSites/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
