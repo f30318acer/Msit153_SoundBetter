@@ -16,10 +16,12 @@ namespace prjMusicBetter.Controllers
     public class TSitesController : Controller
     {
         private readonly dbSoundBetterContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public TSitesController(dbSoundBetterContext context)
+        public TSitesController(dbSoundBetterContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: TSites
@@ -30,26 +32,25 @@ namespace prjMusicBetter.Controllers
         }
 
         // GET: TSites/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.TSites == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.TSites == null)
+            {
+                return NotFound();
+            }
 
-        //    var tSite = await _context.TSites
-        //        .Include(t => t.FCity)
-        //        .Include(t => t.FMember)
-        //        .Include(t => t.FSitePicture)
-        //        .FirstOrDefaultAsync(t => t.FSiteId == id);
+            var tSite = await _context.TSites
+                .Include(t => t.FCity)
+                .Include(t => t.FMember)
+                .FirstOrDefaultAsync(t => t.FSiteId == id);
 
-        //    if (tSite == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (tSite == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(tSite);
-        //}
+            return View(tSite);
+        }
 
         // GET: TSites/Create
         public IActionResult Create()
@@ -64,16 +65,20 @@ namespace prjMusicBetter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FSiteId,FSiteName,FMemberId,FPhone,FSiteType,FCityId,FAddress")] TSite tSite)
+        public async Task<IActionResult> Create([Bind("FSiteId,FSiteName,FMemberId,FPhone,FSiteType,FCityId,FAddress")] TSite tSite, IFormFile formFile)
         {
             if (ModelState.IsValid)
             {
+                if (formFile != null)
+                {
+                    string photoName = $"place{tSite.FSiteId}.jpg";
+                    tSite.FPicture = photoName;
+                    formFile.CopyTo(new FileStream(_environment.WebRootPath + "/img/Place/" + photoName, FileMode.Create));
+                }
                 _context.Add(tSite);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FCityId"] = new SelectList(_context.TCities, "FCityId", "FCityId", tSite.FCityId);
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tSite.FMemberId);
             return View(tSite);
         }
 
