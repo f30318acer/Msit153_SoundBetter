@@ -1,0 +1,457 @@
+﻿@model prjMusicBetter.Models.TWork
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>音樂分享</h1>
+<section class="category-section spad">
+    <div class="container-fluid">
+        <div class="section-title">
+            <h2>音樂探索</h2>
+        </div>
+        <div class="container">
+            <div class="category-links">
+                <div class="container col-lg-9">
+                    <div class="text-right">
+                        <select id="selectStyle" class="form-select mr-2"></select>
+                        <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
+                        <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+                    </div>
+                </div>
+                <a href="" class="active">Genres</a>
+                <a href="">Artists</a>
+                <a href="">All Playlist</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="category-items col-md-10">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="category-item">
+                            <img src="~/img/playlist/99.jpg" alt="">
+                            <div class="ci-text">
+                                <h4>周杰倫</h4>
+                                <p>Live from Madrid</p>
+                            </div>
+                            <a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-item">
+                            <img src="~/img/playlist/22.jpg" alt="">
+                            <div class="ci-text">
+                                <h4>楊丞琳</h4>
+                                <p>Live from Madrid</p>
+                            </div>
+                            <a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-item">
+                            <img src="~/img/playlist/78.jpg" alt="" height="365">
+                            <div class="ci-text">
+                                <h4>王力宏</h4>
+                                <p>Live from Madrid</p>
+                            </div>
+                            <a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</section>
+<!-- Category section end --><section class="songs-section">
+    <div class="  container" />
+    <div id="divList" class="row">
+        <!--  new song -->
+        <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+            <div class="col-12 mb-2"></div>
+            <div class="row playlist-item" style="margin: 0;">
+                <div class="col-2" style="margin:0px">
+                    <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
+                </div>
+                <div class="col-10" style="margin:0px">
+                    <div class="row">
+                        <div class="col-12 mb-4"></div>
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-10">  <h5>123</h5></div>
+                                <div class="col-2"></div>
+                            </div>
+                            <p style="margin:0px">member name</p>
+                        </div>
+                        <div class="col-12">
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!--  new song -->
+        <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+            <div class="mb-2"></div>
+            <div class="row playlist-item" style="margin: 0;">
+                <div class="col-2" style="margin:0px">
+                    <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;">
+                </div>
+                <div class="col-10" style="margin:0px">
+                    <div class="row">
+                        <div class="col-12 mb-4"></div>
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-10">  <h5>稻香</h5></div>
+                                <div class="col-2"></div>
+                            </div>
+
+                            <p style="margin:0px">member name</p>
+                        </div>
+                        <div class="col-12">
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="mb-2"></div>
+        </div>
+        @*   END*@
+        <div class=" col-12 mb-2"></div>
+        <!--  new song -->
+        <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+            <div class="mb-2"></div>
+            <div class="row playlist-item" style="margin: 0;">
+                <div class="col-2" style="margin:0px">
+                    <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;">
+                </div>
+                <div class="col-10" style="margin:0px">
+                    <div class="row">
+                        <div class="col-12 mb-4"></div>
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-10">  <h5>稻香</h5></div>
+                                <div class="col-2"></div>
+                            </div>
+
+                            <p style="margin:0px">Ton</p>
+                        </div>
+                        <div class="col-12">
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="mb-2"></div>
+        </div>
+        @*   END*@
+        <div  class=" col-12 mb-2"></div>
+        <!--  new song -->
+        <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+            <div class="mb-2"></div>
+            <div class="row playlist-item" style="margin: 0;">
+                <div class="col-2" style="margin:0px">
+                    <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;">
+                </div>
+                <div class="col-10" style="margin:0px">
+                    <div class="row">
+                        <div class="col-12 mb-4"></div>
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-10">  <h5>稻香</h5></div>
+                                <div class="col-2"></div>
+                        </div>
+                            <p style="margin:0px">member name</p>
+                    </div>
+                        <div class="col-12">
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                </div>
+            </div>
+         </div>
+           
+          
+              
+                <div class="col-10" style="margin:0px">
+                    <div class="row">
+                        <div class="col-12 mb-4"></div>
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-10">  <h5>稻香</h5></div>
+                                <div class="col-2"></div>
+                            </div>
+
+                            <p style="margin:0px">member name</p>
+                        </div>
+                        <div class="col-12">
+                            <audio controls style="width:100%">
+                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="mb-2"></div>
+        </div>
+        @*   END*@
+        <div class=" col-12 mb-2"></div>
+     
+    </div>
+</section>
+@section Scripts{
+        <script>
+                             const selStyle = document.querySelector('#selectStyle');
+                             const pageButtonsContainer = $('#pageButtons');
+                             const onePage = 4;
+
+                             //Style選擇器
+                             async function loadStyle() {
+                                 const response = await fetch('@Url.Content("~/apiTStyle/List")');
+                                 const data = await response.json();
+                                 const defaultOption = '<option value="100">請選擇風格</option>';
+                                 const styleOptions = data.map(s => `<option value="${s.fStyleId}">${s.fWorkName}</option>`);
+                                 styleOptions.unshift(defaultOption);
+                                 selStyle.innerHTML = styleOptions.join("");
+                             }
+                             loadStyle();
+
+                             //分頁按鈕
+                             async function loadPage() {
+                                 const response = await fetch('@Url.Content("~/apiTWork/List")');
+                                 const data = await response.json();
+                                 // 篩選條件
+                                 const sId = $('#selectStyle').val();
+                                 const keyword = $('#txtKeyword').val();
+
+                                 // 根據所選風格篩選數據
+                                 let filteredData = data;
+                                 if (sId != 100) {
+                                     filteredData = data.filter(item => item.fStyleId == sId);
+                                 }
+                                 //關鍵字篩選
+                                 if (keyword != '') {
+                                     filteredData = filteredData.filter(item => {
+                                         // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+                    return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
+                                     });
+                                 }
+
+                                 const dataCount = filteredData.length;
+                                 const pageCount = Math.ceil(dataCount / onePage);
+
+                                 // 清空現有按鈕
+                                 pageButtonsContainer.empty();
+                                 for (let i = 1; i <= pageCount; i++) {
+                                     let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+                                     button.click(function () {
+                                         load(i);
+                                     });
+                                     pageButtonsContainer.append(button);
+                                 }
+                             }
+                             loadPage();
+                             //載入資料
+                             function load(pageNumber) {
+                                 const divList = $('#divList')
+                                 const sId = $('#selectStyle').val();
+                                 const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+                                 //divList.empty();
+
+                                $.getJSON('/apiTWork/ListWithUserName', function (datas) {
+                                    console.log(datas)
+                                     let filteredDatas = datas;
+                                     //風格條件篩選
+                                     if (sId != 100) {
+                                         filteredDatas = datas.filter(item => {
+                                             // 在此添加筛选条件
+                                             return item.fStyleId == sId;
+                                         });
+                                     }
+                                     //關鍵字篩選
+                                     if (keyword) {
+                                         filteredDatas = filteredDatas.filter(item => {
+                                             // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+                                                        return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
+                                         });
+                                     }
+                                     console.log(filteredDatas);
+
+                                     dataCount = filteredDatas.length;
+
+                                     //獲得限定頁面資料
+                                     const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                                     const docFrag = $(document.createDocumentFragment())
+                                     $.each(limitdatas, function (index, item) {
+                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                                         const card = $(   `
+                                        <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                                            <div class="col-12 mb-2"></div>
+                                            <div class="row playlist-item" style="margin: 0;">
+                                                <div class="col-2" style="margin:0px">
+                                                            <img src="/img/Works/${item.fPhotoPath}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
+                                                </div>
+                                                <div class="col-10" style="margin:0px">
+                                                    <div class="row">
+                                                        <div class="col-12 mb-4"></div>
+                                                        <div class="col-12 text-center">
+                                                            <div class="row">
+                                                                <div class="col-10">  <h5>${item.fWorkName}</h5></div>
+                                                                <div class="col-2"></div>
+                                                            </div>
+                                                            <p style="margin:0px">${item.fUsername}</p>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <audio controls style="width:100%">
+                                                                <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                                            </audio>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="col-12 mb-2"></div>
+                        `
+                                         );
+                                         docFrag.append(card);
+                                     })
+                                     divList.html(docFrag)
+                                 })
+                             }
+
+                             //第一次讀取
+                             function firstLoad(pageNumber) {
+                                 const divList = $('#divList')
+                                 //divList.empty();
+
+                                 $.getJSON('/apiTWork/ListWithUserName', function (datas) {
+                                     console.log(datas);
+                                     //獲得限定頁面資料
+                                     const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                                     const docFrag = $(document.createDocumentFragment())
+                                     $.each(limitdatas, function (index, item) {
+                                        const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                                        const card = $(`
+                                                <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                                                    <div class="col-12 mb-2"></div>
+                                                    <div class="row playlist-item" style="margin: 0;">
+                                                        <div class="col-2" style="margin:0px">
+                                                            <img src="~/img/songs/7.jpg" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
+                                                        </div>
+                                                        <div class="col-10" style="margin:0px">
+                                                            <div class="row">
+                                                                <div class="col-12 mb-4"></div>
+                                                                <div class="col-12 text-center">
+                                                                    <div class="row">
+                                                                                <div class="col-10">  <h5>${item.fWorkName}</h5></div>
+                                                                        <div class="col-2"></div>
+                                                                    </div>
+                                                                            <p style="margin:0px">${item.fUsername}</p>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <audio controls style="width:100%">
+                                                                        <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                                                    </audio>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                          <div class=" col-12 mb-2" ></div>
+                                                          `
+                    );
+                                         docFrag.append(card);
+                                     })
+                                     divList.html(docFrag)
+                                 })
+                             }
+                             firstLoad(1);
+                             //搜尋按鈕
+                             $('#btnSearch').click(function () {
+                                 //讀取條件篩選後第一頁,重新讀取分頁頁碼
+                                 load(1);
+                                 loadPage();
+                                 //$('#txtKeyword').val('');
+                             });
+    </script>
+
+
+
+}
+<div>
+    <h4>TWork</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FWorkName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FWorkName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FUpdateTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FUpdateTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FThumbnail)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FThumbnail)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FFilePath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FFilePath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FMember)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FMember.FMemberId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FStyle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FStyle.FStyleId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FWorkType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FWorkType.FWorkTypeId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FWorkId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
