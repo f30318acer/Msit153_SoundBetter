@@ -74,7 +74,7 @@
                     </div>
                     <input type="hidden" id="FCurrentStudent" name="FCurrentStudent" value="0" />
                     <div class="col-md-12 pad">
-                        <button id="buttonSubmit" type="submit" class="btm">確定建立</button>
+                        <button id="buttonSubmit" type="submit" class="btn btn-primary">確定建立</button>
                     </div>
                 </div>
             </form>
@@ -171,6 +171,8 @@
                     isValid = false;
                 }
             });
+            // 重置 isAlertShown，以便下次提交時再次顯示警告
+            isAlertShown = false;
             return isValid;
         }
 

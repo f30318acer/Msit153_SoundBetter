@@ -5,54 +5,74 @@
     Layout = "_Layout2";
 }
 <main id="main" class="main">
-<h1>Create</h1>
-
-<h4>TClass</h4>
+<h1>新增課程</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+            <form id="classForm" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FTeacherId" class="control-label"></label>
-                <select asp-for="FTeacherId" class ="form-control" asp-items="ViewBag.FTeacherId"></select>
+                <label asp-for="FTeacherId" class="control-label">導師ID</label>
+                <select asp-for="FTeacherId" type="hidden" class="form-control" asp-items="ViewBag.FTeacherId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="FClassName" class="control-label"></label>
+                    <label asp-for="FClassName" class="control-label">課程名稱</label>
                 <input asp-for="FClassName" class="form-control" />
                 <span asp-validation-for="FClassName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FPrice" class="control-label"></label>
+                    <label asp-for="FPrice" class="control-label">單堂價格</label>
                 <input asp-for="FPrice" class="form-control" />
                 <span asp-validation-for="FPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FDescription" class="control-label"></label>
+                    <label asp-for="FDescription" class="control-label">課程說明</label>
                 <input asp-for="FDescription" class="form-control" />
                 <span asp-validation-for="FDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FStartdate" class="control-label"></label>
-                <input asp-for="FStartdate" class="form-control" />
+                    <label asp-for="FStartdate" class="control-label">開始日期</label>
+                    <input asp-for="FStartdate" class="form-control datepicker" />
                 <span asp-validation-for="FStartdate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FEnddate" class="control-label"></label>
-                <input asp-for="FEnddate" class="form-control" />
+                    <label asp-for="FEnddate" class="control-label">結束日期</label>
+                    <input asp-for="FEnddate" class="form-control datepicker" />
                 <span asp-validation-for="FEnddate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FSiteId" class="control-label"></label>
-                <select asp-for="FSiteId" class ="form-control" asp-items="ViewBag.FSiteId"></select>
+                    <label asp-for="FSiteId" class="control-label">上課地點</label>
+                    <input type="hidden" id="fSiteID" name="fSiteID" value="1" />
+                    <select id="fSiteName" name="fSiteName" required></select><br />
             </div>
+                <div class="form-group">
+                    <label asp-for="FOnLine" class="control-label">上課方式</label>
+                    <select asp-for="FOnLine" class="form-control">
+                        <option value="0">實體課程</option>
+                        <option value="1">線上課程</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FSkillId" class="control-label">課程類型</label>
+                    <input type="hidden" id="fSkillID" name="fSkillID" value="1" />
+                    <select id="fName" name="fName" required></select><br />
+            </div>
+                <div class="form-group">
+                    <label asp-for="FMaxStudent" class="control-label">課程人數</label>
+                    <input asp-for="FMaxStudent" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="FCurrentStudent" class="control-label">目前人數</label>
+                    <input asp-for="FCurrentStudent" class="form-control value=" 0"" />
+                </div>
             <div class="form-group">
-                <label asp-for="FThumbnailPath" class="control-label"></label>
-                <input asp-for="FThumbnailPath" class="form-control" />
+                    <label for="formFile">圖片:</label>
+                    <input type="file" id="formFile" name="formFile" accept="image/*" />
+                    <img id="imgPreview" src="~/img/classimg/class_bg.jpg" style="border-radius:10px; max-width: 400px; max-height: 400px;">
                 <span asp-validation-for="FThumbnailPath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                    <button id="buttonSubmit" type="submit" class="btn btn-primary">確定建立</button>
             </div>
         </form>
     </div>
@@ -63,6 +83,147 @@
 </div>
 
 @section Scripts {
+        <script>
+            const ID = @ViewBag.MemberId;
+            //讓上課地點選項顯示fSiteName
+            const SiteID = document.querySelector('#fSiteID');
+            const SiteName = document.querySelector('#fSiteName');
+
+            //讓課程類型選項顯示fName
+            const SkillID = document.querySelector('#fSkillID');
+            const SkillName = document.querySelector('#fName');
+
+            var selectedValue = $('#fifOnLine').val();
+            $('#fifOnLine').on('change', function () {
+                // 获取当前选择的选项的 value
+                var selectedValue = $(this).val();
+
+                // 更新隐藏字段的值
+                $('#fOnLine').val(selectedValue);
+
+                // 输出选项的 value 到控制台（可选）
+                console.log('Selected Value:', selectedValue);
+            });
+
+
+
+            function load() {
+                // 獲取TSites資料
+                fetch('@Url.Content("~/Place/List")')
+                    .then(response => response.json())
+                    .then(data => {
+                        const selectElement = document.getElementById('fSiteName');
+                        data.forEach(site => {
+                            const option = document.createElement('option');
+                            option.value = String(site.fSiteId);  // 使用fSiteID作為值
+                            option.text = site.fSiteName; // 顯示fSiteName
+                            selectElement.appendChild(option);
+                        });
+                        // 添加 change 事件監聽器，當選擇改變時觸發
+                        selectElement.addEventListener('change', function () {
+                            // 將隱藏的 fSiteID 更新為所選擇的 fSiteID
+                            SiteID.value = selectElement.value;
+                        });
+                    });
+
+                /////////////////////////////////////////////////////
+
+                // 獲取TSkill資料
+                fetch('@Url.Content("~/apiTSkills/OnlyIdName")')
+                    .then(response => response.json())
+                    .then(data => {
+                        const selectElement = document.getElementById('fName');
+                        data.forEach(skill => {
+                            const option = document.createElement('option');
+                            option.value = String(skill.fSkillId);  // 使用FSkillId作為值
+                            option.text = skill.fName; // 顯示FName
+                            selectElement.appendChild(option);
+                            //console.log(data);
+                        });
+                        // 添加 change 事件監聽器，當選擇改變時觸發
+                        selectElement.addEventListener('change', function () {
+                            // 將隱藏的 fSkillID 更新為所選擇的 fSkillID
+                            SkillID.value = selectElement.value;
+                        });
+                    });
+            }
+            load();
+
+            //檢查必填項目是否都已填寫///////////////////////////////////////////////////////////////////////
+
+            function validateForm() {
+                // 檢查必填項目是否都已填寫
+                const requiredFields = document.querySelectorAll('[required]');
+                let isValid = true;
+                let isAlertShown = false; // 追踪警告是否已經顯示
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        if (!isAlertShown) {
+                            alert('請填寫所有必填項目');
+                            isAlertShown = true; // 警告已經顯示
+                        }
+                        isValid = false;
+                    }
+                });
+
+                // 重置 isAlertShown，以便下次提交時再次顯示警告
+                isAlertShown = false;
+
+                return isValid;
+            }
+
+
+            //上傳資料///////////////////////////////////////////////////////////////////////
+
+            const btn = document.querySelector('#buttonSubmit');
+
+            btn.addEventListener('click', event => {
+
+                event.preventDefault();//不讓submit運作
+                if (validateForm()) {
+                    //傳整個Form的資料
+                    const formData = new FormData(document.querySelector('#classForm'));
+
+                    fetch('@Url.Content("~/apiTClass/Create")', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert("新增成功");
+                                location.href = '@Url.Content("~/TClasses/Index")';
+                            }
+                        })
+                }
+            })
+
+            //預覽圖片///////////////////////////////////////////////////////////////////////
+
+            var arrayBuffer;
+
+            $("#formFile").bind("change", function () {
+                var file = this.files[0];
+                var allowType = "image.*";
+                if (file.type.match(allowType)) {
+                    //預覽
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        arrayBuffer = this.result;
+                        var blob = new Blob([arrayBuffer], {
+                            type: "image/jpeg"
+                        });
+                        var urlCreator = window.URL || window.webkitURL;
+                        var imageURL = urlCreator.createObjectURL(blob);
+                        $("#imgPreview").attr("src", imageURL);
+                    };
+                    reader.readAsArrayBuffer(this.files[0]);
+                }
+                else {
+                    alert("不支援的檔案類型");
+                }
+            });
+        </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 </main>
