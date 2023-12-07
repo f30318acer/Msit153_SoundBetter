@@ -30,6 +30,7 @@ namespace prjSoundBetterApi.Controllers
             var dbSoundBetterContext = _context.TProjects;
             return Json(dbSoundBetterContext);
         }
+
         //===List_MemberID===
         public IActionResult QueryByMember(int? id)//MemberId
         {
