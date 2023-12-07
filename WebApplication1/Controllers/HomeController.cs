@@ -102,10 +102,10 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
 
                 //驗證成功，取使用者資訊內容
-                ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
-                ViewData["Msg"] += "Email:" + payload.Email + "<br>";
-                ViewData["Msg"] += "Name:" + payload.Name + "<br>";
-                ViewData["Msg"] += "Picture:" + payload.Picture;
+                //ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
+                //ViewData["Msg"] += "Email:" + payload.Email + "<br>";
+                //ViewData["Msg"] += "Name:" + payload.Name + "<br>";
+                //ViewData["Msg"] += "Picture:" + payload.Picture;
             }
             else
             {

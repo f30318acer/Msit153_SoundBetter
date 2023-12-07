@@ -30,9 +30,8 @@ builder.Services.AddDbContext<dbSoundBetterContext>(
         builder.Configuration.GetConnectionString("dbSoundBetterConnection")
 ));
 
+//建立聊天室連接需要特別加這一段
 builder.Services.AddSignalR();
-
-
 
 
 //登入cookie 要加這一段才能使用
@@ -56,7 +55,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseRouting();
+
 
 //================= AspNetCore.Authentication 用戶登入驗證操作機制使用=====
 //執行順序不能顛倒不然驗證功能會無法正常工作。
@@ -70,6 +69,7 @@ app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseRouting();
 
 //app.UseAuthorization();
 
