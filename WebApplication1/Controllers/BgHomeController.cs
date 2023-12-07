@@ -1,31 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.ViewModels;
+using prjMusicBetter.Models.Services;
 
 namespace prjMusicBetter.Controllers
 {
     public class BgHomeController : Controller
 	{
 		private readonly dbSoundBetterContext _context;
-		public BgHomeController(dbSoundBetterContext context)
+        private readonly MemberService _memberService;
+		public BgHomeController(dbSoundBetterContext context ,MemberService memberService)
 		{
 			_context = context;
+            _memberService = memberService;
 		}
 
         public IActionResult Index()
 		{
 			return View();
 		}
-        //public List<ChartDataModel> GetMemberStatistics()
-        //{
-        //    return _context.TMembers
-        //               .GroupBy(m => m.FCreationTime.Year)
-        //               .Select(g => new ChartDataModel
-        //               {
-        //                   Label = g.Key.ToString(),
-        //                   Value = g.Count()
-        //               })
-        //               .ToList(); ;
-        //}
-}
+		public IActionResult actionResult()
+		{
+
+           
+            return View(data)
+        }
+       
+    }
 }
