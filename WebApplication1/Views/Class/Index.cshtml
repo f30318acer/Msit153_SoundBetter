@@ -169,7 +169,7 @@
 </section>
 <!-- Playlist section end -->
 <!-- Help section end -->
-<section class="help-section spad pt-0">
+@*<section class="help-section spad pt-0">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
@@ -185,14 +185,14 @@
             <div class="col-lg-6">
                 <div class="d-flex h-100 align-items-end">
                     <form class="search-form">
-                        @*<input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value=""/>
-                        <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>*@
+                        <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value=""/>
+                        <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- Help section end -->
 @section Scripts{
     <script>
@@ -206,7 +206,7 @@
             const divList = $('#divList');
             //讀取Json資料
             $.getJSON('/apiTClass/List', function (datas) {
-                //console.log(datas);
+                console.log(datas);
 
                 // 獲得限定頁面資料
                 const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
@@ -388,8 +388,9 @@
                 // 使用 Promise.all 確保所有非同步請求都完成後再進行排序和渲染
                 Promise.all(promises)
                     .then(cards => {
+                        console.log(cards);
                         // 如果資料為空，顯示提示訊息
-                        if (cards === null) {
+                        if (cards['length'] === 0) {
                             const docFrag = $(document.createDocumentFragment());
                             const card = $(
                                 `<div class="col-lg-6">
@@ -403,12 +404,13 @@
                                     </p>
                                 </div>`
                             );
+                            console.log("沒資料");
                             docFrag.append(card);
                             divList.html(docFrag);
                         } else {
                             // 根據 fClassId 屬性排序卡片
                             cards.sort((a, b) => a[0].fClassId - b[0].fClassId);
-
+                            console.log("寄");
                             // 渲染卡片
                             divList.html(cards.map(card => card[0]));
                         }

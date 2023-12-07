@@ -183,7 +183,7 @@ namespace prjMusicBetter.Controllers
             return Json(classfav);//我喜歡哪些課
         }
 
-        // POST: apiTClassFavs/Create
+        // 新增我的最愛
         [HttpPost]
         public async Task<IActionResult> CreateFav(int classId)
         {
@@ -194,10 +194,10 @@ namespace prjMusicBetter.Controllers
             _context.TClassFavs.Add(tClassFav);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok();//如果返回Ok()，就表示不向客户端返回任何信息，只告诉客户端请求成功
         }
 
-        // POST: apiTClassFavs/Delete
+        // 刪除我的最愛
         [HttpPost]
         public async Task<IActionResult> DeleteFav(int classId)
         {

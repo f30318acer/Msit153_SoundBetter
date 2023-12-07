@@ -50,7 +50,7 @@
                         <input type="hidden" id="fSiteID" name="fSiteID" value="1" />
                         <select id="fSiteName" name="fSiteName" required></select><br />
                     </div>
-                    <div class="col-md-12 pad">
+                    <div class="col-md-6 pad">
                         <label for="fOnLine">上課方式:</label>
                         <input type="hidden" id="fOnLine" name="fOnLine" value="0" />
                         <select id="fifOnLine" name="fifOnLine" required>
@@ -58,20 +58,21 @@
                             <option value="1">線上課程</option>
                         </select><br />
                     </div>
-                    <div class="col-md-12 pad">
-                        <label for="formFile">圖片:</label>
-                        <input type="file" id="formFile" name="formFile" accept="image/*" />
+                    <div class="col-md-6 pad">
+                        <label for="fSkillID">課程類型:</label>
+                        <input type="hidden" id="fSkillID" name="fSkillID" value="1" />
+                        <select id="fName" name="fName" required></select><br />
                     </div>
                     <div class="col-md-12 pad">
                         <label for="fMaxStudent">課程人數:</label>
                         <input type="text" id="fMaxStudent" name="fMaxStudent" required value="0"/>
                     </div>
-                    <input type="hidden" id="FCurrentStudent" name="FCurrentStudent" value="0" />
                     <div class="col-md-12 pad">
-                        <label for="fSkillID">課程類型:</label>
-                        <input type="hidden" id="fSkillID" name="fSkillID" value="1" />
-                        <select id="fName" name="fName" required></select><br />
+                        <label for="formFile">圖片:</label>
+                        <input type="file" id="formFile" name="formFile" accept="image/*" />
+                        <img id="imgPreview" src="~/img/classimg/class_bg.jpg" style="border-radius:10px; max-width: 400px; max-height: 400px;">
                     </div>
+                    <input type="hidden" id="FCurrentStudent" name="FCurrentStudent" value="0" />
                     <div class="col-md-12 pad">
                         <button id="buttonSubmit" type="submit" class="btm">確定建立</button>
                     </div>
@@ -197,6 +198,34 @@
                     })
             }
         })
+
+
+
+        //預覽圖片///////////////////////////////////////////////////////////////////////
+
+        var arrayBuffer;
+
+        $("#formFile").bind("change", function () {
+            var file = this.files[0];
+            var allowType = "image.*";
+            if (file.type.match(allowType)) {
+                //預覽
+                var reader = new FileReader();
+                reader.onload = function () {
+                    arrayBuffer = this.result;
+                    var blob = new Blob([arrayBuffer], {
+                        type: "image/jpeg"
+                    });
+                    var urlCreator = window.URL || window.webkitURL;
+                    var imageURL = urlCreator.createObjectURL(blob);
+                    $("#imgPreview").attr("src", imageURL);
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+            else {
+                alert("不支援的檔案類型");
+            }
+        });
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
