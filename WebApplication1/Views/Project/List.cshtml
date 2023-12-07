@@ -16,7 +16,7 @@
 					<select id="selectStyle" class="form-select mr-2"></select>
 					<input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字"class="mr-2"/>
 					<button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
-					<a href="~/Project/Create" type="button" class="btn btn-success mr-2">建立專案</a>
+					<a href="javascript:void(0);" type="button" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">建立專案</a>
 				</div>
 			</div>
 		</div>
@@ -177,7 +177,8 @@
 				(async function () {
 					for (const item of limitdatas) {
 						await LoadMemberInfo(item.fMemberId);
-						console.log(item.fProjectId); // 在這裡處理 memberName
+						console.log(item.fProjectId); 
+						// 在這裡處理 memberName
 						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
 						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
 								<div class="playlist-item">
@@ -215,6 +216,19 @@
 			load(1);
 			loadPage();
 			//$('#txtKeyword').val('');
-		});		
+		});
+		//判斷是否登入
+		async function CheckLoginAndNavigate() {
+			const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
+			const isLogin = await response.json();
+
+			if (isLogin) {
+				// 如果已登錄，導航到 ClassController/Create
+				window.location.href = "@Url.Action("Create", "Project")";
+			} else {
+				// 如果未登錄，導航到 Home/Login
+				window.location.href = "@Url.Action("Login", "Home")";
+			}
+		}
 	</script>
 }

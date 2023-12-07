@@ -50,6 +50,8 @@ namespace prjMusicBetter.Controllers
 		}
         public IActionResult Create()
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            ViewBag.MemberId = member.FMemberId;
             return View();
         }
     }

@@ -28,19 +28,19 @@
                                         </div>
                                     </div>
                                     
-                                    <input type="hidden" id="fMemberId" class="form-control" name="fMemberId" value="1" />                                   
+                                    <input type="hidden" id="fMemberId" class="form-control" name="fMemberId" value="@ViewBag.MemberId" />
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案名稱</label>
-                                            <input type="text" id="fName" class="form-control" name="fName" />
+                                            <input type="text" id="fName" class="form-control" name="fName" required />
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案風格</label>
                                             <div title="請選擇風格">
-                                                <select id="selectStyle" class="form-select" name="fStyleId"></select>
+                                                <select id="selectStyle" class="form-select" name="fStyleId" required></select>
                                             </div>                                            
                                         </div>
                                     </div>
@@ -48,27 +48,27 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">專案預算</label>
-                                            <input type="number" id="fBudget" class="form-control" name="fBudget" />
+                                            <input type="number" id="fBudget" class="form-control" name="fBudget" required />
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">專案介紹</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription" style="height: 100px" name="fDescription"></textarea>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription" style="height: 100px" name="fDescription" required></textarea>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">人員需求</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription2" style="height: 100px" name="fDescription2"></textarea>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fDescription2" style="height: 100px" name="fDescription2" required></textarea>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">製作期限</label>
-                                            <input type="datetime-local" class="form-control mb-3" id="fEnddate" name="fEnddate">
+                                            <input type="datetime-local" class="form-control mb-3" id="fEnddate" name="fEnddate" required>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
@@ -98,7 +98,7 @@
 @section Scripts{
     <script>
         const url = '/apiTProjects/Create';
-        const btn = document.querySelector('#buttonSend');
+        
         const selStyle = document.querySelector('#selectStyle');
         
         //圖片預覽
@@ -126,22 +126,45 @@
             }
         });
 
-        //===
+        //===新增資料=====
+        const btn = document.querySelector('#buttonSend');
+
         btn.addEventListener('click', event => {
             event.preventDefault();
-            const formData = new FormData(document.querySelector('#projectForm'));
-            fetch('@Url.Content("~/apiTProjects/Create")', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("新增成功");
-                        location.href = '@Url.Content("~/Project/List")';
-                    }
+            if (validateForm()) {
+                const formData = new FormData(document.querySelector('#projectForm'));
+                fetch('@Url.Content("~/apiTProjects/Create")', {
+                    method: 'POST',
+                    body: formData
                 })
-        
+                    .then(response => {
+                        if (response.ok) {
+                            alert("新增成功");
+                            location.href = '@Url.Content("~/Project/List")';
+                        }
+                    })
+            }        
         })
+
+        //檢查必填項目是否都已填寫///////////////////////////////////////////////////////////////////////
+
+        function validateForm() {
+            // 檢查必填項目是否都已填寫
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            let isAlertShown = false; // 追踪警告是否已經顯示
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    if (!isAlertShown) {
+                        alert('請填寫所有必填項目');
+                        isAlertShown = true; // 警告已經顯示
+                    }
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
         //===
 
         //$('#buttonSend').click(function () {
