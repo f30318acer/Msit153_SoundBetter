@@ -16,7 +16,7 @@ namespace prjMusicBetter.Controllers
             _userInfoService = userInfoService;
 
         }
-        [Authorize(Roles = "Member")]
+        //[Authorize(Roles = "Member")]
         public IActionResult List()
         {
             return View();
@@ -27,7 +27,13 @@ namespace prjMusicBetter.Controllers
 		}		
 		public async Task<IActionResult> Details(int? id)
 		{
-
+			TMember member = _userInfoService.GetMemberInfo();
+			ViewBag.MemberId = 0;
+			if (member != null)
+			{
+				ViewBag.MemberId = member.FMemberId;
+			}
+			
 			if (id == null || _context.TProjects == null)
 			{
 				return NotFound();
