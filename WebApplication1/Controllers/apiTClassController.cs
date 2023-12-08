@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
 using System.Formats.Asn1;
+using System.Text.RegularExpressions;
 
 namespace prjMusicBetter.Controllers
 {
@@ -17,26 +18,37 @@ namespace prjMusicBetter.Controllers
 			_context = context;
             _userInfoService = userInfoService;//抓使用者
         }
-
-		//===全部課程的資料===
-		public IActionResult List()
+        //===去除資料的html標籤===
+        public static string ReplaceHtmlTag(string Html)
+        {
+            Html = Regex.Replace(Html, "<[^>]*>", "");
+            return Html;
+        }
+        //===全部課程的資料===
+        public IActionResult List()
 		{
 			var dbSoundBetterContext = from s in _context.TClasses
 									   join c in  _context.TClassClicks
 									   on s.FClassId equals c.FClassId
                                        join m in _context.TMembers
                                        on s.FTeacherId equals m.FMemberId
+                                       join t in _context.TSites
+                                      on s.FSiteId equals t.FSiteId
                                        select new
                                        {
                                            fClassId = s.FClassId,
                                            fClassName = s.FClassName,
                                            fThumbnailPath = s.FThumbnailPath,
-                                           fSkillId = s.FSkillId,
-                                           fDescription = s.FDescription,
+                                           fCurrentStudent = s.FCurrentStudent,
+                                           fMaxStudent = s.FMaxStudent,
                                            fOnLine = s.FOnLine,
+                                           fSkillId = s.FSkillId,
+                                           fDescription = ReplaceHtmlTag(s.FDescription),
                                            fClick = c.FClick,
                                            fTeacherNmae = m.FName,
+                                           fSiteName = t.FSiteName
                                        };
+
             return Json(dbSoundBetterContext);
 		}
 		//===用MemberID搜尋===
@@ -59,8 +71,10 @@ namespace prjMusicBetter.Controllers
 										   fClassId = s.FClassId,
 										   fClassName = s.FClassName,
 										   fThumbnailPath = s.FThumbnailPath,
-										   fSkillId = s.FSkillId,
-										   fDescription = s.FDescription,
+                                           fCurrentStudent = s.FCurrentStudent,
+                                           fMaxStudent = s.FMaxStudent,
+                                           fSkillId = s.FSkillId,
+										   fDescription = ReplaceHtmlTag(s.FDescription),
 										   fOnLine = s.FOnLine,
 										   fClick = c.FClick,
 										   fTeacherNmae = m.FName,

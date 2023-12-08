@@ -96,7 +96,6 @@ public partial class dbSoundBetterContext : DbContext
     public virtual DbSet<TWorkType> TWorkTypes { get; set; }
 
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TApplicationRecord>(entity =>
