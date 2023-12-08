@@ -190,7 +190,7 @@ namespace prjMusicBetter.Controllers
                     if (FPhotoPath != null && FPhotoPath.Length > 0)
                     {
                         var fileName = Path.GetFileName(FPhotoPath.FileName);
-                        var filePath = Path.Combine(_environment.WebRootPath, "img", fileName);
+                        var filePath = Path.Combine(_environment.WebRootPath, "img/Member/", fileName);
 
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {

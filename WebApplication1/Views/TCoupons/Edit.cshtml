@@ -53,7 +53,7 @@
                                 <label asp-for="FPicture" class="control-label">圖片</label>
                                 @if (Model.FPicture != null)
                                 {
-                                    <img src="@Url.Content("~/img/" + Model.FPicture)" alt="Current Image" style="width:150px;" />
+                                    <img src="@Url.Content("~/img/CoolPon/" + Model.FPicture)" alt="Current Image" style="width:150px;" />
                                 }
                                 <input type="file" asp-for="FPicture" class="form-control" />
                                 <span asp-validation-for="FPicture" class="text-danger"></span>

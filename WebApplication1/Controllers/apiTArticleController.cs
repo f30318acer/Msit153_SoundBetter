@@ -70,8 +70,49 @@ namespace prjMusicBetter.Controllers
             }
             return Content("錯誤");
         }
-		//===PicturesByID===
-		public IActionResult QueryPictureByID(int? id)//MemberId
+        public IActionResult ArticleFav(int? id)
+        {
+            var Articlefav = _context.TArticleFavs.Where(m => m.FArticleId == id).Select(t => t.FMemberId);
+            return Json(Articlefav);//這堂課有誰喜歡
+        }
+        public IActionResult FavQueryById()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var Articlefav = _context.TArticleFavs.Where(m => m.FMemberId == member.FMemberId);
+            return Json(Articlefav);//我喜歡哪些課
+        }
+        // 新增我的最愛
+        [HttpPost]
+        public async Task<IActionResult> CreateFav(int ArticleId)
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var memberId = member.FMemberId;
+            var tArticleFav = new TArticleFav { FArticleId = ArticleId, FMemberId = memberId };
+
+            _context.TArticleFavs.Add(tArticleFav);
+            await _context.SaveChangesAsync();
+
+            return Ok();//如果返回Ok()，就表示不向客户端返回任何信息，只告诉客户端请求成功
+        }
+
+        // 刪除我的最愛
+        [HttpPost]
+        public async Task<IActionResult> DeleteFav(int ArticleId)
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var memberId = member.FMemberId;
+            var tArticleFav = await _context.TArticleFavs.FirstOrDefaultAsync(f => f.FArticleId == ArticleId && f.FMemberId == memberId);
+
+            if (tArticleFav != null)
+            {
+                _context.TArticleFavs.Remove(tArticleFav);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+        //===PicturesByID===
+        public IActionResult QueryPictureByID(int? id)//MemberId
 		{
 			if (id == null || _context.TArticlePictures == null)
 			{

@@ -196,7 +196,7 @@ namespace prjMusicBetter.Controllers
                     if (FPicture != null && FPicture.Length > 0)
                     {
                         var fileName = Path.GetFileName(FPicture.FileName);
-                        var filePath = Path.Combine(_environment.WebRootPath, "img", fileName);
+                        var filePath = Path.Combine(_environment.WebRootPath, "img/CoolPon/", fileName);
 
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {

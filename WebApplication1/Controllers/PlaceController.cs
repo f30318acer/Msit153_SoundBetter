@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using SendGrid.Helpers.Mail;
+using SendGrid;
 using System;
 
 namespace Music_matchmaking_platform.Controllers
