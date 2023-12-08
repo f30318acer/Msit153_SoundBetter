@@ -26,6 +26,16 @@ namespace prjSoundBetterApi.Controllers
             var dbSoundBetterContext = _context.TWorks;
             return Json(dbSoundBetterContext);
         }
+
+        public IActionResult MemberList()
+        {
+            var x = from m in _context.TMembers
+                    join w in _context.TWorks
+                    on m.FMemberId equals w.FMemberId
+                    select new {m.FMemberId ,m.FUsername,w.FFilePath,w.FWorkName ,m.FPhotoPath};
+            var y = x.Take(3);
+            return Json(y); 
+        }
         public IActionResult ListWithUserName()
         {
             var dbSoundBetterContext = from w in _context.TWorks

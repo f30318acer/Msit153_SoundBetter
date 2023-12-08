@@ -3,6 +3,19 @@
 @{
     ViewData["Title"] = "Details";
 }
+@section Styles
+{
+    <style>
+       /* .img {
+          width:200px ;height:300px;
+        }*/
+        #div01{
+ 
+            height: 90%;
+        }
+    </style>
+
+}
 
 <section class="category-section spad">
     <div class="container-fluid">
@@ -27,37 +40,9 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="category-items col-md-10">
-                <div id=" div01" class="row">
-                    <div class="col-md-4">
-                        <div class="category-item">
-                            <img src="~/img/playlist/99.jpg" alt="" height="250">
-                            <div class="ci-text">
-                                <h4>周杰倫</h4>
-                                <p>Live from Madrid</p>
-                            </div>
-                            <a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="category-item">
-                            <img src="~/img/playlist/22.jpg" alt="" height="250">
-                            <div class="ci-text">
-                                <h4>楊丞琳</h4>
-                                <p>Live from Madrid</p>
-                            </div>
-                            <a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="category-item">
-                            <img src="~/img/playlist/78.jpg" alt="" height="250">
-                            <div class="ci-text">
-                                <h4>王力宏</h4>
-                                <p>Live from Madrid</p>
-                            </div>
-                            <a href="artist.html" class="ci-link"><i class="fa fa-play"></i></a>
-                        </div>
-                    </div>
+                <div id="div01" class="row">
+                    <!--List_-->
+                    
 
                 </div>
             </div>
@@ -208,7 +193,7 @@
                 const divList = $('#divList')
                 //divList.empty();
 
-    $.getJSON('/apiTWork/ListWithUserName', function (datas) {
+                     $.getJSON('/apiTWork/ListWithUserName', function (datas) {
                     console.log(datas);
                     //獲得限定頁面資料
                     const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
@@ -216,7 +201,7 @@
                     const docFrag = $(document.createDocumentFragment())
                     $.each(limitdatas, function (index, item) {
                     const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-    const card = $(`
+                               const card = $(`
                             <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
                                 <div class="col-12 mb-2"></div>
                                 <div class="row playlist-item" style="margin: 0;">
@@ -250,13 +235,42 @@
                             </div>
                         <div class="col-12 mb-2"></div>
             `
-    );
+                              );
                         docFrag.append(card);
                     })
                     divList.html(docFrag)
                 })
             }
             firstLoad(1);
+
+            //DIv01 資料
+            function LoadDiv01() {
+                const div01=$('#div01')
+                $.getJSON('/apiTWork/MemberList', function (datas) {
+                    const docFrag = $(document.createDocumentFragment())
+                    $.each(datas, function (index, item) { 
+                        const card=$(
+                            `
+                            <div class="col-md-4">
+                                <div class="category-item">
+                                        
+                                            <img src="/img/Member/${item.fPhotoPath}" alt=""  style="width="200" height="200"">
+                                    
+                                    <div class="ci-text">
+                                        <h4>${item.fUsername}</h4>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            `
+                        )
+                    docFrag.append(card);
+                     })
+                div01.html(docFrag);
+                })
+            }
+        $(document).ready(function () {
+            LoadDiv01();
+        });
             //搜尋按鈕
             $('#btnSearch').click(function () {
                 //讀取條件篩選後第一頁,重新讀取分頁頁碼
@@ -265,62 +279,4 @@
                 //$('#txtKeyword').val('');
             });
     </script>
-
-
-
 }
-<div>
-    <h4>TWork</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FWorkName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FWorkName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FUpdateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FUpdateTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FThumbnail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FThumbnail)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FFilePath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FFilePath)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FMember)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FMember.FMemberId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FStyle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FStyle.FStyleId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FWorkType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FWorkType.FWorkTypeId)
-        </dd>
-    </dl>
-</div>
-
