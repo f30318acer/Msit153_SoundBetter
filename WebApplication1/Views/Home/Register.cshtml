@@ -20,6 +20,29 @@
         padding: 10px;
         height: auto; /* 或者具体的高度，根据需要调整 */
     }
+
+
+    .btn-dark {
+        width: 100%; /* 讓按鈕寬度與輸入框相匹配 */
+        padding: 10px;
+        margin-top: 10px; /* 在按鈕上方增加間隙 */
+    }
+
+
+
+    .custom-form-container {
+        max-width: 600px; /* 或者您希望的任何數值 */
+        margin: auto; /* 這將會使得表單在頁面中間 */
+    }
+
+    .card-container {
+        max-width: 400px; /* 或者您需要的宽度 */
+        margin: auto; /* 水平居中 */
+    }
+    p{
+        color:black;
+        font-size:20px;
+    }
 </style>
 
 
@@ -40,13 +63,13 @@
                                     <div class="photo-button mb-3">
                                         <div class="photo-card mb-2 d-flex justify-content-center">
                                             <div class="photo">
-                                                <img src="~/img/Member/default.jpg" class="circle-size-300" id="imgMember">
+                                                <img src="~/img/Member/default.jpg" class="circle-size-300" id="imgMember" width="450" height="330">
                                                 <input type="file" name="Photo" id="form-control" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
@@ -64,7 +87,6 @@
                                             @Html.ValidationMessageFor(member => member.fName, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">電子信箱</div>
@@ -73,7 +95,6 @@
                                             @Html.ValidationMessageFor(member => member.fEmail, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">電話</div>
@@ -82,24 +103,14 @@
                                             @Html.ValidationMessageFor(member => member.fPhone, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">密碼</div>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <p id="text">ji3g4da</p>
+                                        <div class="form-outline flex-fill mb-0">                                         
                                             <input type="password" id="fPassword" name="fPassword" class="form-control" placeholder="請輸入密碼" />
                                             @Html.ValidationMessageFor(member => member.fPassword, "", new { @class = "text-danger" })
                                         </div>
-                                    </div>
-                                    @*   <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                    <div class=" width-50px  fw-bold">確定密碼</div>
-                                    <div class="form-outline flex-fill mb-0">
-                                    <input type="password" id="ComfirmPassword" name="ComfirmPassword" class="form-control" placeholder="請重新輸入密碼" />
-                                    <span asp-validation-for="ComfirmPassword" class="text-danger"></span>
-                                    </div>
-                                    </div> *@
+                                    </div>                               
                                     <div class="pt-2 d-flex align-items-baseline">
                                         <div class=" width-50px  fw-bold">性別</div>
                                         <div class="mx-3 d-flex">
@@ -129,11 +140,11 @@
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                         <div class="d-flex justify-content-between p-2">
                                             <div class="p-2">
-                                            </div>
-                                            <div class="p-2">
-                                                <input type="button" class="btn btn-outline-secondary" value="Demo" id="Demo" />
-                                                <input type="submit" value="註冊" id="Login" class="btn btn-dark fw-bold">
                                                 @Html.ActionLink("取消", "Login", "Home", "", new { @class = "btn btn-outline-dark fw-bold" })
+                                                <input type="submit" value="註冊" id="Login" class="btn btn-outline-dark fw-bold">
+                                                <input type="button" class="btn btn-outline-secondary" value="Demo" id="Demo" />
+                                            </div>
+                                            <div class="p-2">                                                                                       
                                             </div>
                                         </div>
                                     </div>
@@ -146,32 +157,6 @@
         </div>
     </div>
 </section>
-
-@section Styles
-{
-    <style>
-
-
-        .btn-dark {
-            width: 100%; /* 讓按鈕寬度與輸入框相匹配 */
-            padding: 10px;
-            margin-top: 10px; /* 在按鈕上方增加間隙 */
-        }
-
-
-
-        .custom-form-container {
-            max-width: 600px; /* 或者您希望的任何數值 */
-            margin: auto; /* 這將會使得表單在頁面中間 */
-        }
-
-        .card-container {
-            max-width: 400px; /* 或者您需要的宽度 */
-            margin: auto; /* 水平居中 */
-        }
-    </style>
-}
-
 
 @section Scripts {
     <script>

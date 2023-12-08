@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function ()
+{
     // 從伺服器端獲取數據
     $.ajax({
         type: "GET",
@@ -45,3 +46,6 @@
         }
     });
 });
+
+
+

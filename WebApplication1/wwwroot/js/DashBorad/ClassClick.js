@@ -1,42 +1,35 @@
 ﻿$(document).ready(function () {
+    // 從伺服器端獲取課程點擊數據
     $.ajax({
-        url: '/Chart/ClickRatio',
-        type: 'GET',
-        dataType: 'json',
+        type: "GET",
+        url: '/Chart/ClickRatio', // 確保這是返回課程點擊數據的端點
         success: function (data) {
-            // 創建 Highcharts 圖表
-            Highcharts.chart('container', {
+            // 使用數據建立柱狀圖
+            Highcharts.chart('clickContainer', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Class Click Statistics'
+                    text: '課程點擊統計'
                 },
                 xAxis: {
-                    title: {
-                        text: 'Class ID'
-                    },
-                    categories: data.map(function (item) {
-                        return item.ClassID;
-                    })
+                    categories: data.map(item => 'Class ' + item.ClassID),
+                    crosshair: true
                 },
                 yAxis: {
                     min: 0,
                     title: {
                         text: 'Clicks'
-                    },
-                    allowDecimals: false
+                    }
                 },
                 series: [{
                     name: 'Clicks',
-                    data: data.map(function (item) {
-                        return item.Click;
-                    })
+                    data: data.map(item => item.Clicks) // 假設每個 Clicks 都是單一數字，而不是數組
                 }]
             });
         },
         error: function (error) {
-            console.log("Error fetching data", error);
+            console.error("發生錯誤:", error);
         }
     });
-});
+}
