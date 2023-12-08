@@ -151,25 +151,25 @@
 
 
 @section Scripts{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rainyday.js/0.1.2/rainyday.min.js"></script>
+    
 
     <script>
-        const image = document.querySelector('.img');
-        image.crossOrigin = 'anonymous';
-        const loadRainEffect = function () {
-            const rainEffect = new RainDay({
-                image: image,
-                gravityAngle: Math.PI / 3,
-                fps: 30,
-            });
-            rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
-        };
+        // const image = document.querySelector('.img');
+        // image.crossOrigin = 'anonymous';
+        // const loadRainEffect = function () {
+        //     const rainEffect = new RainDay({
+        //         image: image,
+        //         gravityAngle: Math.PI / 3,
+        //         fps: 30,
+        //     });
+        //     rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
+        // };
 
-        if (image.complete) {
-            loadRainEffect();
-        } else {
-            image.onload = loadRainEffect;
-        }
+        // if (image.complete) {
+        //     loadRainEffect();
+        // } else {
+        //     image.onload = loadRainEffect;
+        // }
 
         //一般會員登入 目前還沒設任何功能
         $('#DemoMember').on('click', function () {
