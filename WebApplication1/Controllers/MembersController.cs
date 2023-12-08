@@ -170,6 +170,7 @@ namespace prjMusicBetter.Controllers
             return PartialView(member);
         }
 
+        //個人會員好友名單
         public async Task<IActionResult> Friends(string searchString)
         {
             ViewData["CurrentFilter"] = searchString;
@@ -201,6 +202,8 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+
+        //個人會員黑名單
         public async Task<IActionResult> blackList()
         {
             TMember member = _userInfoService.GetMemberInfo();
@@ -221,6 +224,21 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+        //public async Task<IActionResult> Memberworks()
+        //{
+        //    TMember member = _userInfoService.GetMemberInfo();
+        //    if(member == null)
+        //    {
+        //        return RedirectToAction("Members", "Index");
+        //    }
+        //    var memberworksIds = await _context.TWorks
+        //        .Where(x=>x.FMemberId==member.FMemberId)
+        //        .Select(x=>x.FWorkId)
+        //        .ToListAsync();
+
+        //}
+
+
         public async Task<IActionResult> MemberCoupon()
         {
             TMember member = _userInfoService.GetMemberInfo();

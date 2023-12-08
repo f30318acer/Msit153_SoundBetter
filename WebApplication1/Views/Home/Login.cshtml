@@ -5,7 +5,9 @@
 }
 
 
+
 <section class="vh-100">
+    <div id="rainy"></div>
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-6 col-xl-6">
@@ -15,11 +17,12 @@
                             <div class="col-md-10 col-lg-7 order-2 order-lg-1">
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
                                 <form class="mx-1 mx-md-4" method="post" action="@Url.Action("Login","Home")">
-                                    <div class="mb-3">
-                                    @*     <img src="@Url.Content("~/assets/img/background/rain.jpg")" class="img-fluid img" alt="Rainy Background" /> *@
+                                    <div class="mb-3">                                     
                                         <label for="inputEmail">帳號:</label>
-                                        <input type="email" name="Email" id="inputEmail" class="form-control" value="" />
-                                        @* <input type="email" name="Email"id="inputEmail" class="form-control"value="" /> *@
+                                        <body onload="run();">
+                                            <img id="background" alt="background" src="~/assets/img/background/Rain.jpg" />
+                                        </body>
+                                        <input type="email" name="Email" id="inputEmail" class="form-control" value="" />                                      
                                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="mb-3">
@@ -88,12 +91,13 @@
     </div>
 </section>
 
+<script src="~/js/rainyday.min.js"></script>
 
 @section Styles
 {
     <style>
         .vh-100 {
-            background: url('@Url.Content("~/assets/img/background/rain.jpg")') no-repeat center center fixed;
+            background: url('@Url.Content("~/assets/img/background/Rain.jpg")') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -127,6 +131,25 @@
             margin: auto; /* 這將會使得表單在頁面中間 */
         }
 
+        #rainy {
+            position: fixed; /* or absolute */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1; /* Behind the content */
+        }
+
+        .container {
+            position: relative;
+            z-index: 20; /* 高於雨滴效果的層級 */
+        }
+
+        .card {
+            background: white; /* or any non-transparent color */
+            /* other styles */
+        }
+
         p {
             color: black;
         }
@@ -135,8 +158,6 @@
 @section Scripts
 {
     <script>
-
-
 
         //一般會員登入
         $('#DemoMember').on('click', function () {
@@ -152,23 +173,59 @@
         })
 
         //雨滴功能
-
-        const image = document.querySelector('.img');
+        // const image = document.querySelector('background');
         
-        image.crossOrigin = 'anonymous';
-        const loadRainEffect = function () {
-            const rainEffect = new RainDay({
-                image: image,
-                gravityAngle: Math.PI / 3,
-                fps: 30,
-            });
-            rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
+        // image.crossOrigin = 'anonymous';
+        // const loadRainEffect = function () {
+        //     const rainEffect = new RainDay({
+        //         image: image,
+        //         gravityAngle: Math.PI / 3,
+        //         fps: 30,
+        //     });
+        //     rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
+        // };
+
+        // if (image.complete) {
+        //     loadRainEffect();
+        // } else {
+        //     image.onload = loadRainEffect;
+        // }
+
+
+        window.onload = function () {
+            var image = document.getElementById('rainy');
+            if (image) {
+                // 創建一個新的圖片對象，用於雨滴效果
+                var img = new Image();
+                img.onload = function () {
+                    var engine = new RainyDay({
+                        image: this
+                    });
+                    engine.rain([[3, 3, 0.1], [5, 5, 0.2]], 100);
+                };
+                img.crossOrigin = 'anonymous';
+                img.src = '@Url.Content("~/assets/img/background/Rain.jpg")'; // 使用 ASP.NET Core 的 Url.Content 方法
+
+                img.style.width = '100%';
+                img.style.height = '100%';
+
+                // 將圖片加入到 #rainy 容器中
+                image.appendChild(img);
+            }
         };
 
-        if (image.complete) {
-            loadRainEffect();
-        } else {
-            image.onload = loadRainEffect;
-        }
+        // window.onload = function () {
+        //     var image = document.getElementById('background');
+        //     if (image) {
+        //         image.crossOrigin = 'anonymous';
+        //         image.onload = function () {
+        //             var engine = new RainyDay({
+        //                 image: this
+        //             });
+        //             engine.rain([[3, 3, 0.1], [5, 5, 0.2]], 100);
+        //         };
+        //         image.src = image.getAttribute('src'); // 重新觸發onload事件
+        //     }
+        // };
     </script>
 }
