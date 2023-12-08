@@ -21,8 +21,10 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            帳號:
-                                            <input type="email" name="Email"id="inputEmail" class="form-control"value="" />
+                                            <label for="inputEmail">帳號:</label>
+                                            <input type="email" name="Email" id="inputEmail" class="form-control" value="" />
+
+                                            @* <input type="email" name="Email"id="inputEmail" class="form-control"value="" /> *@
                                             @Html.ValidationMessageFor(model => model.Email,"",new{@class = "text-danger"})
                                         </div>
                                     </div>
@@ -147,7 +149,7 @@
     </style>
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/rainyday.js/0.1.2/rainyday.min.js"></script>
+
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rainyday.js/0.1.2/rainyday.min.js"></script>
 
