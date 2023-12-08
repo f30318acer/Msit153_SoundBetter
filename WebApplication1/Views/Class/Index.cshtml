@@ -141,6 +141,9 @@
     }
 </style>
 <!-- Playlist section -->
+<!-- 在<body>標籤內引入CKEditor 5腳本 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+
 <section class="playlist-section spad">
     <div class="container-fluid">
         <div class="section-title">
@@ -212,7 +215,7 @@
             const divList = $('#divList');
             //讀取Json資料
             $.getJSON('/apiTClass/List', function (datas) {
-                console.log(datas);
+                //console.log(datas);
 
                 // 獲得限定頁面資料
                 const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
@@ -222,6 +225,8 @@
                 const promises = limitdatas.map(item => new Promise(resolve => {
                     checkIfFavorite(item.fClassId, isFavorite => {
                         const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
+
+                        const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
 
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
@@ -234,7 +239,7 @@
                                          <div class="ClassName">
                                              <h5>${item.fClassName}</h5>
                                          </div>
-                                         <p>${item.fDescription}</p>
+                                         <p>${Description}</p>
                                      </div>
                                      <div>
                                          <h5>導師：${item.fTeacherNmae}</h5>
@@ -249,6 +254,7 @@
                         resolve(card);
                     });
                 }));
+
 
                 // 使用 Promise.all 確保所有非同步請求都完成後再進行排序和渲染
                 Promise.all(promises)
@@ -343,6 +349,8 @@
 
                         const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
 
+                        const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
+
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                 <a href="/Class/Viewclass?id=${item.fClassId}">
@@ -354,7 +362,7 @@
                                         <div class="ClassName">
                                             <h5>${item.fClassName}</h5>
                                         </div>
-                                        <p>${item.fDescription}</p>
+                                                <p>${Description}</p>
                                     </div>
                                     <div>
                                         <h5>導師：${item.fTeacherNmae}</h5>

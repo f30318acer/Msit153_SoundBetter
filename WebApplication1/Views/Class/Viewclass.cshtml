@@ -204,8 +204,8 @@
     <section class="songs-details-section">
         <div class="detail-block">
             <h3 class="detail-title">課程簡介</h3>
-            <span class="detail-wrapper">
-                @Model.FDescription
+            <span class="detail-wrapper" style="text-align: left;">
+                @Html.Raw(Model.FDescription)
             </span>
         </div>
     </section>
@@ -225,49 +225,49 @@
 @section Scripts {
     <script>
         function checkQuota() {
-        // 檢查是否符合課程名額條件
-        if (@Model.FCurrentStudent < @Model.FMaxStudent) {
-            // 符合條件，執行頁面跳轉
-            return true;
-        } else {
-            // 不符合條件，顯示提醒並阻止表單提交
-            alert("不好意思，課程名額已滿");
-            return false;
+            // 檢查是否符合課程名額條件
+            if (@Model.FCurrentStudent < @Model.FMaxStudent) {
+                // 符合條件，執行頁面跳轉
+                return true;
+            } else {
+                // 不符合條件，顯示提醒並阻止表單提交
+                alert("不好意思，課程名額已滿");
+                return false;
+            }
         }
-    }
 
-    function firstLoad(pageNumber) {
-            const divList = $('#divList')
-            //讀取Json資料
-            const SkillId = @Model.FSkillId
-            console.log(SkillId);
-            $.getJSON(`/apiTClass/QueryBySkillID?id=${SkillId}`, function (datas) {
-                console.log(datas);
+        function firstLoad(pageNumber) {
+                const divList = $('#divList')
+                //讀取Json資料
+                const SkillId = @Model.FSkillId
+                console.log(SkillId);
+                $.getJSON(`/apiTClass/QueryBySkillID?id=${SkillId}`, function (datas) {
+                    console.log(datas);
 
-                //獲得限定頁面資料
-                //slice(a,b) 陣列datas第a項到第b項的所有資料
-                //這裡是第0項到第4項
-                const limitdatas = datas.slice(0, 4);
+                    //獲得限定頁面資料
+                    //slice(a,b) 陣列datas第a項到第b項的所有資料
+                    //這裡是第0項到第4項
+                    const limitdatas = datas.slice(0, 4);
 
-                //做出一個空的容器來存放div
-                const docFrag = $(document.createDocumentFragment())
+                    //做出一個空的容器來存放div
+                    const docFrag = $(document.createDocumentFragment())
 
-                //讀出每個Json物件
-                $.each(limitdatas, function (index, item) {
-                    //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                    const card = $(
-                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                            <a href="/Class/Viewclass?id=${item.fClassId}">
-                                <div class="playlist-item">
-                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                    <h5>${item.fClassName}</h5>
-                                </div>
-                            </a>
-                        </div>`);
-                    docFrag.append(card);//.append()將一筆div放入容器中
+                    //讀出每個Json物件
+                    $.each(limitdatas, function (index, item) {
+                        //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(
+                            `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                <a href="/Class/Viewclass?id=${item.fClassId}">
+                                    <div class="playlist-item">
+                                        <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                        <h5>${item.fClassName}</h5>
+                                    </div>
+                                </a>
+                            </div>`);
+                        docFrag.append(card);//.append()將一筆div放入容器中
+                    })
+                    divList.html(docFrag)//.html()一次將全部的資料都上傳
                 })
-                divList.html(docFrag)//.html()一次將全部的資料都上傳
-            })
         }
         firstLoad(1);
     </script>

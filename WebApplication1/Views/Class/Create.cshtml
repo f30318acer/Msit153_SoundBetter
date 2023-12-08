@@ -16,6 +16,9 @@
     }
 </style>
 <!-- Contact section -->
+<!-- 在<body>標籤內引入CKEditor 5腳本 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+
 <section class="contact-section">
     <div class="container-fluid">
         <div class="contact-warp">
@@ -90,6 +93,18 @@
 
 @section Scripts {
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 將<textarea>元素轉換為CKEditor 5編輯器
+            ClassicEditor
+                .create(document.querySelector('#fDescription'))
+                .then(editor => {
+                    editorInstance = editor; // 賦值 CKEditor 實例給全局變數
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
         //讓上課地點選項顯示fSiteName
         const SiteID = document.querySelector('#fSiteID');
         const SiteName = document.querySelector('#fSiteName');
@@ -184,20 +199,29 @@
         btn.addEventListener('click', event => {
 
             event.preventDefault();//不讓submit運作
-            if (validateForm()) {
-                //傳整個Form的資料
-                const formData = new FormData(document.querySelector('#classForm'));
+            // 檢查是否存在 CKEditor 實例
+            if (editorInstance) {
+                // 將 CKEditor 5 的內容設定為 textarea 的值
+                const descriptionTextarea = document.querySelector('#fDescription');
+                descriptionTextarea.value = editorInstance.getData();
 
-                fetch('@Url.Content("~/apiTClass/Create")', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("新增成功");
-                            location.href = '@Url.Content("~/Members/Memberclass")';
-                        }
+                if (validateForm()) {
+                    // 傳整個 Form 的資料
+                    const formData = new FormData(document.querySelector('#classForm'));
+
+                    fetch('@Url.Content("~/apiTClass/Create")', {
+                        method: 'POST',
+                        body: formData
                     })
+                        .then(response => {
+                            if (response.ok) {
+                                alert("新增成功");
+                                location.href = '@Url.Content("~/Members/Memberclass")';
+                            }
+                        });
+                }
+            } else {
+                console.error('CKEditor 實例不存在或未正確加載。');
             }
         })
 
