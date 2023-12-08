@@ -39,12 +39,31 @@
 	</div>
 @* 	<!-- 留言部分 -->
 	<div> 
-	<form class="input-group" asp-action="AddComment" asp-route-Id="@Model.TComment.FMemberID">
+	<form class="input-group" asp-action="AddComment" asp-route-Id="@Model.TArticles.FMemberID">
 		<textarea class="form-control" type="text"
 				  placeholder="請先登入再留言" name="myComment"></textarea>
 		<input class="btn btn-sm btn-primary" type="submit" value="送出" />
 	</form>
 	</div>
 	<!-- 留言部分 --> *@
+
+	@* <!-- 留言部分2 -->
+	<p class="alert-light m-0">共 @Model.TArticles.Comments.Count 則留言</p>
+	<div>
+		@foreach (var comment in Model.TArticles.Comments)
+		{
+			<div class="row m-3">
+				<div class="col-1"><img src="~/image/person.png" /></div>
+				<div class="col-11" style="background-color: #f8f9fa">
+					<p>
+						<span class="font-weight-bold">@comment.FMemberID</span>
+						<span class="text-muted">． @comment.FCommentTime</span>
+					</p>
+					<p>@comment.Content</p>
+				</div>
+			</div>
+		}
+	</div>
+	<!-- 留言部分2 --> *@
 </section>
 <!-- Blog section end -->
