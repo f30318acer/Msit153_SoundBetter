@@ -3,7 +3,19 @@
     ViewData["Title"] = "List";
 }
 
+<style>
+	#divList {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start; /* 靠左對齊，可根據需要更改 */
+		align-items: flex-start; /* 靠上對齊，可根據需要更改 */
+	}
 
+	.playlist-item {
+		/* 這裡可以添加卡片的樣式 */
+		margin: 10px; /* 可根據需要調整邊距 */
+	}
+</style>
 <!-- Playlist section -->
 <section class="playlist-section spad">
 	<div class="container-fluid">
@@ -62,8 +74,8 @@
 			const response = await fetch('@Url.Content("~/apiTProjects/SkillsList")');
 			const data = await response.json();
 			console.log(data);
-			const defaultBtn = '<div class="col-12 mb-3"><button value="100" class="btn btn-info mr-2 btnSkill active" style="width: 210px;background-color: #fc0254;">所有技能</button></div>';
-			const skillsBtn = data.map(s => `<div class="col-6 mb-3"><button value="${s.fSkillId}" class="btn btn-secondary mr-2 btnSkill" style="width: 90px;">${s.fName}</button></div>`);
+			const defaultBtn = '<div class="col-12 mb-3"><button value="100" class="btn btn-info mr-2 btnSkill activeSkill" style="width: 210px;height:40px;background-color: #fc0254;">所有技能</button></div>';
+			const skillsBtn = data.map(s => `<div class="col-6 mb-3"><button value="${s.fSkillId}" class="btn btn-secondary mr-2 btnSkill" style="width: 90px;height: 40px">${s.fName}</button></div>`);
 			skillsBtn.unshift(defaultBtn);
 			skillList.innerHTML = skillsBtn.join("");
 		}
@@ -122,7 +134,7 @@
 			}
 			//Skill條件
 			if (skillID != 100) {
-				filteredDatas = filteredDatas.filter(item => item.fSkillId == skillID);				
+				filteredData = filteredData.filter(item => item.fSkillId == skillID);
 
 			}
 
@@ -139,7 +151,6 @@
 				pageButtonsContainer.append(button);
 			}
 		}
-		loadPage();
 		//載入資料
 		function load(pageNumber) {
 			const divList = $('#divList')
@@ -183,13 +194,14 @@
 				(async function () {
 					for (const item of limitdatas) {
 						await LoadMemberInfo(item.fMemberId);
+						await LoadAppliNumber(item.fProjectId);
 						console.log(item.fProjectId); // 在這裡處理 memberName
 						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
 						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
 								<div class="playlist-item">
 									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
 									<h5>${item.fName}</h5>
-									<p style="margin:0px">製作人:${memberName}/應徵人數:0</p>
+									<p style="margin:0px">製作人 : ${memberName} / 應徵人數 : ${appliNum}</p>
 									<p>${descriSub}</p>
 								</div>
 							</a>`);
@@ -201,6 +213,25 @@
 			});			
 		}
 
+		//第一次讀取分頁按鈕
+		async function firstLoadPage() {
+			const response = await fetch('@Url.Content("~/apiTProjects/List")');
+			const data = await response.json();
+
+			const dataCount = data.length;
+			const pageCount = Math.ceil(dataCount / onePage);
+
+			// 清空現有按鈕
+			pageButtonsContainer.empty();
+			for (let i = 1; i <= pageCount; i++) {
+				let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+				button.click(function () {
+					load(i);
+				});
+				pageButtonsContainer.append(button);
+			}
+		}
+		firstLoadPage();
 		//第一次讀取
 		function firstLoad(pageNumber) {
 			const divList = $('#divList')
@@ -214,14 +245,14 @@
 				(async function () {
 					for (const item of limitdatas) {
 						await LoadMemberInfo(item.fMemberId);
-						console.log(item.fProjectId); 
+						await LoadAppliNumber(item.fProjectId);
 						// 在這裡處理 memberName
 						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
 						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
 								<div class="playlist-item">
 									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
 									<h5>${item.fName}</h5>
-									<p style="margin: 0;">製作人:${memberName}/應徵人數:0</p>
+									<p style="margin: 0;">製作人 : ${memberName} / 應徵人數 : ${appliNum}</p>
 									<p>${descriSub}</p>
 								</div>
 							</a>`);
@@ -241,6 +272,16 @@
 			return new Promise(function (resolve) {
 				$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
 					memberName = datas.fUsername;
+					resolve();
+				});
+			});
+		}
+		//讀取應徵資料
+		let appliNum;
+		function LoadAppliNumber(projectId){
+			return new Promise(function(resolve){
+				$.get(`/apiTProjects/QueryApppliNumById/${projectId}`,function(data){
+					appliNum = data;
 					resolve();
 				});
 			});
