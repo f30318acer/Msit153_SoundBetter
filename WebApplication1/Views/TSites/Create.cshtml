@@ -45,7 +45,8 @@
             <div class="form-group">
                 <label class="control-label">圖片</label>
                 <img id="imgPreview" src="https://miro.medium.com/v2/resize:fit:2700/1*TmKyEbnyhKvgKsDB4-3JlA.gif" style="width: 500px; height: 300px;">
-                <input class="form-control btn btn-success" type="file" id="imgFile" name="formFile" />
+                <input class="btn btn-success" type="file" id="imgFile" />
+                <input type="hidden" id="croppedImageInput" name="formFile" />
                 <br />
                 <div id="croppie-container"></div>
                 <br /><br />
@@ -123,11 +124,20 @@
         $("#crop_img").on("click", function () {
             // 在這裡處理裁剪圖片的邏輯
             croppieInstance.croppie('result', {
-                type: 'canvas',
-                size: 'original'
+                type: 'blob',
+                size: 'original',
+                format: 'jpeg'
             }).then(function (result) {
                 // 在這裡將裁剪後的圖片顯示在 imgPreview 中
-                $("#imgPreview").attr("src", result);
+                var urlCreator = window.URL || window.webkitURL;
+                var imageURL = urlCreator.createObjectURL(result);
+                $("#imgPreview").attr("src", imageURL);
+                // 將Blob轉換為File對象，並設置名稱
+                var file = new File([result], 'croppedImage.jpg', { type: 'image/jpeg' });
+                // 設置隱藏的input元素的值為Blob數據的URL
+                $("#croppedImageInput").val(window.URL.createObjectURL(file));
+                // 提示用戶已經完成裁剪
+                alert("圖片裁剪完成！");
             });
         });
     </script>
