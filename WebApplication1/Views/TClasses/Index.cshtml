@@ -24,7 +24,7 @@
 <main id="main" class="main">
 <h1>課程管理</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+        <a asp-action="Create" class="btn">新增課程</a>
 </p>
 <table class="table">
     <thead>
@@ -106,15 +106,19 @@
                 @Html.DisplayFor(modelItem => item.FCurrentStudent)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FSkill)
+                @Html.DisplayFor(modelItem => item.FSkill.FName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FOnLine)
+                        @{
+                            var onLineValue = item.FOnLine;
+                            var displayText = (onLineValue == 0) ? "實體課程" : "線上課程";
+                        }
+                        @displayText
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FClassId" class="btn">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FClassId" class="btn">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FClassId" class="btn">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.FClassId" class="btn">修改</a> |
+                <a asp-action="Details" asp-route-id="@item.FClassId" class="btn">課程內容</a> |
+                <a asp-action="Delete" asp-route-id="@item.FClassId" class="btn">刪除</a>
             </td>
         </tr>
 }
