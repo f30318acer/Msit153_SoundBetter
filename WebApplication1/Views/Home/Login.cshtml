@@ -73,8 +73,9 @@
 
                                             <div class="  container col-12">
                                                 <div class=" p-2 col-12">
-                                                    <input type="button" class="btn btn-outline-secondary" value="DemoMember" id="DemoMember" />
-                                                    <input type="button" class="btn btn-outline-secondary" value="DemoAdministrator" id="DemoAdministrator" />
+
+                                                    <input type="button" class="btn btn-dark" value="DemoMember" id="DemoMember" />
+                                                    <input type="button" class="btn btn-dark" value="DemoAdministrator" id="DemoAdministrator" />
                                                 </div> 
                                             </div>
                                              <div class="p-2">
@@ -102,6 +103,7 @@
                                 </form>
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                             
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
                                     id="img" class="img-fluid"*@ alt="Sample image">
                             </div>
@@ -113,8 +115,60 @@
     </div>
     </section>
 
+
+@section Styles
+{
+   <style>
+        .vh-100 {
+            background: url('@Url.Content("~/assets/img/background/rain.jpg")') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.4); /* 半透明背景 */
+            border-radius: 15px; /* 边框圆角 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
+        }
+
+        .btn-dark btn-outline-dark btn btn-outline-secondary {
+            background-color: #000; /* 按钮背景颜色 */
+            border-radius: 10px; /* 按钮的边框圆角 */
+            color: #fff; /* 按钮文字颜色 */
+            padding: 10px 20px; /* 按钮内边距 */
+            font-size: 16px; /* 文字大小 */
+            border: none; /* 去除边框 */
+        }
+
+        .form-control {
+            border-radius: 10px; /* 输入框的边框圆角 */
+            border: 1px solid #ccc; /* 输入框边框 */
+            padding: 15px; /* 输入框内边距 */
+        }
+    </style>
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rainyday.js/0.1.2/rainyday.min.js"></script>
 @section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rainyday.js/0.1.2/rainyday.min.js"></script>
+
     <script>
+        const image = document.querySelector('.img');
+        image.crossOrigin = 'anonymous';
+        const loadRainEffect = function () {
+            const rainEffect = new RainDay({
+                image: image,
+                gravityAngle: Math.PI / 3,
+                fps: 30,
+            });
+            rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
+        };
+
+        if (image.complete) {
+            loadRainEffect();
+        } else {
+            image.onload = loadRainEffect;
+        }
+
         //一般會員登入 目前還沒設任何功能
         $('#DemoMember').on('click', function () {
             let email = "gaytony@gmail.com"

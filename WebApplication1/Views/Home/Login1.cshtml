@@ -1,0 +1,56 @@
+﻿@model prjMusicBetter.Models.ViewModels.LoginVM
+
+@{
+    ViewData["Title"] = "Login1";
+ 
+}
+<html>
+<head>
+    <link rel="stylesheet "href="~/assets/css/Login.css" />
+    
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+
+
+
+<body>
+    <form class="card">
+        <h1 class="title">Login</h1>
+        <div class="input-group">
+            <input type="email" class="form-control" id="email" /><label for="email"
+                                                                         class="label">
+                Email
+            </label>
+        </div>
+        <div class="input-group" id="password">
+            <input type="password" class="form-control" /><label for="password"
+                                                                 class="label">password</label>
+        </div>
+    </form>
+    <img src="https://images.unsplash.com/photo-1624607391660-d61e7c44c31b?ixlib=rb-4.0.3&"
+         alt="" class="img" />
+
+</body>
+</html>
+
+
+@section Scripts{
+    <script>
+        //一般會員登入 目前還沒設任何功能
+        $('#DemoMember').on('click', function () {
+            let email = "gaytony@gmail.com"
+            $('#inputEmail').val(email)
+            $('#inputPassword').val("123")
+        })
+        //管理員登入
+        $('#DemoAdministrator').on('click', function () {
+            let email = "kevin@gmail.com"
+            $('#inputEmail').val(email)
+            $('#inputPassword').val("123")
+        })
+    </script>
+
+}
