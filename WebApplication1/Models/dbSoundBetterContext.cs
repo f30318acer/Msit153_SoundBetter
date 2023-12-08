@@ -95,7 +95,10 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TWorkType> TWorkTypes { get; set; }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 185a56a4eee5a53bc0ae5fcd7126fbdc94666e34
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

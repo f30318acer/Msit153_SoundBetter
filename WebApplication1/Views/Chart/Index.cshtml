@@ -1,4 +1,4 @@
-﻿
+﻿@model prjMusicBetter.Models.ViewModels.DashboardViewModel;
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout2";
@@ -18,7 +18,7 @@
     .highcharts-figure, .highcharts-data-table table {
         min-width: 310px;
         max-width: 800px;
-        margin: 30px auto; /* 或者增加更多的上邊距 */
+        margin: 70px auto; /* 或者增加更多的上邊距 */
     }
 
     .highcharts-description {
@@ -32,10 +32,13 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+
 <figure class="highcharts-figure">
     <div id="container"></div>
     <p class="highcharts-description">     
         會員男女比
     </p>
 </figure>
+
+
 <script src="~/js/DashBorad/DashBorad.js"></script>
