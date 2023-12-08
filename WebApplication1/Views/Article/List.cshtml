@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "List2";
 }
 
 
@@ -141,6 +141,9 @@
 				const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
 
 				const docFrag = $(document.createDocumentFragment())
+				const promises = limitdatas.map(item => new Promise(resolve => {
+					checkIfFavorite(item.fClassId, isFavorite => {
+						const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
 				$.each(limitdatas, function (index, item) {
 					const descriSub = item.fContent.length > 15 ? item.fContent.substring(0, 15) + '...' : item.fContent;
 					const card = $(

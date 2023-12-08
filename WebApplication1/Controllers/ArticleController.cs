@@ -18,8 +18,18 @@ namespace prjMusicBetter.Controllers
             _context = context;
             _userInfoService = userInfoService;
         }
-        public IActionResult List()
+        public IActionResult List3()
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                // 處理會員資料不存在的情況，導向登入頁面
+                return RedirectToAction("Login", "Home"); // 導向登入頁面
+            }
+            if (member != null)
+            {
+                ViewBag.MemberId = member.FMemberId;
+            }
             return View();
         }
         public IActionResult Detail2()
