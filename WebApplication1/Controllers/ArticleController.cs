@@ -35,7 +35,10 @@ namespace prjMusicBetter.Controllers
         public IActionResult Detail2()
         {
             return View();
-        }
+
+            //留言部分
+			//await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == Id);
+		}
         public IActionResult Create()
         {
             return View();
@@ -145,8 +148,8 @@ namespace prjMusicBetter.Controllers
 
             _context.Add(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = Id });
-        }
+            return RedirectToAction("Detail2", new { id = Id });			
+		}
 
-    }
+	}
 }

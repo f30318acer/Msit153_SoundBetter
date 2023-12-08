@@ -51,8 +51,23 @@ namespace prjSoundBetterApi.Controllers
             }
             return Json(tProject);
         }
-        //===List_Status===
-        public IActionResult QueryByStatus(int? id)//StatusId
+		//===AppliNum_By_ProjectID===
+		public IActionResult QueryApppliNumById(int? id)//ProjectId
+		{
+			if (id == null || _context.TProjects == null)
+			{
+				return Content("0");
+			}
+
+			var appliRec = _context.TApplicationRecords.Where(m => m.FProjectId == id);
+			if (appliRec == null)
+			{
+				return Content("0");
+			}
+			return Content(appliRec.Count().ToString());
+		}
+		//===List_Status===
+		public IActionResult QueryByStatus(int? id)//StatusId
         {
             if (id == null || _context.TProjects == null)
             {

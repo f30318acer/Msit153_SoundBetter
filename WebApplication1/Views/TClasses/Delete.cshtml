@@ -2,68 +2,124 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "_Layout2";
 }
 
-<h1>Delete</h1>
+<h1>刪除課程</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>確定要刪除課程嗎?</h3>
 <div>
-    <h4>TClass</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FClassName)
+        <dt class="col-sm-2">
+            課程名稱
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FClassName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FPrice)
+        <dt class="col-sm-2">
+            單堂價格
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FPrice)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FDescription)
+        <dt class="col-sm-2">
+            課程說明
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FDescription)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FStartdate)
+        <dt class="col-sm-2">
+            開始日期
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FStartdate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FEnddate)
+        <dt class="col-sm-2">
+            結束日期
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FEnddate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FThumbnailPath)
+        <dt class="col-sm-2">
+            圖片名稱
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FThumbnailPath)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSite)
+        <dt class="col-sm-2">
+            地點
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSite.FSiteId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FSite.FSiteName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FTeacher)
+        <dt class="col-sm-2">
+            教師
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FTeacher.FMemberId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FTeacher.FName)
+        </dd>
+        <dt class="col-sm-2">
+            最大人數
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FMaxStudent)
+        </dd>
+        <dt class="col-sm-2">
+            目前人數
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FCurrentStudent)
+        </dd>
+        <dt class="col-sm-2">
+            課程類型
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FSkill.FName)
+        </dd>
+        <dt class="col-sm-2">
+            上課方式
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var onLineValue = Model.FOnLine;
+                var displayText = (onLineValue == 0) ? "實體課程" : "線上課程";
+            }
+
+            @*@Html.DisplayFor(model => model.FOnLine)*@
+            @displayText
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="FClassId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <button id="deleteButton" name="deleteButton" class="btn btn-danger">刪除課程</button> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+ @section Scripts {
+    <script>
+        // 刪除課程///////////////////////
+
+        document.getElementById('deleteButton').addEventListener('click', function () {
+            var result = confirm("確定要刪除課程嗎？");
+
+            if (result) {
+                // 如果用戶確認刪除，則執行刪除操作
+                var classId = @Model.FClassId; // 使用 Razor 語法獲取課程 ID
+                fetch('@Url.Action("Delete", "apiTClass")/' + classId, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("課程刪除成功");
+                            location.href = '@Url.Content("~/TClasses/Index")';
+                            // 這裡可以重定向到某個頁面或執行其他操作
+                        } else {
+                            alert("課程刪除失敗");
+                        }
+                    });
+            }
+        });
+    </script>
+ }

@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <form asp-action="Create" method="post" enctype="multipart/form-data" id="siteForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FSiteName" class="control-label">場地名稱</label>
@@ -46,15 +46,14 @@
                 <label class="control-label">圖片</label>
                 <img id="imgPreview" src="https://miro.medium.com/v2/resize:fit:2700/1*TmKyEbnyhKvgKsDB4-3JlA.gif" style="width: 500px; height: 300px;">
                 <input class="btn btn-success" type="file" id="imgFile" />
-                <input type="hidden" id="croppedImageInput" name="formFile" />
-                <br />
-                <div id="croppie-container"></div>
                 <br /><br />
+                <div id="croppie-container"></div>
                 <input type="button" id="crop_img" class="btn btn-info" value="裁剪圖片" />
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="新增場地" class="btn btn-primary" />
+@*                 <input type="submit" value="新增場地" class="btn btn-primary" /> *@
+                <button type="button" class="btn btn-success" id="buttonSend">新增場地</button>
             </div>
         </form>
     </div>
@@ -121,6 +120,7 @@
                 alert("不支援的檔案類型");
             }
         });
+
         $("#crop_img").on("click", function () {
             // 在這裡處理裁剪圖片的邏輯
             croppieInstance.croppie('result', {
@@ -132,13 +132,27 @@
                 var urlCreator = window.URL || window.webkitURL;
                 var imageURL = urlCreator.createObjectURL(result);
                 $("#imgPreview").attr("src", imageURL);
-                // 將Blob轉換為File對象，並設置名稱
-                var file = new File([result], 'croppedImage.jpg', { type: 'image/jpeg' });
-                // 設置隱藏的input元素的值為Blob數據的URL
-                $("#croppedImageInput").val(window.URL.createObjectURL(file));
+                window.croppedImageBlob = result;
                 // 提示用戶已經完成裁剪
                 alert("圖片裁剪完成！");
             });
         });
+
+        const btn = document.querySelector('#buttonSend');
+
+        btn.addEventListener('click', event => {
+            event.preventDefault();
+            const formData = new FormData(document.querySelector('#siteForm'));
+            formData.append('formFile', window.croppedImageBlob, 'croppedImage.jpg');
+            fetch('@Url.Content("~/TSites/Create")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("新增成功");
+                    }
+                })
+        })
     </script>
 }
