@@ -18,7 +18,7 @@ namespace prjMusicBetter.Controllers
             _context = context;
             _userInfoService = userInfoService;
         }
-        public IActionResult List3()
+        public IActionResult List()
         {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)

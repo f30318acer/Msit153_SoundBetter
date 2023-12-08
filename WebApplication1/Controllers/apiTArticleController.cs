@@ -25,7 +25,7 @@ namespace prjMusicBetter.Controllers
         //===List_All===
         public IActionResult List()
         {
-            var dbSoundBetterContext = _context.TArticles.ToList();
+            var dbSoundBetterContext = _context.TArticles;
             return Json(dbSoundBetterContext);
         }
         //===List_MemberID===
