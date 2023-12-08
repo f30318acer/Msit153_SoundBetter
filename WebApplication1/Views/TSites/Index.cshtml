@@ -51,7 +51,22 @@
                 @Html.DisplayFor(modelItem => item.FSiteName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FSiteType)
+                @{
+                    string siteTypeText = "";
+                    switch (item.FSiteType)
+                    {
+                        case 1:
+                            siteTypeText = "錄音室";
+                            break;
+                        case 2:
+                            siteTypeText = "音樂教室";
+                            break;
+                        default:
+                            siteTypeText = "其他";
+                            break;
+                    }
+                }
+                @siteTypeText
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FPhone)
