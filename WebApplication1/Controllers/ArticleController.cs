@@ -142,6 +142,7 @@ namespace prjMusicBetter.Controllers
                     select new TComment
                     {
                         FCommentId = Id,
+                        //FMemberId = HttpContext.User.Identity.Name,
                         FCommentContent = myComment,
                         FCommentTime = DateTime.Now
                     };
