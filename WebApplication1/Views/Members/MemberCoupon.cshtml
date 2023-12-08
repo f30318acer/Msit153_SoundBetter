@@ -31,9 +31,18 @@
                     <td>@Html.DisplayFor(modelItem => coupon.FCouponContent)</td>
                     <td>@Html.DisplayFor(modelItem => coupon.FDescription) <!-- 描述 --></td>
                     <td>@Html.DisplayFor(modelItem => coupon.FStartdate) <!-- 有效期限 --></td>
-                    <td>@Html.DisplayFor(modelItem => coupon.FEnddate) <!-- 有效期限 --></td>
-                    <td>@Html.DisplayFor(modelItem => coupon.FPicture) <!-- 有效期限 --></td>
-                    </tr>
+                    <td>@Html.DisplayFor(modelItem => coupon.FEnddate) <!-- 有效期限 --></td>                 
+                    <td>
+                        @if (!string.IsNullOrEmpty(coupon.FPicture))
+                        {
+                            <img src="@Url.Content("~/img/Members" + coupon.FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
+                        }
+                        else
+                        {
+                            @:No Image
+                        }
+                    </td>
+                </tr>
                     }
                 </tbody>
             </table>
