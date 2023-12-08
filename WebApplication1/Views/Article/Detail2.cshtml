@@ -37,5 +37,14 @@
 			<a href="#">04.</a>
 		</div>
 	</div>
+@* 	<!-- 留言部分 -->
+	<div> 
+	<form class="input-group" asp-action="AddComment" asp-route-Id="@Model.TComment.FMemberID">
+		<textarea class="form-control" type="text"
+				  placeholder="請先登入再留言" name="myComment"></textarea>
+		<input class="btn btn-sm btn-primary" type="submit" value="送出" />
+	</form>
+	</div>
+	<!-- 留言部分 --> *@
 </section>
 <!-- Blog section end -->

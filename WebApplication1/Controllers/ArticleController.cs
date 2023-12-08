@@ -135,7 +135,7 @@ namespace prjMusicBetter.Controllers
 
             _context.Add(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = Id });
+            return RedirectToAction("Detail2", new { id = Id });
         }
 
     }
