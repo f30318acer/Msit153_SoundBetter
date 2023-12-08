@@ -28,4 +28,6 @@ public partial class TArticle
     public virtual ICollection<TArticleFav> TArticleFavs { get; set; } = new List<TArticleFav>();
 
     public virtual ICollection<TArticlePicture> TArticlePictures { get; set; } = new List<TArticlePicture>();
+
+    public virtual ICollection<TComment> TComments { get; set; } = new List<TComment>();
 }

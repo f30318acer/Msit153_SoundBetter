@@ -7,26 +7,17 @@ namespace prjMusicBetter.Models;
 
 public partial class TComment
 {
-    public int FCommentID { get; set; }
+    public int FCommentId { get; set; }
 
     public int FMemberId { get; set; }
 
-    public string? FCommentContent { get; set; }
+    public string FCommentContent { get; set; }
+
+    public int FArticleId { get; set; }
 
     public DateTime? FCommentTime { get; set; }
 
-    public int FArticleID { get; set; }
+    public virtual TArticle FArticle { get; set; }
 
     public virtual TMember FMember { get; set; }
-
-    //public virtual TStyle FStyle { get; set; }
-
-    //public virtual ICollection<TArticleFav> TArticleFavs { get; set; } = new List<TArticleFav>();
-
-    //public virtual ICollection<TArticlePicture> TArticlePictures { get; set; } = new List<TArticlePicture>();
-}
-
-public partial class TArticle
-{
-    public List<TComment> Comments { get; set; }
 }

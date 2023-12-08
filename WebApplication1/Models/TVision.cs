@@ -7,14 +7,15 @@ namespace prjMusicBetter.Models;
 
 public partial class TVision
 {
+    public int FVisionId { get; set; }
+
     public int FMemberId { get; set; }
-    
-    public int? FVisionID { get; set; }
 
-    public string? FVisionName { get; set; }
+    public string FVisionName { get; set; }
 
-    public string? FVisionDescription { get; set; }
+    public string FVisionDescription { get; set; }
 
-    public string? FVisionPath { get; set; }
+    public string FVisionPath { get; set; }
 
+    public virtual TMember FMember { get; set; }
 }

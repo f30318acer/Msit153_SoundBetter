@@ -52,6 +52,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tComment]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tCoupon]",
          "ObjectType": 0
       },
@@ -149,6 +153,10 @@
       },
       {
          "Name": "[dbo].[tStyle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tVision]",
          "ObjectType": 0
       },
       {
