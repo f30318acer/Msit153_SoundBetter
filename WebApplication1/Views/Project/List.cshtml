@@ -62,8 +62,8 @@
 			const response = await fetch('@Url.Content("~/apiTProjects/SkillsList")');
 			const data = await response.json();
 			console.log(data);
-			const defaultBtn = '<div class="col-12 mb-3"><button id="btnSkill" value="100" class="btn btn-info mr-2 active" style="width: 210px;background-color: #fc0254;">所有技能</button></div>';
-			const skillsBtn = data.map(s => `<div class="col-6 mb-3"><button id="btnSkill" value="${s.fSkillId}" class="btn btn-secondary mr-2" style="width: 90px;">${s.fName}</button></div>`);
+			const defaultBtn = '<div class="col-12 mb-3"><button value="100" class="btn btn-info mr-2 btnSkill active" style="width: 210px;background-color: #fc0254;">所有技能</button></div>';
+			const skillsBtn = data.map(s => `<div class="col-6 mb-3"><button value="${s.fSkillId}" class="btn btn-secondary mr-2 btnSkill" style="width: 90px;">${s.fName}</button></div>`);
 			skillsBtn.unshift(defaultBtn);
 			skillList.innerHTML = skillsBtn.join("");
 		}
@@ -76,15 +76,15 @@
 			// 確保點擊的元素是按鈕
 			if (event.target.tagName === 'BUTTON') {
 				// 移除所有按鈕的 active 類
-				const buttons = document.querySelectorAll('#btnSkill');
-				buttons.forEach(button => button.classList.remove('active'));
+				const buttons = document.querySelectorAll('.btnSkill');
+				
 				// 遍歷所有按鈕，將它們的背景色還原
 				buttons.forEach(button => {
+					button.classList.remove('activeSkill');
 					button.style.backgroundColor = ''; // 還原預設的背景色
 					button.style.color = ''; // 還原文字顏色
 				});
-				// 將被點擊的按鈕添加 active 類
-				event.target.classList.add('active');
+				event.target.classList.add('activeSkill');
 				// 獲取按鈕的 value
 				const buttonValue = event.target.value;
 				
@@ -94,6 +94,8 @@
 
 				// 這裡可以進一步處理按鈕的 value，例如更新 div 的內容
 				load(1);
+				loadPage();
+				console.log($('#selectStyle').val())
 			}
 		});
 
@@ -104,6 +106,7 @@
 			// 篩選條件
 			const sId = $('#selectStyle').val();
 			const keyword = $('#txtKeyword').val();
+			const skillID = $('.activeSkill').val();
 
 			// 根據所選風格篩選數據
 			let filteredData = data;
@@ -116,6 +119,11 @@
 					// 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
 					return item.fDescription.includes(keyword) || item.fName.includes(keyword);
 				});
+			}
+			//Skill條件
+			if (skillID != 100) {
+				filteredDatas = filteredDatas.filter(item => item.fSkillId == skillID);				
+
 			}
 
 			const dataCount = filteredData.length;
@@ -137,8 +145,7 @@
 			const divList = $('#divList')
 			const sId = $('#selectStyle').val();
 			const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
-			const skillID = $('#SkillList').val()
-			console.log('SkillID:', skillID);
+			const skillID = $('.activeSkill').val()
 			//divList.empty();
 
 			$.getJSON('/apiTProjects/List', function (datas) {
