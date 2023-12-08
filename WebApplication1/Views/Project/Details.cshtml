@@ -135,6 +135,7 @@
 <input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="budget" value="@Html.DisplayFor(model => model.FBudget)" />
 <input type="hidden" id="pID" value="@Html.DisplayFor(model => model.FProjectId)" />
+<input type="hidden" id="loginId" value="@ViewBag.MemberId" />
 
 <section id="title" class="player-section" style="background-image: url('/img/playlist/img4.jpg');">
 
@@ -156,10 +157,11 @@
                 </div>
                 <div class="col-2">
 
-                    <button class="btn btn-primary">追蹤專案</button>
+                    <button id="btnFev" class="btn btn-primary" >追蹤專案</button>
                     <div class="mb-2"></div>
-                    <button class="btn btn-danger">應徵專案</button>
-
+                    <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>
+                    <div class="mb-2"></div>
+                    <button id="btnEdit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal" style="display:none;">修改專案</button>
                 </div>
             </div>
         </div>
@@ -232,7 +234,7 @@
             </div>
         </div>
     </div>
-    <button id="btnEdit" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#addModal">修改專案</button>
+    
 </section>
 
 <!-- Modal -->
@@ -308,100 +310,33 @@
 <!-- Intro section end -->
 
 
-@*<div>
-    <h4>TProject</h4>
-    <hr 
-            @Html.DisplayFor(model => model.FDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FThumbnailPath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FThumbnailPath)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FDescription2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FDescription2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FStyleId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FStyleId)
-        </dd>/>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FBudget)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FBudget)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FStartdate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FStartdate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FEnddate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FEnddate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FDescription)
-        </dt>
-        <dd class = "col-sm-10">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FMember)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FMember.FMemberId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FProjectStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FProjectStatus.FProjectStatusId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSite)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSite.FSiteId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteNavigation.FStyleId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FProjectId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>*@
-
 @section Scripts{
 	<script>
 		const styleId = $('#styleId').val();
 		const memberId = $('#memberId').val();
         const projectID = $('#pID').val();
+        const loginID = $('#loginId').val();
+        const btnEdit = document.getElementById('btnEdit');
+        const btnAppli = document.getElementById('btnAppli');
+        const btnFev = document.getElementById('btnFev');
         
         //取得風格資訊
 		$.getJSON(`/apiTStyle/QueryById/${styleId}`, function (datas) {
 			console.log(datas);
 			$('#styleName').html(`製作風格 : ${datas[0].fName}`);
 		})
+
+        //根據登入狀況顯示按鈕        
+        function DisplayButton(){
+            
+            if (loginID == memberId) {
+                btnEdit.style.display = 'block';
+                btnAppli.style.display = 'none';
+                btnFev.style.display = 'none';
+            }
+        }
+        DisplayButton();
+
         //取得會員資訊
 		$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
 			console.log(datas);
@@ -489,5 +424,32 @@
                 }
             })
         })
+        //判斷是否登入
+        async function CheckLoginAndNavigate(btnID) {
+            const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
+            const isLogin = await response.json();
+
+            if (isLogin) {
+                if(btnID == 1)
+                {
+                    window.location.href = "@Url.Action("ApplyConfirm", "Project")";
+                }
+                if(btnID == 2)
+                {
+                    console.log('hahahahahahahaha');
+                }
+            } else {
+                // 如果未登錄，導航到 Home/Login
+                window.location.href = "@Url.Action("Login", "Home")";
+            }
+        }
+
+        btnAppli.addEventListener('click', function () {
+            CheckLoginAndNavigate(1);
+        });
+
+        btnFev.addEventListener('click', function () {
+            CheckLoginAndNavigate(2);
+        });
 	</script>
 }
