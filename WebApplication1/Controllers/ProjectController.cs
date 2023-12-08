@@ -54,13 +54,25 @@ namespace prjMusicBetter.Controllers
 		}
 		public IActionResult ApplyConfirm()
 		{
-			return View();
+            TMember member = _userInfoService.GetMemberInfo();
+            ViewBag.MemberId = 0;
+            if (member != null)
+            {
+                ViewBag.MemberId = member.FMemberId;
+                return View();
+            }
+            return RedirectToAction("List");
 		}
         public IActionResult Create()
         {
             TMember member = _userInfoService.GetMemberInfo();
-            ViewBag.MemberId = member.FMemberId;
-            return View();
+            ViewBag.MemberId = 0;
+            if (member != null)
+            {
+                ViewBag.MemberId = member.FMemberId;
+                return View();
+            }
+            return RedirectToAction("List");
         }
     }
 }
