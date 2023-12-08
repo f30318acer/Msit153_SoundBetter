@@ -126,6 +126,52 @@
         </div>
     </div>
 </section>
+
+@section Styles
+{
+    <style>
+        .vh-100 {
+            background: url('@Url.Content("~/assets/img/background/rain.jpg")') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.3); /* 半透明背景 */
+            border-radius: 15px; /* 边框圆角 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
+        }
+
+        .btn-dark btn-outline-dark btn btn-outline-secondary {
+            background-color: #000; /* 按钮背景颜色 */
+            border-radius: 10px; /* 按钮的边框圆角 */
+            color: #fff; /* 按钮文字颜色 */
+            padding: 10px 20px; /* 按钮内边距 */
+            font-size: 16px; /* 文字大小 */
+            border: none; /* 去除边框 */
+        }
+
+        .form-control {
+            border-radius: 10px; /* 输入框的边框圆角 */
+            border: 1px solid #ccc; /* 输入框边框 */
+            padding: 15px; /* 输入框内边距 */
+        }
+
+        #img1 {
+            display: none;
+        }
+
+        .custom-form-container {
+            max-width: 600px; /* 或者您希望的任何數值 */
+            margin: auto; /* 這將會使得表單在頁面中間 */
+        }
+
+        p {
+            color: black;
+        }
+    </style>
+}
+
+
 @section Scripts{
     <script>
         const photo = document.querySelector('#photo')

@@ -5,58 +5,41 @@
 }
 
 
-<section class="vh-100" style="background-color: #eee;">
+<section class="vh-100">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px;">
-                    <div class="card-body p-md-5">
+            <div class="col-lg-6 col-xl-6">
+                <div class="card text-black">
+                    <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                            <div class="col-md-10 col-lg-7 order-2 order-lg-1">
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
-
-
-                                <form class="mx-1 mx-md-4" method="post"action="@Url.Action("Login","Home")">
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label for="inputEmail">帳號:</label>
-                                            <input type="email" name="Email" id="inputEmail" class="form-control" value="" />
-
-                                            @* <input type="email" name="Email"id="inputEmail" class="form-control"value="" /> *@
-                                            @Html.ValidationMessageFor(model => model.Email,"",new{@class = "text-danger"})
-                                        </div>
+                                <form class="mx-1 mx-md-4" method="post" action="@Url.Action("Login","Home")">
+                                    <div class="mb-3">
+                                    @*     <img src="@Url.Content("~/assets/img/background/rain.jpg")" class="img-fluid img" alt="Rainy Background" /> *@
+                                        <label for="inputEmail">帳號:</label>
+                                        <input type="email" name="Email" id="inputEmail" class="form-control" value="" />
+                                        @* <input type="email" name="Email"id="inputEmail" class="form-control"value="" /> *@
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            密碼:
-                                            <input type="password" name="Password"id="inputPassword" class="form-control" value="" />
-                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        </div>
+                                    <div class="mb-3">
+                                        密碼:
+                                        <input type="password" name="Password" id="inputPassword" class="form-control" value="" />
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="container">
                                         <div class="row">
                                             <!-- First Column for the Register Button -->
-                                            <div class="col">
-                                               @*  <a asp-area="" asp-controller="Home" asp-action="Register"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                            transition: all 0.3s ease;">註冊</a> *@
-                                            </div>
-                                            <!-- Second Column for the Login Button -->
-                                            <div class="col">
-                                                @* <a asp-area="" asp-controller="Home" asp-action="Index"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                                transition: all 0.3s ease;">登入</a> *@
-                                            </div> 
                                             @*登入平台*@
-                                            <div class="p-2">                                               
+                                            <div class="p-2">
                                                 @Html.ActionLink("註冊", "Register", "Home", "", new { @class = "btn btn-outline-dark" })
-                                                <input type="submit" value="登入" id="Login" class="btn btn-dark fw-bold" />                                                                                            
+                                                <input type="submit" value="登入" id="Login" class="btn btn-dark fw-bold" />
+                                            </div>
+
+                                            <div class=" p-2">
+                                                <input type="button" class="btn btn-outline-dark" value="DemoMember" id="DemoMember" />
+                                                <input type="button" class="btn btn-outline-dark" value="DemoAdministrator" id="DemoAdministrator" />
                                             </div>
                                             <script src="https://accounts.google.com/gsi/client" async defer></script>
                                             <div id="g_id_onload"
@@ -73,41 +56,29 @@
                                                  data-logo_alignment="left">
                                             </div>
 
-                                            <div class="  container col-12">
-                                                <div class=" p-2 col-12">
+                                            @*  <div class="p-2">
+                                            <a asp-area="" asp-controller="Home" asp-action="ForgetPwd"
+                                            style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
+                                            transition: all 0.3s ease;">忘記密碼</a>
+                                            </div>  *@
 
-                                                    <input type="button" class="btn btn-dark" value="DemoMember" id="DemoMember" />
-                                                    <input type="button" class="btn btn-dark" value="DemoAdministrator" id="DemoAdministrator" />
-                                                </div> 
-                                            </div>
-                                             <div class="p-2">
-                                              <a asp-area="" asp-controller="Home" asp-action="ForgetPwd"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                                transition: all 0.3s ease;">忘記密碼</a>
-                                            </div> 
-                                          
-                                          
+
 
                                             @*暫定連結後台 *@
-                                           @*  <div class="col">
-                                                <a asp-area="" asp-controller="BgHome" asp-action="Index"
-                                                   style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                                transition: all 0.3s ease;">後台</a>
+                                            @*  <div class="col">
+                                            <a asp-area="" asp-controller="BgHome" asp-action="Index"
+                                            style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
+                                            transition: all 0.3s ease;">後台</a>
                                             </div> *@
 
                                             <div class="col">
-                                               
-                                               @* @Html.ActionLink("忘記密碼","ForgetPwd","Home")*@
+
+                                                @* @Html.ActionLink("忘記密碼","ForgetPwd","Home")*@
                                             </div>
                                         </div>
                                     </div>
 
                                 </form>
-                            </div>
-                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                             
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                                    id="img" class="img-fluid"*@ alt="Sample image">
                             </div>
                         </div>
                     </div>
@@ -115,19 +86,19 @@
             </div>
         </div>
     </div>
-    </section>
+</section>
 
 
 @section Styles
 {
-   <style>
+    <style>
         .vh-100 {
             background: url('@Url.Content("~/assets/img/background/rain.jpg")') no-repeat center center fixed;
             background-size: cover;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.4); /* 半透明背景 */
+            background: rgba(255, 255, 255, 0.3); /* 半透明背景 */
             border-radius: 15px; /* 边框圆角 */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
         }
@@ -146,32 +117,28 @@
             border: 1px solid #ccc; /* 输入框边框 */
             padding: 15px; /* 输入框内边距 */
         }
+
+        #img1 {
+            display: none;
+        }
+
+        .custom-form-container {
+            max-width: 600px; /* 或者您希望的任何數值 */
+            margin: auto; /* 這將會使得表單在頁面中間 */
+        }
+
+        p {
+            color: black;
+        }
     </style>
 }
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/rainyday.js/0.1.2/rainyday.min.js"></script>
-@section Scripts{
-    
-
+@section Scripts
+{
     <script>
-        // const image = document.querySelector('.img');
-        // image.crossOrigin = 'anonymous';
-        // const loadRainEffect = function () {
-        //     const rainEffect = new RainDay({
-        //         image: image,
-        //         gravityAngle: Math.PI / 3,
-        //         fps: 30,
-        //     });
-        //     rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
-        // };
 
-        // if (image.complete) {
-        //     loadRainEffect();
-        // } else {
-        //     image.onload = loadRainEffect;
-        // }
 
-        //一般會員登入 目前還沒設任何功能
+
+        //一般會員登入
         $('#DemoMember').on('click', function () {
             let email = "gaytony@gmail.com"
             $('#inputEmail').val(email)
@@ -183,5 +150,25 @@
             $('#inputEmail').val(email)
             $('#inputPassword').val("123")
         })
+
+        //雨滴功能
+
+        const image = document.querySelector('.img');
+        
+        image.crossOrigin = 'anonymous';
+        const loadRainEffect = function () {
+            const rainEffect = new RainDay({
+                image: image,
+                gravityAngle: Math.PI / 3,
+                fps: 30,
+            });
+            rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
+        };
+
+        if (image.complete) {
+            loadRainEffect();
+        } else {
+            image.onload = loadRainEffect;
+        }
     </script>
 }
