@@ -23,7 +23,7 @@ namespace prjMusicBetter.Controllers
         // GET: TClasses
         public async Task<IActionResult> Index()
         {
-            var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher);
+            var dbSoundBetterContext = _context.TClasses.Include(t => t.FSite).Include(t => t.FTeacher).Include(t => t.FSkill);
             return View(await dbSoundBetterContext.ToListAsync());
         }
 
@@ -38,6 +38,7 @@ namespace prjMusicBetter.Controllers
             var tClass = await _context.TClasses
                 .Include(t => t.FSite)
                 .Include(t => t.FTeacher)
+                .Include(t => t.FSkill)
                 .FirstOrDefaultAsync(m => m.FClassId == id);
             if (tClass == null)
             {
@@ -91,6 +92,9 @@ namespace prjMusicBetter.Controllers
             }
             ViewData["FSiteId"] = new SelectList(_context.TSites, "FSiteId", "FSiteId", tClass.FSiteId);
             ViewData["FTeacherId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tClass.FTeacherId);
+
+            ViewBag.SiteId = tClass.FSiteId;//原本的地址
+
             return View(tClass);
         }
 
@@ -142,6 +146,7 @@ namespace prjMusicBetter.Controllers
             var tClass = await _context.TClasses
                 .Include(t => t.FSite)
                 .Include(t => t.FTeacher)
+                 .Include(t => t.FSkill)
                 .FirstOrDefaultAsync(m => m.FClassId == id);
             if (tClass == null)
             {
