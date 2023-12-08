@@ -31,7 +31,7 @@ namespace prjSoundBetterApi.Controllers
             var dbSoundBetterContext = from w in _context.TWorks
                                        join m in _context.TMembers
                                        on w.FMemberId equals m.FMemberId
-                                       select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyle, w.FThumbnail,w.FWorkName, };
+                                       select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyle, w.FThumbnail,w.FWorkName };
 
             return Json(dbSoundBetterContext);
         }
