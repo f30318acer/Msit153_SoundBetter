@@ -107,15 +107,15 @@
             position: relative; /* 設置相對定位，讓內部元素可以使用絕對定位相對於這個容器 */
         }
 
-        .genres span {
-            position: absolute; /* 設置絕對定位 */
-            bottom: 0; /* 距離底部的距離 */
-            right: 0; /* 距離右邊的距離 */
-            background-color: white;
-            color: black;
-            padding: 5px;
-            border: 1px solid #fc0254; /* 粉框 */
-        }
+    .gss {
+        position: absolute; /* 設置絕對定位 */
+        bottom: 0; /* 距離底部的距離 */
+        right: 0; /* 距離右邊的距離 */
+        background-color: white;
+        color: black;
+        padding: 5px;
+        border: 1px solid #fc0254; /* 粉框 */
+    }
 
         /* 調整其他樣式以避免重疊 */
         .genres h5, .genres p, .genres span {
@@ -147,6 +147,11 @@
             <div class="container col-lg-12 ddd">
                 <div class="text-right ">
                     <select id="selectSkill" class="form-select mr-2"></select>
+                    <select id="selectOnLine" class="form-select mr-2">
+                        <option value="0">請選擇線上或實體課程</option>
+                        <option value="1">實體課程</option>
+                        <option value="2">線上課程</option>
+                    </select>
                     <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
                     <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
                     <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
@@ -223,7 +228,7 @@
             const divList = $('#divList');
             //讀取Json資料
             $.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
-                console.log(datas);
+                //console.log(datas);
 
                 // 獲得限定頁面資料
                 const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
@@ -235,23 +240,26 @@
                     const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                            <a href="/Class/Edit?id=${item.fClassId}">
-                                        <div>
-                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                            <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
-                                        </div>
-                                        <div>
-                                            <div class="ClassName">
-                                                <h5>${item.fClassName}</h5>
-                                            </div>
-                                                    <p>${Description}</p>
-                                        </div>
-                                        <div>
-                                            <h5>導師：${item.fTeacherNmae}</h5>
-                                            <p>點閱數：${item.fClick}</p>
-                                        </div>
-                                    </a>
-                                </div>`
+                            <a href="/Class/Edit?id=${item.fClassId}">
+                                <div style="position: relative;">
+                                    <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
+                                        ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                    </span>
+                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                    <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                </div>
+                                <div>
+                                    <div class="ClassName">
+                                        <h5>${item.fClassName}</h5>
+                                    </div>
+                                            <p>${Description}</p>
+                                </div>
+                                <div>
+                                    <h5>導師：${item.fTeacherNmae}</h5>
+                                    <p>點閱數：${item.fClick}</p>
+                                </div>
+                            </a>
+                        </div>`
                     );
                     docFrag.append(card);
                 });
@@ -265,14 +273,39 @@
             const divList = $('#divList')
             const sId = $('#selectSkill').val();
             const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+            const sOnLine = $('#selectOnLine').val();
 
 
             //讀取Json資料
             $.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
-                console.log(datas);
+
+                let filteredDatas = datas;
+
+                if (sId != 0) {
+                    filteredDatas = datas.filter(item => {
+                        // 在此添加筛选条件
+                        return item.fSkillId == sId;
+                    });
+                }
+                //關鍵字篩選
+                if (keyword) {
+                    filteredDatas = filteredDatas.filter(item => {
+                        // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+                        return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
+                    });
+                }
+                //線上實體篩選
+                if (sOnLine != 0) {
+                    filteredDatas = filteredDatas.filter(item => {
+                        console.log("DD");
+                        return item.fOnLine == sOnLine - 1;
+                    });
+                }
+
+                dataCount = filteredDatas.length;
 
                 // 獲得限定頁面資料
-                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+                const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
                 //dataCount = filteredDatas.length;
 
                 //做出一個空的容器來存放div
@@ -282,10 +315,13 @@
                     const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                    <a href="/Class/Edit?id=${item.fClassId}">
-                                <div>
+                            <a href="/Class/Edit?id=${item.fClassId}">
+                                <div style="position: relative;">
+                                    <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
+                                        ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                    </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                    <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                    <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
                                 </div>
                                 <div>
                                     <div class="ClassName">
