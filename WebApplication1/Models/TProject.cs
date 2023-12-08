@@ -37,13 +37,13 @@ public partial class TProject
 
     public virtual TMember FMember { get; set; }
 
-    public virtual TSkill FProject { get; set; }
-
     public virtual TProjectStatus FProjectStatus { get; set; }
 
     public virtual TSite FSite { get; set; }
 
     public virtual TStyle FSiteNavigation { get; set; }
+
+    public virtual TSkill FSkill { get; set; }
 
     public virtual ICollection<TApplicationRecord> TApplicationRecords { get; set; } = new List<TApplicationRecord>();
 

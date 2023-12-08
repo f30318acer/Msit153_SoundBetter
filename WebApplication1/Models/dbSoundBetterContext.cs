@@ -35,6 +35,8 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TClassFav> TClassFavs { get; set; }
 
+    public virtual DbSet<TComment> TComments { get; set; }
+
     public virtual DbSet<TCoupon> TCoupons { get; set; }
 
     public virtual DbSet<TDealClass> TDealClasses { get; set; }
@@ -85,15 +87,17 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TStyle> TStyles { get; set; }
 
+    public virtual DbSet<TVision> TVisions { get; set; }
+
     public virtual DbSet<TWork> TWorks { get; set; }
 
     public virtual DbSet<TWorkFav> TWorkFavs { get; set; }
 
     public virtual DbSet<TWorkType> TWorkTypes { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;Persist Security Info=True;User ID=bbb;Password=123");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;Persist Security Info=True;User ID=bbb;Password=123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -300,6 +304,31 @@ public partial class dbSoundBetterContext : DbContext
             entity.HasOne(d => d.FMember).WithMany(p => p.TClassFavs)
                 .HasForeignKey(d => d.FMemberId)
                 .HasConstraintName("FK_tClassFav_tMember");
+        });
+
+        modelBuilder.Entity<TComment>(entity =>
+        {
+            entity.HasKey(e => e.FCommentId);
+
+            entity.ToTable("tComment");
+
+            entity.Property(e => e.FCommentId).HasColumnName("fCommentID");
+            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+            entity.Property(e => e.FCommentContent).HasColumnName("fCommentContent");
+            entity.Property(e => e.FCommentTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fCommentTime");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.HasOne(d => d.FArticle).WithMany(p => p.TComments)
+                .HasForeignKey(d => d.FArticleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tComment_tArticle");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TComments)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tComment_tMember");
         });
 
         modelBuilder.Entity<TCoupon>(entity =>
@@ -657,9 +686,7 @@ public partial class dbSoundBetterContext : DbContext
 
             entity.ToTable("tProject");
 
-            entity.Property(e => e.FProjectId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("fProjectID");
+            entity.Property(e => e.FProjectId).HasColumnName("fProjectID");
             entity.Property(e => e.FBudget)
                 .HasColumnType("money")
                 .HasColumnName("fBudget");
@@ -689,11 +716,6 @@ public partial class dbSoundBetterContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tProject_tMember");
 
-            entity.HasOne(d => d.FProject).WithOne(p => p.TProject)
-                .HasForeignKey<TProject>(d => d.FProjectId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tProject_tSkill");
-
             entity.HasOne(d => d.FProjectStatus).WithMany(p => p.TProjects)
                 .HasForeignKey(d => d.FProjectStatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -708,6 +730,10 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FSiteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tProject_tStyle");
+
+            entity.HasOne(d => d.FSkill).WithMany(p => p.TProjects)
+                .HasForeignKey(d => d.FSkillId)
+                .HasConstraintName("FK_tProject_tSkill");
         });
 
         modelBuilder.Entity<TProjectFav>(entity =>
@@ -1046,6 +1072,30 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FThumbnailPath)
                 .HasMaxLength(50)
                 .HasColumnName("fThumbnailPath");
+        });
+
+        modelBuilder.Entity<TVision>(entity =>
+        {
+            entity.HasKey(e => e.FVisionId);
+
+            entity.ToTable("tVision");
+
+            entity.Property(e => e.FVisionId).HasColumnName("fVisionID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FVisionDescription)
+                .HasMaxLength(50)
+                .HasColumnName("fVisionDescription");
+            entity.Property(e => e.FVisionName)
+                .HasMaxLength(50)
+                .HasColumnName("fVisionName");
+            entity.Property(e => e.FVisionPath)
+                .HasMaxLength(50)
+                .HasColumnName("fVisionPath");
+
+            entity.HasOne(d => d.FMember).WithMany(p => p.TVisions)
+                .HasForeignKey(d => d.FMemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tVision_tMember");
         });
 
         modelBuilder.Entity<TWork>(entity =>

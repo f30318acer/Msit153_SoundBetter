@@ -2,23 +2,46 @@
 @{
     ViewData["Title"] = "Login";
 }
+<style>
+    .vh-100 {
+        background: url('@Url.Content("~/assets/img/background/rain.jpg")') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.5); /* 半透明背景 */
+        border-radius: 15px; /* 边框圆角 */
+        margin: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影
+                                }
+                        .form-control {
+                            border-radius: 5px; /* 更细微的圆角 */
+        border: 1px solid #ccc;
+        padding: 10px;
+        height: auto; /* 或者具体的高度，根据需要调整 */
+    }
+</style>
+
+
+
+
 
 <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12 col-xl-11">
+            <div class="col-lg-12">
                 <div class="card text-black" style="border-radius: 25px;">
                     <div class="card-body p-md-5">
                         <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                            <div class="col-md-1 col-lg-6  order-2 order-lg-1">
                                 <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">Register</p>
-                                <form method="post" enctype="multipart/form-data"class="mx-1 mx-md-4">
+                                <form method="post" enctype="multipart/form-data" class="mx-1 mx-md-4">
 
                                     <div class="photo-button mb-3">
                                         <div class="photo-card mb-2 d-flex justify-content-center">
                                             <div class="photo">
-                                                <img src="~/img/Member/default.jpg" class="circle-size-300"id="imgMember">
-                                                <input type="file" name="Photo"id="form-control"/>
+                                                <img src="~/img/Member/default.jpg" class="circle-size-300" id="imgMember">
+                                                <input type="file" name="Photo" id="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -38,7 +61,7 @@
                                         <div class=" width-50px  fw-bold">姓名</div>
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="text" id="fName" name="fName" class="form-control" placeholder="請輸入姓名" />
-                                            @Html.ValidationMessageFor(member=>member.fName,"",new{@class="text-danger"})
+                                            @Html.ValidationMessageFor(member => member.fName, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
@@ -47,7 +70,7 @@
                                         <div class=" width-50px  fw-bold">電子信箱</div>
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="email" id="fEmail" name="fEmail" class="form-control" placeholder="請輸入電子郵箱" />
-                                            @Html.ValidationMessageFor(member=>member.fEmail,"",new{@class="text-danger"})
+                                            @Html.ValidationMessageFor(member => member.fEmail, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
@@ -64,17 +87,18 @@
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class=" width-50px  fw-bold">密碼</div>
                                         <div class="form-outline flex-fill mb-0">
+                                            <p id="text">ji3g4da</p>
                                             <input type="password" id="fPassword" name="fPassword" class="form-control" placeholder="請輸入密碼" />
-                                            @Html.ValidationMessageFor(member=>member.fPassword,"",new{@class="text-danger"})
+                                            @Html.ValidationMessageFor(member => member.fPassword, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                  @*   <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class=" width-50px  fw-bold">確定密碼</div>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="ComfirmPassword" name="ComfirmPassword" class="form-control" placeholder="請重新輸入密碼" />
-                                            <span asp-validation-for="ComfirmPassword" class="text-danger"></span>
-                                        </div>
+                                    @*   <div class="d-flex flex-row align-items-center mb-4">
+                                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                    <div class=" width-50px  fw-bold">確定密碼</div>
+                                    <div class="form-outline flex-fill mb-0">
+                                    <input type="password" id="ComfirmPassword" name="ComfirmPassword" class="form-control" placeholder="請重新輸入密碼" />
+                                    <span asp-validation-for="ComfirmPassword" class="text-danger"></span>
+                                    </div>
                                     </div> *@
                                     <div class="pt-2 d-flex align-items-baseline">
                                         <div class=" width-50px  fw-bold">性別</div>
@@ -97,7 +121,7 @@
                                         <div class=" width-50px  fw-bold">生日</div>
                                         <div class="mx-3 d-flex">
                                             <input type="date" class="form-control" value="" name="fBirthday" id="fBirthday" />
-                                            @Html.ValidationMessageFor(member=>member.fBirthday,"",new{@class="text-danger"})
+                                            @Html.ValidationMessageFor(member => member.fBirthday, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="container">
@@ -115,10 +139,6 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                                @*class="img-fluid"*@ alt="Sample image">
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -126,33 +146,60 @@
         </div>
     </div>
 </section>
-@section Scripts{
+
+@section Styles
+{
+    <style>
+
+
+        .btn-dark {
+            width: 100%; /* 讓按鈕寬度與輸入框相匹配 */
+            padding: 10px;
+            margin-top: 10px; /* 在按鈕上方增加間隙 */
+        }
+
+
+
+        .custom-form-container {
+            max-width: 600px; /* 或者您希望的任何數值 */
+            margin: auto; /* 這將會使得表單在頁面中間 */
+        }
+
+        .card-container {
+            max-width: 400px; /* 或者您需要的宽度 */
+            margin: auto; /* 水平居中 */
+        }
+    </style>
+}
+
+
+@section Scripts {
     <script>
         const photo = document.querySelector('#photo')
 
         photo.addEventListener('change', () => {
-            const file =photo.files
+            const file = photo.files
             if (file.length == 0) {
                 let imgDefault = '@Url.Content("~/img/Member/default.jpg")'
                 $('#imgMember').attr('src', imgDefault)
             }
             else {
                 const url = URL.createObjectURL(file[0]);
-                $('#imgMember').attr('src',url)
+                $('#imgMember').attr('src', url)
             }
         })
         //顯示密碼
         // $(document).ready(function () {
         //     $('#showPassword').in('change', function () {
         //         var passwordInput = $('#fPassword');
-               
+
         //         if ($(this).is(':check')) {
         //             passwordInput.attr('type', 'text');
-                   
+
         //         }
         //         else {
         //             passwordInput.attr('type', 'password');
-                   
+
         //         }
         //     })
         // })

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
+using System.Linq.Expressions;
 
 namespace prjMusicBetter.Controllers
 {
@@ -111,6 +113,29 @@ namespace prjMusicBetter.Controllers
             
 
             return View(tArticle);    
+        }
+
+
+
+        ///留言功能
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddComment(int Id, string myComment)
+        {   
+            TComment comment = new TComment();
+
+            var q = from m in _context.TArticles
+                    where m.FArticleId == comment.FArticleId
+                    select new TComment
+                    {
+                        FCommentId = Id,
+                        FCommentContent = myComment,
+                        FCommentTime = DateTime.Now
+                    };
+
+            _context.Add(comment);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new { id = Id });
         }
 
     }
