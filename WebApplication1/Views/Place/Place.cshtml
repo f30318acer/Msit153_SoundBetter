@@ -98,10 +98,25 @@
                                 <img src="/img/Place/${item.fPicturePath}" alt = "" class="ss-thumb">
                                 <h5>${item.fSiteName}</h5>
                                 <h5>${item.fCity}</h5>
-                                <h5>@Model${item.fSiteTypeText}</h5>
+                                <h5 id="siteTypeText"></h5>
                             </div>
                          <br />
                          </a>`);
+
+                    let siteTypeText = "";
+                    switch (item.fSiteType) {
+                        case 1:
+                            siteTypeText = "錄音室";
+                            break;
+                        case 2:
+                            siteTypeText = "音樂教室";
+                            break;
+                        default:
+                            siteTypeText = "其他";
+                            break;
+                    }
+
+                    card.find('#siteTypeText').text(siteTypeText);
 
                     docFrag.append(card);
                 });
@@ -127,10 +142,26 @@
                                         <img src="/img/Place/${item.fPicturePath}" alt = "" class="ss-thumb" >
                                         <h5>${item.fSiteName}</h5>
                                         <h5>${item.fCity}</h5>
-                                        <h5>@Model${item.fSiteTypeText}</h5>
+                                        <h5 id="siteTypeText"></h5>
                                     </div>
                                  <br />
                                  </a>`);
+
+                    let siteTypeText = "";
+                    switch (item.fSiteType) {
+                        case 1:
+                            siteTypeText = "錄音室";
+                            break;
+                        case 2:
+                            siteTypeText = "音樂教室";
+                            break;
+                        default:
+                            siteTypeText = "其他";
+                            break;
+                    }
+
+                    card.find('#siteTypeText').text(siteTypeText);
+
                     docFrag.append(card);
                 })
                 divList.html(docFrag)
