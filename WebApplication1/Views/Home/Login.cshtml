@@ -4,10 +4,64 @@
     ViewData["Title"] = "Login";
 }
 
+<style>
+    .vh-100 {
+        background: url('@Url.Content("~/assets/img/background/Rain.jpg")') no-repeat center center fixed;
+        background-size: cover;
+        z-index: 0;
+    }
 
+    .card {
+        background: rgba(255, 255, 255, 0.5); /* 半透明背景 */
+        border-radius: 15px; /* 边框圆角 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
+        z-index:auto;
+    }
+
+    .btn-dark btn-outline-dark btn btn-outline-secondary {
+        background-color: #000; /* 按钮背景颜色 */
+        border-radius: 10px; /* 按钮的边框圆角 */
+        color: #fff; /* 按钮文字颜色 */
+        padding: 10px 20px; /* 按钮内边距 */
+        font-size: 16px; /* 文字大小 */
+        border: none; /* 去除边框 */
+    }
+
+    .form-control {
+        border-radius: 10px; /* 输入框的边框圆角 */
+        border: 1px solid #ccc; /* 输入框边框 */
+        padding: 15px; /* 输入框内边距 */
+    }
+
+    #img1 {
+        display: none;
+    }
+
+    .custom-form-container {
+        max-width: 600px; /* 或者您希望的任何數值 */
+        margin: auto; /* 這將會使得表單在頁面中間 */
+    }
+
+    #rainy {
+        position: fixed; /* or absolute */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1; /* Behind the content */
+    }
+
+    .container {
+        position: relative;
+        z-index: 20; /* 高於雨滴效果的層級 */
+    }
+    p {
+        color: black;
+    }
+</style>
 
 <section class="vh-100">
-    <div id="rainy"></div>
+    @* <div id="rainy"></div>   *@
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-6 col-xl-6">
@@ -19,9 +73,6 @@
                                 <form class="mx-1 mx-md-4" method="post" action="@Url.Action("Login","Home")">
                                     <div class="mb-3">                                     
                                         <label for="inputEmail">帳號:</label>
-                                        <body onload="run();">
-                                            <img id="background" alt="background" src="~/assets/img/background/Rain.jpg" />
-                                        </body>
                                         <input type="email" name="Email" id="inputEmail" class="form-control" value="" />                                      
                                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </div>
@@ -93,68 +144,9 @@
 
 <script src="~/js/rainyday.min.js"></script>
 
-@section Styles
-{
-    <style>
-        .vh-100 {
-            background: url('@Url.Content("~/assets/img/background/Rain.jpg")') no-repeat center center fixed;
-            background-size: cover;
-        }
 
-        .card {
-            background: rgba(255, 255, 255, 0.5); /* 半透明背景 */
-            border-radius: 15px; /* 边框圆角 */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
-        }
 
-        .btn-dark btn-outline-dark btn btn-outline-secondary {
-            background-color: #000; /* 按钮背景颜色 */
-            border-radius: 10px; /* 按钮的边框圆角 */
-            color: #fff; /* 按钮文字颜色 */
-            padding: 10px 20px; /* 按钮内边距 */
-            font-size: 16px; /* 文字大小 */
-            border: none; /* 去除边框 */
-        }
 
-        .form-control {
-            border-radius: 10px; /* 输入框的边框圆角 */
-            border: 1px solid #ccc; /* 输入框边框 */
-            padding: 15px; /* 输入框内边距 */
-        }
-
-        #img1 {
-            display: none;
-        }
-
-        .custom-form-container {
-            max-width: 600px; /* 或者您希望的任何數值 */
-            margin: auto; /* 這將會使得表單在頁面中間 */
-        }
-
-        #rainy {
-            position: fixed; /* or absolute */
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1; /* Behind the content */
-        }
-
-        .container {
-            position: relative;
-            z-index: 20; /* 高於雨滴效果的層級 */
-        }
-
-        .card {
-            background: white; /* or any non-transparent color */
-            /* other styles */
-        }
-
-        p {
-            color: black;
-        }
-    </style>
-}
 @section Scripts
 {
     <script>
@@ -171,27 +163,6 @@
             $('#inputEmail').val(email)
             $('#inputPassword').val("123")
         })
-
-        //雨滴功能
-        // const image = document.querySelector('background');
-        
-        // image.crossOrigin = 'anonymous';
-        // const loadRainEffect = function () {
-        //     const rainEffect = new RainDay({
-        //         image: image,
-        //         gravityAngle: Math.PI / 3,
-        //         fps: 30,
-        //     });
-        //     rainEffect.rain([[10, 8, 0.05], [7, 4, 0.5], [2, 1, 20]], 80);
-        // };
-
-        // if (image.complete) {
-        //     loadRainEffect();
-        // } else {
-        //     image.onload = loadRainEffect;
-        // }
-
-
         window.onload = function () {
             var image = document.getElementById('rainy');
             if (image) {
@@ -213,19 +184,5 @@
                 image.appendChild(img);
             }
         };
-
-        // window.onload = function () {
-        //     var image = document.getElementById('background');
-        //     if (image) {
-        //         image.crossOrigin = 'anonymous';
-        //         image.onload = function () {
-        //             var engine = new RainyDay({
-        //                 image: this
-        //             });
-        //             engine.rain([[3, 3, 0.1], [5, 5, 0.2]], 100);
-        //         };
-        //         image.src = image.getAttribute('src'); // 重新觸發onload事件
-        //     }
-        // };
     </script>
 }

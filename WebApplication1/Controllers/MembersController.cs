@@ -171,9 +171,10 @@ namespace prjMusicBetter.Controllers
         }
 
         //個人會員好友名單
-        public async Task<IActionResult> Friends(string searchString)
+        public async Task<IActionResult> Friends(string search)
         {
-            ViewData["CurrentFilter"] = searchString;
+
+            ViewData["CurrentFilter"] = search;
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
@@ -187,11 +188,11 @@ namespace prjMusicBetter.Controllers
             var friends = await _context.TMembers.Where(m => friendIds.Contains(m.FMemberId)).ToListAsync();
 
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                friends = friends.Where(s => s.FName.Contains(searchString)
-                                  || s.FEmail.Contains(searchString)
-                                  || s.FPhone.Contains(searchString)).ToList();
+                friends = friends.Where(s => s.FName.Contains(search)
+                                  || s.FEmail.Contains(search)
+                                  || s.FPhone.Contains(search)).ToList();
             }
 
             var viewModel = new FriendsViewModel
@@ -202,6 +203,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+      
 
         //個人會員黑名單
         public async Task<IActionResult> blackList()
@@ -224,21 +226,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-        //public async Task<IActionResult> Memberworks()
-        //{
-        //    TMember member = _userInfoService.GetMemberInfo();
-        //    if(member == null)
-        //    {
-        //        return RedirectToAction("Members", "Index");
-        //    }
-        //    var memberworksIds = await _context.TWorks
-        //        .Where(x=>x.FMemberId==member.FMemberId)
-        //        .Select(x=>x.FWorkId)
-        //        .ToListAsync();
-
-        //}
-
-
+   
         public async Task<IActionResult> MemberCoupon()
         {
             TMember member = _userInfoService.GetMemberInfo();
@@ -262,6 +250,27 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+  
+   
+        public async Task<IActionResult> MemberWorks()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Members", "Index");// 如果未找到會員，重定向到登入頁面
+            }
+            var works = await _context.TWorks.Where(w => w.FMemberId == member.FMemberId)
+                           .ToListAsync();// 獲取該會員的所有作品
+            var viewModel = new MemberWorksVM
+            {
+                Member = member,
+                Works = works // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
+            };
+            return PartialView(viewModel);
+        }
+
+      
     }
 }
+
 

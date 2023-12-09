@@ -2,49 +2,51 @@
 @{
     ViewData["Title"] = "MemberCoupon";
 }
-
-<h1>MemberCoupon</h1>
-
-<div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
-    <h2>@Model.Member.FUsername 的優惠券</h2>
-        <div id="searchResults"></div>
-        <div class="d-flex align-items-center">
-        <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")">
-            <input type="text" name="searchTerm" id="search" placeholder="Search...">
-            <button type="submit">Search</button>
-        </form>
-        </div>
-            <table class="table table-striped align-middle text-center">
+<script src="https://cdn.tailwindcss.com"></script>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-2">@Model.Member.FUsername 的優惠券</h2>
+            <div id="searchResults"></div>
+            <div class="flex items-center my-4">
+                <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")" class="flex-grow flex items-center mr-2">
+                    <input type="text" name="searchTerm" id="search" placeholder="Search..." class="form-input border border-gray-300 rounded-md p-2 mr-2">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
+                </form>
+                <a href="@Url.Action("CreateMemberCoupon", "Members")" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md">新增</a>
+            </div>
+            <table class="min-w-full leading-normal">
                 <thead>
-                    <tr>
-                        <th>優惠券名稱</th>                    
-                        <th>描述</th>
-                        <th>有效期限</th>
-                        <th>有效期限</th>
-                        <th>照片</th>            
+                    <tr class="bg-yellow-300">
+                        <th class="text-center py-2">名稱</th>
+                        <th class="text-center py-2">描述</th>
+                        <th class="text-center py-2">有效期限</th>
+                        <th class="text-center py-2">有效期限</th>
+                        <th class="text-center py-2">照片</th>
                     </tr>
                 </thead>
                 <tbody id="memberTable">
                     @foreach (var coupon in Model.Coupons)
                     {
-                    <tr>
-                    <td>@Html.DisplayFor(modelItem => coupon.FCouponContent)</td>
-                    <td>@Html.DisplayFor(modelItem => coupon.FDescription) <!-- 描述 --></td>
-                    <td>@Html.DisplayFor(modelItem => coupon.FStartdate) <!-- 有效期限 --></td>
-                    <td>@Html.DisplayFor(modelItem => coupon.FEnddate) <!-- 有效期限 --></td>                 
-                    <td>
-                        @if (!string.IsNullOrEmpty(coupon.FPicture))
-                        {
-                            <img src="@Url.Content("~/img/CoolPon/" + coupon.FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
-                        }
-                        else
-                        {
-                            @:No Image
-                        }
-                    </td>
-                </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => coupon.FCouponContent)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => coupon.FDescription)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => coupon.FStartdate)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => coupon.FEnddate)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                @if (!string.IsNullOrEmpty(coupon.FPicture))
+                                {
+                                    <img src="@Url.Content("~/img/CoolPon/" + coupon.FPicture)" alt="Coupon Image" class="w-24 h-auto rounded-md" />
+                                }
+                                else
+                                {
+                                    <span class="text-gray-500">No Image</span>
+                                }
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
-</div>
+    </div>
+</body>

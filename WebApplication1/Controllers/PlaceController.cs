@@ -4,16 +4,21 @@ using prjMusicBetter.Models;
 using SendGrid.Helpers.Mail;
 using SendGrid;
 using System;
+using prjMusicBetter.Models.infra;
 
 namespace Music_matchmaking_platform.Controllers
 {
     public class PlaceController : Controller
     {
 		private readonly dbSoundBetterContext _context;
-		public PlaceController(dbSoundBetterContext context)
+        private readonly IWebHostEnvironment _host;
+        private readonly UserInfoService _userInfoService;
+        public PlaceController(IWebHostEnvironment host, dbSoundBetterContext context, UserInfoService userInfoService)
 		{
-			_context = context;
-		}
+            _host = host;
+            _context = context;
+            _userInfoService = userInfoService;//抓使用者
+        }
 		public IActionResult List()
 		{
 			var dbSoundBetterContext = _context.TSites
@@ -129,5 +134,18 @@ namespace Music_matchmaking_platform.Controllers
 
 			return View(tSite);
 		}
-	}
+        public IActionResult GetMemberNameandEmail()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var name = member?.FName;
+            var email = member?.FEmail;
+            var result = new
+            {
+                Name = name,
+                Email = email
+            };
+
+            return Json(result);
+        }
+    }
 }

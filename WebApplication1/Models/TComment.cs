@@ -21,3 +21,8 @@ public partial class TComment
 
     public virtual TMember FMember { get; set; }
 }
+
+public partial class TArticle
+{
+	public List<TComment> Comments { get; set; }
+}

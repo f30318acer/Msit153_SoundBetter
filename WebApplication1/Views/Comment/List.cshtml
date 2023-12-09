@@ -1,0 +1,69 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TComment>
+
+@{
+    ViewBag.Title = "留言板";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                序
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FMemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCommentContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCommentTime)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FMemberId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FCommentContent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FCommentTime)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@* <div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FCommentContent" class="control-label"></label>
+                <input asp-for="FCommentContent" class="form-control" />
+                <span asp-validation-for="FCommentContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="發送留言" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div> *@
+

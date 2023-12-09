@@ -1,0 +1,39 @@
+﻿@model prjMusicBetter.Models.ViewModels.MemberWorksVM
+@{
+    ViewData["Title"] = "MemberWorks";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>作品名稱</th>
+            <th>描述</th>
+            <th>更新時間</th>
+            <th>作品</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var work in Model.Works)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => work.FWorkName)</td>
+                <td>@Html.DisplayFor(modelItem => work.FDescription)</td>
+                <td>@Html.DisplayFor(modelItem => work.FUpdateTime)</td>
+                <td>
+                    <audio controls>
+                        <source src="@Url.Content("~/works/" + work.FFilePath)" type="audio/mpeg">
+                        您的瀏覽器不支援 audio 元素。
+                    
+                    @Html.DisplayFor(modelItem => work.FFilePath)</td>
+                <td>
+                    <!-- 這裡可以放置編輯或刪除的操作鏈接 -->
+                    @Html.ActionLink("編輯", "EditWork", new { id = work.FWorkId }) |
+                    @Html.ActionLink("刪除", "MemberWorksDelete", new { id = work.FWorkId }, new { onclick = "return confirm('確定要刪除這個作品嗎？');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
