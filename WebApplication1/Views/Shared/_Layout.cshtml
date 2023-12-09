@@ -240,7 +240,6 @@
             })
                 .then(function (response) {
                     // 判斷購物車種類
-                    console.log(response)
                     cartItemCount = response.length
 
                     // 更新頁面購物車商品數量
@@ -336,35 +335,35 @@
                     
                    
                     }
-            //     else
-            //         {  
+                else
+                    {  
                         
-            //         let str = "";
-            //         str += `<ul class="navbar-nav">
-            //                                                     <li class="nav-item dropdown" id="memberIcon">
-            //                                                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
-            //         if (datas.photoPath != null) {
-            //             str += `<img src="@Url.Content("~/uploads/")${datas.photoPath}" class="circle-size-35" />`
-            //         }
-            //         else {
-            //             str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
-            //         }
-            //         str += `</button>
-            //                                                 <ul class="dropdown-menu dropdown-menu-dark">
-            //                                                     <li class="d-flex align-items-center mx-2">
-            //                                                         <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
-            //                                                         <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
-            //                                                     </li>
-            //                                                     <li class="d-flex align-items-center mx-2">
-            //                                                                 <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
-            //                                                                 <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
-            //                                                     </li>
-            //                                                 </ul>
-            //                                             </li>
-            //                                         </ul>`;
+                    let str = "";
+                    str += `<ul class="navbar-nav">
+                                                                <li class="nav-item dropdown" id="memberIcon">
+                                                                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
+                    if (datas.photoPath != null) {
+                        str += `<img src="@Url.Content("~/uploads/")${datas.photoPath}" class="circle-size-35" />`
+                    }
+                    else {
+                        str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
+                    }
+                    str += `</button>
+                                                            <ul class="dropdown-menu dropdown-menu-dark">
+                                                                <li class="d-flex align-items-center mx-2">
+                                                                    <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
+                                                                    <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
+                                                                </li>
+                                                                <li class="d-flex align-items-center mx-2">
+                                                                            <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
+                                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>`;
 
-            //         $("#memberIcon").html(str)
-            //     }
+                    $("#memberIcon").html(str)
+                }
             }
         }
 
