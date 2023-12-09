@@ -3,8 +3,6 @@
     ViewData["Title"] = "MemberCoupon";
 }
 
-<h1>MemberCoupon</h1>
-
 <div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
     <h2>@Model.Member.FUsername 的優惠券</h2>
         <div id="searchResults"></div>
@@ -12,7 +10,10 @@
         <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")">
             <input type="text" name="searchTerm" id="search" placeholder="Search...">
             <button type="submit">Search</button>
+            <a href="@Url.Action("CreateMemberCoupon", "Members")" class="btn btn-outline-primary mb-1">新增</a>
         </form>
+       
+
         </div>
             <table class="table table-striped align-middle text-center">
                 <thead>

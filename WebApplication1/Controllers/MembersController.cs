@@ -262,6 +262,61 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+        public async Task<IActionResult> SearchCoupons(string searchTerm)
+        {
+            var coupons =await _context.TCoupons
+                .Where(c=>c.FDescription.Contains(searchTerm)|| c.FCouponContent.Contains(searchTerm))
+                .ToArrayAsync();
+
+            // 创建一个视图模型，如果需要的话
+            var viewModel = new SearchCouponsViewModel
+            {
+                Coupons = coupons
+
+            };
+            return PartialView("_SearchResults", viewModel); // 确保创建了相应的视图
+
+        }
+        // GET: TCoupons/Create
+        public IActionResult CreateMemberCoupon()
+        {
+            ViewBag.Members = _context.TMembers.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateMemberCoupon([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(tCoupon);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(tCoupon);
+        }
+
+
+        public async Task<IActionResult> MemberWorks()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Members", "Index");// 如果未找到會員，重定向到登入頁面
+            }
+            var works = await _context.TWorks.Where(w => w.FMemberId == member.FMemberId)
+                           .ToListAsync();// 獲取該會員的所有作品
+            var viewModel = new MemberWorksVM
+            {
+                Member = member,
+                Works = works // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
+            };
+            return PartialView(viewModel);
+        }
+
+      
     }
 }
+
 
