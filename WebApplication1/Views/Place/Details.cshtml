@@ -27,7 +27,7 @@
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FAddress)</li>
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FPhone)</li>
                     </ul>
-                    <form class="contact-from" >
+                    <form class="contact-from" id="reservationForm">
                         <div class="row" id="divForm">
 @*                             <div class="col-md-6">
                                 <input type="text" placeholder="請輸入姓名" style="font-size: 20px; border: solid">
@@ -327,9 +327,9 @@
                     </div>
                     <br />
                     <button class="site-btn" id="btnReserve">預約</button>
-                    <div>
-                        <a asp-action="Edit" asp-route-id="@Model?.FSiteId">Edit</a> |
-                        <a asp-action="Index">Back to List</a>
+                    <br /><br />
+                    <div id="btnforHome">
+                        <a asp-action="Place" class="btn btn-success" style="border-radius:20px">回場地一覽</a>
                     </div>
                 </div>
             </div>
@@ -349,14 +349,14 @@
             $.getJSON(url, function (data) {
                 const form = $(`
                     <div class="col-md-6">
-                        <input type="text" id="nameInput" style="font-size: 20px; border: solid">
+                        <input type="text" id="nameInput" style="font-size: 20px; border: solid" name="name">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="emailInput" style="font-size: 20px; border: solid">
+                        <input type="text" id="emailInput" style="font-size: 20px; border: solid" name="email">
                     </div>
                     <div class="col-md-12">
-                        <input type="text" placeholder="主旨" style="font-size: 20px; border: solid">
-                        <textarea placeholder="訊息" style="font-size: 20px; border: solid"></textarea>
+                        <input type="text" placeholder="主旨" style="font-size: 20px; border: solid" name="subject">
+                        <textarea placeholder="訊息" style="font-size: 20px; border: solid" name="message"></textarea>
                     </div>
                 `);
                 // 將名稱和電子郵件設置到相應的輸入字段中
@@ -382,6 +382,7 @@
 
         $('#btnReserve').click(function () {
             const formData = new FormData(document.querySelector('#editForm'));
+            const formData2 = new FormData(document.querySelector('#reservationForm'));
 
             $('input[type="checkbox"]').each(function () {
                 const checkbox = $(this);
@@ -397,15 +398,29 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => {
-                if (response.ok) {
-                        alert("場地預約成功");
-                    location.href = '@Url.Content("~/Place/Details/")' + siteID;
-                }
-                else {
-                    alert("連線失敗");
-                }
+                .then(response => {
+                    if (response.ok) {
+                        // alert("場地預約成功");
+                        // location.href = '@Url.Content("~/Place/Details/")' + siteID;
+                    }
+                    else {
+                        alert("連線失敗");
+                    }
+                })
+
+            fetch('@Url.Content("~/Place/Edit/")', {
+                method: 'POST',
+                body: formData2
             })
+                .then(response => {
+                    if (response.ok) {
+                        alert("場地預約成功");
+                        location.href = '@Url.Content("~/Place/Details/")' + siteID;
+                    }
+                    else {
+                        alert("連線失敗");
+                    }
+                })
         })
 
         function initMap() {
