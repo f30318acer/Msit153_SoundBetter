@@ -326,6 +326,6 @@ namespace WebApplication1.Controllers
         //public IActionResult Partner() { return View(); }
         public IActionResult contactUS() { return View(); }
 
-
+        
     }
 }
