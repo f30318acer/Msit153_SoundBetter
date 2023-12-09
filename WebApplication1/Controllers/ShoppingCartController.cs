@@ -7,8 +7,15 @@ namespace prjMusicBetter.Controllers
 	{
 		public IActionResult List()
 		{
-			return View();
+            // 取得Session
+
+            // 依照Session內 ProductId 檢查 => 
+            // 例如：商品特價、商品沒貨、
+            // 
+
+            return View();
 		}
+
         public IActionResult Checkout()
         {
             return View();

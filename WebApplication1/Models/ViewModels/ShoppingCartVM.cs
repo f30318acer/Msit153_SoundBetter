@@ -1,21 +1,37 @@
-﻿namespace prjMusicBetter.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace prjMusicBetter.Models.ViewModels
 {
+    /// <summary>
+    /// 購物車用Model
+    /// </summary>
     public class ShoppingCartVM
     {
-        public int ClassID { get; set; }
+        /// <summary>
+        /// 商品id
+        /// </summary>
+        public int ProductId { get; set; }
 
-        public string ClassName { get; set; }
+        /// <summary>
+        /// 商品名稱
+        /// </summary>
+        public string ProductName { get; set; }
 
-        public string ClassDescription { get; set; }
+        /// <summary>
+        /// 商品描述
+        /// </summary>
+        public string ProductDesc { get; set; }
 
-        public decimal CPrice { get; set; }
+        /// <summary>
+        /// 商品數量
+        /// </summary>
+        public int ProjectCount { get; set; }
 
-        public int ClassCount { get; set; }
-
-        public int SiteID { get; set; }
-
-        public string SiteName { get; set; }
-
-
+        /// <summary>
+        /// 商品價格
+        /// </summary>
+        public decimal? ProjectPrice { get; set; }
     }
 }
+
+

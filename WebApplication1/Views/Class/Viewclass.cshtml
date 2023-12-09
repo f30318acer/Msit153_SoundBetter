@@ -192,9 +192,7 @@
                 <h2 class="price">報名人數</h2>
                 <h3 style="text-align: center">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
                 <div>
-                    <form asp-controller="ShoppingCart" asp-action="List" onsubmit="return checkQuota()" method="get" style="text-align: center; margin: 20px auto;">
-                        <button name="createClass" class="btm">購買課程</button>
-                    </form>
+                    <button name="createClass" onclick="checkQuota()" class="btm">購買課程</button>
                 </div>
             </div>
         </div>
@@ -227,7 +225,33 @@
         function checkQuota() {
             // 檢查是否符合課程名額條件
             if (@Model.FCurrentStudent < @Model.FMaxStudent) {
+                // 準備要傳送的資料，將 Razor 模型轉換為 JSON 字串
+                var postData = {
+                    ProductId: @Model.FClassId,
+                    ProductName: '@Html.Raw(Model.FClassName)',
+                    ProjectPrice: @Model.FPrice,
+                    ProductDesc: '@Html.Raw(Model.FDescription)'
+                };
+
                 // 符合條件，執行頁面跳轉
+                $.ajax({
+                    type: "POST",
+                    url: "/apiShoppingCart/AddClassToCart", // 修改成你的 API 端點
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(postData),
+                    success: function (response) {
+                        // 處理成功的回應
+                        alert(response.message);
+                        // 刷新購物車Icon
+                        UpdateShoppingCartIcon();
+                    },
+                    error: function (error) {
+                        // 處理錯誤
+                        alert(response.message);
+                    }
+                });
+
                 return true;
             } else {
                 // 不符合條件，顯示提醒並阻止表單提交

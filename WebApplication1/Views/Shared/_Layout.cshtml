@@ -93,15 +93,15 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown" id="memberIcon">
                                     <button class="btn btn-dark" data-bs-toggle="dropdown">
-                                        <img src="~/img/header/user.png" class="circle-size-35" width="15px" />
+                                        <img src="~/img/header/user.png" class="circle-size-35" width="30" />
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark" id="empList">
                                         <li class="d-flex align-items-center mx-2">
-                                            <img src="/img/icons/help_icon.png" class="width-16px" width="15px    />
+                                            <img src="/img/icons/help_icon.png" class="width-16px" width="30"    />
                                             <a class="dropdown-item fs-12px" href="#">幫助中心</a>
                                         </li>
                                         <li class="d-flex align-items-center mx-2">
-                                            <img src="/img/icons/login.png" class="width-16px" width="15px" />
+                                            <img src="/img/icons/login.png" class="width-16px" width="30" />
                                             @if (User.Identity.IsAuthenticated)
                                             {
                                                 <a class="dropdown-item"  asp-action="Loginout" asp-controller="Home">登出</a>
@@ -122,7 +122,11 @@
                             </a> *@
                         </div>                  
                         <a asp-action="List" asp-controller="ShoppingCart" class="nav-icon mx-3 position-relative" id="cartItems">
-                            <img src="~/img/header/shopping-cart.png" width="15" />
+                            <img src="~/img/header/shopping-cart.png" width="30" />
+                            <span id="cartItemCount" class="badge badge-danger position-absolute top-0 start-100 translate-middle">
+                                <!-- 購物車數量 -->
+                            </span>
+
                         </a>
                     </div>
                 </div>
@@ -222,9 +226,42 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="~/js/sweetalert2.all.min.js"></script>
-   
     <script>
+        // 更新購物車Session
+        $( function () {
+            UpdateShoppingCartIcon()
+        })
 
+        function UpdateShoppingCartIcon() {
+            $.ajax({
+                type: 'GET',
+                url: '/apiShoppingCart/Index',
+                dataType: 'json',
+            })
+                .then(function (response) {
+                    // 判斷購物車種類
+                    console.log(response)
+                    cartItemCount = response.length
+
+                    // 更新頁面購物車商品數量
+                    var cartItemCountElement = $('#cartItemCount');
+
+                    cartItemCountElement.text(cartItemCount);
+
+                    // 沒東西 隱藏數字
+                    if (cartItemCount === 0) {
+                        cartItemCountElement.hide();
+                    } else {
+                        cartItemCountElement.show();
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Failed to retrieve shopping cart information.', error);
+                });
+            }
+    </script>
+
+    <script>
         AOS.init();
 
         CheckLogin()
@@ -234,7 +271,6 @@
             const isLogin = await response.json();
 
             if (isLogin) {
-
                 const response = await fetch(`@Url.Content("~/apiHome/UpdateNav")`)
                 const dto = await response.json();
 
@@ -245,14 +281,12 @@
                     str += `<ul class="navbar-nav">
                                                    <li class="nav-item dropdown" id="memberIcon">
                                                       <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> `;
-                    if (datas.photoPath != null)
-                    {
+                    if (datas.photoPath != null) {
 
-                        str += `<img src="@Url.Content("~/img/Member/")${datas.photoPath}" class="circle - size - 35" />`
+                        str += `<img src="@Url.Content("~/img/Member/")${datas.photoPath}" class="circle - size - 35"  width="30px"/>`
                     }
-                    else
-                    {
-                        str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
+                    else {
+                        str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" width="30px" />`
                     }
                     str += `</button>
                                             <ul class="dropdown-menu dropdown-menu-dark">
@@ -270,17 +304,18 @@
                                     </ul>`;
 
                     $("#memberIcon").html(str)
-                   
-                } else {
+                }
+
+                else {
                     let str = "";
                     str += `<ul class="navbar-nav">
                                                    <li class="nav-item dropdown" id="memberIcon">
                                                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
                     if (datas.photoPath != null) {
-                        str += `<img src="@Url.Content("~/images/uploads/Employee/")${datas.photoPath}" class="circle-size-35" />`
+                        str += `<img src="@Url.Content("~/images/uploads/Employee/")${datas.photoPath}" class="circle-size-35"  width="30px"/>`
                     }
                     else {
-                        str += `<img src="@Url.Content("~/images/header/user.png")" class="circle-size-35" />`
+                        str += `<img src="@Url.Content("~/images/header/user.png")" class="circle-size-35"  width="30px"/>`
 
                     }
                     str += `</button>
@@ -301,37 +336,39 @@
                     
                    
                     }
-                else
-                    {  
+            //     else
+            //         {  
                         
-                    let str = "";
-                    str += `<ul class="navbar-nav">
-                                                                <li class="nav-item dropdown" id="memberIcon">
-                                                                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
-                    if (datas.photoPath != null) {
-                        str += `<img src="@Url.Content("~/uploads/")${datas.photoPath}" class="circle-size-35" />`
-                    }
-                    else {
-                        str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
-                    }
-                    str += `</button>
-                                                            <ul class="dropdown-menu dropdown-menu-dark">
-                                                                <li class="d-flex align-items-center mx-2">
-                                                                    <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
-                                                                    <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
-                                                                </li>
-                                                                <li class="d-flex align-items-center mx-2">
-                                                                            <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
-                                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>`;
+            //         let str = "";
+            //         str += `<ul class="navbar-nav">
+            //                                                     <li class="nav-item dropdown" id="memberIcon">
+            //                                                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
+            //         if (datas.photoPath != null) {
+            //             str += `<img src="@Url.Content("~/uploads/")${datas.photoPath}" class="circle-size-35" />`
+            //         }
+            //         else {
+            //             str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
+            //         }
+            //         str += `</button>
+            //                                                 <ul class="dropdown-menu dropdown-menu-dark">
+            //                                                     <li class="d-flex align-items-center mx-2">
+            //                                                         <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
+            //                                                         <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
+            //                                                     </li>
+            //                                                     <li class="d-flex align-items-center mx-2">
+            //                                                                 <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
+            //                                                                 <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+            //                                                     </li>
+            //                                                 </ul>
+            //                                             </li>
+            //                                         </ul>`;
 
-                    $("#memberIcon").html(str)
-                }
+            //         $("#memberIcon").html(str)
+            //     }
             }
         }
+
+
     </script>
 
     @if (TempData["AlertLogin"] != null)
@@ -364,3 +401,22 @@
 </body>
 
 </html>
+
+<style>
+    .nav-icon {
+        position: relative;
+        display: inline-block;
+    }
+
+    #cartItemCount {
+        position: absolute;
+        top: 0;
+        start: 100%;
+        transform: translate(-50%, -50%);
+        background-color: red; /* 背景颜色，可以根据需求更改 */
+        color: white; /* 字体颜色，可以根据需求更改 */
+        border-radius: 50%;
+        padding: 5px 8px;
+        font-size: 12px; /* 字体大小，可以根据需求更改 */
+    }
+</style>
