@@ -27,9 +27,9 @@
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FAddress)</li>
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FPhone)</li>
                     </ul>
-                    <form class="contact-from">
-                        <div class="row">
-                            <div class="col-md-6">
+                    <form class="contact-from" >
+                        <div class="row" id="divForm">
+@*                             <div class="col-md-6">
                                 <input type="text" placeholder="請輸入姓名" style="font-size: 20px; border: solid">
                             </div>
                             <div class="col-md-6">
@@ -38,7 +38,7 @@
                             <div class="col-md-12">
                                 <input type="text" placeholder="主旨" style="font-size: 20px; border: solid">
                                 <textarea placeholder="訊息" style="font-size: 20px; border: solid"></textarea>
-                            </div>
+                            </div> *@
                         </div>
                     </form>
                     <div id="accordion">
@@ -341,6 +341,33 @@
 {
     <script>
         const siteID = $('#pID').val();
+
+        function loadForm() {
+            const divForm = $('#divForm');
+            let url = '/Place/GetMemberNameandEmail';
+
+            $.getJSON(url, function (data) {
+                const form = $(`
+                    <div class="col-md-6">
+                        <input type="text" id="nameInput" style="font-size: 20px; border: solid">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="emailInput" style="font-size: 20px; border: solid">
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" placeholder="主旨" style="font-size: 20px; border: solid">
+                        <textarea placeholder="訊息" style="font-size: 20px; border: solid"></textarea>
+                    </div>
+                `);
+                // 將名稱和電子郵件設置到相應的輸入字段中
+                form.find('#nameInput').val(data.name);
+                form.find('#emailInput').val(data.email);
+
+                divForm.html(form)
+            })
+        }
+
+        loadForm();
 
         function loadPlacePeriod() {
             $('input[type="checkbox"]').each(function () {
