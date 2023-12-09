@@ -171,9 +171,10 @@ namespace prjMusicBetter.Controllers
         }
 
         //個人會員好友名單
-        public async Task<IActionResult> Friends(string searchString)
+        public async Task<IActionResult> Friends(string search)
         {
-            ViewData["CurrentFilter"] = searchString;
+
+            ViewData["CurrentFilter"] = search;
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
@@ -187,11 +188,11 @@ namespace prjMusicBetter.Controllers
             var friends = await _context.TMembers.Where(m => friendIds.Contains(m.FMemberId)).ToListAsync();
 
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(search))
             {
-                friends = friends.Where(s => s.FName.Contains(searchString)
-                                  || s.FEmail.Contains(searchString)
-                                  || s.FPhone.Contains(searchString)).ToList();
+                friends = friends.Where(s => s.FName.Contains(search)
+                                  || s.FEmail.Contains(search)
+                                  || s.FPhone.Contains(search)).ToList();
             }
 
             var viewModel = new FriendsViewModel
@@ -202,6 +203,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+      
 
         //個人會員黑名單
         public async Task<IActionResult> blackList()
@@ -224,21 +226,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-        //public async Task<IActionResult> Memberworks()
-        //{
-        //    TMember member = _userInfoService.GetMemberInfo();
-        //    if(member == null)
-        //    {
-        //        return RedirectToAction("Members", "Index");
-        //    }
-        //    var memberworksIds = await _context.TWorks
-        //        .Where(x=>x.FMemberId==member.FMemberId)
-        //        .Select(x=>x.FWorkId)
-        //        .ToListAsync();
-
-        //}
-
-
+   
         public async Task<IActionResult> MemberCoupon()
         {
             TMember member = _userInfoService.GetMemberInfo();
@@ -262,42 +250,8 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-        public async Task<IActionResult> SearchCoupons(string searchTerm)
-        {
-            var coupons =await _context.TCoupons
-                .Where(c=>c.FDescription.Contains(searchTerm)|| c.FCouponContent.Contains(searchTerm))
-                .ToArrayAsync();
-
-            // 创建一个视图模型，如果需要的话
-            var viewModel = new SearchCouponsViewModel
-            {
-                Coupons = coupons
-
-            };
-            return PartialView("_SearchResults", viewModel); // 确保创建了相应的视图
-
-        }
-        // GET: TCoupons/Create
-        public IActionResult CreateMemberCoupon()
-        {
-            ViewBag.Members = _context.TMembers.ToList();
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateMemberCoupon([Bind("FCouponId,FCouponContent,FCouponCode,FDescription,FStartdate,FEnddate,FPicture")] TCoupon tCoupon)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tCoupon);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tCoupon);
-        }
-
-
+  
+   
         public async Task<IActionResult> MemberWorks()
         {
             TMember member = _userInfoService.GetMemberInfo();
