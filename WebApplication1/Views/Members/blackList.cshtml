@@ -1,67 +1,74 @@
 ﻿@model prjMusicBetter.Models.ViewModels.FriendsViewModel
 
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-    tr:hover 
-    {
+    .hover\:color-coral:hover {
         color: coral;
     }
-    
+
+    .rounded-td {
+        border-radius: 0.375rem; /* This is Tailwind's 'rounded-md' utility equivalent */
+    }
 </style>
-<body>
-<div class="border border-secondary p-2 mb-2 border-opacity-75 rounded">
-    <h2>@Model.Member.FUsername 的黑名單</h2>
-        <div id="searchResults"></div>
-        <div class="d-flex align-items-center">
-            <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")">
-                <input type="text" name="searchTerm" id="search" placeholder="Search...">
-                <button type="submit">Search</button>
-            </form>
+
+
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <!-- Search Section -->
+        <div class="flex mb-4 items-center">
+            <div class="flex border border-gray-300 rounded overflow-hidden">
+                <label for="search" class="block text-gray-700 p-2 bg-white">搜尋關鍵字:</label>
+                <input type="text" id="search" placeholder="請輸入關鍵字" class="p-2" />
+                <button type="button" id="searchButton" class="bg-blue-500 hover:bg-blue-700 text-white p-2">搜尋</button>
+            </div>
         </div>
-            <table class="table table-striped align-middle text-center">
-                <thead>
-                    <tr>
-                        <th>姓名</th>                    
-                        <th>電話號碼</th>
-                        <th>信箱</th>
-                        <th>性別</th>
-                        <th>生日</th>                                             
-                        <th>照片</th>                
+
+        <!-- Table Section -->
+        <div class="bg-white shadow rounded-md overflow-hidden">
+            <table class="w-full">
+                <thead class="bg-gray-50">
+                    <tr class="bg-yellow-300">
+                        <th class="text-center py-2">姓名</th>
+                        <th class="text-center py-2">電話號碼</th>
+                        <th class="text-center py-2">信箱</th>
+                        <th class="text-center py-2">性別</th>
+                        <th class="text-center py-2">生日</th>
+                        <th class="text-center py-2">照片</th>
                     </tr>
                 </thead>
-                <tbody id="memberTable">
+                <tbody>
                     @foreach (var item in Model.BlackList)
                     {
-                        <tr>                          
-                            <td>
+                        <tr class="hover:bg-gray-100 hover:color-coral">
+                            <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FName)
-                            </td>                          
-                            <td>
+                            </td>
+                            <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FPhone)
                             </td>
-                            <td>
+                            <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FEmail)
                             </td>
-                            <td>
+                            <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FGender)
                             </td>
-                            <td>
+                            <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FBirthday)
-                            </td>                               
-                            <td>
+                            </td>
+                            <td class="py-2 px-4 rounded-td">
                                 @if (!string.IsNullOrEmpty(item.FPhotoPath))
                                 {
-                                    <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Coupon Image" style="width:100px; height:auto;" />
+                                    <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" class="w-24 h-auto rounded" />
                                 }
                                 else
                                 {
                                     @:No Image
-                                }                         
-                                
-                            </td>                  
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-</div>
+    </div>
 </body>

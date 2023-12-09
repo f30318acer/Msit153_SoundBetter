@@ -3,65 +3,43 @@
     ViewData["Title"] = "MemberInfo";
 }
 
+<script src="https://cdn.tailwindcss.com"></script>
 
-<form method="post">
-    <div class="container">
-        <div class="m-3 fs-3 fw-bold  border-bottom py-4 ">個人資料</div>
-        <div class="p-2 ">
-            <input type="hidden" name="MemberId" value="@Model.FMemberID">
-            <div class="row justify-content-around p-3">
-
-                <div class="pt-2 d-flex col-6 align-items-center">
-                    <div class=" width-90px text-end fw-bold">姓名 :</div>
-                    <div class="mx-2">
-                        @Model.FName
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-3xl font-bold text-gray-900 border-b-2 border-gray-100 pb-4">個人資料</h2>
+            <form method="post" class="space-y-4">
+                <input type="hidden" name="MemberId" value="@Model.FMemberID">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center">
+                        <div class="block text-right w-24 font-bold mr-2">姓名:</div>
+                        <div class="flex-grow">@Model.FName</div>
+                    </div>
+                    <div class="flex items-center">
+                        <label class="block text-right w-24 font-bold mr-2">生日:</label>
+                        <div class="flex-grow">@Model.FBirthday</div>
+                    </div>
+                    <div class="flex items-center">
+                        <label class="block text-right w-24 font-bold mr-2">信箱:</label>
+                        <div class="flex-grow">@Model.FEmail</div>
+                    </div>
+                    <div class="flex items-center">
+                        <label class="block text-right w-24 font-bold mr-2">電話:</label>
+                        <div class="flex-grow">@Model.FPhone</div>
+                    </div>
+                    <div class="flex items-center col-span-1 md:col-span-2">
+                        <label class="block text-right w-24 font-bold mr-2">性別:</label>
+                        <div class="flex-grow">@Model.FGender</div>
                     </div>
                 </div>
-                <div class="pt-2 d-flex col-6 align-items-center">
-                    <div class=" width-90px text-end fw-bold">生日 :</div>
-                    <div class="mx-2">
-                        @Model.FBirthday
-                    </div>
+                <div class="flex justify-center mt-6">
+                    <input type="submit" value="修改個人資料" class="btn btn-dark btnEdit" data-id="@Model.FMemberID">
+                    <a href="@Url.Content("~/Home/Index")" class="btn btn-dark">回首頁</a>
                 </div>
-            </div>
-            <div class="row justify-content-around p-3">
-                <div class="pt-2 d-flex col-6 align-items-center">
-                    <div class=" width-90px text-end fw-bold">信箱 :</div>
-                    <div class="mx-2">
-                        @Model.FEmail
-                    </div>
-                </div>
-                <div class="pt-2 d-flex col-6 align-items-center">
-                    <div class=" width-90px text-end fw-bold">電話 :</div>
-                    <div class="mx-2">
-                        @Model.FPhone
-                    </div>
-                </div>
-
-            </div>
-            <div class="pt-2 d-flex col-6 align-items-center  p-3 mt-3">
-                <div class=" width-90px text-end fw-bold">性別 :</div>
-                <div class="mx-2">
-                    @Model.FGender
-                </div>
-            </div>
-            @* <div class="pt-2 d-flex col-6 align-items-center  p-3 mt-3">
-                <div class=" width-90px text-end fw-bold">使用者姓名 :</div>
-                <div class="mx-2">
-                    @Model.FUsername
-                </div>
-            </div> *@
-        </div>
-        <div class="justify-content-around p-5">
-            <div class="text-center">
-               @*   <a href="@Url.Action("MemberInfoEdit", "Members")" class="btn btn-dark p-2 px-4 btnEdit" data-id="">修改個人資料</a>
-                @Model.FMemberID *@
-                   <input type="submit" value="修改個人資料" class="btn btn-dark p-2 px-4 btnEdit" data-id="@Model.FMemberID"> 
-                   <a href="@Url.Content("~/Home/Index")" class="btn btn-dark">回首頁</a>
-            </div>
+            </form>
         </div>
     </div>
-@*     <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HQovWu9wfZBnLgpt5k7BlUBqt_o4XyyVbyc2vg0tffnMuLqTvxn77jdU8k0bSIFXla1UNXH9GX5Pkyia_lxvHi7TYTlBlr0ytkaL4n-312QAjLEmFmiAX4J6FMdTeXBysN19XNxJP1fxx30rUtbDY2bysWp1aviFk0dFjFbFwr3PFg8lI82D4oXRiEwGT8XfQ">
- *@</form>
+</body>
 
 
