@@ -6,10 +6,8 @@ namespace prjMusicBetter.Controllers
     public class CommentController : Controller
     {
         private readonly dbSoundBetterContext _context;
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
+        
 
         public IActionResult List(int id, string myComment)
         {
@@ -31,5 +29,7 @@ namespace prjMusicBetter.Controllers
 
             return View();
         }
+    
     }
+    
 }
