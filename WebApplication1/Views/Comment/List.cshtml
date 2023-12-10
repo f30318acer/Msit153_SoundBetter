@@ -1,5 +1,4 @@
-﻿@model IEnumerable<prjMusicBetter.Models.TComment>
-
+﻿@model prjMusicBetter.Models.ViewModels.CommentListViewModel
 @{
     ViewBag.Title = "留言板";
 }
@@ -11,59 +10,38 @@
                 序
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FMemberId)
+                會員名稱
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FCommentContent)
+                留言內容
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FCommentTime)
-            </th>
-            <th>
-
+                留言時間
             </th>
         </tr>
     </thead>
     <tbody>
-        @{
-            int count = 0;
-            foreach (var item in Model)
-            {
-
-                <tr>
-                    <td>
-                        @count
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FMemberId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FCommentContent)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FCommentTime)
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            }
+        @for (var index = 0; index < Model.Comments.Count; index++)
+        {
+            <tr>
+                <td>
+                    @(index + 1)
+                </td>
+                <td>
+                    @Model.Comments[index].FMember.FName
+                </td>
+                <td>
+                    @Model.Comments[index].FCommentContent
+                </td>
+                <td>
+                    @Model.Comments[index].FCommentTime.Value.ToString("yyyy/MM/dd HH:mm")
+                </td>
+                <td>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<script>
 
-@* <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FCommentContent" class="control-label"></label>
-                <input asp-for="FCommentContent" class="form-control" />
-                <span asp-validation-for="FCommentContent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="發送留言" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div> *@
-
+</script>

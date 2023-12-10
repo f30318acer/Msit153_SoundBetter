@@ -30,5 +30,25 @@ namespace prjMusicBetter.Models.infra
 
             return member;
         }
+
+        /// <summary>
+        /// 取得使用者Id
+        /// </summary>
+        public int GetMemberId()
+        {
+            var claim = _contextAccessor.HttpContext.User.Claims.ToList();
+
+            var memberId = claim.Where(c => c.Type == "fMemberID").FirstOrDefault();
+
+
+            if (memberId == null)
+            {
+                return 0;
+            }
+
+            int id = Convert.ToInt32(memberId.Value);
+
+            return id;
+        }
     }
 }

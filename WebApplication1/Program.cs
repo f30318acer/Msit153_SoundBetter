@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); ;
 //AspNetCore.Authentication 用戶驗證操作機制註冊DI
 builder.Services.AddHttpContextAccessor();
 //自訂用戶登入資訊操作註冊DI
@@ -37,6 +37,12 @@ builder.Services.AddScoped<MemberDataService>();
 
 //建立聊天室連接需要特別加這一段
 builder.Services.AddSignalR();
+
+// 增加Session 超過1小時會被清空
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1);
+});
 
 
 //登入cookie 要加這一段才能使用
@@ -70,6 +76,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 //================= AspNetCore.Authentication 用戶登入驗證操作機制使用======
 
+// 使用Session
+app.UseSession();
 
 
 app.UseEndpoints(endpoints =>
