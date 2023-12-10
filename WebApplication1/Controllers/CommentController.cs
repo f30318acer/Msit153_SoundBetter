@@ -33,7 +33,7 @@ namespace prjMusicBetter.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateComment(CommentDto dto)
+        public IActionResult Create(CommentDto dto)
         {
             //新增_文章備註資料
             _context.TComments.Add(new TComment()
