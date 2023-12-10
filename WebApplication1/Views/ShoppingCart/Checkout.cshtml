@@ -1,9 +1,9 @@
-﻿@{
-    ViewData["Title"] = "List";
+﻿@model List<prjMusicBetter.Models.ViewModels.ShoppingCartVM>
+@{
+    ViewData["Title"] = "結帳頁面";
+    int totalPrice = 0;
 }
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"></script>
 <div class="container">
     <main>
         <div class="py-5 text-center" style="text-align:left;">
@@ -25,15 +25,27 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @* 每筆訂單資料 *@
+                    @foreach(var item in Model)
+                    {
+                        totalPrice += Convert.ToInt32(item.ProductPrice * item.ProductCount);
+
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@Convert.ToInt32(item.ProductPrice)</td>
+                            <td>@item.ProductCount</td>
+                            <td>@Convert.ToInt32(item.ProductPrice * item.ProductCount)</td>
+                        </tr>
+                    }
                     <tr>
-                        <td>爵士課程</td>
-                        <td>$3999</td>
-                        <td>10</td>
-                        <td>39990</td>
+
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">總價</th>
+                        <th scope="col">@(totalPrice)</th>
                     </tr>
                 </tbody>
             </table>
-            <!-- End Default Table Example -->
             <div>
             </div>
         </div>
@@ -178,10 +190,6 @@
         </ul>
     </footer>
 </div>
-
-<script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-<script src="checkout.js"></script>
 
 <script>
     $('input[type=radio][name="type"]').on('change', function () {

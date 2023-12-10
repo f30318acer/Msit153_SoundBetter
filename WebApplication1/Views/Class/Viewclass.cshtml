@@ -226,11 +226,9 @@
             // 檢查是否符合課程名額條件
             if (@Model.FCurrentStudent < @Model.FMaxStudent) {
                 // 準備要傳送的資料，將 Razor 模型轉換為 JSON 字串
+
                 var postData = {
-                    ProductId: @Model.FClassId,
-                    ProductName: '@Html.Raw(Model.FClassName)',
-                    ProjectPrice: @Model.FPrice,
-                    ProductDesc: '@Html.Raw(Model.FDescription)'
+                    ProductId: @Model.FClassId
                 };
 
                 // 符合條件，執行頁面跳轉
