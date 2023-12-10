@@ -34,9 +34,9 @@ namespace prjMusicBetter.Controllers
             try
             {
                 // 空的話錯誤
-                if (request.ProductId == 0)
+                if (request == null || request.ProductId == 0)
                 {
-                    return Json(new { success = false, message = $"加入購物車失敗 : 請聯絡客服" });
+                    return Json(new { success = false, message = $"加入購物車失敗 : 請聯絡客服_" });
                 }
 
                 int memberId = _userInfoService.GetMemberId();
@@ -50,17 +50,15 @@ namespace prjMusicBetter.Controllers
                 if (existingProduct != null)
                 {
                     // 如果購物車中已經有相同的課程，將其數量 +1
-                    existingProduct.ProjectCount += 1;
+                    existingProduct.ProductCount += 1;
                 }
                 else
                 {
                     // 如果購物車中沒有該課程，將其添加到購物車
                     ShoppingCartVM shoppingCartVM = new ShoppingCartVM();
                     shoppingCartVM.ProductId = request.ProductId;
-                    shoppingCartVM.ProductName = request.ProductName;
-                    shoppingCartVM.ProjectPrice = request.ProjectPrice;
-                    shoppingCartVM.ProductDesc = request.ProductDesc;
-                    shoppingCartVM.ProjectCount = 1;
+                    shoppingCartVM.ProductCount = 1;
+                    shoppingCartVM.ProductStatus = 0000;
 
                     cart.Add(shoppingCartVM);
                 }
@@ -84,13 +82,18 @@ namespace prjMusicBetter.Controllers
         {
             int memberId = _userInfoService.GetMemberId();
 
+            if (productId == 0)
+            {
+                return Json(new { success = true, message = "更新失敗，請洽客服" });
+            }
+
             var cart = HttpContext.Session.Get<List<ShoppingCartVM>>($"ShoppingCart_{memberId}") ?? new List<ShoppingCartVM>();
 
             // 找到要更新的物品
             var productToUpdate = cart.Find(item => item.ProductId == productId);
             if (productToUpdate != null)
             {
-                productToUpdate.ProjectCount = productCount;
+                productToUpdate.ProductCount = productCount;
 
                 // 數量0 = 刪除
                 if (productCount == 0)

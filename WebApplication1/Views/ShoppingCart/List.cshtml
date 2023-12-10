@@ -1,15 +1,15 @@
-﻿
+﻿@model List<prjMusicBetter.Models.ViewModels.ShoppingCartVM>
 @{
     ViewData["Title"] = "List";
 }
 
-    
-    <style>
-        .form-outline input {
-            text-align: center;
-        }
-    </style>
-   
+
+<style>
+    .form-outline input {
+        text-align: center;
+    }
+</style>
+
 <section class="h-100 gradient-custom">
     <div class="container py-5">
         <div class="row d-flex justify-content-center my-4">
@@ -18,63 +18,75 @@
                     <div class="card-header py-3">
                         <h5 class="mb-0">購物車</h5>
                     </div>
-                    <div class="card-body">
-                       
-                        <div class="row">
-                            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                               
-                                <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                    <img src="~/img/classimg/2.jpg" alt= ""
-                                         class="w-100"/>
-                                    <a href="#!">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                                    </a>
-                                </div>
-                                
-                            </div>
 
-                            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                               
-                                <p>
-                                    <strong>
-                                        輕鬆學樂理聽寫和聲！
-                                    </strong>
-                                </p>
-                                <p>
-                                    教授樂器/類型:音樂理論
-                                </p>
-                                <p>授課老師:Julianna</p>
+                    @* 購物車商品內容 *@
+                    @foreach(var item in Model)
+                    {
+                        <div id="card-body_@item.ProductId" class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
 
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                               
-                                <div class="d-flex mb-4" style="max-width: 300px">
-
-                                    <button class="btn btn-primary px-3 "
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                        <img src="~/img/icons/dash.png" alt="Button Image" />
-                                    </button>
-
-                                    <div class="form-outline">
-                                        <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control" style="" />
+                                    @* 圖片 *@
+                                    <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                                        <img src="~/img/classimg/@(item.ProductThumbnailPath)" alt=""
+                                             class="w-100" />
+                                        <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                        </a>
                                     </div>
 
-                                    <button class="btn btn-primary px-3 "
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                        <img src="~/img/icons/plus.png" alt="Button Image" />
-                                    </button>
-                                  
                                 </div>
-                                <p class="text-start text-md-center">
-                                    <strong>$5000</strong>
-                                </p>
+
+                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+
+                                    <p>
+                                        @* 課程名稱 *@
+                                        <strong>
+                                            @item.ProductName
+                                        </strong>
+                                    </p>
+                                    @* 課程起始日 *@
+                                    <p>@item.ProductStartDate</p>
+                                    @* 課程結束日 *@
+                                    <p>@item.ProductEndDate</p>
+
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+
+                                    <div class="d-flex mb-4" style="max-width: 300px">
+
+                                        @* 減少購買數量 *@
+                                        <button class="btn btn-primary px-3 "
+                                                onclick="updateProductCount(-1, '@(item.ProductId)' , '@Convert.ToInt32(item.ProductPrice)')">
+                                            <img src="~/img/icons/dash.png" alt="Button Image" />
+                                        </button>
+
+                                        @* 購買數量 *@
+                                        <div class="form-outline">
+                                            <input id="countForm_@item.ProductId" min="0" name="quantity" value="@(item.ProductCount)" type="number" class="form-control" style="" />
+                                        </div>
+
+                                        @* 增加購買數量 *@
+                                        <button class="btn btn-primary px-3 "
+                                                onclick="updateProductCount(1, '@(item.ProductId)' , '@Convert.ToInt32(item.ProductPrice)')">
+                                            <img src="~/img/icons/plus.png" alt="Button Image" />
+                                        </button>
+
+                                    </div>
+                                    @* 課程金額 *@
+                                    <p class="text-start text-md-center">
+                                        <strong>$ @Convert.ToInt32(item.ProductPrice)</strong>
+                                    </p>
+                                </div>
                             </div>
+                            <hr class="my-4" />
                         </div>
-                        <hr class="my-4" />
-                    </div>
+
+                    }
                 </div>
-               
+
+                @* 付款方式 *@
                 <div class="card mb-4 mb-lg-0">
                     <div class="card-body">
                         <p><strong>付款方式</strong></p>
@@ -84,10 +96,12 @@
                         <img class="me-2" width="45px"
                              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
                              alt="Mastercard" />
-                        
+
                     </div>
                 </div>
             </div>
+
+            @* 結束框框 *@
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-header py-3">
@@ -95,28 +109,135 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                Products
-                                <span>$53.98</span>
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                                <strong>課程名稱</strong>
+                                @* 總計課程原價 *@
+                                <strong>價格</strong>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                Shipping
-                                <span>Gratis</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                            @* 每堂課價格計算 *@
+                            @foreach(var item in Model)
+                            {
+                                <li id="productSumPrice_@item.ProductId" class=" d-flex justify-content-between align-items-center px-0 pt-1 pb-1">
+                                    @* 課程名稱 *@
+                                    <span>@item.ProductName</span>
+                                    @* 該課程價格總計 *@
+                                    <span class="productSumPrice" id="classPriceSum_@item.ProductId">@Convert.ToInt32(item.ProductPrice * item.ProductCount) </span>
+                                </li>
+                            }
+                            
+                            <li class="d-flex justify-content-between align-items-center border-top-3  pt-3 mb-3">
                                 <div>
                                     <strong>總計</strong>
-                                  
-
                                 </div>
-                                <span><strong>$53.98</strong></span>
+                                <span id="totalSumPrice"><strong></strong></span>
                             </li>
                         </ul>
-                        <a href="/ShoppingCart/Checkout" type="button" class="btn btn-primary btn-lg btn-block">結帳</a>
-                        
+                        @* 結帳Button *@
+                        <a id="checkOutButton" href="/ShoppingCart/Checkout"  type="button" class="btn btn-primary btn-lg btn-block">結帳</a>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
+
+
+@section Scripts {
+    <script>
+        updateTotal()
+
+        // 更新商品數量
+        function updateProductCount(countChangeNumber, productId , productPrice) {
+            // 課程數量
+            formElement = $(`#countForm_${productId}`)
+            // 取出原value 做運算
+            newCount = parseInt(formElement.val()) + countChangeNumber
+
+            if (newCount <= 0) {
+                if (confirm("是否移除購物車？")) {
+                    // 刪除該筆資料
+                    cartBodyElement = $(`#card-body_${productId}`)
+                    cartBodyElement.remove()
+
+                    productSumPriceElement = $(`#productSumPrice_${productId}`)
+                    productSumPriceElement.remove()
+                }
+                else {
+                    newCount += 1;
+                }
+            }
+
+            formElement.val(newCount)
+            // 更新Session 數量
+            updateSession(productId, newCount)
+
+            // 該課程價格總計
+            classPriceSumElement = $(`#classPriceSum_${productId}`)
+            newPriceSum = newCount * productPrice
+            classPriceSumElement.text(newPriceSum)
+
+            // 更新購物車總計數字
+            updateTotal()
+        }
+
+        // 更新Session
+        function updateSession(productId, productCount) {
+            var postData = {
+                productId: parseInt(productId),
+                productCount: productCount
+            };
+
+            // 符合條件，執行頁面跳轉
+            $.ajax({
+                type: "POST",
+                url: "/apiShoppingCart/UpdateCartItem", 
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",  // 後端接的不是Json 要用Form格式
+                data: postData,
+                success: function (response) {
+                    // 刷新購物車Icon
+                    UpdateShoppingCartIcon();
+                },
+                error: function (error) {
+                    // 處理錯誤
+                    alert(response.message);
+                }
+            });
+
+            return true;
+        }
+
+        // 更新購物車總計數字
+        function updateTotal() {
+            var totalSum = 0;
+
+            // 目前有的課程種類 productSumPrice 數量
+            var productKind = 0;
+
+            // 遍歷每個包含類名 'productSumClass' 的元素
+            $('.productSumPrice').each(function () {
+                productKind += 1
+
+                // 從當前元素中獲取數字並將其轉換為整數
+                var value = parseInt($(this).text(), 10);
+
+                // 檢查是否成功解析為數字
+                if (!isNaN(value)) {
+                    // 累加到總和
+                    totalSum += value;
+                }
+            });
+
+            if (productKind == 0) {
+                $("#checkOutButton").addClass("disabled")
+            }
+            else {
+                $("#checkOutButton").removeClass("disabled")
+            }
+
+            $("#totalSumPrice").text(totalSum)
+        }
+
+    </script>
+}
