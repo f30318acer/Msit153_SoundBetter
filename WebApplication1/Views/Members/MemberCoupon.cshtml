@@ -6,10 +6,9 @@
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
         <div class="bg-white shadow-lg rounded-lg p-6">
-            <h2 class="text-2xl font-semibold mb-2">@Model.Member.FUsername 的優惠券</h2>
             <div id="searchResults"></div>
             <div class="flex items-center my-4">
-                <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")" class="flex-grow flex items-center mr-2">
+                <form id="searchForm" method="get" action="@Url.Action("MemberCoupon", "Members")" class="flex-grow flex items-center mr-2">
                     <input type="text" name="searchTerm" id="search" placeholder="Search..." class="form-input border border-gray-300 rounded-md p-2 mr-2">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
                 </form>
