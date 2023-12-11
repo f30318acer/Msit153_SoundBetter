@@ -51,7 +51,8 @@ namespace prjMusicBetter.Controllers
         {
 
             dto.FArticleId = 20;
-            _context.TComments.Add(new TComment(){
+            _context.TComments.Add(new TComment()
+            {
                 FMemberID = dto.FMemberId,
                 FCommentContent = dto.Content,
                 FArticleID = dto.FArticleId,
@@ -62,32 +63,48 @@ namespace prjMusicBetter.Controllers
             return Ok();
         }
 
-        public IActionResult Edit(int? id)
+
+        //public IActionResult Create()
+        //{
+        //    TMember member = _userInfoService.GetMemberInfo();
+        //    if (member == null)
+        //    { return RedirectToAction("Login","Home"); }
+        //    ViewBag.MemberID = member.FMemberId;
+        //    return View();
+
+        //}
+
+        //public IActionResult Edit(int? id)
+        //{
+        //    dbSoundBetterContext db = new dbSoundBetterContext();
+        //    TComment x = db.TComments.FirstOrDefault(p => p.FCommentID == id);
+        //    if (x != null)
+        //        return RedirectToAction("List");
+        //    return View();
+        //}
+        //[HttpPost]
+        //public IActionResult Edit(TComment pIN)
+        //{
+        //    dbSoundBetterContext db = new dbSoundBetterContext();
+        //    TComment pDB = db.TComments.FirstOrDefault(p => p.FCommentID == pIN.FCommentID);
+        //    if (pDB != null)
+        //    {
+        //        pDB.FMemberID = pIN.FMemberID;
+        //        pDB.FArticleID = pIN.FArticleID;
+        //        pDB.FCommentContent = pIN.FCommentContent;
+        //        pIN.FCommentTime = DateTime.Now;
+
+        //        db.SaveChanges();
+        //    }
+        //    return RedirectToAction("List");
+        //}
+
+        public async Task<IActionResult> Edit(int? id)
         {
-            dbSoundBetterContext db = new dbSoundBetterContext();
-            TComment x = db.TComments.FirstOrDefault(p => p.FCommentID == id);
-            if (x != null)
-                return RedirectToAction("List");
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Edit(TComment pIN)
-        {
-            dbSoundBetterContext db = new dbSoundBetterContext();
-            TComment pDB = db.TComments.FirstOrDefault(p => p.FCommentID == pIN.FCommentID);
-            if (pDB != null)
-            {
-                pDB.FMemberID = pIN.FMemberID;
-                pDB.FArticleID = pIN.FArticleID;
-                pDB.FCommentContent = pIN.FCommentContent;
-                pIN.FCommentTime = DateTime.Now;
-
-                db.SaveChanges();
-            }
-            return RedirectToAction("List");
-
-
-
+            if(id == null || _context.TComments == null) { return NotFound(); }
+            var tComment = await _context.TComments.FindAsync(id);
+            if (tComment == null) { return NotFound(); }
+            return View(tComment);
         }
 
         public IActionResult Delete(int? id)
