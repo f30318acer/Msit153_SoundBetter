@@ -383,27 +383,13 @@ public partial class dbSoundBetterContext : DbContext
             entity.ToTable("tDealClass");
 
             entity.Property(e => e.FDealClassId).HasColumnName("fDealClassID");
-            entity.Property(e => e.FClassId).HasColumnName("fClassID");
-            entity.Property(e => e.FCouponId).HasColumnName("fCouponID");
-            entity.Property(e => e.FEnddate)
+            entity.Property(e => e.FDealdate)
                 .HasColumnType("datetime")
-                .HasColumnName("fEnddate");
+                .HasColumnName("fDealdate");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
             entity.Property(e => e.FPrice)
                 .HasColumnType("money")
                 .HasColumnName("fPrice");
-            entity.Property(e => e.FStartdate)
-                .HasColumnType("datetime")
-                .HasColumnName("fStartdate");
-
-            entity.HasOne(d => d.FClass).WithMany(p => p.TDealClasses)
-                .HasForeignKey(d => d.FClassId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tDealClass_tClass");
-
-            entity.HasOne(d => d.FCoupon).WithMany(p => p.TDealClasses)
-                .HasForeignKey(d => d.FCouponId)
-                .HasConstraintName("FK_tDealClass_tCoupon");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TDealClasses)
                 .HasForeignKey(d => d.FMemberId)
@@ -420,7 +406,13 @@ public partial class dbSoundBetterContext : DbContext
             entity.Property(e => e.FDealClassDetailId).HasColumnName("fDealClassDetailID");
             entity.Property(e => e.FClassId).HasColumnName("fClassID");
             entity.Property(e => e.FDealClassId).HasColumnName("fDealClassID");
+            entity.Property(e => e.FEndDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fEndDate");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FStartDate)
+                .HasColumnType("datetime")
+                .HasColumnName("fStartDate");
 
             entity.HasOne(d => d.FClass).WithMany(p => p.TDealClassDetails)
                 .HasForeignKey(d => d.FClassId)
