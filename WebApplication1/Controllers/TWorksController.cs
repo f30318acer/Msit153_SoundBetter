@@ -50,7 +50,7 @@ namespace prjMusicBetter.Controllers
         }
 
         // GET: TWorks/Create
-        public IActionResult Create()
+        public IActionResult Create1()
         {
             ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");
             ViewData["FStyleId"] = new SelectList(_context.TStyles, "FStyleId", "FStyleId");
@@ -75,6 +75,8 @@ namespace prjMusicBetter.Controllers
                     file.CopyTo(stream);
                 }
 
+
+
                 // 在這裡執行其他邏輯，例如將檔案路徑保存到數據庫中
             }
 
@@ -89,6 +91,8 @@ namespace prjMusicBetter.Controllers
             ViewData["FStyleId"] = new SelectList(_context.TStyles, "FStyleId", "FStyleId", tWork.FStyleId);
             ViewData["FWorkTypeId"] = new SelectList(_context.TWorkTypes, "FWorkTypeId", "FWorkTypeId", tWork.FWorkTypeId);
             return View(tWork);
+
+     
         }
 
         // GET: TWorks/Edit/5
