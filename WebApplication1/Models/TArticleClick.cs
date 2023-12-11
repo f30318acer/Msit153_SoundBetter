@@ -5,19 +5,13 @@ using System.Collections.Generic;
 
 namespace prjMusicBetter.Models;
 
-public partial class TComment
+public partial class TArticleClick
 {
-    public int FCommentId { get; set; }
-
-    public int FMemberId { get; set; }
-
-    public string FCommentContent { get; set; }
+    public int FArticleClickId { get; set; }
 
     public int? FArticleId { get; set; }
 
-    public DateTime? FCommentTime { get; set; }
+    public int? FArticleClick { get; set; }
 
     public virtual TArticle FArticle { get; set; }
-
-    public virtual TMember FMember { get; set; }
 }

@@ -33,5 +33,7 @@ public partial class TWork
 
     public virtual ICollection<TEvaluate> TEvaluates { get; set; } = new List<TEvaluate>();
 
+    public virtual ICollection<TWorkClick> TWorkClicks { get; set; } = new List<TWorkClick>();
+
     public virtual ICollection<TWorkFav> TWorkFavs { get; set; } = new List<TWorkFav>();
 }

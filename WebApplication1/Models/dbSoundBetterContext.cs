@@ -23,6 +23,8 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TArticle> TArticles { get; set; }
 
+    public virtual DbSet<TArticleClick> TArticleClicks { get; set; }
+
     public virtual DbSet<TArticleFav> TArticleFavs { get; set; }
 
     public virtual DbSet<TArticlePicture> TArticlePictures { get; set; }
@@ -40,6 +42,8 @@ public partial class dbSoundBetterContext : DbContext
     public virtual DbSet<TCoupon> TCoupons { get; set; }
 
     public virtual DbSet<TDealClass> TDealClasses { get; set; }
+
+    public virtual DbSet<TDealClassDetail> TDealClassDetails { get; set; }
 
     public virtual DbSet<TDealProject> TDealProjects { get; set; }
 
@@ -91,10 +95,11 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TWork> TWorks { get; set; }
 
+    public virtual DbSet<TWorkClick> TWorkClicks { get; set; }
+
     public virtual DbSet<TWorkFav> TWorkFavs { get; set; }
 
     public virtual DbSet<TWorkType> TWorkTypes { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -172,6 +177,23 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FStyleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tArticle_tStyle");
+        });
+
+        modelBuilder.Entity<TArticleClick>(entity =>
+        {
+            entity.HasKey(e => e.FArticleClickId);
+
+            entity.ToTable("tArticleClick");
+
+            entity.Property(e => e.FArticleClickId)
+                .ValueGeneratedNever()
+                .HasColumnName("fArticleClickID");
+            entity.Property(e => e.FArticleClick).HasColumnName("fArticleClick");
+            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+
+            entity.HasOne(d => d.FArticle).WithMany(p => p.TArticleClicks)
+                .HasForeignKey(d => d.FArticleId)
+                .HasConstraintName("FK_tArticleClick_tArticle");
         });
 
         modelBuilder.Entity<TArticleFav>(entity =>
@@ -319,7 +341,6 @@ public partial class dbSoundBetterContext : DbContext
 
             entity.HasOne(d => d.FArticle).WithMany(p => p.TComments)
                 .HasForeignKey(d => d.FArticleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tComment_tArticle");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TComments)
@@ -388,6 +409,26 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FMemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tDealClass_tMember");
+        });
+
+        modelBuilder.Entity<TDealClassDetail>(entity =>
+        {
+            entity.HasKey(e => e.FDealClassDetailId);
+
+            entity.ToTable("tDealClassDetail");
+
+            entity.Property(e => e.FDealClassDetailId).HasColumnName("fDealClassDetailID");
+            entity.Property(e => e.FClassId).HasColumnName("fClassID");
+            entity.Property(e => e.FDealClassId).HasColumnName("fDealClassID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+
+            entity.HasOne(d => d.FClass).WithMany(p => p.TDealClassDetails)
+                .HasForeignKey(d => d.FClassId)
+                .HasConstraintName("FK_tDealClassDetail_tClass");
+
+            entity.HasOne(d => d.FDealClass).WithMany(p => p.TDealClassDetails)
+                .HasForeignKey(d => d.FDealClassId)
+                .HasConstraintName("FK_tDealClassDetail_tDealClass");
         });
 
         modelBuilder.Entity<TDealProject>(entity =>
@@ -1132,6 +1173,21 @@ public partial class dbSoundBetterContext : DbContext
             entity.HasOne(d => d.FWorkType).WithMany(p => p.TWorks)
                 .HasForeignKey(d => d.FWorkTypeId)
                 .HasConstraintName("FK_tWork_tWorkType");
+        });
+
+        modelBuilder.Entity<TWorkClick>(entity =>
+        {
+            entity.HasKey(e => e.FWorkClick);
+
+            entity.ToTable("tWorkClick");
+
+            entity.Property(e => e.FWorkClick).HasColumnName("fWorkClick");
+            entity.Property(e => e.FClick).HasColumnName("fClick");
+            entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
+
+            entity.HasOne(d => d.FWork).WithMany(p => p.TWorkClicks)
+                .HasForeignKey(d => d.FWorkId)
+                .HasConstraintName("FK_tWorkClick_tWork");
         });
 
         modelBuilder.Entity<TWorkFav>(entity =>
