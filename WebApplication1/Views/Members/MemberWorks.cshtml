@@ -3,19 +3,21 @@
     ViewData["Title"] = "MemberWorks";
 
 }
-
 <script src="https://cdn.tailwindcss.com"></script>
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
         <div class="bg-white shadow-lg rounded-lg p-6">
             <div id="searchResults"></div>
             <div class="flex items-center my-4">
-
                 <form id="searchForm" method="get" action="@Url.Action("MemberWorks", "Members")" class="flex-grow flex items-center mr-2">
                     <input type="text" name="search" id="search" placeholder="Search..." class="form-input border border-gray-300 rounded-md p-2 mr-2">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
                 </form>
-                <a href="@Url.Action("CreateMemberCoupon", "Members")" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md">新增</a>
+            </div>
+            <div class="pagination">
+                <a href="#" onclick="loadPage(@Model.CurrentPage - 1)">上一頁</a>
+                <span>第 @Model.CurrentPage 頁，共 @Model.TotalPages 頁</span>
+                <a href="#" onclick="loadPage(@Model.CurrentPage + 1)">下一頁</a>
             </div>
 
             <table class="min-w-full leading-normal">
@@ -26,7 +28,6 @@
                         <th class="text-center py-2">更新時間</th>
                         <th class="text-center py-2">作品</th>
                         <th class="text-center py-2">詳細資料</th> <!-- New column for details button -->
-                     @*    <th class="text-center py-2">操作</th> *@
                     </tr>
                 </thead>
                 <tbody id="memberTable">
@@ -46,27 +47,27 @@
                             <td class="text-center border-b border-gray-200">
                                 <a href="@Url.Action("Details", "MemberPage", new { id = work.FMemberId })" class="text-blue-500 hover:text-blue-600">Detail</a>
                             </td>
-                          @*   <td class="px-5 py-5 border-b border-gray-200 text-sm">
-                                <!-- 這裡可以放置編輯或刪除的操作鏈接 -->
-                                @Html.ActionLink("編輯", "EditWork", new { id = work.FWorkId }) |
-                                @Html.ActionLink("刪除", "MemberWorksDelete", new { id = work.FWorkId }, new { onclick = "return confirm('確定要刪除這個作品嗎？');" })
-                            </td> *@
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
 
+    <script>
         $('#searchForm').on('submit', function (event) {
             event.preventDefault(); // 阻止表單的默認提交行為
             var searchTerm = $('#search').val(); // 獲取搜索條件
             $('#divPartial').load(`@Url.Content("~/Members/MemberWorks")?search=${searchTerm}`); // 使用 AJAX 加載搜索結果
         });
-
-    </script>
-
+    </script> 
 </body>
 
+
+
+
+<script>
+    function loadPage(page) {
+        $('#divPartial').load('@Url.Action("MemberWorks", "Members")', { page: page });
+    }
+</script>

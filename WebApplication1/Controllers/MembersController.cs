@@ -322,7 +322,7 @@ namespace prjMusicBetter.Controllers
         }
 
 
-        public async Task<IActionResult> MemberWorks(string search)
+        public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10)
         {
            
             TMember member = _userInfoService.GetMemberInfo();
@@ -330,9 +330,9 @@ namespace prjMusicBetter.Controllers
             {
                 return RedirectToAction("Members", "Index");// 如果未找到會員，重定向到登入頁面
             }
-            var memberworkIds = await _context.TWorks
+            var memberworkIds = _context.TWorks
                 .Where(x=>x.FMemberId==member.FMemberId)
-                .Select(x=>x.FWorkId) .ToListAsync();
+                .Select(x=>x.FWorkId);
 
             var query = _context.TWorks.AsQueryable();
             if(!string.IsNullOrWhiteSpace(search)) 
@@ -340,15 +340,24 @@ namespace prjMusicBetter.Controllers
                 query = query.Where(c => c.FWorkName.Contains(search));
             }
 
+            var memberworks = query.Where(c=>memberworkIds.Contains(c.FWorkId))
+                ;// 獲取該會員的所有作品
 
-            var memberworks = await query.Where(c=>memberworkIds.Contains(c.FWorkId))
-                .ToListAsync();// 獲取該會員的所有作品
+            //先計算總數量
+            var totalItems = await memberworks.CountAsync();
+
+            var pageWorkList = await memberworks.Skip((page-1)*pageSize).ToListAsync();
 
             var viewModel = new MemberWorksVM
             {
                 Member = member,
-                Works = memberworks // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
+               Works = pageWorkList,
+                CurrentPage=page,
+                TotalPages = (int)Math.Ceiling((double)totalItems/pageSize),
+                PageSize = pageSize,
+                 // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
             };
+
             return PartialView(viewModel);
         }
 
