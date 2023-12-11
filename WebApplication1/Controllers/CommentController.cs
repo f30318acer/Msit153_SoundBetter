@@ -23,6 +23,7 @@ namespace prjMusicBetter.Controllers
         public IActionResult List(int articleId)
         {
             //取得_當前文章所有留言資料
+            articleId = 20;
             var comments = _context.TComments.Include(e => e.FMember).Where(e => e.FArticleId == articleId).ToList();
             var viewModel = new CommentListViewModel()
             { 
