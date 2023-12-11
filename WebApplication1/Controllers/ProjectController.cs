@@ -19,7 +19,13 @@ namespace prjMusicBetter.Controllers
         //[Authorize(Roles = "Member")]
         public IActionResult List()
         {
-            return View();
+			TMember member = _userInfoService.GetMemberInfo();
+			ViewBag.MemberId = 0;
+			if (member != null)
+			{
+				ViewBag.MemberId = member.FMemberId;
+			}
+			return View();
         }
 		public IActionResult Apply()
 		{

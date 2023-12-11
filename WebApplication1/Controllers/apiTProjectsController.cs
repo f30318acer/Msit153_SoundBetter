@@ -113,21 +113,26 @@ namespace prjSoundBetterApi.Controllers
 		}
 		//===新增===
 		[HttpPost]
-        public IActionResult Create(TProject? project,IFormFile formFile)
+        public IActionResult Create(TProject? project,IFormFile formFilePhoto, IFormFile formFileDemo)
         {            
             if (project != null)
             {
-                if (formFile != null)
+                if (formFilePhoto != null)
                 {
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
                     project.FThumbnailPath = photoName;
-                    formFile.CopyTo(new FileStream(_enviro.WebRootPath + "/img/project/" + photoName, FileMode.Create));
+                    formFilePhoto.CopyTo(new FileStream(_enviro.WebRootPath + "/img/project/" + photoName, FileMode.Create));
+                }
+                if (formFileDemo != null)
+                {
+                    string DemoName = Guid.NewGuid().ToString() + ".mp3";
+                    project.FDemoFilePath = DemoName;
+                    formFileDemo.CopyTo(new FileStream(_enviro.WebRootPath + "/ProjectDemo/" + DemoName, FileMode.Create));
                 }
                 DateTime now = DateTime.Now;
                 project.FStartdate = now;
                 project.FProjectStatusId = 1;
                 project.FSiteId = 1;
-                project.FSkillId = 1;
                 _context.Add(project);
                 _context.SaveChanges();
                 return Content("新增成功");
@@ -155,8 +160,7 @@ namespace prjSoundBetterApi.Controllers
                 }
                 if (formFileDemo != null)
                 {
-                    string DemoName = "Demo_"+ pDb.FProjectId + ".mp3";
-                    pDb.FDemoFilePath = DemoName;
+                    string DemoName = pDb.FDemoFilePath;
                     formFileDemo.CopyTo(new FileStream(_enviro.WebRootPath + "/ProjectDemo/" + DemoName, FileMode.Create));
                 }
                 _context.SaveChanges();
