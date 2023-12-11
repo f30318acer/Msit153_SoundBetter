@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
+using SendGrid.Helpers.Mail;
 using System.Formats.Asn1;
 using System.Text.RegularExpressions;
 
@@ -33,7 +34,8 @@ namespace prjMusicBetter.Controllers
                                        join m in _context.TMembers
                                        on s.FTeacherId equals m.FMemberId
                                        join t in _context.TSites
-                                      on s.FSiteId equals t.FSiteId
+                                       on s.FSiteId equals t.FSiteId
+									   where s.FEnddate >= DateTime.Now
                                        select new
                                        {
                                            fClassId = s.FClassId,
@@ -66,7 +68,8 @@ namespace prjMusicBetter.Controllers
 									   join m in _context.TMembers
 									   on s.FTeacherId equals m.FMemberId
 									   where s.FTeacherId == id
-									   select new
+                                       orderby s.FClassId descending
+                                       select new
 									   {
 										   fClassId = s.FClassId,
 										   fClassName = s.FClassName,
@@ -78,7 +81,8 @@ namespace prjMusicBetter.Controllers
 										   fOnLine = s.FOnLine,
 										   fClick = c.FClick,
 										   fTeacherNmae = m.FName,
-									   };
+                                           fEnddate = s.FEnddate,
+                                       };
 			if (dbSoundBetterContext == null)
 			{
 				return NotFound();
@@ -218,11 +222,40 @@ namespace prjMusicBetter.Controllers
             return Json(classfav);//這堂課有誰喜歡
         }
 
+
+        //我的最愛
         public IActionResult FavQueryById()
         {
             TMember member = _userInfoService.GetMemberInfo();
             var classfav = _context.TClassFavs.Where(m => m.FMemberId == member.FMemberId);
-            return Json(classfav);//我喜歡哪些課
+			if(classfav.Count() > 0) {
+				return Json(classfav); 
+			}
+            return NotFound();
+        }
+        public IActionResult FavById(int id)
+        {
+            var result = from s in _context.TClasses
+                         join f in _context.TClassFavs on s.FClassId equals f.FClassId
+                         join c in _context.TClassClicks on s.FClassId equals c.FClassId
+                         join m in _context.TMembers on s.FTeacherId equals m.FMemberId
+                         where f.FMemberId == id
+                         orderby s.FClassId descending
+                         select new
+                         {
+                             fClassId = s.FClassId,
+                             fClassName = s.FClassName,
+                             fThumbnailPath = s.FThumbnailPath,
+                             fCurrentStudent = s.FCurrentStudent,
+                             fMaxStudent = s.FMaxStudent,
+                             fSkillId = s.FSkillId,
+                             fDescription = ReplaceHtmlTag(s.FDescription),
+                             fOnLine = s.FOnLine,
+                             fClick = c.FClick,
+                             fTeacherNmae = m.FName,
+                             fEnddate = s.FEnddate,
+                         };
+            return Json(result.ToList());
         }
 
         // 新增我的最愛
@@ -254,6 +287,32 @@ namespace prjMusicBetter.Controllers
             }
 
             return Ok();
+        }
+
+        //我買的課程
+        public IActionResult AddCurrentStudent(int id)
+        {
+            var result = from s in _context.TClasses
+                         join f in _context.TDealClassDetails on s.FClassId equals f.FClassId
+                         join c in _context.TClassClicks on s.FClassId equals c.FClassId
+                         join m in _context.TMembers on s.FTeacherId equals m.FMemberId
+                         where f.FMemberId == id
+                         orderby s.FClassId descending
+                         select new
+                         {
+                             fClassId = s.FClassId,
+                             fClassName = s.FClassName,
+                             fThumbnailPath = s.FThumbnailPath,
+                             fCurrentStudent = s.FCurrentStudent,
+                             fMaxStudent = s.FMaxStudent,
+                             fSkillId = s.FSkillId,
+                             fDescription = ReplaceHtmlTag(s.FDescription),
+                             fOnLine = s.FOnLine,
+                             fClick = c.FClick,
+                             fTeacherNmae = m.FName,
+                             fEnddate = s.FEnddate,
+                         };
+            return Json(result.ToList());
         }
     }
 }

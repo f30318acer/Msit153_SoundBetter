@@ -141,9 +141,14 @@
     }
 </style>
 <section class="playlist-section spad">
-	<div class="container-fluid">
-        <div class="section-title">
-            <h2 class="title">我的課程</h2>
+    <div class="container-fluid">
+        <div class="section-title" style="display: flex; align-items: center;">
+            <h2 class="title" style="margin-right: 30px;">編輯我建立的課程</h2>
+            <button type="button" id="btnToggleContent" class="btn btn-info">⌵</button>
+        </div>
+        <div class="clearfix"></div>
+        <!-- 折疊內容 -->
+        <div id="collapseContent" class="collapse show">
             <div class="container col-lg-12 ddd">
                 <div class="text-right ">
                     <select id="selectSkill" class="form-select mr-2"></select>
@@ -157,73 +162,118 @@
                     <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
                 </div>
             </div>
-		</div>
-		<div class="clearfix"></div>
-		<div id ="divList" class="row playlist-area">
-			@*@foreach (var item in Model)
-			{
-				<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-					<a asp-area="" asp-controller="Class" asp-action="Viewclass" asp-route-id="@item.FClassId">
-						<div class="playlist-item">
-							<img src="~/img/classimg/1.jpg" alt="">
-							<h5>@Html.DisplayFor(modelItem => item.FClassName)</h5>
-						</div>
-					</a>
-				</div>
-			}*@
-			<!--List內容-->
-		</div>
-        <div id="pageButtons" class="text-center">
-            <!--分頁按鈕位置-->
+            <div id="divList" class="row playlist-area">
+                <!-- List內容 -->
+            </div>
+            <div id="pageButtons" class="text-center">
+                <!-- 分頁按鈕位置 -->
+            </div>
         </div>
-	</div>
+
+
+        <div class="section-title" style="display: flex; align-items: center;">
+            <h2 class="title" style="margin-right: 10px;">我買的課程</h2>
+            <button type="button" id="btnToggleContent2" class="btn btn-info">⌵</button>
+        </div>
+        <div class="clearfix"></div>
+        <!-- 折疊內容 -->
+        <div id="collapseContent2" class="collapse show">
+            <div class="container col-lg-12 ddd">
+                <div class="text-right ">
+                    <select id="selectSkill2" class="form-select mr-2"></select>
+                    <select id="selectOnLine2" class="form-select mr-2">
+                        <option value="0">請選擇線上或實體課程</option>
+                        <option value="1">實體課程</option>
+                        <option value="2">線上課程</option>
+                    </select>
+                    <input type="text" id="txtKeyword2" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
+                    <button type="button" id="btnSearch2" class="btn btn-secondary mr-2">條件搜尋</button>
+                    <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
+                </div>
+            </div>
+            <div id="divList2" class="row playlist-area">
+                <!-- List內容 -->
+            </div>
+            <div id="pageButtons2" class="text-center">
+                <!-- 分頁按鈕位置 -->
+            </div>
+        </div>
+
+
+        <div class="section-title" style="display: flex; align-items: center;">
+            <h2 class="title" style="margin-right: 10px;">我的最愛</h2>
+            <button type="button" id="btnToggleContent3" class="btn btn-info">⌵</button>
+        </div>
+        <div class="clearfix"></div>
+        <!-- 折疊內容 -->
+        <div id="collapseContent3" class="collapse show">
+            <div class="container col-lg-12 ddd">
+                <div class="text-right ">
+                    <select id="selectSkill3" class="form-select mr-2"></select>
+                    <select id="selectOnLine3" class="form-select mr-2">
+                        <option value="0">請選擇線上或實體課程</option>
+                        <option value="1">實體課程</option>
+                        <option value="2">線上課程</option>
+                    </select>
+                    <input type="text" id="txtKeyword3" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
+                    <button type="button" id="btnSearch3" class="btn btn-secondary mr-2">條件搜尋</button>
+                    <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
+                </div>
+            </div>
+            <div id="divList3" class="row playlist-area">
+                <!-- List內容 -->
+            </div>
+            <div id="pageButtons3" class="text-center">
+                <!-- 分頁按鈕位置 -->
+            </div>
+        </div>
+    </div>
 </section>
-<!-- Playlist section end -->
 @section Scripts{
 	<script>
-		//function load() {
-		//	const divList = $('#divList')
-		//	//讀取Json資料
-		//	$.getJSON('/apiTClass/QueryByMember/?id=@(ViewBag.MemberId)', function (datas) {
-		//		console.log(datas);
-
-		//		//做出一個空的容器來存放div
-		//		const docFrag = $(document.createDocumentFragment())
-
-		//		//讀出每個Json物件
-		//		$.each(datas, function (index, item) {
-		//			//const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-		//			const card = $(
-		//				`<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-  //                                   <a href="/Class/Edit?id=${item.fClassId}">
-		//						 <div>
-		//							 <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-		//							 <span>${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
-		//						 </div>
-		//						 <div>
-		//							 <div class="ClassName">
-		//								 <h5>${item.fClassName}</h5>
-		//							 </div>
-		//							 <p>${item.fDescription}</p>
-		//						 </div>
-		//						 <div>
-		//							 <h5>導師：${item.fTeacherNmae}</h5>
-		//							 <p>點閱數：${item.fClick}</p>
-		//						 </div>
-		//					 </a>
-		//				</div>`);
-		//			docFrag.append(card);//.append()將一筆div放入容器中
-		//		})
-		//		divList.html(docFrag)//.html()一次將全部的資料都上傳
-		//	})
-		//}
-		//load();
-
         const selStyle = document.querySelector('#selectSkill');
+        const selStyle2 = document.querySelector('#selectSkill2');
+        const selStyle3 = document.querySelector('#selectSkill3');
         const pageButtonsContainer = $('#pageButtons');//分頁按鈕位置
+        const pageButtonsContainer2 = $('#pageButtons2');
+        const pageButtonsContainer3 = $('#pageButtons3');
         const onePage = 8;//一頁要有幾個課程
         const MemberId = @ViewBag.MemberId;
 
+        //三個折疊頁
+        $(document).ready(function () {
+            // 初始時將內容折疊起來
+            $("#collapseContent").hide();
+
+            // 當按鈕被點擊時
+            $("#btnToggleContent").click(function () {
+                // 切換內容的顯示與隱藏
+                $("#collapseContent").slideToggle();
+            });
+        });
+        $(document).ready(function () {
+            // 初始時將內容折疊起來
+            $("#collapseContent2").hide();
+
+            // 當按鈕被點擊時
+            $("#btnToggleContent2").click(function () {
+                // 切換內容的顯示與隱藏
+                $("#collapseContent2").slideToggle();
+            });
+        });
+        $(document).ready(function () {
+            // 初始時將內容折疊起來
+            $("#collapseContent3").hide();
+
+            // 當按鈕被點擊時
+            $("#btnToggleContent3").click(function () {
+                // 切換內容的顯示與隱藏
+                $("#collapseContent3").slideToggle();
+            });
+        });
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //我建立的課程
         function firstLoad(pageNumber) {
             const divList = $('#divList');
             //讀取Json資料
@@ -242,8 +292,8 @@
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                             <a href="/Class/Edit?id=${item.fClassId}">
                                 <div style="position: relative;">
-                                    <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
-                                        ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
+                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
@@ -297,7 +347,7 @@
                 //線上實體篩選
                 if (sOnLine != 0) {
                     filteredDatas = filteredDatas.filter(item => {
-                        console.log("DD");
+                        //console.log("DD");
                         return item.fOnLine == sOnLine - 1;
                     });
                 }
@@ -310,15 +360,22 @@
 
                 //做出一個空的容器來存放div
                 const docFrag = $(document.createDocumentFragment())
-
+                if (limitdatas['length'] === 0) {
+                    const card = $(
+                        `<div class="section-title mb-5 pb-4 container-fluid" style="display: flex; justify-content: center;">
+                            <h3 class="mb-5">我的課程中沒有符合條件的課程</h3>
+                         </div>`
+                    );
+                    docFrag.append(card);
+                }
                 $.each(limitdatas, function (index, item) {
                     const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                             <a href="/Class/Edit?id=${item.fClassId}">
                                 <div style="position: relative;">
-                                    <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
-                                        ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
+                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
@@ -342,14 +399,13 @@
             });
         };
 
-
         //分頁按鈕
         async function loadPage() {
             const Id = @(ViewBag.MemberId)
             const url = `@Url.Content("~/apiTClass/QueryByMember/?id=${Id}")`;
             const response = await fetch('../../../apiTClass/QueryByMember/?id=@(ViewBag.MemberId)');
             const data = await response.json();
-            console.log(data);
+            //console.log(data);
             // 獲取所選風格的ID
             const sId = $('#selectSkill').val();
             const keyword = $('#txtKeyword').val();
@@ -380,6 +436,461 @@
         }
         loadPage();
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //我買的課程
+        function firstLoad2(pageNumber) {
+            const divList = $('#divList2');
+            //讀取Json資料
+            $.getJSON('/apiTClass/AddCurrentStudent/?id=@(ViewBag.MemberId)', function (datas) {
+                //console.log(datas);
+
+                // 獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                // 做出一個空的容器來存放div
+                const docFrag = $(document.createDocumentFragment());
+                if (limitdatas['length'] === 0) {
+                    const card = $(
+                        `<div class="section-title mb-5 pb-4 container-fluid" style="display: flex; justify-content: center;">
+                            <h3 class="mb-5">我還沒買任何課程</h3>
+                         </div>`
+                    );
+                    docFrag.append(card);
+                }
+                $.each(limitdatas, function (index, item) {
+                    const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                        <div style="position: relative;">
+                                            <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
+                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                            </span>
+                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                            <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                        </div>
+                                        <div>
+                                            <div class="ClassName">
+                                                <h5>${item.fClassName}</h5>
+                                            </div>
+                                                    <p>${Description}</p>
+                                        </div>
+                                        <div>
+                                            <h5>導師：${item.fTeacherNmae}</h5>
+                                            <p>點閱數：${item.fClick}</p>
+                                        </div>
+                                    </a>
+                                </div>`
+                    );
+                    docFrag.append(card);
+                });
+
+                divList.html(docFrag);
+            });
+        }
+        firstLoad2(1);
+
+        function load2(pageNumber) {
+            const divList = $('#divList2')
+            const sId = $('#selectSkill2').val();
+            const keyword = $('#txtKeyword2').val(); // 新增的關鍵字搜尋
+            const sOnLine = $('#selectOnLine2').val();
+
+
+            //讀取Json資料
+            $.getJSON('/apiTClass/AddCurrentStudent/?id=@(ViewBag.MemberId)', function (datas) {
+
+                let filteredDatas = datas;
+
+                if (sId != 0) {
+                    filteredDatas = datas.filter(item => {
+                        // 在此添加筛选条件
+                        return item.fSkillId == sId;
+                    });
+                }
+                //關鍵字篩選
+                if (keyword) {
+                    filteredDatas = filteredDatas.filter(item => {
+                        // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+                        return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
+                    });
+                }
+                //線上實體篩選
+                if (sOnLine != 0) {
+                    filteredDatas = filteredDatas.filter(item => {
+                        //console.log("DD");
+                        return item.fOnLine == sOnLine - 1;
+                    });
+                }
+
+                dataCount = filteredDatas.length;
+
+                // 獲得限定頁面資料
+                const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+                //dataCount = filteredDatas.length;
+
+                //做出一個空的容器來存放div
+                const docFrag = $(document.createDocumentFragment())
+                if (limitdatas['length'] === 0) {
+                    const card = $(
+                        `<div class="section-title mb-5 pb-4 container-fluid" style="display: flex; justify-content: center;">
+                                    <h3 class="mb-5">我買的課程中沒有符合條件的課程</h3>
+                                 </div>`
+                    );
+                    docFrag.append(card);
+                }
+                $.each(limitdatas, function (index, item) {
+                    const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                        <div style="position: relative;">
+                                            <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
+                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                            </span>
+                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                            <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                        </div>
+                                        <div>
+                                            <div class="ClassName">
+                                                <h5>${item.fClassName}</h5>
+                                            </div>
+                                                    <p>${Description}</p>
+                                        </div>
+                                        <div>
+                                            <h5>導師：${item.fTeacherNmae}</h5>
+                                            <p>點閱數：${item.fClick}</p>
+                                        </div>
+                                    </a>
+                                </div>`
+                    );
+                    docFrag.append(card);
+                });
+                divList.html(docFrag)//.html()一次將全部的資料都上傳
+            });
+        };
+
+
+        //分頁按鈕
+        async function loadPage2() {
+            const Id = @(ViewBag.MemberId)
+            const url = `@Url.Content("~/apiTClass/AddCurrentStudent/?id=${Id}")`;
+            const response = await fetch('../../../apiTClass/AddCurrentStudent/?id=@(ViewBag.MemberId)');
+            const data = await response.json();
+            //console.log(data);
+            // 獲取所選風格的ID
+            const sId = $('#selectSkill2').val();
+            const keyword = $('#txtKeyword2').val();
+
+            // 根據所選風格篩選數據
+            let filteredData = data;
+            if (sId != 0) {
+                filteredData = data.filter(item => item.fSkillId == sId);
+            }
+            //關鍵字篩選
+            if (keyword != '') {
+                filteredData = filteredData.filter(item => {
+                    // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+                    return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
+                });
+            }
+            const dataCount = filteredData.length;//有幾筆資料
+            const pageCount = Math.ceil(dataCount / onePage);//有幾頁
+            // 清空現有按鈕
+            pageButtonsContainer2.empty();
+            for (let i = 1; i <= pageCount; i++) {
+                let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+                button.click(function () {
+                    load2(i);//加載第i頁
+                });
+                pageButtonsContainer2.append(button);
+            }
+        }
+        loadPage2();
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //我的最愛
+        function firstLoad3(pageNumber) {
+            const divList = $('#divList3');
+            //讀取Json資料
+            $.getJSON('/apiTClass/FavById/?id=@(ViewBag.MemberId)', function (datas) {
+                //console.log(datas);
+
+                // 獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                // 這裡每次回傳的卡片順序都是亂的，只能先排好順序
+                // 建立 Promise 數組，每個 Promise 對應一個非同步請求
+                const promises = limitdatas.map(item => new Promise(resolve => {
+                    checkIfFavorite(item.fClassId, isFavorite => {
+                        const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
+
+                        const Description = item.fDescription.length > 30 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
+                        console.log(item);
+                        const card = $(
+                            `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                         <a href="/Class/Viewclass?id=${item.fClassId}">
+                                             <div style="position: relative;">
+                                                 <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
+                                                     ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                                 </span>
+                                                 <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                                 <span class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                             </div>
+                                             <div>
+                                                 <div class="ClassName">
+                                                     <h5>${item.fClassName}</h5>
+                                                 </div>
+                                                 <p>${Description}</p>
+                                             </div>
+                                             <div>
+                                                 <h5>導師：${item.fTeacherNmae}</h5>
+                                                 <h6>地點：${item.fSiteName}</h6>
+                                                 <p>點閱數：${item.fClick}</p>
+                                             </div>
+                                         </a>
+                                         <button class="favorite-button" data-classid="${item.fClassId}">
+                                             <img src="${loveImgSrc}" class="favorite-icon" style="width: 30px; height: 30px;" />
+                                         </button>
+                                     </div>`
+                        );
+                        resolve(card);
+                    });
+                }));
+
+
+                // 使用 Promise.all 確保所有非同步請求都完成後再進行排序和渲染
+                Promise.all(promises)
+                    .then(cards => {
+                        if (cards['length'] === 0) {
+                            const docFrag = $(document.createDocumentFragment());
+                            const card = $(
+                                `<div class="section-title mb-5 pb-4 container-fluid" style="display: flex; justify-content: center;">
+                                            <h3 class="mb-5">我的最愛中沒有符合條件的課程</h3>
+                                         </div>`
+                            );
+                            console.log("沒資料");
+                            docFrag.append(card);
+                            divList.html(docFrag);
+                        } else {
+                            // 根據 fClassId 屬性排序卡片
+                            cards.sort((a, b) => a[0].fClassId - b[0].fClassId);
+                            // 渲染卡片
+                            divList.html(cards.map(card => card[0]));
+                        }
+                    });
+            });
+        }
+        firstLoad3(1);
+
+        function load3(pageNumber) {
+            const divList = $('#divList3')
+            const sId = $('#selectSkill3').val();
+            const keyword = $('#txtKeyword3').val(); // 新增的關鍵字搜尋
+            const sOnLine = $('#selectOnLine3').val();
+
+
+            $.getJSON('/apiTClass/FavById/?id=@(ViewBag.MemberId)', function (datas) {
+
+                let filteredDatas = datas;
+
+                if (sId != 0) {
+                    filteredDatas = datas.filter(item => {
+                        // 在此添加筛选条件
+                        return item.fSkillId == sId;
+                    });
+                }
+                //關鍵字篩選
+                if (keyword) {
+                    filteredDatas = filteredDatas.filter(item => {
+                        // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+                        return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
+                    });
+                }
+                //線上實體篩選
+                if (sOnLine != 0) {
+                    filteredDatas = filteredDatas.filter(item => {
+                        // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+                        return item.fOnLine == sOnLine - 1;
+                    });
+                }
+
+                dataCount = filteredDatas.length;
+
+                //獲得限定頁面資料
+                const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                // 這裡每次回傳的卡片順序都是亂的，只能先排好順序
+                // 建立 Promise 數組，每個 Promise 對應一個非同步請求
+                const promises = limitdatas.map(item => new Promise(resolve => {
+                    checkIfFavorite(item.fClassId, isFavorite => {
+
+                        const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
+
+                        const Description = item.fDescription.length > 30 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
+
+                        const card = $(
+                            `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                                        <a href="/Class/Viewclass?id=${item.fClassId}">
+                                            <div>
+                                                <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
+                                                    ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                                </span>
+                                                <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                                <span class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                            </div>
+                                            <div>
+                                                <div class="ClassName">
+                                                    <h5>${item.fClassName}</h5>
+                                                </div>
+                                                        <p>${Description}</p>
+                                            </div>
+                                            <div>
+                                                <h5>導師：${item.fTeacherNmae}</h5>
+                                                <h6>地點：${item.fSiteName}</h6>
+                                                <p>點閱數：${item.fClick}</p>
+                                            </div>
+                                        </a>
+                                        <button class="favorite-button" data-classid="${item.fClassId}">
+                                             <img src="${loveImgSrc}" class="favorite-icon" style="width: 30px; height: 30px;" />
+                                        </button>
+                                    </div>`
+                        );
+                        resolve(card);
+                    });
+                }));
+
+                // 使用 Promise.all 確保所有非同步請求都完成後再進行排序和渲染
+                Promise.all(promises)
+                    .then(cards => {
+                        //console.log(cards);
+                        // 如果資料為空，顯示提示訊息
+                        if (cards['length'] === 0) {
+                            const docFrag = $(document.createDocumentFragment());
+                            const card = $(
+                                `<div class="section-title mb-5 pb-4 container-fluid" style="display: flex; justify-content: center;">
+                                            <h3 class="mb-5">我的最愛中沒有符合條件的課程</h3>
+                                 </div>`
+                            );
+                            console.log("沒資料");
+                            docFrag.append(card);
+                            divList.html(docFrag);
+                        } else {
+                            // 根據 fClassId 屬性排序卡片
+                            cards.sort((a, b) => a[0].fClassId - b[0].fClassId);
+                            // 渲染卡片
+                            divList.html(cards.map(card => card[0]));
+                        }
+                    });
+            })
+        };
+        // 檢查是否為最愛课程
+        function checkIfFavorite(classId, callback) {
+            //接收classId，回傳callback
+            $.getJSON(`/apiTClass/classFav/${classId}`, function (datas2) {
+                //取得這堂課有誰喜歡
+                let isFavorite = false;
+                $.each(datas2, function (index, item) {
+                    if (MemberId == item) {
+                        isFavorite = true;//如果登入者喜歡就為true
+                    }
+                });
+                callback(isFavorite);
+            });
+        }
+        $(document).on('click', '.favorite-button', function () {
+            // 獲取點擊的按鈕的 data-classid
+            const button = $(this);
+            const classId = button.data('classid');
+
+            // 獲取按鈕內的圖片元素
+            const img = button.find('.favorite-icon');
+            const src = img.attr('src');
+
+            // 根據 src 的不同調用不同的 API
+            if (src === '/img/classimg/notlove.PNG') {
+                console.log("新增");
+                createFavorite(classId, img);
+            } else if (src === '/img/classimg/love.PNG') {
+                console.log("刪除");
+                deleteFavorite(classId, img);
+            }
+        });
+        // 新增 createFavorite 函數
+        function createFavorite(classId, img) {
+            // 呼叫 apiTClassFavs/Create 方法新增一筆 TClassFav 資料
+            $.ajax({
+                url: `/apiTClass/CreateFav?classId=${classId}`,
+                method: 'POST',
+                success: function () {
+                    // 成功後更新圖片的 src
+                    img.attr('src', '/img/classimg/love.PNG');
+                },
+                error: function () {
+                    console.error('Error creating favorite.');
+                }
+            });
+        }
+        // 新增 deleteFavorite 函數
+        function deleteFavorite(classId, img) {
+            // 呼叫 apiTClassFavs/Delete 方法刪除一筆 TClassFav 資料
+            $.ajax({
+                url: `/apiTClass/DeleteFav?classId=${classId}`,
+                method: 'POST',
+                success: function () {
+                    // 成功後更新圖片的 src
+                    img.attr('src', '/img/classimg/notlove.PNG');
+                },
+                error: function () {
+                    console.error('Error deleting favorite.');
+                }
+            });
+        }
+
+
+
+
+        //分頁按鈕
+        async function loadPage3() {
+            const Id = @(ViewBag.MemberId)
+                            const url = `@Url.Content("~/apiTClass/FavById/?id=${Id}")`;
+            const response = await fetch('../../../apiTClass/FavById/?id=@(ViewBag.MemberId)');
+            const data = await response.json();
+            //console.log(data);
+            // 獲取所選風格的ID
+            const sId = $('#selectSkill3').val();
+            const keyword = $('#txtKeyword3').val();
+
+            // 根據所選風格篩選數據
+            let filteredData = data;
+            if (sId != 0) {
+                filteredData = data.filter(item => item.fSkillId == sId);
+            }
+            //關鍵字篩選
+            if (keyword != '') {
+                filteredData = filteredData.filter(item => {
+                    // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
+                    return item.fClassName.includes(keyword) || item.fDescription.includes(keyword);
+                });
+            }
+            const dataCount = filteredData.length;//有幾筆資料
+            const pageCount = Math.ceil(dataCount / onePage);//有幾頁
+            // 清空現有按鈕
+            pageButtonsContainer3.empty();
+            for (let i = 1; i <= pageCount; i++) {
+                let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+                button.click(function () {
+                    load3(i);//加載第i頁
+                });
+                pageButtonsContainer3.append(button);
+            }
+        }
+        loadPage3();
+
+
+
         //Skill選擇器
         async function loadStyle() {
             const response = await fetch('@Url.Content("~/apiTSkills/OnlyIdName")');//從哪裡取得
@@ -388,6 +899,8 @@
             const styleOptions = data.map(s => `<option value="${s.fSkillId}">${s.fName}</option>`);//要把取得的資料作什麼加工
             styleOptions.unshift(defaultOption);
             selStyle.innerHTML = styleOptions.join("");//加入到指定的位置
+            selStyle2.innerHTML = styleOptions.join("");//加入到指定的位置
+            selStyle3.innerHTML = styleOptions.join("");//加入到指定的位置
         }
         loadStyle();//啟動
 
@@ -397,6 +910,16 @@
             load(1);
             loadPage();
             //$('#txtKeyword').val('');
+        });
+        $('#btnSearch2').click(function () {
+            //讀取條件篩選後第一頁,重新讀取分頁頁碼
+            load2(1);
+            loadPage2();
+        });
+        $('#btnSearch3').click(function () {
+            //讀取條件篩選後第一頁,重新讀取分頁頁碼
+            load3(1);
+            loadPage3();
         });
 
         //跑到新建頁面

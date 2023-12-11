@@ -9,21 +9,13 @@ public partial class TDealClass
 {
     public int FDealClassId { get; set; }
 
-    public int FClassId { get; set; }
-
     public int FMemberId { get; set; }
 
-    public DateTime? FStartdate { get; set; }
-
-    public DateTime? FEnddate { get; set; }
+    public DateTime? FDealdate { get; set; }
 
     public decimal? FPrice { get; set; }
 
-    public int? FCouponId { get; set; }
-
-    public virtual TClass FClass { get; set; }
-
-    public virtual TCoupon FCoupon { get; set; }
-
     public virtual TMember FMember { get; set; }
+
+    public virtual ICollection<TDealClassDetail> TDealClassDetails { get; set; } = new List<TDealClassDetail>();
 }
