@@ -172,8 +172,8 @@ namespace Music_matchmaking_platform.Controllers
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("zackyandjacky@gmail.com", "SoundBetter"); // 替換為實際的寄件者 Email 和名稱
             var to = new EmailAddress(Email, Name);
-            var plainTextContent = $"親愛的 {Name}，\n\n感謝您的預約。以下是您的預約詳情：\n\n主旨：{Subject}\n訊息：{Message}";
-            var htmlContent = $"<p>親愛的 {Name}，</p><p>感謝您的預約。以下是您的預約詳情：</p><p><strong>主旨：</strong>{Subject}</p><p><strong>訊息：</strong>{Message}</p>";
+            var plainTextContent = $"親愛的 {Name}，\n\n{Subject}。以下是預約詳情：\n\n預約會員：{Subject}\n訊息：{Message}";
+            var htmlContent = $"<p>親愛的 {Name}，</p><p>{Subject}。以下是預約詳情：</p><p><strong>預約會員：</strong>{Subject}</p><p><strong>訊息：</strong>{Message}</p>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, Subject, plainTextContent, htmlContent);
 
