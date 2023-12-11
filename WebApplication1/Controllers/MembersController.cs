@@ -11,6 +11,7 @@ using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.Services;
 using prjMusicBetter.Models.ViewModels;
+using System.Linq;
 using System.Net.WebSockets;
 
 namespace prjMusicBetter.Controllers
@@ -361,19 +362,38 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
-        public async Task<IActionResult> MemberProject()
+        public async Task<IActionResult> MemberProject(string search, int page = 1, int pageSize = 10)
         {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
                 return RedirectToAction("Members", "Index");
             }
-            var project = await _context.TProjects.Where(p => p.FMemberId == member.FMemberId)
-                .ToListAsync();
+
+            var projectIds = _context.TProjects
+                .Where(p => p.FMemberId == member.FMemberId)
+                .Select(x=>x.FProjectId);
+
+            var query = _context.TProjects.AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(search))
+            {
+               query=query.Where(c =>c.FName.Contains(search));
+            }
+
+           var memberProjects = query.Where(c =>projectIds.Contains(c.FProjectId));
+
+            var totalItems = await memberProjects.CountAsync();
+
+            var pageProjectList = await memberProjects.Skip((page - 1) * pageSize).ToListAsync();
+
             var viewModel = new MemberProjectVM
             {
                 Member = member,
-                Project = project
+                Project = pageProjectList,
+                CurrentPage=page,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                PageSize = pageSize,
             };
             return PartialView(viewModel);
         }
