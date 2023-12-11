@@ -54,8 +54,8 @@
                                 <input type="text" value="@Html.DisplayFor(model => model.FMember.FEmail)" style="font-size: 20px; border: solid" name="Email">
                             </div>
                             <div class="col-md-12">
-                                <input type="text" placeholder="主旨" style="font-size: 20px; border: solid" name="Subject">
-                                <textarea placeholder="訊息" style="font-size: 20px; border: solid" name="Message"></textarea>
+                                <input type="hidden" style="font-size: 20px; border: solid" value="有人預約你的場地 - @Html.DisplayFor(model => model.FSiteName)" name="Subject">
+                                <textarea placeholder="給場地主的訊息" style="font-size: 20px; border: solid" name="Message"></textarea>
                             </div>
                         </div>
                     </form>

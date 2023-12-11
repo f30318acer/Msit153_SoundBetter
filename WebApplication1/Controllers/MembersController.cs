@@ -206,8 +206,9 @@ namespace prjMusicBetter.Controllers
       
 
         //個人會員黑名單
-        public async Task<IActionResult> blackList()
+        public async Task<IActionResult> blackList(string search)
         {
+            ViewData["CurrentFilter"] = search;
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
@@ -219,6 +220,14 @@ namespace prjMusicBetter.Controllers
 
             var blackList = await _context.TMembers.Where(m => blackListIds.Contains(m.FMemberId)).ToListAsync();
 
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                blackList = blackList.Where(s => s.FName.Contains(search)
+                                  || s.FEmail.Contains(search)
+                                  || s.FPhone.Contains(search)).ToList();
+            }
+
             var viewModel = new FriendsViewModel
             {
                 Member = member,
@@ -227,7 +236,7 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
    
-        public async Task<IActionResult> MemberCoupon()
+        public async Task<IActionResult> MemberCoupon(string keyword)
         {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
@@ -239,9 +248,15 @@ namespace prjMusicBetter.Controllers
                 .Select(x => x.FCouponId)
                 .ToListAsync();
 
-            var memberCoupons = await _context.TCoupons
-                                    .Where(c => membercouponIds.Contains(c.FCouponId))
-                                    .ToListAsync();
+            var query =_context.TCoupons.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                query = query.Where(c => c.FCouponContent.Contains(keyword));
+            }
+
+            var memberCoupons = await query.Where(c=>membercouponIds.Contains(c.FCouponId))
+                .ToListAsync();
 
             var viewModel = new MemberCouponVM
             {

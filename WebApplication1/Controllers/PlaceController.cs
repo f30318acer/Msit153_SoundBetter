@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
-using SendGrid.Helpers.Mail;
-using SendGrid;
+using SendGrid.Helpers.Mail;//
+using SendGrid;//
 using System;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
 using Microsoft.SqlServer.Server;
-using System.Threading.Tasks;
+using System.Threading.Tasks;//
 
 namespace Music_matchmaking_platform.Controllers
 {
@@ -167,13 +167,13 @@ namespace Music_matchmaking_platform.Controllers
         }
         public void SendReservationConfirmationEmail(string Email, string Name, string Subject, string Message)
         {
-            string apiKey = "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"; // 替換為你的 SendGrid API Key
+            string apiKey = ""; // 替換為你的 SendGrid API Key
 
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("jonson50815@yahoo.com.tw", "陳品諺"); // 替換為實際的寄件者 Email 和名稱
+            var from = new EmailAddress("zackyandjacky@gmail.com", "SoundBetter"); // 替換為實際的寄件者 Email 和名稱
             var to = new EmailAddress(Email, Name);
-            var plainTextContent = $"親愛的 {Name}，\n\n感謝您的預約。以下是您的預約詳情：\n\n主旨：{Subject}\n訊息：{Message}";
-            var htmlContent = $"<p>親愛的 {Name}，</p><p>感謝您的預約。以下是您的預約詳情：</p><p><strong>主旨：</strong>{Subject}</p><p><strong>訊息：</strong>{Message}</p>";
+            var plainTextContent = $"親愛的 {Name}，\n\n{Subject}。以下是預約詳情：\n\n預約會員：{Subject}\n訊息：{Message}";
+            var htmlContent = $"<p>親愛的 {Name}，</p><p>{Subject}。以下是預約詳情：</p><p><strong>預約會員：</strong>{Subject}</p><p><strong>訊息：</strong>{Message}</p>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, Subject, plainTextContent, htmlContent);
 
