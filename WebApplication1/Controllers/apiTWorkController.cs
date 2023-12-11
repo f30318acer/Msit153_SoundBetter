@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace prjSoundBetterApi.Controllers
 {
@@ -145,5 +146,17 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("刪除失敗");
         }
+
+        public IActionResult PlusOne(int?id)
+        {
+            var WorkClick = _context.TWorkClicks.FirstOrDefault(c => c.FWorkId == 1025);
+            if (WorkClick != null)
+            {
+                WorkClick.FClick++;//點閱數+1
+            }
+            _context.SaveChanges();
+            return Content("新增成功");
+        }
+
     }
 }
