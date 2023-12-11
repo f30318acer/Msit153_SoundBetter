@@ -28,10 +28,16 @@ namespace prjMusicBetter.Controllers
 		public async Task<IActionResult> Details(int? id)
 		{
 			TMember member = _userInfoService.GetMemberInfo();
+			ViewBag.Fav = 0;
 			ViewBag.MemberId = 0;
 			if (member != null)
 			{
-				ViewBag.MemberId = member.FMemberId;
+                ViewBag.MemberId = member.FMemberId;
+				TProjectFav fav = _context.TProjectFavs.FirstOrDefault(f => f.FMemberId == member.FMemberId && f.FProjectId == id);
+				if (fav != null)
+				{
+					ViewBag.Fav = 1;
+				}
 			}
 			
 			if (id == null || _context.TProjects == null)

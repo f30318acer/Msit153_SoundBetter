@@ -30,8 +30,8 @@ namespace prjSoundBetterApi.Controllers
         public IActionResult MemberList()
         {
             var x = from m in _context.TMembers
-                    join w in _context.TWorks
-                    on m.FMemberId equals w.FMemberId
+                    join w in _context.TWorks on m.FMemberId equals w.FMemberId
+                   
                     select new {m.FMemberId ,m.FUsername,w.FFilePath,w.FWorkName ,m.FPhotoPath};
             var y = x.Take(3);
             return Json(y); 
@@ -62,19 +62,47 @@ namespace prjSoundBetterApi.Controllers
         }
         //===新增===
         [HttpPost]
-        public IActionResult Create([FromBody] TWork? work)
+        public IActionResult Create1([FromBody] TWork? work)
         {
             if (work != null)
             {
                 _context.Add(work);
                 _context.SaveChanges();
+                TWorkClick WorkClick = new TWorkClick
+                {
+                    FWorkId = work.FWorkId, // 使用 TClass 資料的 FClassId
+                    FClick = 0
+                };
+
+                _context.Add(WorkClick);
+                _context.SaveChanges();
                 return Content("新增成功");
             }
             return Content("錯誤");
+
         }
         private bool TWorkExists(int id)
         {
             return (_context.TWorks?.Any(e => e.FWorkId == id)).GetValueOrDefault();
+        }
+
+        public IActionResult Delete(int id)
+        {
+            if (_context.TWorks == null)
+            {
+                return Problem("連線錯誤");
+            }
+            var project = _context.TWorks.Where(c => c.FWorkId == id).FirstOrDefault();
+            if (project != null)
+            {
+                // 刪除 TClassClick 中符合條件的資料
+                var relatedClicks = _context.TWorkClicks.Where(click => click.FWorkId == project.FWorkId).ToList();
+                _context.TWorkClicks.RemoveRange(relatedClicks);
+                _context.TWorks.Remove(project);
+                _context.SaveChanges();
+                return Content("刪除成功");
+            }
+            return Content("刪除失敗");
         }
     }
 }

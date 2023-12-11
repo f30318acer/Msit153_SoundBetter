@@ -184,5 +184,47 @@ namespace prjSoundBetterApi.Controllers
         {
             return (_context.TProjects?.Any(e => e.FProjectId == id)).GetValueOrDefault();
         }
+        //===新增應徵===
+        [HttpPost]
+        public IActionResult AppliProject(int id, TApplicationRecord appli)
+        {
+            if (appli != null)
+            {
+                DateTime now = DateTime.Now;
+                appli.FProjectId = id;
+                appli.FApplicationStatusId = 1;
+                _context.Add(appli);
+                _context.SaveChanges();
+                return Content("新增成功");
+            }
+            return Content("錯誤");
+        }
+        //===新增追蹤===
+        [HttpPost]
+        public IActionResult favProject(int id, TProjectFav fav)
+        {
+            if (fav != null)
+            {
+                DateTime now = DateTime.Now;
+                fav.FProjectId = id;
+                _context.Add(fav);
+                _context.SaveChanges();
+                return Content("追蹤成功");
+            }
+            return Content("錯誤");
+        }
+        //===取消追蹤===
+        [HttpPost]
+        public IActionResult DisFavProject(TProjectFav fav)
+        {
+            TProjectFav fDb = _context.TProjectFavs.FirstOrDefault(f => f.FMemberId == fav.FMemberId && f.FProjectId == fav.FProjectId);
+            if (fDb != null)
+            {
+                _context.Remove(fDb);
+                _context.SaveChanges();
+                return Content("取消追蹤");
+            }
+            return Content("錯誤");
+        }
     }
 }

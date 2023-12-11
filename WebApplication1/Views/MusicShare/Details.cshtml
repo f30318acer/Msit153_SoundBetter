@@ -29,6 +29,7 @@
                         <select id="selectStyle" class="form-select mr-2"></select>
                         <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
                         <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+                        <a href="javascript:void(0);" type="button" onclick="CheckLoginAndNavigate()" class="btn btn-info mr-2" style="background-color: #fc0254;">建立作品</a>
                     </div>
                 </div>
                 <a href="" class="active">Genres</a>
@@ -278,5 +279,21 @@
                 loadPage();
                 //$('#txtKeyword').val('');
             });
+
+
+
+
+        async function CheckLoginAndNavigate() {
+            const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
+            const isLogin = await response.json();
+
+            if (isLogin) {
+                // 如果已登錄，導航到 ClassController/Create
+                window.location.href = "@Url.Action("Create1", "TWorks")";
+            } else {
+                // 如果未登錄，導航到 Home/Login
+                window.location.href = "@Url.Action("Login", "Home")";
+            }
+        }
     </script>
 }
