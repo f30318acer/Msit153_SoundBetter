@@ -9,7 +9,7 @@
     <link href="img/favicon.ico" rel="shortcut icon" />
 
     @* Login 雨滴*@
-    <script src="~/js/rainyday.min.js"></script>
+    @* <script src="~/js/rainyday.min.js"></script> *@
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
@@ -278,8 +278,8 @@
                 if (role == "Member") {
                     let str = "";
                     str += `<ul class="navbar-nav">
-                                                           <li class="nav-item dropdown" id="memberIcon">
-                                                              <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> `;
+                                                                   <li class="nav-item dropdown" id="memberIcon">
+                                                                      <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> `;
                     if (datas.photoPath != null) {
 
                         str += `<img src="@Url.Content("~/img/Member/")${datas.photoPath}" class="circle - size - 35"  width="30px"/>`
@@ -288,29 +288,28 @@
                         str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" width="30px" />`
                     }
                     str += `</button>
-                                                    <ul class="dropdown-menu dropdown-menu-dark">
-                                                        <li class="d-flex align-items-center mx-2">
-                                                            <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
-                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Members/index?display=MemberInfo")">會員資料</a>
-                                                        </li>
+                                                            <ul class="dropdown-menu dropdown-menu-dark">
+                                                                <li class="d-flex align-items-center mx-2">
+                                                                    <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
+                                                                    <a class="dropdown-item fs-12px" href="@Url.Content("~/Members/index?display=MemberInfo")">會員資料</a>
+                                                                </li>
 
-                                                        <li class="d-flex align-items-center mx-2">
-                                                            <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
-                                                                    <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                                                <li class="d-flex align-items-center mx-2">
+                                                                    <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
+                                                                            <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                                                </li>
+                                                            </ul>
                                                         </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>`;
+                                                    </ul>`;
 
                     $("#memberIcon").html(str)
                 }
 
-                else
-                {
+                else {
                     let str = "";
                     str += `<ul class="navbar-nav">
-                                                           <li class="nav-item dropdown" id="memberIcon">
-                                                           <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
+                                                                   <li class="nav-item dropdown" id="memberIcon">
+                                                                   <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
                     if (datas.photoPath != null) {
                         str += `<img src="@Url.Content("~/images/uploads/Employee/")${datas.photoPath}" class="circle-size-35"  width="30px"/>`
                     }
@@ -318,48 +317,49 @@
                         str += `<img src="@Url.Content("~/images/header/user.png")" class="circle-size-35"  width="30px"/>`
                     }
                     str += `</button>
-                                          <ul class="dropdown-menu dropdown-menu-dark">
-                                              <li class="d-flex align-items-center mx-2">
-                                                 <img src="@Url.Content("~/images/header/user.png")" class="width-16px" />
-                                                     <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
+                                                  <ul class="dropdown-menu dropdown-menu-dark">
+                                                      <li class="d-flex align-items-center mx-2">
+                                                         <img src="@Url.Content("~/images/header/user.png")" class="width-16px" />
+                                                             <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
+                                                      </li>
+                                                      <li class="d-flex align-items-center mx-2">
+                                                         <img src="@Url.Content("~/images/icon/logout.png")" class="width-16px" />
+                                                             <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                                      </li>
+                                                  </ul>
                                               </li>
-                                              <li class="d-flex align-items-center mx-2">
-                                                 <img src="@Url.Content("~/images/icon/logout.png")" class="width-16px" />
-                                                     <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
-                                              </li>
-                                          </ul>
-                                      </li>
-                                  </ul>`;
+                                          </ul>`;
                     $("#memberIcon").html(str)
                 }
-                // else 
-                // {            
-                //     let str = "";
-                //     str += `<ul class="navbar-nav">
-                //                                                         <li class="nav-item dropdown" id="memberIcon">
-                //                                                             <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
-                //     if (datas.photoPath != null) {
-                //         str += `<img src="@Url.Content("~/uploads/")${datas.photoPath}" class="circle-size-35" />`
-                //     }
-                //     else {
-                //         str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
-                //     }
-                //     str += `</button>
-                //                                                     <ul class="dropdown-menu dropdown-menu-dark">
-                //                                                         <li class="d-flex align-items-center mx-2">
-                //                                                             <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
-                //                                                             <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
-                //                                                         </li>
-                //                                                         <li class="d-flex align-items-center mx-2">
-                //                                                                     <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
-                //                                                                     <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
-                //                                                         </li>
-                //                                                     </ul>
-                //                                                 </li>
-                //                                             </ul>`;
-
-                //     $("#memberIcon").html(str)                    
-                // }                      
+                        else
+                {
+                    let str = "";
+                    str += `<ul class="navbar-nav">
+                              <li class="nav-item dropdown" id="memberIcon">
+                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
+                    if (datas.photoPath != null) 
+                    {
+                        str += `<img src="@Url.Content("~/uploads/")${datas.photoPath}" class="circle-size-35" />`
+                    }
+                    else
+                    {
+                        str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" />`
+                    }
+                    str += `</button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                                  <li class="d-flex align-items-center mx-2">
+                                     <img src="@Url.Content("~/img/header/user.png")" class="width-16px" />
+                                         <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
+                                     </li>
+                                  <li class="d-flex align-items-center mx-2">
+                              <img src="@Url.Content("~/img/icons/logout.png")" class="width-16px" />
+                                       <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
+                                  </li>
+                               </ul>
+                               </li>
+                               </ul>`;
+                    $("#memberIcon").html(str)
+                }
             }
         }
     </script>

@@ -1,13 +1,8 @@
 ﻿@model prjMusicBetter.Models.ViewModels.FriendsViewModel
-
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-    .hover\:color-coral:hover {
-        color: coral;
-    }
-
-</style>
-
+@{
+    ViewData["Title"] = "Friends";
+}
+ <script src="https://cdn.tailwindcss.com"></script> 
 
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
@@ -69,7 +64,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
     <script>
         $(document).ready(function () {
             $('#searchButton').click(function () {
