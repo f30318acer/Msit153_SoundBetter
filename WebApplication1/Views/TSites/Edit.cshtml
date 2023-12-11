@@ -5,9 +5,7 @@
     Layout = "_Layout2";
 }
 <main id="main" class="main">
-    <h1>Edit</h1>
-
-    <h4>TSite</h4>
+    <h1>修改場地</h1>
     <hr />
     <div class="row">
         <div class="col-md-4">
@@ -33,9 +31,11 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="FSiteType" class="control-label">場地類別</label>
-                    <input asp-for="FSiteType" class="form-control" />
-                    <span asp-validation-for="FSiteType" class="text-danger"></span>
+                    <label asp-for="FSiteType" class="control-label">場地類型</label>
+                    <select asp-for="FSiteType" class="form-control">
+                        <option selected value="1">錄音室</option>
+                        <option value="2">音樂教室</option>
+                    </select>
                 </div>
                 <br />
                 <div class="form-group">
@@ -51,7 +51,7 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="儲存" class="btn btn-primary" />
                 </div>
             </form>
         </div>

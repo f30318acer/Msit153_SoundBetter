@@ -58,7 +58,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">修改專案 <span></span></h5>
+				<h5 class="modal-title" id="exampleModalLabel">創立專案 <span></span></h5>
 				@*      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>*@
@@ -135,17 +135,13 @@
 
 		const loginID = $('#loginId').val();
 		const btnCreate = document.getElementById('btnCreate');
-		const btnCreate2 = document.getElementById('btnCreate2');
+
 		function btnCreatFuntion() {
 			if (loginID != 0) {
 				btnCreate.setAttribute('data-bs-toggle', 'modal');
 				btnCreate.setAttribute('data-bs-target', '#addModal');
-			//btnCreate.style.display = 'block';
-			//btnCreate2.style.display = 'none';
 			}
 			if (loginID == 0) {
-			//btnCreate.style.display = 'none';
-			//btnCreate2.style.display = 'block';
 			}
 		}
 		btnCreatFuntion();
