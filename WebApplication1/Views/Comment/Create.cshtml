@@ -8,31 +8,35 @@
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         
+        <input asp-for="FMemberId" type="hidden" class="form-control" />
+
+        <input asp-for="FArticleId" type="hidden" class="form-control" />
+        
         <div class="form-group">
-            <label asp-for="FCommentContent" class="control-label"></label>
+            <label asp-for="FCommentContent" class="control-label">新增留言</label>
             <input asp-for="FCommentContent" class="form-control" />
             <span asp-validation-for="FCommentContent" class="text-danger"></span>
         </div>
 
 
         <div class="form-group">
-            <input type="submit" value="新增" class="btn btn-primary" />
+            <input type="submit" value="新增留言" class="btn btn-primary" />
         </div>
     </form>
 </div>
-@* @section Scripts {
+
     <script>
         const url = '/apiTComment/Create';
-        const selStyle = document.querySelector('#selectStyle');
+        const selArticleID = document.querySelector('#selectArticleID');
         $('#buttonSend').click(function () {
 
             // 獲取當前的本地時間
             const currentDate = new Date();
             const jsonData = JSON.stringify({
-                fMemberId: 1,
-                fTitle: $('#fTitle'),
-                fContent: $('#fContent'),
-                fStyleId: selStyle.value
+                fMemberId: $('#FMemberId'),
+                fArticleId: $('#FArticleId'),
+                fCommentContent: $('#FCommentContent'),
+                fCommentTime: currentDate
             })
             console.log(jsonData)
             $.ajax({
@@ -47,13 +51,12 @@
                 alert("新增失敗");
             });
         });
-        //Style選擇器
-        async function loadStyle() {
-            const response = await fetch('@Url.Content("~/apiTStyle/List")');
-            const data = await response.json();
-            const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
-            selStyle.innerHTML = style.join("");
-        }
-        loadStyle();
+        // //Style選擇器
+        // async function loadStyle() {
+        //     const response = await fetch('@Url.Content("~/apiTStyle/List")');
+        //     const data = await response.json();
+        //     const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+        //     selStyle.innerHTML = style.join("");
+        // }
+        // loadStyle();
     </script>
-} *@
