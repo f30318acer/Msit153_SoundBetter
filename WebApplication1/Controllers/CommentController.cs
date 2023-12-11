@@ -26,7 +26,7 @@ namespace prjMusicBetter.Controllers
             articleId = 20;
             var comments = _context.TComments.Include(e => e.FMember).Where(e => e.FArticleId == articleId).ToList();
             var viewModel = new CommentListViewModel()
-            { 
+            {
                 Comments = comments,
             };
 
@@ -34,7 +34,7 @@ namespace prjMusicBetter.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateComment(CommentDto dto)
+        public IActionResult Create(CommentDto dto)
         {
             //新增_文章備註資料
             _context.TComments.Add(new TComment()
