@@ -11,6 +11,7 @@ using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.Services;
 using prjMusicBetter.Models.ViewModels;
+using System.Net.WebSockets;
 
 namespace prjMusicBetter.Controllers
 {
@@ -321,19 +322,32 @@ namespace prjMusicBetter.Controllers
         }
 
 
-        public async Task<IActionResult> MemberWorks(string search, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> MemberWorks(string search)
         {
+           
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
                 return RedirectToAction("Members", "Index");// 如果未找到會員，重定向到登入頁面
             }
-            var works = await _context.TWorks.Where(w => w.FMemberId == member.FMemberId)
-                           .ToListAsync();// 獲取該會員的所有作品
+            var memberworkIds = await _context.TWorks
+                .Where(x=>x.FMemberId==member.FMemberId)
+                .Select(x=>x.FWorkId) .ToListAsync();
+
+            var query = _context.TWorks.AsQueryable();
+            if(!string.IsNullOrWhiteSpace(search)) 
+            {
+                query = query.Where(c => c.FWorkName.Contains(search));
+            }
+
+
+            var memberworks = await query.Where(c=>memberworkIds.Contains(c.FWorkId))
+                .ToListAsync();// 獲取該會員的所有作品
+
             var viewModel = new MemberWorksVM
             {
                 Member = member,
-                Works = works // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
+                Works = memberworks // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
             };
             return PartialView(viewModel);
         }
