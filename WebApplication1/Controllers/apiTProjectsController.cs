@@ -113,21 +113,26 @@ namespace prjSoundBetterApi.Controllers
 		}
 		//===新增===
 		[HttpPost]
-        public IActionResult Create(TProject? project,IFormFile formFile)
+        public IActionResult Create(TProject? project,IFormFile formFilePhoto, IFormFile formFileDemo)
         {            
             if (project != null)
             {
-                if (formFile != null)
+                if (formFilePhoto != null)
                 {
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
                     project.FThumbnailPath = photoName;
-                    formFile.CopyTo(new FileStream(_enviro.WebRootPath + "/img/project/" + photoName, FileMode.Create));
+                    formFilePhoto.CopyTo(new FileStream(_enviro.WebRootPath + "/img/project/" + photoName, FileMode.Create));
+                }
+                if (formFileDemo != null)
+                {
+                    string DemoName = Guid.NewGuid().ToString() + ".mp3";
+                    project.FDemoFilePath = DemoName;
+                    formFileDemo.CopyTo(new FileStream(_enviro.WebRootPath + "/ProjectDemo/" + DemoName, FileMode.Create));
                 }
                 DateTime now = DateTime.Now;
                 project.FStartdate = now;
                 project.FProjectStatusId = 1;
                 project.FSiteId = 1;
-                project.FSkillId = 1;
                 _context.Add(project);
                 _context.SaveChanges();
                 return Content("新增成功");
@@ -155,8 +160,7 @@ namespace prjSoundBetterApi.Controllers
                 }
                 if (formFileDemo != null)
                 {
-                    string DemoName = "Demo_"+ pDb.FProjectId + ".mp3";
-                    pDb.FDemoFilePath = DemoName;
+                    string DemoName = pDb.FDemoFilePath;
                     formFileDemo.CopyTo(new FileStream(_enviro.WebRootPath + "/ProjectDemo/" + DemoName, FileMode.Create));
                 }
                 _context.SaveChanges();
@@ -183,6 +187,48 @@ namespace prjSoundBetterApi.Controllers
         private bool TProjectExists(int id)
         {
             return (_context.TProjects?.Any(e => e.FProjectId == id)).GetValueOrDefault();
+        }
+        //===新增應徵===
+        [HttpPost]
+        public IActionResult AppliProject(int id, TApplicationRecord appli)
+        {
+            if (appli != null)
+            {
+                DateTime now = DateTime.Now;
+                appli.FProjectId = id;
+                appli.FApplicationStatusId = 1;
+                _context.Add(appli);
+                _context.SaveChanges();
+                return Content("新增成功");
+            }
+            return Content("錯誤");
+        }
+        //===新增追蹤===
+        [HttpPost]
+        public IActionResult favProject(int id, TProjectFav fav)
+        {
+            if (fav != null)
+            {
+                DateTime now = DateTime.Now;
+                fav.FProjectId = id;
+                _context.Add(fav);
+                _context.SaveChanges();
+                return Content("追蹤成功");
+            }
+            return Content("錯誤");
+        }
+        //===取消追蹤===
+        [HttpPost]
+        public IActionResult DisFavProject(TProjectFav fav)
+        {
+            TProjectFav fDb = _context.TProjectFavs.FirstOrDefault(f => f.FMemberId == fav.FMemberId && f.FProjectId == fav.FProjectId);
+            if (fDb != null)
+            {
+                _context.Remove(fDb);
+                _context.SaveChanges();
+                return Content("取消追蹤");
+            }
+            return Content("錯誤");
         }
     }
 }

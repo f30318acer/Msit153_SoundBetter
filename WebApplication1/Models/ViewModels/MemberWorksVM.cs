@@ -2,9 +2,9 @@
 
 namespace prjMusicBetter.Models.ViewModels
 {
-    internal class MemberWorksVM
+    public class MemberWorksVM
     {
         public TMember Member { get; set; }
-        public List<TWork> Works { get; set; }
+        public List<TWork> Works { get; set; }  
     }
 }

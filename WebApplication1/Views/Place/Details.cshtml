@@ -25,20 +25,38 @@
                     <br />
                     <ul>
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FAddress)</li>
-                        <li style="font-size: 20px">@Html.DisplayFor(model => model.FPhone)</li>
+                        <li style="font-size: 20px">
+                            @{
+                                string siteTypeText = "";
+                                switch (Model.FSiteType)
+                                {
+                                    case 1:
+                                        siteTypeText = "錄音室";
+                                        break;
+                                    case 2:
+                                        siteTypeText = "音樂教室";
+                                        break;
+                                    default:
+                                        siteTypeText = "其他";
+                                        break;
+                                }
+                            }
+                            @siteTypeText / @Html.DisplayFor(model => model.FPhone)
+                        </li>
                     </ul>
+                    <div id="siteclass"></div>
                     <form class="contact-from" id="reservationForm">
                         <div class="row" id="divForm">
-@*                             <div class="col-md-6">
-                                <input type="text" placeholder="請輸入姓名" style="font-size: 20px; border: solid">
+                            <div class="col-md-6">
+                                <input type="text" value="@Html.DisplayFor(model => model.FMember.FName)" style="font-size: 20px; border: solid" name="Name">
                             </div>
                             <div class="col-md-6">
-                                <input type="text" placeholder="請輸入E-mail" style="font-size: 20px; border: solid">
+                                <input type="text" value="@Html.DisplayFor(model => model.FMember.FEmail)" style="font-size: 20px; border: solid" name="Email">
                             </div>
                             <div class="col-md-12">
-                                <input type="text" placeholder="主旨" style="font-size: 20px; border: solid">
-                                <textarea placeholder="訊息" style="font-size: 20px; border: solid"></textarea>
-                            </div> *@
+                                <input type="hidden" style="font-size: 20px; border: solid" value="有人預約你的場地 - @Html.DisplayFor(model => model.FSiteName)" name="Subject">
+                                <textarea placeholder="給場地主的訊息" style="font-size: 20px; border: solid" name="Message"></textarea>
+                            </div>
                         </div>
                     </form>
                     <div id="accordion">
@@ -342,32 +360,56 @@
     <script>
         const siteID = $('#pID').val();
 
-        function loadForm() {
-            const divForm = $('#divForm');
-            let url = '/Place/GetMemberNameandEmail';
+        // function loadForm() {
+        //     const divForm = $('#divForm');
+        //     let url = '/Place/GetMemberNameandEmail';
 
-            $.getJSON(url, function (data) {
-                const form = $(`
-                    <div class="col-md-6">
-                        <input type="text" id="nameInput" style="font-size: 20px; border: solid" name="name">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="emailInput" style="font-size: 20px; border: solid" name="email">
-                    </div>
-                    <div class="col-md-12">
-                        <input type="text" placeholder="主旨" style="font-size: 20px; border: solid" name="subject">
-                        <textarea placeholder="訊息" style="font-size: 20px; border: solid" name="message"></textarea>
-                    </div>
-                `);
-                // 將名稱和電子郵件設置到相應的輸入字段中
-                form.find('#nameInput').val(data.name);
-                form.find('#emailInput').val(data.email);
+        //     $.getJSON(url, function (data) {
+        //         const form = $(`
+        //             <div class="col-md-6">
+        //                 <input type="text" id="nameInput" style="font-size: 20px; border: solid" name="name" disabled>
+        //             </div>
+        //             <div class="col-md-6">
+        //                 <input type="text" id="emailInput" style="font-size: 20px; border: solid" name="email" disabled>
+        //             </div>
+        //             <div class="col-md-12">
+        //                 <input type="text" placeholder="主旨" style="font-size: 20px; border: solid" name="subject">
+        //                 <textarea placeholder="訊息" style="font-size: 20px; border: solid" name="message"></textarea>
+        //             </div>
+        //         `);
+        //         // 將名稱和電子郵件設置到相應的輸入字段中
+        //         form.find('#nameInput').val(data.name);
+        //         form.find('#emailInput').val(data.email);
 
-                divForm.html(form)
+        //         divForm.html(form)
+        //     })
+        // }
+
+        // loadForm();
+        function loadClass(siteID) {
+            const siteclass = $('#siteclass');
+            let url = '/Place/GetClasses';
+            if (siteID) {
+                url += `?fSiteId=${siteID}`;
+            }
+
+            $.getJSON(url, function (datas) {
+                const docFrag = $(document.createDocumentFragment());
+                const ulElement = $('<ul style="list-style-image: linear-gradient(to left bottom, red, blue);">');
+
+                $.each(datas, function (index, item) {
+                    const liElement = $(`
+                        <li style="font-size: 20px">${item.fClassName}</li>
+                    `);
+                    ulElement.append(liElement);
+                })
+
+                docFrag.append(ulElement);
+                siteclass.html(docFrag);
             })
         }
 
-        loadForm();
+        loadClass(siteID);
 
         function loadPlacePeriod() {
             $('input[type="checkbox"]').each(function () {
@@ -408,7 +450,7 @@
                     }
                 })
 
-            fetch('@Url.Content("~/Place/Edit/")', {
+            fetch('@Url.Content("~/Place/sendEmail/")', {
                 method: 'POST',
                 body: formData2
             })

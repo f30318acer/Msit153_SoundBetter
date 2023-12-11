@@ -6,16 +6,16 @@
 @section Styles
 {
     <style>
-       /* .img {
-          width:200px ;height:300px;
-        }*/
-        #div01{
- 
-            height: 90%;
+       .imgmember {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 
 }
+<input type="hidden" id="loginId" value="@ViewBag.MemberId" />
+<!---->
 
 <section class="category-section spad">
     <div class="container-fluid">
@@ -29,6 +29,7 @@
                         <select id="selectStyle" class="form-select mr-2"></select>
                         <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
                         <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
+                        <button type="button" onclick="CheckLoginAndNavigate()" id="btnCreate" class="btn btn-info mr-2" style="background-color: #fc0254;">建立作品</button>
                     </div>
                 </div>
                 <a href="" class="active">Genres</a>
@@ -51,18 +52,82 @@
     </div>
     
 </section>
-<!-- Category section end --><section class="songs-section">
+<!-- Category section end --> 
+<section class="songs-section spad">
     <div class="  container" />
     <div id="divList" class="row">
-        <!--  new song -->
-        
+        <!--  new song -->       
     </div>
+    <div class="row container">
+        <div class=" text-center" id="pageButtons"><!--  分頁按鈕 -->  </div>
+    </div>
+
+    <!-- Modal1 -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">創立作品 <span></span></h5>
+                    @*      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>*@
+                    @*<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">取消</button>*@
+                </div>
+                <div class="modal-body">
+                    <form id="createForm">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="hidden" id="loginId" name="fMemberId" value="@ViewBag.MemberId" />
+                                    <div style="display: flex; justify-content: center; align-items: center; height: 230px;">
+                                        <img id="imgPreview" src="~/img/Works/1.jpg" style="height: 200px;" alt="">
+                                    </div>
+                                    <div style="display: flex; justify-content: center; align-items: center;">
+                                        <input type="file" id="imgFile" name="formFilePhoto" @*class="btn btn-secondary"*@ @*style="display: none;"*@>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fName">作品名稱</label>
+                                    <input type="text" class="form-control" id="fName" name="fWorkName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="FBudget">風格</label>
+                                    <select id="selectStyle2" class="form-select" name="fStyleId"></select>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="FBudget">作品描述</label>
+                                    <textarea class="form-control" id="fDescription" name="fDescription" style="height: 200px;"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="FBudget">上傳Demo</label>
+                                    <input type="file" id="demoFile" name="formFileDemo" @*style="display: none;"*@>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 關閉</button>
+                    <button type="button" class="btn btn-primary" id="buttonSend"><i class="bi bi-send-check-fill"></i> 送出 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </section>
 @section Scripts{
         <script>
 
             const selStyle = document.querySelector('#selectStyle');
+            const selStyle2 = document.querySelector('#selectStyle2');
             const pageButtonsContainer = $('#pageButtons');
             const onePage = 4;
 
@@ -74,10 +139,66 @@
                 const styleOptions = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
                 styleOptions.unshift(defaultOption);
                 selStyle.innerHTML = styleOptions.join("");
-            }
+                selStyle2.innerHTML = styleOptions.join("");
+        }
             loadStyle();
+        //建立按鈕功能
 
-            //分頁按鈕
+        const loginID = $('#loginId').val();
+        const btnCreate = document.getElementById('btnCreate');
+
+        function btnCreatFuntion() {
+            if (loginID != 0) {
+                btnCreate.setAttribute('data-bs-toggle', 'modal');
+                btnCreate.setAttribute('data-bs-target', '#addModal');
+            }
+            if (loginID == 0) {
+            }
+        }
+        btnCreatFuntion();
+        //圖片預覽
+        var arrayBuffer;
+
+        $("#imgFile").bind("change", function () {
+            var file = this.files[0];
+            var allowType = "image.*";
+            if (file.type.match(allowType)) {
+                //預覽
+                var reader = new FileReader();
+                reader.onload = function () {
+                    arrayBuffer = this.result;
+                    var blob = new Blob([arrayBuffer], {
+                        type: "image/jpeg"
+                    });
+                    var urlCreator = window.URL || window.webkitURL;
+                    var imageURL = urlCreator.createObjectURL(blob);
+                    $("#imgPreview").attr("src", imageURL);
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+            else {
+                alert("不支援的檔案類型");
+            }
+        });
+        //送出創建資料
+        $('#buttonSend').click(function () {
+            const formData = new FormData(document.querySelector('#createForm'));
+            fetch('@Url.Content("~/apiTWork/Create")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("創立成功");
+                        location.href = '@Url.Content("~/MusicShare/Details")';
+                    }
+                    else {
+                        alert("連線失敗");
+                    }
+                })
+        })
+
+        //分頁按鈕
             async function loadPage() {
                 const response = await fetch('@Url.Content("~/apiTWork/ListWithUserName")');
                 const data = await response.json();
@@ -97,7 +218,7 @@
                 return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
                     });
                 }
-
+            loadPage();
                 const dataCount = filteredData.length;
                 const pageCount = Math.ceil(dataCount / onePage);
 
@@ -152,7 +273,7 @@
                         <div class="col-12 mb-2"></div>
                         <div class="row playlist-item" style="margin: 0;">
                             <div class="col-2" style="margin:0px">
-                                                <img src="/img/Works/${item.fThumbnail}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
+                                                <img  src="/img/Works/${item.fThumbnail}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
                             </div>
                             <div class="col-10" style="margin:0px">
                                 <div class="row">
@@ -172,7 +293,7 @@
                                     </div>
                                     <div class="col-12">
                                         <audio controls style="width:100%">
-                                            <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                            <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
                                         </audio>
                                     </div>
                                 </div>
@@ -226,7 +347,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <audio controls style="width:100%">
-                                                    <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                                    <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
                                                 </audio>
                                             </div>
                                         </div>
@@ -278,5 +399,20 @@
                 loadPage();
                 //$('#txtKeyword').val('');
             });
+
+
+
+
+        async function CheckLoginAndNavigate() {
+            const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
+            const isLogin = await response.json();
+
+            if (isLogin) {
+
+            } else {
+                // 如果未登錄，導航到 Home/Login
+                window.location.href = "@Url.Action("Login", "Home")";
+            }
+        }
     </script>
 }

@@ -897,6 +897,7 @@
     <Folder Include="wwwroot\img\Article\ArticlePicture\" />
     <Folder Include="wwwroot\img\Works\" />
     <Folder Include="wwwroot\img\Place\" />
+    <Folder Include="wwwroot\WorkFile\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

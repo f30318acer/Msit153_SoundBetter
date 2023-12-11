@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
-using SendGrid.Helpers.Mail;
-using SendGrid;
+using SendGrid.Helpers.Mail;//
+using SendGrid;//
 using System;
 using prjMusicBetter.Models.infra;
+using prjMusicBetter.Models.ViewModels;
+using Microsoft.SqlServer.Server;
+using System.Threading.Tasks;//
 
 namespace Music_matchmaking_platform.Controllers
 {
@@ -134,18 +137,57 @@ namespace Music_matchmaking_platform.Controllers
 
 			return View(tSite);
 		}
-        public IActionResult GetMemberNameandEmail()
-        {
-            TMember member = _userInfoService.GetMemberInfo();
-            var name = member?.FName;
-            var email = member?.FEmail;
-            var result = new
-            {
-                Name = name,
-                Email = email
-            };
+        //public IActionResult GetMemberNameandEmail()
+        //{
+        //    TMember member = _userInfoService.GetMemberInfo();
+        //    var name = member?.FName;
+        //    var email = member?.FEmail;
+        //    var result = new
+        //    {
+        //        Name = name,
+        //        Email = email
+        //    };
 
-            return Json(result);
+        //    return Json(result);
+        //}
+        public IActionResult GetClasses(int? fSiteId)
+        {
+            var sss = from s in _context.TSites
+                      join c in _context.TClasses 
+                      on s.FSiteId equals c.FSiteId 
+                      where s.FSiteId == fSiteId
+                      select c;
+
+            return Json(sss);
+        }
+        [HttpPost]
+        public IActionResult sendEmail(EmailVM? formData2)
+        {
+            try
+            {
+                // 發送 Email
+                SendReservationConfirmationEmail(formData2.Email, formData2.Name, formData2.Subject, formData2.Message);
+
+                return Ok(); // 或其他適合的回應
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); // 適當地處理錯誤
+            }
+        }
+        public void SendReservationConfirmationEmail(string Email, string Name, string Subject, string Message)
+        {
+            string apiKey = ""; // 替換為你的 SendGrid API Key
+
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("zackyandjacky@gmail.com", "SoundBetter"); // 替換為實際的寄件者 Email 和名稱
+            var to = new EmailAddress(Email, Name);
+            var plainTextContent = $"親愛的 {Name}，\n\n{Subject}。以下是預約詳情：\n\n預約會員：{Subject}\n訊息：{Message}";
+            var htmlContent = $"<p>親愛的 {Name}，</p><p>{Subject}。以下是預約詳情：</p><p><strong>預約會員：</strong>{Subject}</p><p><strong>訊息：</strong>{Message}</p>";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, Subject, plainTextContent, htmlContent);
+
+             client.SendEmailAsync(msg);
         }
     }
 }

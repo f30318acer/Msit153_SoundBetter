@@ -53,6 +53,19 @@ namespace prjMusicBetter.Models.ViewModels
         /// <para>9999 : 失敗</para>
         /// </summary>
         public int ProductStatus { get; set; }
+
+        /// <summary>
+        /// 場地名稱
+        /// </summary>
+        public string SiteName { get; set; }
+        /// <summary>
+        /// 場地ID
+        /// </summary>
+        public int SiteId { get; set; }
+        /// <summary>
+        /// 場地價格
+        /// </summary>
+        public decimal? SitePrice { get; set; }
     }
 }
 

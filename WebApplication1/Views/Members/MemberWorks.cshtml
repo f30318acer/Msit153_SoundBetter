@@ -1,39 +1,61 @@
 ﻿@model prjMusicBetter.Models.ViewModels.MemberWorksVM
 @{
     ViewData["Title"] = "MemberWorks";
+
 }
 
+<script src="https://cdn.tailwindcss.com"></script>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <div id="searchResults"></div>
+            <div class="flex items-center my-4">
+                <form id="searchForm" method="get" action="@Url.Action("MemberWorks", "Members")" class="flex-grow flex items-center mr-2">
+                    <input type="text" name="keyword" id="search" placeholder="Search..." class="form-input border border-gray-300 rounded-md p-2 mr-2">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
+                </form>
+                <a href="@Url.Action("CreateMemberCoupon", "Members")" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md">新增</a>
+            </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>作品名稱</th>
-            <th>描述</th>
-            <th>更新時間</th>
-            <th>作品</th>
-            <th>操作</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var work in Model.Works)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => work.FWorkName)</td>
-                <td>@Html.DisplayFor(modelItem => work.FDescription)</td>
-                <td>@Html.DisplayFor(modelItem => work.FUpdateTime)</td>
-                <td>
-                    <audio controls>
-                        <source src="@Url.Content("~/works/" + work.FFilePath)" type="audio/mpeg">
-                        您的瀏覽器不支援 audio 元素。
-                    
-                    @Html.DisplayFor(modelItem => work.FFilePath)</td>
-                <td>
-                    <!-- 這裡可以放置編輯或刪除的操作鏈接 -->
-                    @Html.ActionLink("編輯", "EditWork", new { id = work.FWorkId }) |
-                    @Html.ActionLink("刪除", "MemberWorksDelete", new { id = work.FWorkId }, new { onclick = "return confirm('確定要刪除這個作品嗎？');" })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr class="bg-yellow-300">
+                        <th class="text-center py-2">作品名稱</th>
+                        <th class="text-center py-2">描述</th>
+                        <th class="text-center py-2">更新時間</th>
+                        <th class="text-center py-2">作品</th>
+                        <th class="text-center py-2">詳細資料</th> <!-- New column for details button -->
+                     @*    <th class="text-center py-2">操作</th> *@
+                    </tr>
+                </thead>
+                <tbody id="memberTable">
+                    @foreach (var work in Model.Works)
+                    {
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => work.FWorkName)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => work.FDescription)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => work.FUpdateTime)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                <audio controls>
+                                    <source src="@Url.Content("~/works/" + work.FFilePath)" type="audio/mpeg">
+                                    您的瀏覽器不支援 audio 元素。
+
+                                    @Html.DisplayFor(modelItem => work.FFilePath)
+                            </td>
+                            <td class="text-center border-b border-gray-200">
+                                <a href="@Url.Action("Details", "MemberPage", new { id = work.FMemberId })" class="text-blue-500 hover:text-blue-600">Detail</a>
+                            </td>
+                          @*   <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                <!-- 這裡可以放置編輯或刪除的操作鏈接 -->
+                                @Html.ActionLink("編輯", "EditWork", new { id = work.FWorkId }) |
+                                @Html.ActionLink("刪除", "MemberWorksDelete", new { id = work.FWorkId }, new { onclick = "return confirm('確定要刪除這個作品嗎？');" })
+                            </td> *@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
 

@@ -17,11 +17,24 @@
         <!-- Search Section -->
         <div class="flex mb-4 items-center">
             <div class="flex border border-gray-300 rounded overflow-hidden">
-                <label for="search" class="block text-gray-700 p-2 bg-white">搜尋關鍵字:</label>
-                <input type="text" id="search" placeholder="請輸入關鍵字" class="p-2" />
-                <button type="button" id="searchButton" class="bg-blue-500 hover:bg-blue-700 text-white p-2">搜尋</button>
+                <form id="searchForm" method="get" action="@Url.Action("blackList", "Members")" class="flex-grow flex items-center mr-2">
+                    <input type="text" name="keyword" id="search" placeholder="Search..." class="form-input border border-gray-300 rounded-md p-2 mr-2">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
+                </form>
             </div>
         </div>
+        <!-- 分頁控制 -->
+        <div class="pagination">
+            <a href="#" onclick="loadPage(@Model.CurrentPage - 1)">上一頁</a>
+            <span>第 @Model.CurrentPage 頁，共 @Model.TotalPages 頁</span>
+            <a href="#" onclick="loadPage(@Model.CurrentPage + 1)">下一頁</a>
+        </div>
+
+        <script>
+            function loadPage(page) {
+                $('#divPartial').load('@Url.Action("blackList", "Members")', { page: page });
+            }
+        </script>
 
         <!-- Table Section -->
         <div class="bg-white shadow rounded-md overflow-hidden">
@@ -34,6 +47,7 @@
                         <th class="text-center py-2">性別</th>
                         <th class="text-center py-2">生日</th>
                         <th class="text-center py-2">照片</th>
+                        <th class="text-center py-2">Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,10 +79,22 @@
                                     @:No Image
                                 }
                             </td>
+                            <td class="text-center border-b border-gray-200">
+                                <a href="@Url.Action("Details", "MemberPage", new { id = item.FMemberId })" class="text-blue-500 hover:text-blue-600">Detail</a>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        //搜尋功能
+        $('#searchForm').on('submit', function (event) {
+            event.preventDefault(); // 阻止表單的默認提交行為
+            var searchTerm = $('#search').val(); // 獲取搜索條件
+            $('#divPartial').load(`@Url.Content("~/Members/blackList")?search=${searchTerm}`); // 使用 AJAX 加載搜索結果
+        });
+    </script>
 </body>

@@ -136,6 +136,7 @@
 <input type="hidden" id="budget" value="@Html.DisplayFor(model => model.FBudget)" />
 <input type="hidden" id="pID" value="@Html.DisplayFor(model => model.FProjectId)" />
 <input type="hidden" id="loginId" value="@ViewBag.MemberId" />
+<input type="hidden" id="favYes" value="@ViewBag.Fav" />
 
 <section id="title" class="player-section" style="background-image: url('/img/playlist/img4.jpg');">
 
@@ -157,11 +158,12 @@
                 </div>
                 <div class="col-2">
 
-                    <button id="btnFev" class="btn btn-primary" >追蹤專案</button>
-                    <div class="mb-2"></div>
-                    <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>
-                    <div class="mb-2"></div>
+                    <button id="btnFev" class="btn btn-primary" style="display:none;" >追蹤專案</button>
+                    <button id="btnDisFev" class="btn btn-secondary" style="display:none;">取消追蹤</button>
                     <button id="btnEdit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal" style="display:none;">修改專案</button>
+                    <div class="mb-2"></div>
+                    <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>  
+                    <button id="btnDelete" class="btn btn-danger" style="display:none;">刪除專案</button>
                 </div>
             </div>
         </div>
@@ -307,6 +309,11 @@
         </div>
     </div>
 </div>
+<form id="favForm" tyle="display: none;">
+    <!-- form fields go here -->
+    <input type="hidden" name="fMemberId" value="@ViewBag.MemberId">
+    <input type="hidden" name="fProjectId" value="@Html.DisplayFor(model => model.FProjectId)">
+</form>
 <!-- Modal2 -->
 <div class="modal fade" id="addModa2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -320,15 +327,16 @@
                 @*<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">取消</button>*@
             </div>
             <div class="modal-body">
-                <form id="editForm">
+                <form id="appliForm">
                     <input type="hidden" name="id" id="fProjectId" value="@Html.DisplayFor(model => model.FProjectId)">
                     <div class="row">                      
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="FBudget">自我介紹 : </label>                                
-                                <textarea class="form-control" id="fDescription" name="fDescription" style="height: 200px;">製作人您好，我對這個職位有強烈興趣，希望能得到合作的機會，謝謝。</textarea>
+                                <label for="FBudget">自我介紹 : </label>    
+                                <input type="hidden" name="fMemberId" value="@ViewBag.MemberId" />
+                                <textarea id="txtIntro" class="form-control" name="fSelfIntroduction" style="height: 200px;">製作人您好，我對這個職位有強烈興趣，希望能得到合作的機會，謝謝。</textarea>
                                 <div class="mb-2"></div>
-                                <button class="btn btn-secondary">套用會員介紹</button>
+                                <button type="button" id="btnDefault" class="btn btn-secondary">套用會員介紹</button>
                             </div>                            
                         </div>
                     </div>
@@ -338,7 +346,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 取消</button>
-                <button type="button" class="btn btn-primary" id="buttonSend"><i class="bi bi-send-check-fill"></i> 應徵 </button>
+                <button type="button" class="btn btn-primary" id="btnAppliSend"><i class="bi bi-send-check-fill"></i> 應徵 </button>
             </div>
         </div>
     </div>
@@ -352,9 +360,12 @@
 		const memberId = $('#memberId').val();
         const projectID = $('#pID').val();
         const loginID = $('#loginId').val();
+        const favYes = $('#favYes').val();
         const btnEdit = document.getElementById('btnEdit');
         const btnAppli = document.getElementById('btnAppli');
+        const btnDelete = document.getElementById('btnDelete');
         const btnFev = document.getElementById('btnFev');
+        const btnDisFev = document.getElementById('btnDisFev');
         
         //取得風格資訊
 		$.getJSON(`/apiTStyle/QueryById/${styleId}`, function (datas) {
@@ -370,8 +381,16 @@
             }
             if (loginID == memberId) {
                 btnEdit.style.display = 'block';
+                btnDelete.style.display = 'block';
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
+                btnDisFev.style.display = 'none';
+            }
+            if (loginID != memberId && favYes == 0){
+                btnFev.style.display = 'block';
+            }
+            if (loginID != memberId && favYes == 1){
+                btnDisFev.style.display = 'block';
             }
         }
         DisplayButton();
@@ -448,7 +467,7 @@
             }
         });
 
-        //修改資料
+        //送出修改資料
         $('#buttonSend').click(function () {
             const formData = new FormData(document.querySelector('#editForm'));
             fetch('@Url.Content("~/apiTProjects/Edit")' + '/' + projectID, {
@@ -465,6 +484,29 @@
                 }
             })
         })
+        //送出應徵資料
+        $('#btnAppliSend').click(function () {
+            const formData = new FormData(document.querySelector('#appliForm'));
+            fetch('@Url.Content("~/apiTProjects/AppliProject")' + '/' + projectID, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("應徵成功");
+                    location.href = '@Url.Content("~/Project/Details/")' + projectID;
+                }
+                else{
+                    alert("連線失敗");
+                }
+            })
+        })
+        //套用預設自我介紹
+        $('#btnDefault').click(function () {
+            $.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
+                $('#txtIntro').val(datas.fIntroduction);
+            })
+        })
         //判斷是否登入
         async function CheckLoginAndNavigate(btnID) {
             const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
@@ -473,7 +515,40 @@
             if (isLogin) {
                 if(btnID == 2)
                 {
-                    console.log('hahahahahahahaha');
+                    //追蹤專案
+                    const formData = new FormData(document.querySelector('#favForm'));
+                    fetch('@Url.Content("~/apiTProjects/favProject")' + '/' + projectID, {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                btnFev.style.display = 'none';
+                                btnDisFev.style.display = 'block';
+                                alert("追蹤成功");
+                            }
+                            else {
+                                alert("連線失敗");
+                            }
+                        })
+                }
+                if (btnID == 3) {
+                    //取消追蹤
+                    const formData = new FormData(document.querySelector('#favForm'));
+                    fetch('@Url.Content("~/apiTProjects/DisFavProject")', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                btnFev.style.display = 'block';
+                                btnDisFev.style.display = 'none';
+                                alert("已取消追蹤");
+                            }
+                            else {
+                                alert("連線失敗");
+                            }
+                        })
                 }
             } else {
                 // 如果未登錄，導航到 Home/Login
@@ -487,6 +562,9 @@
 
         btnFev.addEventListener('click', function () {
             CheckLoginAndNavigate(2);
+        });
+        btnDisFev.addEventListener('click', function () {
+            CheckLoginAndNavigate(3);
         });
 	</script>
 }
