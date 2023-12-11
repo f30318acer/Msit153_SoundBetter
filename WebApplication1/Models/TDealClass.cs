@@ -26,4 +26,6 @@ public partial class TDealClass
     public virtual TCoupon FCoupon { get; set; }
 
     public virtual TMember FMember { get; set; }
+
+    public virtual ICollection<TDealClassDetail> TDealClassDetails { get; set; } = new List<TDealClassDetail>();
 }

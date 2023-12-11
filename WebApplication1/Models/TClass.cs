@@ -43,5 +43,7 @@ public partial class TClass
 
     public virtual ICollection<TClassFav> TClassFavs { get; set; } = new List<TClassFav>();
 
+    public virtual ICollection<TDealClassDetail> TDealClassDetails { get; set; } = new List<TDealClassDetail>();
+
     public virtual ICollection<TDealClass> TDealClasses { get; set; } = new List<TDealClass>();
 }

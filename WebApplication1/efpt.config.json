@@ -28,6 +28,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tArticleClick]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tArticleFav]",
          "ObjectType": 0
       },
@@ -61,6 +65,10 @@
       },
       {
          "Name": "[dbo].[tDealClass]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tDealClassDetail]",
          "ObjectType": 0
       },
       {
@@ -161,6 +169,10 @@
       },
       {
          "Name": "[dbo].[tWork]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tWorkClick]",
          "ObjectType": 0
       },
       {
