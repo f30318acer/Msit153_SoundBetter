@@ -1,7 +1,7 @@
 ﻿@model prjMusicBetter.Models.TComment
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "新增留言";
 }
 
 <div class="col-md-4">
@@ -9,7 +9,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         
         <div class="form-group">
-            <label asp-for="FCommentContent" class="control-label"></label>
+            <label asp-for="FCommentContent" class="control-label">新增留言</label>
             <input asp-for="FCommentContent" class="form-control" />
             <span asp-validation-for="FCommentContent" class="text-danger"></span>
         </div>

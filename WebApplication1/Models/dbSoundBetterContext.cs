@@ -327,24 +327,24 @@ public partial class dbSoundBetterContext : DbContext
 
         modelBuilder.Entity<TComment>(entity =>
         {
-            entity.HasKey(e => e.FCommentId);
+            entity.HasKey(e => e.FCommentID);
 
             entity.ToTable("tComment");
 
-            entity.Property(e => e.FCommentId).HasColumnName("fCommentID");
-            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+            entity.Property(e => e.FCommentID).HasColumnName("fCommentID");
+            entity.Property(e => e.FArticleID).HasColumnName("fArticleID");
             entity.Property(e => e.FCommentContent).HasColumnName("fCommentContent");
             entity.Property(e => e.FCommentTime)
                 .HasColumnType("datetime")
                 .HasColumnName("fCommentTime");
-            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FMemberID).HasColumnName("fMemberID");
 
             entity.HasOne(d => d.FArticle).WithMany(p => p.TComments)
-                .HasForeignKey(d => d.FArticleId)
+                .HasForeignKey(d => d.FArticleID)
                 .HasConstraintName("FK_tComment_tArticle");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TComments)
-                .HasForeignKey(d => d.FMemberId)
+                .HasForeignKey(d => d.FMemberID)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tComment_tMember");
         });
