@@ -258,15 +258,14 @@
                                     return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
                         });
                     }
-                    console.log(filteredDatas);
-
                     dataCount = filteredDatas.length;
 
                     //獲得限定頁面資料
                     const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
-
+                console.log(limitdatas);
                     const docFrag = $(document.createDocumentFragment())
                     $.each(limitdatas, function (index, item) {
+                    console.log(item);
                         const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                         const card = $(   `
                     <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
@@ -292,9 +291,11 @@
                                     </div>
                                     </div>
                                     <div class="col-12">
-                                        <audio controls style="width:100%">
-                                            <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
-                                        </audio>
+                                                                 <audio controls id="${item.fWorkId}" style="width: 100%" value="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)">
+                    <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
+                </audio>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -321,6 +322,7 @@
 
                     const docFrag = $(document.createDocumentFragment())
                     $.each(limitdatas, function (index, item) {
+                    console.log(item.fWorkId);
                     const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                                const card = $(`
                             <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
@@ -346,9 +348,14 @@
                                             </div>
                                             </div>
                                             <div class="col-12">
-                                                <audio controls style="width:100%">
-                                                    <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
-                                                </audio>
+                                                            <audio controls id="${item.fWorkId}" style="width: 100%" value="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)">
+            <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
+        </audio>
+
+
+
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -374,11 +381,10 @@
                             `
                             <div class="col-md-4">
                                 <div class="category-item">
-                                        
                                             <img src="/img/Member/${item.fPhotoPath}" alt=""  style="width="200" height="200"">
-                                    
                                     <div class="ci-text">
                                         <h4>${item.fUsername}</h4>
+                                                 <a class="btn btn-secondary" href="/MemberPage/Details/${item.fMemberId}">個人資訊</a>
                                     </div>                                    
                                 </div>
                             </div>
@@ -414,5 +420,42 @@
                 window.location.href = "@Url.Action("Login", "Home")";
             }
         }
+
+
+
+        function PlusOne(workId) {
+            // 使用 AJAX 向 apiTWorkController 的 PlusOne 方法發送請求
+            $.ajax({
+                url: `/apiTWork/PlusOne/?id=${workId}`,  // 請根據你的實際路由進行修改
+                type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
+                success: function (response) {
+                    console.log('PlusOne successful');
+                },
+                error: function (error) {
+                    console.error('Error calling PlusOne:', error);
+                }
+            });
+        }
+        function handlePlayEnded(audioElement) {
+    // 在這裡執行你想要的操作
+            console.log(audioElement);
+                alert('播音结束');
+            const idd = audioElement.value;
+            $.ajax({
+                url: `/apiTWork/PlusOne/?id=${idd}`,  // 請根據你的實際路由進行修改
+                type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
+                success: function (response) {
+                    console.log('PlusOne successful');
+                },
+                error: function (error) {
+                    console.error('Error calling PlusOne:', error);
+                }
+            });
+}
+
+
+
+
+
     </script>
 }
