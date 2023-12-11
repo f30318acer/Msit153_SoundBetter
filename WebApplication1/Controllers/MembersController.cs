@@ -130,6 +130,9 @@ namespace prjMusicBetter.Controllers
             ViewBag.MemberId = member.FMemberId;
             return View();
         }
+
+
+
         public IActionResult Create()
         {
             ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
@@ -203,7 +206,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-      
+
 
         //個人會員黑名單
         public async Task<IActionResult> blackList(string search)
@@ -235,7 +238,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-   
+
         public async Task<IActionResult> MemberCoupon(string keyword)
         {
             TMember member = _userInfoService.GetMemberInfo();
@@ -248,14 +251,14 @@ namespace prjMusicBetter.Controllers
                 .Select(x => x.FCouponId)
                 .ToListAsync();
 
-            var query =_context.TCoupons.AsQueryable();
+            var query = _context.TCoupons.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(keyword))
             {
                 query = query.Where(c => c.FCouponContent.Contains(keyword));
             }
 
-            var memberCoupons = await query.Where(c=>membercouponIds.Contains(c.FCouponId))
+            var memberCoupons = await query.Where(c => membercouponIds.Contains(c.FCouponId))
                 .ToListAsync();
 
             var viewModel = new MemberCouponVM
@@ -265,8 +268,8 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-  
-   
+
+
         public async Task<IActionResult> MemberWorks()
         {
             TMember member = _userInfoService.GetMemberInfo();
@@ -284,7 +287,24 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
-      
+        public async Task<IActionResult> MemberProject()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Members", "Index");
+            }
+            var project = await _context.TProjects.Where(p => p.FMemberId == member.FMemberId)
+                .ToListAsync();
+            var viewModel = new MemberProjectVM
+            {
+                Member = member,
+                Project = project
+            };
+            return PartialView(viewModel);
+        }
+
+
     }
 }
 

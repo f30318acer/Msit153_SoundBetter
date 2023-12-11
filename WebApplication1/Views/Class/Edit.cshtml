@@ -1,5 +1,4 @@
 ﻿@model prjMusicBetter.Models.TClass
-@using prjMusicBetter.Models
 @{
     ViewData["Title"] = "Edit";
 }
@@ -90,6 +89,7 @@
                         <label asp-for="FThumbnailPath" class="control-label">圖片:</label>
                         @*<input asp-for="FThumbnailPath" type="file" class="form-control" />*@
                         <input type="file" id="formFile" name="formFile" accept="image/*" />
+                        <img id="imgPreview" src="~/img/classimg/class_bg.jpg" style="border-radius:10px; max-width: 400px; max-height: 400px;">
                         <span asp-validation-for="FThumbnailPath" class="text-danger"></span>
                     </div>
                 <div class="form-group col-md-12">
