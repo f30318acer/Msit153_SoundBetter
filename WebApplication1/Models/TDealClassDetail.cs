@@ -15,6 +15,10 @@ public partial class TDealClassDetail
 
     public int? FClassId { get; set; }
 
+    public DateTime? FStartDate { get; set; }
+
+    public DateTime? FEndDate { get; set; }
+
     public virtual TClass FClass { get; set; }
 
     public virtual TDealClass FDealClass { get; set; }
