@@ -9,7 +9,7 @@ public partial class TComment
 {
     public int FCommentId { get; set; }
 
-    public int FMemberId { get; set; }
+    public int? FMemberId { get; set; }
 
     public string FCommentContent { get; set; }
 
