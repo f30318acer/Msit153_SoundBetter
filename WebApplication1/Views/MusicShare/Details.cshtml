@@ -269,32 +269,33 @@
                         const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                         const card = $(`
                             <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
-                                <div class="col-12 mb-2"></div>
-                                <div class="row playlist-item" style="margin: 0;">
-                                    <div class="col-2" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
-                                    <div class="col-10" style="margin:0px">
-                                        <div class="row">
-                                            <div class="col-12 mb-4"></div>
-                                            <div class="col-12 text-center">
-                                                <div class="row">
-                                                    <div class="col-10">
-                                                        <h5>${item.fWorkName}</h5>
+                                    <div class="col-12 mb-2"></div>
+                                    <div class="row playlist-item" style="margin: 0;">
+                                        <div class="col-2" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
+                                        <div class="col-10" style="margin:0px">
+                                            <div class="row">
+                                                <div class="col-12 mb-4"></div>
+                                                <div class="col-12 text-center">
+                                                    <div class="row">
+                                                        <div class="col-10">
+                                                            <h5>${item.fWorkName}</h5>
+                                                        </div>
+                                                        <div class="col-2"></div>
+                                                        <div class="row"></div>
+                                                        <div class="col-12 mb-2"></div>
+                                                        <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
                                                     </div>
-                                                    <div class="col-2"></div>
-                                                    <div class="row"></div>
-                                                    <div class="col-12 mb-2"></div>
-                                                    <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
                                                 </div>
+                                                <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;
+                                                <p style="margin:0px">點閱數：${item.fClick}</p>
                                             </div>
-                                                    <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;<p style="margin:0px">點閱數：${item.fClick}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12 mb-2"></div>
+                                <div class="col-12 mb-2"></div>
                         `);
                         docFrag.append(card);
                     })
@@ -326,7 +327,6 @@
                                             <div class="col-12 mb-4"></div>
                                             <div class="col-12 text-center">
                                                 <div class="row">
-                                                    //
                                                     <div class="col-10">
                                                         <h5>${item.fWorkName}</h5>
                                                     </div>
@@ -336,7 +336,8 @@
                                                     <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
                                                 </div>
                                             </div>
-                                                    <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;<p style="margin:0px">點閱數：${item.fClick}</p>
+                                            <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;
+                                            <p style="margin:0px">點閱數：${item.fClick}</p>
                                         </div>
                                     </div>
                                     <div class="col-12">
