@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using prjMusicBetter.Models;
@@ -174,10 +175,10 @@ namespace prjMusicBetter.Controllers
         }
 
         //個人會員好友名單
-        public async Task<IActionResult> Friends(string search)
+        public async Task<IActionResult> Friends(string search, int page = 1, int pageSize = 10)
         {
 
-            ViewData["CurrentFilter"] = search;
+
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
@@ -185,57 +186,107 @@ namespace prjMusicBetter.Controllers
             }
 
             // 假設狀態ID為1代表好友，為2代表黑名單
-            var friendIds = await _context.TMemberRelations.Where(x => x.FMemberId == member.FMemberId && x.FMemberRelationStatusId == 1)
-                .Select(x => x.FRelationMemberId).ToListAsync();
+            var friendIdsQuery = _context.TMemberRelations
+           .Where(x => x.FMemberId == member.FMemberId && x.FMemberRelationStatusId == 1)
+           .Select(x => x.FRelationMemberId);
 
-            var friends = await _context.TMembers.Where(m => friendIds.Contains(m.FMemberId)).ToListAsync();
-
+            var friendsQuery = _context.TMembers.Where(m => friendIdsQuery.Contains(m.FMemberId));
 
             if (!String.IsNullOrEmpty(search))
             {
-                friends = friends.Where(s => s.FName.Contains(search)
-                                  || s.FEmail.Contains(search)
-                                  || s.FPhone.Contains(search)).ToList();
+                friendsQuery = friendsQuery.Where(s => s.FName.Contains(search) || s.FEmail.Contains(search) || s.FPhone.Contains(search));
             }
+
+            // 先計算總數量
+            var totalItems = await friendsQuery.CountAsync();
+
+            // 應用分頁
+            var pagedFriends = await friendsQuery.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
             var viewModel = new FriendsViewModel
             {
                 Member = member,
-                Friends = friends,
-
+                Friends = pagedFriends,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                PageSize = pageSize
             };
+
+
+            ViewData["CurrentFilter"] = search;
             return PartialView(viewModel);
+
+
+
+        }
+
+        private FriendsViewModel GetPagedFriends(int page, int pageSize)
+        {
+            // 假設 _context 是您的數據庫上下文
+            var query = _context.TMembers.AsQueryable();
+
+            // 計算總數量
+            int totalItems = query.Count();
+
+            // 應用分頁
+            var friends = query
+                .OrderBy(f => f.FName) // 或者根據您的需求選擇合適的排序方式
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var viewModel = new FriendsViewModel
+            {
+                Friends = friends,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize)
+            };
+
+            return viewModel;
         }
 
 
+
         //個人會員黑名單
-        public async Task<IActionResult> blackList(string search)
+        public async Task<IActionResult> blackList(string search, int page = 1, int pageSize = 10)
         {
-            ViewData["CurrentFilter"] = search;
+          
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
                 return RedirectToAction("Login", "Home");
             }
 
-            var blackListIds = await _context.TMemberRelations.Where(x => x.FMemberId == member.FMemberId && x.FMemberRelationStatusId == 2)
-             .Select(x => x.FRelationMemberId).ToListAsync();
+            var blackListIds = _context.TMemberRelations
+            .Where(x => x.FMemberId == member.FMemberId && x.FMemberRelationStatusId == 2)
+            .Select(x => x.FRelationMemberId);
 
-            var blackList = await _context.TMembers.Where(m => blackListIds.Contains(m.FMemberId)).ToListAsync();
+            var blackListQuery =  _context.TMembers.Where(m => blackListIds.Contains(m.FMemberId));
 
 
             if (!String.IsNullOrEmpty(search))
             {
-                blackList = blackList.Where(s => s.FName.Contains(search)
+                blackListQuery = blackListQuery.Where(s => s.FName.Contains(search)
                                   || s.FEmail.Contains(search)
-                                  || s.FPhone.Contains(search)).ToList();
+                                  || s.FPhone.Contains(search));
             }
+            //先計算總數量
+            var totalItems = await blackListQuery.CountAsync();
+
+            //應用分頁
+            var pagedBlackList = await blackListQuery.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
+
+           
 
             var viewModel = new FriendsViewModel
             {
                 Member = member,
-                BlackList = blackList
+                BlackList = pagedBlackList,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                PageSize = pageSize,
             };
+            ViewData["CurrentFilter"] = search;
             return PartialView(viewModel);
         }
 
@@ -270,7 +321,7 @@ namespace prjMusicBetter.Controllers
         }
 
 
-        public async Task<IActionResult> MemberWorks()
+        public async Task<IActionResult> MemberWorks(string search, int page = 1, int pageSize = 10)
         {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
