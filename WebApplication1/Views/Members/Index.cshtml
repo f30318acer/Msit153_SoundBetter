@@ -10,101 +10,104 @@
     }
 }
 
-<div class="container row p-2 mx-auto border border-dark rounded-3 m-3">
-    <div class="col-3  border rounded-3 p-2 color-FCFCFC">
-        <div class="p-3">
-            <div class="circle-size-150 mx-auto">
-                <form name="formUploadPhoto">
-                    @{
-                        if (Model.FPhotoPath != null)
-                        {
-                            <div>
-                                <div class="my-4 mx-auto btnUpload cursor-pointer" style="width:150px; height:150px">
-                                    <img src="@Url.Content("~/img/Member/")@Model.FPhotoPath" data-filename="@Model.FPhotoPath" id="imgMemberPhoto" class="circle-size-150 cover rounded-circle" />
+<section class="vh-100">
+    <div class="container row p-2 mx-auto border border-dark rounded-3 m-3">
+        <div class="col-3  border rounded-3 p-2 color-FCFCFC">
+            <div class="p-3">
+                <div class="circle-size-150 mx-auto">
+                    <form name="formUploadPhoto">
+                        @{
+                            if (Model.FPhotoPath != null)
+                            {
+                                <div>
+                                    <div class="my-4 mx-auto btnUpload cursor-pointer" style="width:150px; height:150px">
+                                        <img src="@Url.Content("~/img/Member/")@Model.FPhotoPath" data-filename="@Model.FPhotoPath" id="imgMemberPhoto" class="circle-size-150 cover rounded-circle" />
+                                    </div>
+                                    <div class="width-400 mx-auto">
+                                        <input type="file" class="form-control" style="visibility:hidden" id="inputUpload" name="Photo">
+                                    </div>
                                 </div>
-                                <div class="width-400 mx-auto">
-                                    <input type="file" class="form-control" style="visibility:hidden" id="inputUpload" name="Photo">
+                            }
+                            else
+                            {
+                                <div>
+                                    <div class="my-4 mx-auto btnUpload cursor-pointer" style="width:150px; height:150px">
+                                        <img src="@Url.Content("~/img/Member/default.jpg")" id="imgMemberPhoto" class="circle-size-150 cover rounded-circle" />
+                                    </div>
+                                    <div class="width-400 mx-auto">
+                                        <input type="file" class="form-control" style="visibility:hidden" id="inputUpload" name="Photo" />
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
-                        else
-                        {
-                            <div>
-                                <div class="my-4 mx-auto btnUpload cursor-pointer" style="width:150px; height:150px">
-                                    <img src="@Url.Content("~/img/Member/default.jpg")" id="imgMemberPhoto" class="circle-size-150 cover rounded-circle" />
-                                </div>
-                                <div class="width-400 mx-auto">
-                                    <input type="file" class="form-control" style="visibility:hidden" id="inputUpload" name="Photo" />
-                                </div>
-                            </div>
-                        }
-                    }
-                </form>
+                    </form>
+                </div>
+                <div class="mt-3">
+                    <input type="hidden" name="fMemberID" value="@Model.FMemberID" />
+                    <input type="hidden" name="" value="@display" id="display" class="form-control">
+                </div>
             </div>
-            <div class="mt-3">
-                <input type="hidden" name="fMemberID" value="@Model.FMemberID" />
-                <input type="hidden" name="" value="@display" id="display" class="form-control">
+            <div class="m-3 justify-content-center">
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="info">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("~/img/MyMemberphoto/user.png")" alt="">
+                        個人資料
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myclass">
+                        <a href="@Url.Content("~/Members/Memberclass")">
+                            <img class="d-flex w-25-h-25" src="@Url.Content("~/img/MyMemberphoto/myorder.png")" alt="">
+                        </a>
+                        課程查詢
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myWorks">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mymusic.JPG")" alt="">
+                        我的作品
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myProject">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/myproject.JPG")" alt="">
+                        我的專案
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myMemberCoupon">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
+                        我的優惠券
+                        @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myfriends">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
+                        追隨
+                        @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myBlackList">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
+                        黑名單
+                        @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="password">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/myforgot.jpg")" alt="">
+                        修改密碼
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="m-3 justify-content-center">
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="info">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("~/img/MyMemberphoto/user.png")" alt="">
-                    個人資料
-                </div>
-            </div>
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="myclass">
-                    <a href="@Url.Content("~/Members/Memberclass")">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("~/img/MyMemberphoto/myorder.png")" alt="">                 
-                    </a>
-                    課程查詢
-                </div>
-            </div>
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="myWorks">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mymusic.JPG")" alt="">
-                    我的作品
-                </div>
-            </div>
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="myKeep">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/myproject.JPG")" alt="">
-                    我的專案
-                </div>
-            </div>
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="myMemberCoupon">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
-                    我的優惠券
-                    @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
-                </div>
-            </div>
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="myfriends">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
-                    我的好友關係
-                    @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
-                </div>
-            </div>
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="myBlackList">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
-                    我的黑名單
-                    @* <a href="@Url.Content("~/Members/CoolPon")" class="btn btn-dark"></a> *@
-                </div>
-            </div>
-            <div class=" border-bottom align-items-center d-flex">
-                <div class="btnOptions d-flex p-2 gap-3" id="password">
-                    <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/myforgot.jpg")" alt="">
-                    修改密碼
-                </div>
-            </div>                   
+        <div class="col-9 p-2" id="divPartial">
         </div>
     </div>
-    <div class="col-9 p-2" id="divPartial">
-    </div>
-</div>
+</section>
+
 @section Scripts
     {
     <script>
@@ -187,6 +190,12 @@
         $('#myWorks').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/MemberWorks")')
         })
+        //將會員資料(專案)回傳至這裡
+
+        $('#myProject').click(function () {
+            $('#divPartial').load('@Url.Content("~/Members/MemberProject")')
+        })
+
 
         //忘記密碼
         $('#password').click(function () {
