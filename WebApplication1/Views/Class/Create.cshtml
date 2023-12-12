@@ -81,6 +81,9 @@
                     </div>
                 </div>
             </form>
+            <div class="col-md-12 pad">
+                <button id="btnFillDefaults" type="button" class="btn btn-secondary">填入預設資料</button>
+            </div>
         </div>
     </div>
 </section>
@@ -252,6 +255,54 @@
                 alert("不支援的檔案類型");
             }
         });
+
+
+
+        //Demo用按鈕///////////////////////////////////////////////////////////////////////
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // ... 其他代码
+
+            // 找到填充默认数据的按钮
+            const btnFillDefaults = document.getElementById('btnFillDefaults');
+
+            // 添加点击事件处理程序
+            btnFillDefaults.addEventListener('click', function () {
+                // 填充默认数据
+                document.getElementById('fClassName').value = "古典/流行小提琴";
+                document.getElementById('fPrice').value = 1000;
+                // ... 填充其他字段的默认值
+
+                // 更新 CKEditor 内容
+                if (editorInstance) {
+                    const defaultDescription = `
+                        初階/高階 古典或流行音樂
+                        一對一教學
+                        可依您想學的風格客製化專屬課程.曲目
+
+                        課程說明
+                        1. 為您打好基礎
+                        2. 想學會耳熟能響的古典音樂或流行歌曲都能教會你！
+                        3. 若想參加檢定或比賽也沒有問題
+                        4. 會依程度選好樂譜給學生
+                    `;
+                    editorInstance.setData(defaultDescription);
+                }
+
+                // 设置其他字段的默认值
+                document.getElementById('fStartdate').value = "2023-10-17T11:10";
+                document.getElementById('fEnddate').value = "2024-11-01T16:30";
+                document.getElementById('fSiteID').value = 3;
+                document.getElementById('fifOnLine').value = 1;
+                document.getElementById('fSkillID').value = 10;
+                document.getElementById('fMaxStudent').value = 5;
+
+                // 觸發 change 事件，以便更新隱藏的 fSiteID 和 fSkillID
+                document.getElementById('fSiteName').dispatchEvent(new Event('change'));
+                document.getElementById('fName').dispatchEvent(new Event('change'));
+            });
+        });
+
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

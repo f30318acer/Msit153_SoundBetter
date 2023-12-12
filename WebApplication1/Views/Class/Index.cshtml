@@ -461,7 +461,9 @@
                 pageButtonsContainer.append(button);
             }
         }
-        loadPage();
+        window.onload = function () {
+            loadPage();
+        };
 
         //Skill選擇器
         async function loadStyle() {
