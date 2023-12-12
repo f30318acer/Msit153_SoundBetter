@@ -54,13 +54,16 @@ namespace prjSoundBetterApi.Controllers
         }
         public IActionResult ListWithUserName()
         {
-            var dbSoundBetterContext = from w in _context.TWorks
-                                       join m in _context.TMembers
-                                       on w.FMemberId equals m.FMemberId
-                                       select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyleId, w.FThumbnail,w.FWorkName, w.FWorkId, w.FClick};
+            var worksWithUsername = from w in _context.TWorks
+                                    join m in _context.TMembers on w.FMemberId equals m.FMemberId
+                                    select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyleId, w.FThumbnail, w.FWorkName, w.FWorkId, w.FClick };
 
-            return Json(dbSoundBetterContext);
+            // 按 FClick 由多到少排序
+            var sortedWorksWithUsername = worksWithUsername.OrderByDescending(w => w.FClick);
+
+            return Json(sortedWorksWithUsername);
         }
+
         //===List_MemberID===
         public IActionResult QueryByMember(int? id)//MemberId
         {

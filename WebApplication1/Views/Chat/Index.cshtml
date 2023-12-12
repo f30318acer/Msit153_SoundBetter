@@ -120,10 +120,18 @@
                 }
             });
 
-            // 更新用戶個人連線 ID 事件
-            connection.on("UpdSelfID", function (id) {
-                $('#SelfID').html(id);
-            });
+
+        connection.invoke("GetMemberId").then(function (memberId) {
+            // 使用從後端獲取的會員 ID
+            $('#SelfID').html(memberId);
+        });
+
+
+
+            // // 更新用戶個人連線 ID 事件
+            // connection.on("UpdSelfID", function (id) {
+            //     $('#SelfID').html(id);
+            // });
 
             // 更新聊天內容事件
             connection.on("UpdContent", function (msg) {

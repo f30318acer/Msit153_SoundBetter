@@ -87,6 +87,21 @@ namespace prjMusicBetter.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteMemberWork(int workId)
+        {
+            var workToDelete = await _context.TWorks.FirstOrDefaultAsync(w => w.FWorkId == workId);
+            if (workToDelete == null)
+            {
+                return NotFound(); // 404 Not Found，如果找不到要刪除的作品
+            }
+
+            _context.TWorks.Remove(workToDelete);
+            await _context.SaveChangesAsync();
+
+            return NoContent(); // 204 No Content，成功刪除作品
+        }
+
 
     }
 }
