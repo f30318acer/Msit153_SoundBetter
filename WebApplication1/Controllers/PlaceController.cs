@@ -177,7 +177,7 @@ namespace Music_matchmaking_platform.Controllers
         }
         public void SendReservationConfirmationEmail(string Email, string Name, string Subject, string Message, string ReserName)
         {
-            string apiKey = ""; // 替換為你的 SendGrid API Key
+            string apiKey = "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"; // 最後一個字母改為s，替換為你的 SendGrid API Key
 
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("zackyandjacky@gmail.com", "SoundBetter"); // 替換為實際的寄件者 Email 和名稱
