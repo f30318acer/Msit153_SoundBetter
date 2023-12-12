@@ -161,6 +161,7 @@
         }
 </style>
 <section class="playlist-section spad">
+    <button href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btm">新建課程</button>
     <div class="container-fluid">
         <div class="section-title" style="display: flex; align-items: center;">
             <h2 class="title" style="margin-right: 30px;">編輯我建立的課程</h2>
@@ -179,7 +180,6 @@
                     </select>
                     <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
                     <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
-                    <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
                 </div>
             </div>
             <div id="divList" class="row playlist-area">
@@ -208,7 +208,6 @@
                     </select>
                     <input type="text" id="txtKeyword2" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
                     <button type="button" id="btnSearch2" class="btn btn-secondary mr-2">條件搜尋</button>
-                    <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
                 </div>
             </div>
             <div id="divList2" class="row playlist-area">
@@ -237,7 +236,6 @@
                     </select>
                     <input type="text" id="txtKeyword3" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
                     <button type="button" id="btnSearch3" class="btn btn-secondary mr-2">條件搜尋</button>
-                    <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
                 </div>
             </div>
             <div id="divList3" class="row playlist-area">
@@ -265,34 +263,72 @@
         const MemberId = @ViewBag.MemberId;
 
         //三個折疊頁
+        //$(document).ready(function () {
+        //    // 初始時將內容折疊起來
+        //    //$("#collapseContent").hide();
+
+        //    // 當按鈕被點擊時
+        //    $("#btnToggleContent").click(function () {
+        //        // 切換內容的顯示與隱藏
+        //        $("#collapseContent").slideToggle();
+        //    });
+        //});
+        //$(document).ready(function () {
+        //    // 初始時將內容折疊起來
+        //    $("#collapseContent2").hide();
+
+        //    // 當按鈕被點擊時
+        //    $("#btnToggleContent2").click(function () {
+        //        // 切換內容的顯示與隱藏
+        //        $("#collapseContent2").slideToggle();
+        //    });
+        //});
+        //$(document).ready(function () {
+        //    // 初始時將內容折疊起來
+        //    $("#collapseContent3").hide();
+
+        //    // 當按鈕被點擊時
+        //    $("#btnToggleContent3").click(function () {
+        //        // 切換內容的顯示與隱藏
+        //        $("#collapseContent3").slideToggle();
+        //    });
+        //});
         $(document).ready(function () {
-            // 初始時將內容折疊起來
-            $("#collapseContent").hide();
+            // 初始時將內容折疊起來或展開
+            var isContentVisible = localStorage.getItem('isContentVisible') === 'true';
+            $("#collapseContent").toggle(isContentVisible);
 
             // 當按鈕被點擊時
             $("#btnToggleContent").click(function () {
                 // 切換內容的顯示與隱藏
-                $("#collapseContent").slideToggle();
+                $("#collapseContent").slideToggle(function () {
+                    // 存儲展開/折疊狀態到本地存儲
+                    localStorage.setItem('isContentVisible', $("#collapseContent").is(':visible'));
+                });
             });
-        });
-        $(document).ready(function () {
-            // 初始時將內容折疊起來
-            $("#collapseContent2").hide();
+
+            var isContentVisible2 = localStorage.getItem('isContentVisible2') === 'true';
+            $("#collapseContent2").toggle(isContentVisible2);
 
             // 當按鈕被點擊時
             $("#btnToggleContent2").click(function () {
                 // 切換內容的顯示與隱藏
-                $("#collapseContent2").slideToggle();
+                $("#collapseContent2").slideToggle(function () {
+                    // 存儲展開/折疊狀態到本地存儲
+                    localStorage.setItem('isContentVisible2', $("#collapseContent2").is(':visible'));
+                });
             });
-        });
-        $(document).ready(function () {
-            // 初始時將內容折疊起來
-            $("#collapseContent3").hide();
+
+            var isContentVisible3 = localStorage.getItem('isContentVisible3') === 'true';
+            $("#collapseContent3").toggle(isContentVisible3);
 
             // 當按鈕被點擊時
             $("#btnToggleContent3").click(function () {
                 // 切換內容的顯示與隱藏
-                $("#collapseContent3").slideToggle();
+                $("#collapseContent3").slideToggle(function () {
+                    // 存儲展開/折疊狀態到本地存儲
+                    localStorage.setItem('isContentVisible3', $("#collapseContent3").is(':visible'));
+                });
             });
         });
 
@@ -458,7 +494,7 @@
                 pageButtonsContainer.append(button);
             }
         }
-        loadPage();
+        
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -631,7 +667,7 @@
                 pageButtonsContainer2.append(button);
             }
         }
-        loadPage2();
+        
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -873,9 +909,6 @@
             });
         }
 
-
-
-
         //分頁按鈕
         async function loadPage3() {
             const Id = @(ViewBag.MemberId)
@@ -911,9 +944,13 @@
                 pageButtonsContainer3.append(button);
             }
         }
-        loadPage3();
 
 
+        window.onload = function () {
+            loadPage();
+            loadPage2();
+            loadPage3();
+        };
 
         //Skill選擇器
         async function loadStyle() {

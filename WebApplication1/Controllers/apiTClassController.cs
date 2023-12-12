@@ -36,6 +36,7 @@ namespace prjMusicBetter.Controllers
                                        join t in _context.TSites
                                        on s.FSiteId equals t.FSiteId
 									   where s.FEnddate >= DateTime.Now
+                                       orderby s.FClassId descending
                                        select new
                                        {
                                            fClassId = s.FClassId,
