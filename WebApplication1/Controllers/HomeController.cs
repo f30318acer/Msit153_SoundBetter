@@ -298,7 +298,13 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-       
+
+        public IActionResult ForgetPwdMember()
+        {
+            var query = _context.TMembers;
+            return Json(query);
+        }
+
         public IActionResult FAQ()
         {
             return View();
