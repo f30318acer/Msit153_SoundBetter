@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Login";
 }
-
+<script src="~/js/rainyday.min.js"></script>
 <style>
     .vh-100 {
         background: url('@Url.Content("~/assets/img/background/Rain.jpg")') no-repeat center center fixed;
@@ -15,9 +15,17 @@
         background: rgba(255, 255, 255, 0.5); /* 半透明背景 */
         border-radius: 15px; /* 边框圆角 */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
-        z-index:auto;
+        z-index:2;
     }
 
+    #rainy {
+        position: fixed; /* or absolute */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1; /* Behind the content */
+    }
     .btn-dark btn-outline-dark btn btn-outline-secondary {
         background-color: #000; /* 按钮背景颜色 */
         border-radius: 10px; /* 按钮的边框圆角 */
@@ -42,14 +50,7 @@
         margin: auto; /* 這將會使得表單在頁面中間 */
     }
 
-    #rainy {
-        position: fixed; /* or absolute */
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1; /* Behind the content */
-    }
+  
 
     .container {
         position: relative;
@@ -59,13 +60,9 @@
         color: black;
     }
 </style>
-
+@* <div id="rainy"></div> *@
 <section class="vh-100">
-<<<<<<< Updated upstream
-    @* <div id="rainy"></div>   *@
-=======
-    @*<div id="rainy"></div>*@
->>>>>>> Stashed changes
+      
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-6 col-xl-6">
@@ -113,24 +110,7 @@
                                                  data-shape="rectangular"
                                                  data-logo_alignment="left">
                                             </div>
-
-                                            @*  <div class="p-2">
-                                            <a asp-area="" asp-controller="Home" asp-action="ForgetPwd"
-                                            style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                            transition: all 0.3s ease;">忘記密碼</a>
-                                            </div>  *@
-
-
-
-                                            @*暫定連結後台 *@
-                                            @*  <div class="col">
-                                            <a asp-area="" asp-controller="BgHome" asp-action="Index"
-                                            style="border: 1px solid #007bff; padding: 5px; display: inline-block; text-decoration: none; color: #007bff;
-                                            transition: all 0.3s ease;">後台</a>
-                                            </div> *@
-
                                             <div class="col">
-
                                                 @* @Html.ActionLink("忘記密碼","ForgetPwd","Home")*@
                                             </div>
                                         </div>
