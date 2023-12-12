@@ -57,6 +57,7 @@
                                 <input type="hidden" style="font-size: 20px; border: solid" value="有人預約你的場地 - @Html.DisplayFor(model => model.FSiteName)" name="Subject">
                                 <textarea placeholder="給場地主的訊息" style="font-size: 20px; border: solid" name="Message"></textarea>
                             </div>
+                            <div id="divEmail" style="display:none"></div>
                         </div>
                     </form>
                     <div id="accordion">
@@ -389,6 +390,22 @@
         // }
 
         // loadForm();
+
+        function loadEmail() {
+            const divEmail = $('#divEmail');
+            let url = '/Place/GetMemberNameandEmail';
+
+            $.getJSON(url, function (data) {
+                const form = $(`
+                    <input type="hidden" value="${data.name}" name="ReserName" />
+                `);
+
+                divEmail.html(form)
+            })
+        }
+
+        loadEmail();
+
         function loadClass(siteID) {
             
             let url = '/Place/GetClasses';
@@ -419,8 +436,12 @@
                 const checkbox = $(this); // 取得當前迴圈中的 checkbox
                 const value = checkbox.val(); // 從 checkbox 的 value 取得值
 
-                if (value == 1 || value == 3)
+                if (value == 1 || value == 3) {
                     checkbox.prop('disabled', true);
+                    const label = checkbox.closest('.form-group').find('.form-check-label');
+                    // Append "(額滿)" to the label text within a span with a style for red color
+                    label.html(label.html() + '<span style="color: red;">(額滿)</span>');
+                }
             });
         }
         loadPlacePeriod();

@@ -234,7 +234,7 @@
         DisplayButton();
 
         function loadInfo(){
-            $.getJSON(`/MemberPage/GetMemberSkill/${memID}`, function (datas) {
+            $.getJSON(`/MemberPage/GetMemberSkill/${memberId}`, function (datas) {
                 $.each(datas, function (index, item) {
                     console.log(item);
                     skillName = skillName + `${item.fName}${item.fYearExp}年經驗 / `;
@@ -247,7 +247,7 @@
 
         //取得課程資訊
         function classList(){
-            $.getJSON(`/MemberPage/GetMemberClass/${memID}`,function(datas){
+            $.getJSON(`/MemberPage/GetMemberClass/${memberId}`,function(datas){
                 console.log(datas);
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item){
@@ -279,7 +279,7 @@
 
         //取得作品
         function workList() {
-            $.getJSON(`/MemberPage/GetMemberWorks/${memID}`, function (datas) {
+            $.getJSON(`/MemberPage/GetMemberWorks/${memberId}`, function (datas) {
                 const docFrag = $(document.createDocumentFragment())
                 $.each(datas, function (index, item) {
                     const descriSub = item.fDescription.length > 20 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
@@ -297,7 +297,7 @@
                                 <div class="col-12">
                                      <div class="single_player_container" style="margin: 0;">
                                         <audio id="myAudio" controls style="width: 100%;">
-                                            <source src="/works/${item.fFilePath}" type="audio/mp3">
+                                            <source src="/WorkFile/${item.fFilePath}" type="audio/mp3">
                                             Your browser does not support the audio element.
                                         </audio>
                                     </div>
@@ -314,7 +314,7 @@
 
         //取得文章資訊
         function ArtiList() {
-            $.getJSON(`/MemberPage/GetMemberArticle/${memID}`, function (datas) {
+            $.getJSON(`/MemberPage/GetMemberArticle/${memberId}`, function (datas) {
                 console.log(datas);
                 if (datas.length != 0)
                 {
