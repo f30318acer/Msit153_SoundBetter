@@ -27,81 +27,71 @@
                         <div class="datatable-container">
                             <table class="table">
                                 <!-- 表格標題和內容... -->
-                                <div>
-                                   
-                                    <hr />
-                                    <dl class="row">
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FUsername)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FUsername)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FName)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FName)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FPassword)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FPassword)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FPhone)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FPhone)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FEmail)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FEmail)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FGender)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FGender)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FBirthday)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FBirthday)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FCreationTime)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FCreationTime)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FIntroduction)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FIntroduction)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FPhotoPath)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FPhotoPath)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FPermission)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FPermission.FPromissionId)
-                                        </dd>
+                                <div class="row">
+                                    <dl class="col-md-4">
+                                        <form asp-action="Delete">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-group">
+                                                <label asp-for="FUsername" class="control-label">使用者姓名</label>
+                                                <input asp-for="FUsername" class="form-control" />
+                                                <span asp-validation-for="FUsername" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FName" class="control-label">姓名</label>
+                                                <input asp-for="FName" class="form-control" />
+                                                <span asp-validation-for="FName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPassword" class="control-label">密碼</label>
+                                                <input asp-for="FPassword" class="form-control" />
+                                                <span asp-validation-for="FPassword" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPhone" class="control-label">電話</label>
+                                                <input asp-for="FPhone" class="form-control" />
+                                                <span asp-validation-for="FPhone" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FEmail" class="control-label">電子信箱</label>
+                                                <input asp-for="FEmail" class="form-control" />
+                                                <span asp-validation-for="FEmail" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FGender" class="control-label">性別</label>
+                                                <input asp-for="FGender" class="form-control" />
+                                                <span asp-validation-for="FGender" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FBirthday" class="control-label">生日</label>
+                                                <input asp-for="FBirthday" class="form-control" />
+                                                <span asp-validation-for="FBirthday" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FCreationTime" class="control-label">創立時間</label>
+                                                <input asp-for="FCreationTime" class="form-control" />
+                                                <span asp-validation-for="FCreationTime" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FIntroduction" class="control-label">自我介紹</label>
+                                                <input asp-for="FIntroduction" class="form-control" />
+                                                <span asp-validation-for="FIntroduction" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPermissionId" class="control-label">等級</label>
+                                                <select asp-for="FPermissionId" class="form-control" asp-items="ViewBag.FPermissionId"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPhotoPath" class="control-label">照片</label>
+                                                <input asp-for="FPhotoPath" class="form-control" />
+                                                <span asp-validation-for="FPhotoPath" class="text-danger"></span>
+                                            </div>                                         
+                                            <br />                                         
+                                        </form>                                        
                                     </dl>
                                     <hr />
                                     <form asp-action="Delete">
                                         <input type="hidden" asp-for="FMemberId" />
-                                        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirmDelete();" /> |
+                                        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirmDelete();" /> 
                                         <a asp-action="Index" class="btn btn-primary">Back to List</a>
                                     </form>
                                 </div>
