@@ -41,7 +41,7 @@
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => work.FUpdateTime)</td>
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                 <audio controls>
-                                    <source src="@Url.Content("~/works/" + work.FFilePath)" type="audio/mpeg">
+                                    <source src="@Url.Content("~/WorkFile/" + work.FFilePath)" type="audio/mpeg">
                                     您的瀏覽器不支援 audio 元素。
 
                                     @Html.DisplayFor(modelItem => work.FFilePath)
