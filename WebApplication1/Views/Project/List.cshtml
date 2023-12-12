@@ -205,7 +205,6 @@
 		async function loadSkill() {
 			const response = await fetch('@Url.Content("~/apiTProjects/SkillsList")');
 			const data = await response.json();
-			console.log(data);
 			const defaultBtn = '<div class="col-12 mb-3"><button value="100" class="btn btn-info mr-2 btnSkill activeSkill" style="width: 210px;height:40px;background-color: #fc0254;">所有技能</button></div>';
 			const skillsBtn = data.map(s => `<div class="col-6 mb-3"><button value="${s.fSkillId}" class="btn btn-secondary mr-2 btnSkill" style="width: 90px;height: 40px">${s.fName}</button></div>`);
 			skillsBtn.unshift(defaultBtn);
@@ -239,7 +238,6 @@
 				// 這裡可以進一步處理按鈕的 value，例如更新 div 的內容
 				load(1);
 				loadPage();
-				console.log($('#selectStyle').val())
 			}
 		});
 
@@ -302,7 +300,6 @@
 						return item.fStyleId == sId;
 					});
 				}
-				console.log("hehehehe"+filteredDatas);
 				//關鍵字篩選
 				if (keyword != '') {
 					filteredDatas = filteredDatas.filter(item => {

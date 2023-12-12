@@ -205,15 +205,13 @@
                                                             <source src="~/ProjectDemo/@Html.DisplayFor(model => model.FDemoFilePath)" type="audio/mp3">
                                                             Your browser does not support the audio element.
                                                         </audio>
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-		                    </div>
-		
+		                    </div>		
 	                    </div>
 	                    <div class="container">
 		                    <div class="row">
@@ -369,7 +367,6 @@
         
         //取得風格資訊
 		$.getJSON(`/apiTStyle/QueryById/${styleId}`, function (datas) {
-			console.log(datas);
 			$('#styleName').html(`製作風格 : ${datas[0].fName}`);
 		})
 
@@ -397,7 +394,6 @@
 
         //取得會員資訊
 		$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
-			console.log(datas);
 			$('#memberInfo').html(`
 				<div class="col-lg-6" >
 					<h5>製作發案人 : ${datas.fUsername}</h5>
