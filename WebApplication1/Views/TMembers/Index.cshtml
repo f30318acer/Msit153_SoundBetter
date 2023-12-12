@@ -60,9 +60,9 @@
                         <th class="py-3 px-6 text-left">密碼</th>
                         <th class="py-3 px-6 text-left">電話號碼</th>
                         <th class="py-3 px-6 text-left">信箱</th>
-                        <th class="py-3 px-6 text-left">性別</th>
+                        <th class="py-3 px-6 text-left" >性別</th>
                         <th class="py-3 px-6 text-left">生日</th>
-                        <th class="py-3 px-6 text-left">建立時間</th>
+                        <th class="py-3 px-6 text-left" hidden>建立時間</th>
                         <th class="py-3 px-6 text-left" hidden>自我介紹</th>
                         <th class="py-3 px-6 text-left">照片</th>
                         <th class="py-3 px-6 text-center font-bold">操作</th>
@@ -87,13 +87,13 @@
                             <td class="text-base p-4">
                                 @Html.DisplayFor(modelItem => item.FEmail)
                             </td>
-                            <td class="text-base p-4">
+                            <td class="text-base p-4" >
                                 @Html.DisplayFor(modelItem => item.FGender)
                             </td>
                             <td class="text-base p-4">
                                 @Html.DisplayFor(modelItem => item.FBirthday)
                             </td>
-                            <td class="text-base p-4">
+                            <td class="text-base p-4" hidden>
                                 @Html.DisplayFor(modelItem => item.FCreationTime)
                             </td>
                             <td class="text-base p-4" hidden>
