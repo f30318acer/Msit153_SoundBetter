@@ -145,6 +145,26 @@
         /*word-wrap: break-word;  允许单词内换行 */
         overflow-wrap: break-word; /* 允许单词内换行，兼容性更好的属性 */
     }
+
+    .scroll-to-top-btn {
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+        background-color: #fc0254;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 40px;
+        display: none;
+        z-index: 999; /* 將按鈕置於最上層 */
+    }
+
+        .scroll-to-top-btn i {
+            font-size: 40px;
+            position: fixed;
+            z-index: 1000; /* 將 <i> 元素置於最上層 */
+        }
 </style>
 <section id="title" class="player-section" style="background-image: url('/img/classimg/class_bg.jpg');">
     <div class="player-box">
@@ -220,6 +240,10 @@
     </section>
     <!-- Similar Songs section end -->
 </div>
+<div id="scrollToTopBtn" class="scroll-to-top-btn">
+    <i></i>
+    ▲回到上方
+</div>
 @section Scripts {
     <script>
         function checkQuota() {
@@ -228,7 +252,8 @@
                 // 準備要傳送的資料，將 Razor 模型轉換為 JSON 字串
 
                 var postData = {
-                    ProductId: @Model.FClassId
+                    ProductId: @Model.FClassId,
+                   
                 };
 
                 // 符合條件，執行頁面跳轉
@@ -292,6 +317,26 @@
                 })
         }
         firstLoad(1);
+
+        //▲回到上方
+        document.addEventListener("DOMContentLoaded", function () {
+            var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+            window.onscroll = function () {
+                // 顯示或隱藏按鈕根據滾動位置
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    scrollToTopBtn.style.display = "block";
+                } else {
+                    scrollToTopBtn.style.display = "none";
+                }
+            };
+
+            scrollToTopBtn.addEventListener("click", function () {
+                // 捲動到頁面頂部
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            });
+        });
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

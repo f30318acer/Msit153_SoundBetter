@@ -7,17 +7,13 @@ namespace prjMusicBetter.Models;
 
 public partial class TComment
 {
-    public int FCommentID { get; set; }
-
-
-    public int FMemberID { get; set; }
+    public int FCommentId { get; set; }
 
     public int? FMemberId { get; set; }
 
-
     public string FCommentContent { get; set; }
 
-    public int? FArticleID { get; set; }
+    public int? FArticleId { get; set; }
 
     public DateTime? FCommentTime { get; set; }
 

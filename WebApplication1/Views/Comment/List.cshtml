@@ -45,9 +45,6 @@
                 <td>
                 </td>
                 <td>
-                    @Html.ActionLink("修改", "Edit", "Comment", new { id = Model.Comments[index].FCommentID }, null) |
-                    @Html.ActionLink("刪除", "Delete", "Comment", new { id = Model.Comments[index].FCommentID },
-                             new { onclick = "return confirm('確定要刪除嗎?')" })
                 </td>
             </tr>
         }
@@ -75,7 +72,6 @@
     </tbody> *@
 </table>
 
-<a href="@Url.Action("Create","Comment")"><button class="btn btn-primary" type="button">留言</button></a>
 
 
 @* <table>

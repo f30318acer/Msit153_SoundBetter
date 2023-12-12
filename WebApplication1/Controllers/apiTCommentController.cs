@@ -36,7 +36,7 @@ namespace prjMusicBetter.Controllers
                 return NotFound();
             }
 
-            var tComment = _context.TComments.Where(m => m.FMemberID == id);
+            var tComment = _context.TComments.Where(m => m.FMemberId == id);
             if (tComment == null)
             {
                 return NotFound();
@@ -51,7 +51,7 @@ namespace prjMusicBetter.Controllers
                 return NotFound();
             }
 
-            var tComment = _context.TComments.FirstOrDefault(m => m.FCommentID == id);
+            var tComment = _context.TComments.FirstOrDefault(m => m.FCommentId == id);
             if (tComment == null)
             {
                 return NotFound();

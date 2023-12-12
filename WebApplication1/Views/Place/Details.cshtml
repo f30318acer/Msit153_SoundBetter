@@ -25,7 +25,6 @@
                     <br />
                     <ul>
                         <li style="font-size: 20px">@Html.DisplayFor(model => model.FAddress)</li>
-                        <li style="font-size: 20px">@Html.DisplayFor(model => model.FPhone)</li>
                         <li style="font-size: 20px">
                             @{
                                 string siteTypeText = "";
@@ -42,9 +41,10 @@
                                         break;
                                 }
                             }
-                            @siteTypeText
+                            @siteTypeText / @Html.DisplayFor(model => model.FPhone)
                         </li>
                     </ul>
+                    <div id="siteclass"></div>
                     <form class="contact-from" id="reservationForm">
                         <div class="row" id="divForm">
                             <div class="col-md-6">
@@ -54,8 +54,8 @@
                                 <input type="text" value="@Html.DisplayFor(model => model.FMember.FEmail)" style="font-size: 20px; border: solid" name="Email">
                             </div>
                             <div class="col-md-12">
-                                <input type="text" placeholder="主旨" style="font-size: 20px; border: solid" name="Subject">
-                                <textarea placeholder="訊息" style="font-size: 20px; border: solid" name="Message"></textarea>
+                                <input type="hidden" style="font-size: 20px; border: solid" value="有人預約你的場地 - @Html.DisplayFor(model => model.FSiteName)" name="Subject">
+                                <textarea placeholder="給場地主的訊息" style="font-size: 20px; border: solid" name="Message"></textarea>
                             </div>
                         </div>
                     </form>
@@ -79,6 +79,7 @@
                                 <div class="card-body">
                                     <form id="editForm">
                                         <input type="hidden" name="fSiteID" id="fSiteID" value="@Html.DisplayFor(model => model.FSiteId)" />
+                                        @* <div id="timetable"></div> *@
                                         <div class="row mt-6 border-bottom">
                                             <div class="col mt-auto mb-auto">
                                                 <p class="mt-xl-3 fs16">星期一</p>
@@ -359,6 +360,8 @@
 {
     <script>
         const siteID = $('#pID').val();
+        const siteclass = $('#siteclass');
+        const timetable = $('#timetable');
 
         // function loadForm() {
         //     const divForm = $('#divForm');
@@ -386,6 +389,30 @@
         // }
 
         // loadForm();
+        function loadClass(siteID) {
+            
+            let url = '/Place/GetClasses';
+            if (siteID) {
+                url += `?fSiteId=${siteID}`;
+            }
+
+            $.getJSON(url, function (datas) {
+                const docFrag = $(document.createDocumentFragment());
+                const ulElement = $('<ul style="list-style-image: linear-gradient(to left bottom, red, blue);">');
+
+                $.each(datas, function (index, item) {
+                    const liElement = $(`
+                        <li style="font-size: 20px">${item.fClassName}</li>
+                    `);
+                    ulElement.append(liElement);
+                })
+
+                docFrag.append(ulElement);
+                siteclass.html(docFrag);
+            })
+        }
+
+        loadClass(siteID);
 
         function loadPlacePeriod() {
             $('input[type="checkbox"]').each(function () {

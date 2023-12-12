@@ -2,8 +2,8 @@
 {
     public class CommentDto
     {
-        public int FArticleId { get; set; }
-        public int FMemberId { get; set; }
+        public int ArticleId { get; set; }
+        public int MemberId { get; set; }
         public string Content { get; set; }
     }
 }

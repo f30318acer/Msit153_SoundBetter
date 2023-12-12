@@ -138,10 +138,10 @@ namespace prjMusicBetter.Controllers
             TComment comment = new TComment();
 
             var q = from m in _context.TArticles
-                    where m.FArticleId == comment.FArticleID
+                    where m.FArticleId == comment.FArticleId
                     select new TComment
                     {
-                        FCommentID = Id,
+                        FCommentId = Id,
                         //FMemberId = HttpContext.User.Identity.Name,
                         FCommentContent = myComment,
                         FCommentTime = DateTime.Now
