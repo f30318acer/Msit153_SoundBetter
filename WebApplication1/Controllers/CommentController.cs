@@ -43,27 +43,54 @@ namespace prjMusicBetter.Controllers
         }
 
 
-        public IActionResult Create()
-        { 
-            return View(); 
-        }
-        [HttpPost]
-        public IActionResult Create(CommentDto dto)
+        //public IActionResult Create()
+        //{ 
+        //    return View(); 
+        //}
+        //[HttpPost]
+        //public IActionResult Create(CommentDto dto)
+        //{
+
+        //    dto.ArticleId = 20;
+        //    //dto.Content = "test123";
+        //    _context.TComments.Add(new TComment()
+        //    {
+        //        //FMemberId = dto.MemberId,
+        //        FCommentContent = dto.Content,
+        //        FArticleId = dto.ArticleId,
+        //        FCommentTime = DateTime.Now,
+        //    });
+        //    _context.SaveChanges();
+
+        //    return Ok();
+        //}
+         public IActionResult Create()
         {
-
-            dto.ArticleId = 20;
-            //dto.Content = "test123";
-            _context.TComments.Add(new TComment()
-            {
-                //FMemberId = dto.MemberId,
-                FCommentContent = dto.Content,
-                FArticleId = dto.ArticleId,
-                FCommentTime = DateTime.Now,
-            });
-            _context.SaveChanges();
-
-            return Ok();
+            
+            ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticleId");
+            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId");
+            return View();
         }
+
+        // POST: TArticles/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("FCommentId,FMemberId,FArticleId,FCommentContent,FCommentTime")] TComment tComment)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(tComment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("List");
+            }
+            ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticleId",tComment.FArticleId);
+            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
+
+            return View(tComment);
+        }
+
 
         //public IActionResult Edit(int? id)
         //{
