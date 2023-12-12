@@ -12,6 +12,4 @@ public partial class TWorkClick
     public int? FWorkId { get; set; }
 
     public int? FClick { get; set; }
-
-    public virtual TWork FWork { get; set; }
 }
