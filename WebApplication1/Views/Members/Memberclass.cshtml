@@ -117,6 +117,14 @@
         border: 1px solid #fc0254; /* 粉框 */
     }
 
+        .gss[data-course-type="offline"] {
+            background-color: #FFCBB3; /* 實體課程的背景顏色 */
+        }
+
+        .gss[data-course-type="online"] {
+            background-color: #A6FFFF; /* 線上課程的背景顏色 */
+        }
+
         /* 調整其他樣式以避免重疊 */
         .genres h5, .genres p, .genres span {
             z-index: 1; /* 設置 z-index，確保文字和 span 在同一層次 */
@@ -263,36 +271,6 @@
         const MemberId = @ViewBag.MemberId;
 
         //三個折疊頁
-        //$(document).ready(function () {
-        //    // 初始時將內容折疊起來
-        //    //$("#collapseContent").hide();
-
-        //    // 當按鈕被點擊時
-        //    $("#btnToggleContent").click(function () {
-        //        // 切換內容的顯示與隱藏
-        //        $("#collapseContent").slideToggle();
-        //    });
-        //});
-        //$(document).ready(function () {
-        //    // 初始時將內容折疊起來
-        //    $("#collapseContent2").hide();
-
-        //    // 當按鈕被點擊時
-        //    $("#btnToggleContent2").click(function () {
-        //        // 切換內容的顯示與隱藏
-        //        $("#collapseContent2").slideToggle();
-        //    });
-        //});
-        //$(document).ready(function () {
-        //    // 初始時將內容折疊起來
-        //    $("#collapseContent3").hide();
-
-        //    // 當按鈕被點擊時
-        //    $("#btnToggleContent3").click(function () {
-        //        // 切換內容的顯示與隱藏
-        //        $("#collapseContent3").slideToggle();
-        //    });
-        //});
         $(document).ready(function () {
             // 初始時將內容折疊起來或展開
             var isContentVisible = localStorage.getItem('isContentVisible') === 'true';
@@ -356,7 +334,9 @@
                                         ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                    <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                            <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                                 </span>
                                 </div>
                                 <div>
                                     <div class="ClassName">
@@ -438,7 +418,9 @@
                                         ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                    <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                            <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                                 </span>
                                 </div>
                                 <div>
                                     <div class="ClassName">
@@ -528,7 +510,9 @@
                                                 ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
                                             </span>
                                             <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                            <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                                    <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                                 </span>
                                         </div>
                                         <div>
                                             <div class="ClassName">
@@ -610,7 +594,9 @@
                                                 ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
                                             </span>
                                             <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                            <span  class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                                    <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                                 </span>
                                         </div>
                                         <div>
                                             <div class="ClassName">
@@ -697,7 +683,9 @@
                                                      ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
                                                  </span>
                                                  <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                                 <span class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                                         <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                                 </span>
                                              </div>
                                              <div>
                                                  <div class="ClassName">
@@ -799,7 +787,9 @@
                                                     ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
                                                 </span>
                                                 <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                                <span class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                                        <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                                 </span>
                                             </div>
                                             <div>
                                                 <div class="ClassName">

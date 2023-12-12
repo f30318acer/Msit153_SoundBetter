@@ -177,9 +177,17 @@
             <div class="wave-player-info">
                 <h2>@Model.FClassName</h2>
                 <h4 style="color:gray;">類型：@ViewBag.skillname</h4>
-                <h4 style="color:gray;">場地：@ViewBag.SiteName</h4>
-                <h4 style="color:gray;">地點：@ViewBag.Address </h4>
+                    @if (Model.FOnLine == 0)
+                    {
+                        <h4 style="color:gray;">場地：@ViewBag.SiteName</h4>
+                        <h4 style="color:gray;">地點：@ViewBag.Address</h4>
+                    }
+                    else if (Model.FOnLine == 1)
+                    {
+                        <h4 style="color:gray;">場地：線上課程</h4>
+                    }
             </div>
+
         </div>
     </div>
 </section>

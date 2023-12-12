@@ -114,9 +114,16 @@
             background-color: white;
             color: black;
             padding: 5px;
-            border: 1px solid #fc0254; /* 粉框 */
+            /*border: 1px solid #fc0254;  粉框 */
         }
 
+            .gss[data-course-type="offline"] {
+                background-color: #FFCBB3; /* 實體課程的背景顏色 */
+            }
+
+            .gss[data-course-type="online"] {
+                background-color: #A6FFFF; /* 線上課程的背景顏色 */
+            }
 
         /* 調整其他樣式以避免重疊 */
         .genres h5, .genres p, .genres span {
@@ -241,7 +248,9 @@
                                              ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
                                          </span>
                                          <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                         <span class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                         <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                            ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                         </span>
                                      </div>
                                      <div>
                                          <div class="ClassName">
@@ -373,7 +382,9 @@
                                             ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
                                         </span>
                                         <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                        <span class="gss">${item.fOnLine === 0 ? '實體課程' : '線上課程'}</span>
+                                        <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                            ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                        </span>
                                     </div>
                                     <div>
                                         <div class="ClassName">

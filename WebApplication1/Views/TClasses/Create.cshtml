@@ -44,29 +44,29 @@
             </div>
             <div class="form-group">
                     <label asp-for="FSiteId" class="control-label">上課地點</label>
-                    <input type="hidden" id="fSiteID" name="fSiteID" value="1" />
+                    <input type="hidden" id="FSiteId" name="FSiteId" value="1" />
                     <select id="fSiteName" name="fSiteName" required></select><br />
             </div>
-                <div class="form-group">
-                    <label asp-for="FOnLine" class="control-label">上課方式</label>
-                    <select asp-for="FOnLine" class="form-control">
-                        <option value="0">實體課程</option>
-                        <option value="1">線上課程</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FSkillId" class="control-label">課程類型</label>
-                    <input type="hidden" id="fSkillID" name="fSkillID" value="1" />
-                    <select id="fName" name="fName" required></select><br />
+            <div class="form-group">
+                <label asp-for="FOnLine" class="control-label">上課方式</label>
+                <select asp-for="FOnLine" class="form-control">
+                    <option value="0">實體課程</option>
+                    <option value="1">線上課程</option>
+                </select>
             </div>
                 <div class="form-group">
-                    <label asp-for="FMaxStudent" class="control-label">課程人數</label>
-                    <input asp-for="FMaxStudent" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="FCurrentStudent" class="control-label">目前人數</label>
-                    <input asp-for="FCurrentStudent" class="form-control value="0" />
-                </div>
+                    <label asp-for="FSkillId" class="control-label">課程類型</label>
+                    <input type="hidden" id="FSkillID" name="FSkillID" value="1" />
+                    <select id="fName" name="fName" required></select><br />
+            </div>
+            <div class="form-group">
+                <label asp-for="FMaxStudent" class="control-label">課程最多人數</label>
+                <input asp-for="FMaxStudent" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="FCurrentStudent" class="control-label">目前人數</label>
+                <input asp-for="FCurrentStudent" class="form-control value="0" />
+            </div>
             <div class="form-group">
                     <label for="formFile">圖片:</label>
                     <input type="file" id="formFile" name="formFile" accept="image/*" />
@@ -77,6 +77,9 @@
                     <button id="buttonSubmit" type="submit" class="btn btn-primary">確定建立</button>
             </div>
         </form>
+        <div class="form-group pad">
+            <button id="btnFillDefaults" type="button" class="btn btn-secondary">填入預設資料</button>
+        </div>
     </div>
 </div>
 
@@ -99,11 +102,11 @@
             });
             const ID = @ViewBag.MemberId;
             //讓上課地點選項顯示fSiteName
-            const SiteID = document.querySelector('#fSiteID');
+            const SiteID = document.querySelector('#FSiteId');
             const SiteName = document.querySelector('#fSiteName');
 
             //讓課程類型選項顯示fName
-            const SkillID = document.querySelector('#fSkillID');
+            const SkillID = document.querySelector('#FSkillID');
             const SkillName = document.querySelector('#fName');
 
             var selectedValue = $('#fifOnLine').val();
@@ -148,10 +151,9 @@
                         const selectElement = document.getElementById('fName');
                         data.forEach(skill => {
                             const option = document.createElement('option');
-                            option.value = String(skill.fSkillId);  // 使用FSkillId作為值
-                            option.text = skill.fName; // 顯示FName
+                            option.value = String(skill.fSkillId);  // 使用fSkillId作為值
+                            option.text = skill.fName; // 顯示fName
                             selectElement.appendChild(option);
-                            //console.log(data);
                         });
                         // 添加 change 事件監聽器，當選擇改變時觸發
                         selectElement.addEventListener('change', function () {
@@ -260,6 +262,48 @@
                     alert("不支援的檔案類型");
                 }
             });
+
+
+            //Demo用按鈕///////////////////////////////////////////////////////////////////////
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const btnFillDefaults = document.getElementById('btnFillDefaults');
+
+                btnFillDefaults.addEventListener('click', function () {
+                    // 填充預設資料
+                    document.getElementById('FClassName').value = "古典/流行小提琴";
+                    document.getElementById('FPrice').value = 1000;
+                    // ... 填充其他字段的預設值
+
+                    // 更新 CKEditor 內容
+                    const defaultDescription = `
+                        初階/高階 古典或流行音樂
+                        一對一教學
+                        可依您想學的風格客製化專屬課程.曲目
+
+                        課程說明
+                        1. 為您打好基礎
+                        2. 想學會耳熟能響的古典音樂或流行歌曲都能教會你！
+                        3. 若想參加檢定或比賽也沒有問題
+                        4. 會依程度選好樂譜給學生
+                    `;
+                    editorInstance.setData(defaultDescription);
+
+                    // 設置其他字段的預設值
+                    document.getElementById('FStartdate').value = "2023-10-17T11:10";
+                    document.getElementById('FEnddate').value = "2024-11-01T16:30";
+                    document.getElementById('fSiteName').value = 3;
+                    document.getElementById('FOnLine').value = 1;
+                    document.getElementById('fName').value = 10;
+                    document.getElementById('FMaxStudent').value = 5;
+                    document.getElementById('FCurrentStudent').value = 0;
+                    
+                    // 觸發 change 事件，以便更新隱藏的 fSiteID 和 fSkillID
+                    document.getElementById('fSiteName').dispatchEvent(new Event('change'));
+                    document.getElementById('fName').dispatchEvent(new Event('change'));
+                });
+            });
+
         </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

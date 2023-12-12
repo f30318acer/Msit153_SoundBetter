@@ -171,7 +171,8 @@ namespace prjMusicBetter.Controllers
                             project.FThumbnailPath = photoName;
                             formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
                         }
-                        project.FThumbnailPath = Guid.NewGuid().ToString() + ".jpg";
+                        photoName = Guid.NewGuid().ToString() + ".jpg";
+                        project.FThumbnailPath = photoName;
                         formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
                     }
                     //圖片沒改就沿用
