@@ -24,7 +24,7 @@ namespace prjMusicBetter.Controllers
         // GET: TComments
         public async Task<IActionResult> Index()
         {
-            var dbSoundBetterContext = _context.TComments.Include(t => t.FArticleId).Include(t => t.FMemberId);
+            var dbSoundBetterContext = _context.TComments.Include(t => t.FArticleID).Include(t => t.FMemberID);
             return View(await dbSoundBetterContext.ToListAsync());
         }
 
@@ -37,9 +37,9 @@ namespace prjMusicBetter.Controllers
             }
 
             var tComment = await _context.TComments
-                .Include(t => t.FArticleId)
-                .Include(t => t.FMemberId)
-                .FirstOrDefaultAsync(m => m.FArticleId == id);
+                .Include(t => t.FArticleID)
+                .Include(t => t.FMemberID)
+                .FirstOrDefaultAsync(m => m.FArticleID == id);
             if (tComment == null)
             {
                 return NotFound();
@@ -51,27 +51,27 @@ namespace prjMusicBetter.Controllers
         // GET: TComments/tComment
         public IActionResult Create()
         {
-            ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle");
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMember");
+            ViewData["FArticleID"] = new SelectList(_context.TArticles, "FArticleID", "FArticle");
+            ViewData["FMemberID"] = new SelectList(_context.TMembers, "FMemberID", "FMember");
             return View();
         }
 
         // POST: TComments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkID=317598.
         [HttpPost]
         public IActionResult Create(TComment? tComment, TArticle tArticle)
         {
             //if (tArticle != null)
             //{
-                if (tComment != null)
-                {
-                    _context.Add(tComment);
-                    _context.SaveChanges();
+            if (tComment != null)
+            {
+                _context.Add(tComment);
+                _context.SaveChanges();
 
-                    _context.SaveChanges();
-                    return Content("新增成功");
-                }
+                _context.SaveChanges();
+                return Content("新增成功");
+            }
             //}
             return Content("錯誤");
         }
@@ -88,20 +88,20 @@ namespace prjMusicBetter.Controllers
             {
                 return NotFound();
             }
-            ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
-            
+            ViewData["FArticleID"] = new SelectList(_context.TArticles, "FArticleID", "FArticle", tComment.FArticleID);
+            ViewData["FMemberID"] = new SelectList(_context.TMembers, "FMemberID", "FMemberID", tComment.FMemberID);
+
             return View(tComment);
         }
 
         // POST: TComments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkID=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FArticleId,FMemberId,FCommentContent,FCommentTime")] TComment tComment)
+        public async Task<IActionResult> Edit(int id, [Bind("FArticleID,FMemberID,FCommentContent,FCommentTime")] TComment tComment)
         {
-            if (id != tComment.FCommentId)
+            if (id != tComment.FCommentID)
             {
                 return NotFound();
             }
@@ -115,7 +115,7 @@ namespace prjMusicBetter.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TCommentExists(tComment.FCommentId))
+                    if (!TCommentExists(tComment.FCommentID))
                     {
                         return NotFound();
                     }
@@ -126,9 +126,9 @@ namespace prjMusicBetter.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
-            
+            ViewData["FArticleID"] = new SelectList(_context.TArticles, "FArticleID", "FArticle", tComment.FArticleID);
+            ViewData["FMemberID"] = new SelectList(_context.TMembers, "FMemberID", "FMemberID", tComment.FMemberID);
+
             return View(tComment);
         }
 
@@ -143,7 +143,7 @@ namespace prjMusicBetter.Controllers
             var tComment = await _context.TComments
                 .Include(t => t.FArticle)
                 .Include(t => t.FMember)
-                .FirstOrDefaultAsync(m => m.FCommentId == id);
+                .FirstOrDefaultAsync(m => m.FCommentID == id);
             if (tComment == null)
             {
                 return NotFound();
@@ -173,7 +173,7 @@ namespace prjMusicBetter.Controllers
 
         private bool TCommentExists(int id)
         {
-            return (_context.TComments?.Any(e => e.FCommentId == id)).GetValueOrDefault();
+            return (_context.TComments?.Any(e => e.FCommentID == id)).GetValueOrDefault();
         }
     }
 }

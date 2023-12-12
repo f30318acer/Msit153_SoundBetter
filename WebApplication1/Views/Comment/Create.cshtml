@@ -1,17 +1,41 @@
 ﻿@model prjMusicBetter.Models.TComment
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "新增留言";
 }
 
+
+<section class="intro-section spad">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-8 order-2 order-lg-1">
 <div class="col-md-4">
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        
-        <input asp-for="FMemberId" type="hidden" class="form-control" />
 
-        <input asp-for="FArticleId" type="hidden" class="form-control" />
         
+        <div class="d-flex flex-row align-items-center mb-4">
+        <div class="form-outline flex-fill mb-0">
+        <label class="form-label" for="form3Example4c"></label>
+        <input type="hidden" id="fMemberID" class="form-control" />
+
+        </div>
+        </div>
+
+        <div class="d-flex flex-row align-items-center mb-4">
+        <div class="form-outline flex-fill mb-0">
+        <label class="form-label" for="form3Example4c"></label>
+        <input type="hidden" id="fArticleID" class="form-control" />
+
+        </div>
+        </div>
+
+
+
         <div class="form-group">
             <label asp-for="FCommentContent" class="control-label">新增留言</label>
             <input asp-for="FCommentContent" class="form-control" />
@@ -19,24 +43,47 @@
         </div>
 
 
-        <div class="form-group">
-            <input type="submit" value="新增留言" class="btn btn-primary" />
+
+
+        <div class="text-right">
+            <a href="@Url.Action("List","Comment")" type="button" class="btn btn-secondary">取消/回到列表</a>
+            <button type="button" class="btn btn-success" id="buttonSend">確認建立</button>
         </div>
+        
     </form>
 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* <form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FMemberID">
+    <textarea class="form-control" type="text"
+              placeholder="請先登入再留言" name="@Model.FCommentContent"></textarea>
+    <input class="btn btn-sm btn-primary" type="submit" value="送出" />
+</form> *@
+
+@* <div>
+    <a asp-action="List">Back to List</a>
+</div>
+ *@
 
     <script>
         const url = '/apiTComment/Create';
-        const selArticleID = document.querySelector('#selectArticleID');
+        const SelectArticleID = document.querySelector('#SelectArticleID');
         $('#buttonSend').click(function () {
 
             // 獲取當前的本地時間
             const currentDate = new Date();
             const jsonData = JSON.stringify({
-                fMemberId: $('#FMemberId'),
-                fArticleId: $('#FArticleId'),
-                fCommentContent: $('#FCommentContent'),
-                fCommentTime: currentDate
+                fMemberId: $('#fMemberID'),
+                fArticleId: $('#fArticleID'),
+                fCommentContent: $('#fCommentContent'),
+                fCommentTime: $('fCommentTime')
             })
             console.log(jsonData)
             $.ajax({
@@ -51,12 +98,11 @@
                 alert("新增失敗");
             });
         });
-        // //Style選擇器
-        // async function loadStyle() {
-        //     const response = await fetch('@Url.Content("~/apiTStyle/List")');
-        //     const data = await response.json();
-        //     const style = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
-        //     selStyle.innerHTML = style.join("");
-        // }
-        // loadStyle();
-    </script>
+            
+    </script> 
+
+
+ @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

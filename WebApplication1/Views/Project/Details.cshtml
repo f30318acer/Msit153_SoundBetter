@@ -162,8 +162,7 @@
                     <button id="btnDisFev" class="btn btn-secondary" style="display:none;">取消追蹤</button>
                     <button id="btnEdit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal" style="display:none;">修改專案</button>
                     <div class="mb-2"></div>
-                    <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>  
-                    <button id="btnDelete" class="btn btn-danger" style="display:none;">刪除專案</button>
+                    <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>                    
                 </div>
             </div>
         </div>
@@ -363,7 +362,6 @@
         const favYes = $('#favYes').val();
         const btnEdit = document.getElementById('btnEdit');
         const btnAppli = document.getElementById('btnAppli');
-        const btnDelete = document.getElementById('btnDelete');
         const btnFev = document.getElementById('btnFev');
         const btnDisFev = document.getElementById('btnDisFev');
         
@@ -381,7 +379,6 @@
             }
             if (loginID == memberId) {
                 btnEdit.style.display = 'block';
-                btnDelete.style.display = 'block';
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
                 btnDisFev.style.display = 'none';

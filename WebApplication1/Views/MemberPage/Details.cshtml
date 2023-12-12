@@ -131,9 +131,7 @@
         word-wrap: break-word;
     }
 </style>
-<input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
-<input id="memID" type="hidden" value="@ViewBag.MemberId" />
-<input type="hidden" id="favYes" value="@ViewBag.Fav" />
+<input id="memID" type="hidden" value="@Model.FMemberId" />
 
 <section id="title" class="player-section" style="background-image: url('/img/playlist/img3.jpg');">
     <div class="player-box">
@@ -153,9 +151,8 @@
                     <p>@Html.DisplayFor(model => model.FIntroduction)</p>
                 </div> 
                 <div class="col-2">
-
-                    <button id="btnFev" class="btn btn-primary" style="display:none;">追蹤老師</button>
-                    <button id="btnDisFev" class="btn btn-secondary" style="display:none;">取消追蹤</button>
+                    
+                        <button class="btn btn-primary">追蹤老師</button>
                         <div class="mb-2"></div>
                         <button class="btn btn-danger">幹他媽媽</button>
                                      
@@ -196,12 +193,6 @@
     </section>
 </div>
 
-<form id="favForm" tyle="display: none;">
-    <!-- form fields go here -->
-    <input type="hidden" name="fMemberId" value="@ViewBag.MemberId">
-    <input type="hidden" name="fRelationMemberId" value="@Html.DisplayFor(model => model.FMemberId)">
-</form>
-
 
 @section Scripts {
     <script>
@@ -209,29 +200,8 @@
         const divClassList = $('#divClassList')
         const divWorkList = $('#divWorkList')
         const divArticleList = $('#divArticleList')
-        const memberId = $('#memberId').val();
         const memID = $('#memID').val();
-        const favYes = $('#favYes').val();
-        const btnFev = document.getElementById('btnFev');
-        const btnDisFev = document.getElementById('btnDisFev');
         var skillName = '';
-
-        //根據登入狀況顯示按鈕
-        function DisplayButton() {
-            if (memID != 0) {
-            }
-            if (memID == memberId) {
-                btnFev.style.display = 'none';
-                btnDisFev.style.display = 'none';
-            }
-            if (memID != memberId && favYes == 0) {
-                btnFev.style.display = 'block';
-            }
-            if (memID != memberId && favYes == 1) {
-                btnDisFev.style.display = 'block';
-            }
-        }
-        DisplayButton();
 
         function loadInfo(){
             $.getJSON(`/MemberPage/GetMemberSkill/${memID}`, function (datas) {
@@ -348,59 +318,6 @@
             })
         }
         ArtiList();
-        //判斷是否登入
-        async function CheckLoginAndNavigate(btnID) {
-            const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
-            const isLogin = await response.json();
-
-            if (isLogin) {
-                if (btnID == 2) {
-                    //追蹤專案
-                    const formData = new FormData(document.querySelector('#favForm'));
-                    fetch('@Url.Content("~/MemberPage/favMember")' + '/' + memberId, {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                btnFev.style.display = 'none';
-                                btnDisFev.style.display = 'block';
-                                alert("追蹤成功");
-                            }
-                            else {
-                                alert("連線失敗");
-                            }
-                        })
-                }
-                if (btnID == 3) {
-                    //取消追蹤
-                    const formData = new FormData(document.querySelector('#favForm'));
-                    fetch('@Url.Content("~/MemberPage/DisFavMember")', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                btnFev.style.display = 'block';
-                                btnDisFev.style.display = 'none';
-                                alert("已取消追蹤");
-                            }
-                            else {
-                                alert("連線失敗");
-                            }
-                        })
-                }
-            } else {
-                // 如果未登錄，導航到 Home/Login
-                window.location.href = "@Url.Action("Login", "Home")";
-            }
-        }
-        btnFev.addEventListener('click', function () {
-            CheckLoginAndNavigate(2);
-        });
-        btnDisFev.addEventListener('click', function () {
-            CheckLoginAndNavigate(3);
-        });
     </script>
     @{
         //await Html.RenderPartialAsync("_ValidationScriptsPartial");

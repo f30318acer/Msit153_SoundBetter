@@ -66,10 +66,6 @@ namespace prjMusicBetter.Models.ViewModels
         /// 場地價格
         /// </summary>
         public decimal? SitePrice { get; set; }
-        /// <summary>
-        /// 教師名稱
-        /// </summary>
-        public String TeacherName { get; set; }
     }
 }
 

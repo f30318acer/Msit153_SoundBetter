@@ -6,16 +6,16 @@
 @section Styles
 {
     <style>
-       .imgmember {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+       /* .img {
+          width:200px ;height:300px;
+        }*/
+        #div01{
+ 
+            height: 90%;
         }
     </style>
 
 }
-<input type="hidden" id="loginId" value="@ViewBag.MemberId" />
-<!---->
 
 <section class="category-section spad">
     <div class="container-fluid">
@@ -29,7 +29,7 @@
                         <select id="selectStyle" class="form-select mr-2"></select>
                         <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" />
                         <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
-                        <button type="button" onclick="CheckLoginAndNavigate()" id="btnCreate" class="btn btn-info mr-2" style="background-color: #fc0254;">建立作品</button>
+                        <a href="javascript:void(0);" type="button" onclick="CheckLoginAndNavigate()" class="btn btn-info mr-2" style="background-color: #fc0254;">建立作品</a>
                     </div>
                 </div>
                 <a href="" class="active">Genres</a>
@@ -52,82 +52,18 @@
     </div>
     
 </section>
-<!-- Category section end --> 
-<section class="songs-section spad">
+<!-- Category section end --><section class="songs-section">
     <div class="  container" />
     <div id="divList" class="row">
-        <!--  new song -->       
+        <!--  new song -->
+        
     </div>
-    <div class="row container">
-        <div class=" text-center" id="pageButtons"><!--  分頁按鈕 -->  </div>
-    </div>
-
-    <!-- Modal1 -->
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">創立作品 <span></span></h5>
-                    @*      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>*@
-                    @*<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">取消</button>*@
-                </div>
-                <div class="modal-body">
-                    <form id="createForm">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="hidden" id="loginId" name="fMemberId" value="@ViewBag.MemberId" />
-                                    <div style="display: flex; justify-content: center; align-items: center; height: 230px;">
-                                        <img id="imgPreview" src="~/img/Works/1.jpg" style="height: 200px;" alt="">
-                                    </div>
-                                    <div style="display: flex; justify-content: center; align-items: center;">
-                                        <input type="file" id="imgFile" name="formFilePhoto" @*class="btn btn-secondary"*@ @*style="display: none;"*@>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="fName">作品名稱</label>
-                                    <input type="text" class="form-control" id="fName" name="fWorkName">
-                                </div>
-                                <div class="form-group">
-                                    <label for="FBudget">風格</label>
-                                    <select id="selectStyle2" class="form-select" name="fStyleId"></select>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="FBudget">作品描述</label>
-                                    <textarea class="form-control" id="fDescription" name="fDescription" style="height: 200px;"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="FBudget">上傳Demo</label>
-                                    <input type="file" id="demoFile" name="formFileDemo" @*style="display: none;"*@>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 關閉</button>
-                    <button type="button" class="btn btn-primary" id="buttonSend"><i class="bi bi-send-check-fill"></i> 送出 </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 </section>
 @section Scripts{
         <script>
 
             const selStyle = document.querySelector('#selectStyle');
-            const selStyle2 = document.querySelector('#selectStyle2');
             const pageButtonsContainer = $('#pageButtons');
             const onePage = 4;
 
@@ -139,134 +75,56 @@
                 const styleOptions = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
                 styleOptions.unshift(defaultOption);
                 selStyle.innerHTML = styleOptions.join("");
-                selStyle2.innerHTML = styleOptions.join("");
-        }
+            }
             loadStyle();
-        //建立按鈕功能
 
-        const loginID = $('#loginId').val();
-        const btnCreate = document.getElementById('btnCreate');
+            //分頁按鈕
+            async function loadPage() {
+                const response = await fetch('@Url.Content("~/apiTWork/ListWithUserName")');
+                const data = await response.json();
+                // 篩選條件
+                const sId = $('#selectStyle').val();
+                const keyword = $('#txtKeyword').val();
 
-        function btnCreatFuntion() {
-            if (loginID != 0) {
-                btnCreate.setAttribute('data-bs-toggle', 'modal');
-                btnCreate.setAttribute('data-bs-target', '#addModal');
-            }
-            if (loginID == 0) {
-            }
-        }
-        btnCreatFuntion();
-        //圖片預覽
-        var arrayBuffer;
-
-        $("#imgFile").bind("change", function () {
-            var file = this.files[0];
-            var allowType = "image.*";
-            if (file.type.match(allowType)) {
-                //預覽
-                var reader = new FileReader();
-                reader.onload = function () {
-                    arrayBuffer = this.result;
-                    var blob = new Blob([arrayBuffer], {
-                        type: "image/jpeg"
+                // 根據所選風格篩選數據
+                let filteredData = data;
+                if (sId != 100) {
+                    filteredData = data.filter(item => item.fStyleId == sId);
+                }
+                //關鍵字篩選
+                if (keyword != '') {
+                    filteredData = filteredData.filter(item => {
+                        // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+                return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
                     });
-                    var urlCreator = window.URL || window.webkitURL;
-                    var imageURL = urlCreator.createObjectURL(blob);
-                    $("#imgPreview").attr("src", imageURL);
-                };
-                reader.readAsArrayBuffer(this.files[0]);
+                }
+
+                const dataCount = filteredData.length;
+                const pageCount = Math.ceil(dataCount / onePage);
+
+                // 清空現有按鈕
+                pageButtonsContainer.empty();
+                for (let i = 1; i <= pageCount; i++) {
+                    let button = $(`<button class="btn btn-secondary mr-2" onclick="load(${i})">${i}</button>`);
+                    button.click(function () {
+                        console.log("HAhaH"+i);
+                        load(i);
+                    });
+                    pageButtonsContainer.append(button);
+                }
             }
-            else {
-                alert("不支援的檔案類型");
-            }
-        });
-        //送出創建資料
-        $('#buttonSend').click(function () {
-            const formData = new FormData(document.querySelector('#createForm'));
-            fetch('@Url.Content("~/apiTWork/Create")', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("創立成功");
-                        location.href = '@Url.Content("~/MusicShare/Details")';
-                    }
-                    else {
-                        alert("連線失敗");
-                    }
-                })
-        })
-
-        //分頁按鈕
-        async function loadPage() {
-            const response = await fetch('@Url.Content("~/apiTWork/ListWithUserName")');
-            const data = await response.json();
-            // 篩選條件
-            const sId = $('#selectStyle').val();
-            const keyword = $('#txtKeyword').val();
-
-            // 根據所選風格篩選數據
-            let filteredData = data;
-            if (sId != 100) {
-                filteredData = data.filter(item => item.fStyleId == sId);
-            }
-            //關鍵字篩選
-            if (keyword != '') {
-                filteredData = filteredData.filter(item => {
-                    // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
-                    return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
-                });
-            }
-
-
-            const dataCount = filteredData.length;
-            const pageCount = Math.ceil(dataCount / onePage);
-
-            // 清空現有按鈕
-            pageButtonsContainer.empty();
-            for (let i = 1; i <= pageCount; i++) {
-                let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
-                button.click(function () {
-                    load(i);
-                });
-                pageButtonsContainer.append(button);
-            }
-        }
-
-       
-
-        //第一次讀取分頁按鈕
-        async function firstLoadPage() {
-            const response = await fetch('@Url.Content("~/apiTWork/ListWithUserName")');
-            const data = await response.json();
-
-            const dataCount = data.length;
-            const pageCount = Math.ceil(dataCount / onePage);
-
-            // 清空現有按鈕
-            pageButtonsContainer.empty();
-            for (let i = 1; i <= pageCount; i++) {
-                let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
-                button.click(function () {
-                    load(i);
-                });
-                pageButtonsContainer.append(button);
-            }
-        }
-        firstLoadPage();
+            loadPage();
             
             //載入資料
             function load(pageNumber) {
                 console.log("HAHAH");
                 const divList = $('#divList')
-            const sId = $('#selectStyle').val();
+                const sId = $('#selectStyle').val();
                 const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
                 //divList.empty();
-            console.log("gay" + sId)
 
                 $.getJSON('/apiTWork/ListWithUserName', function (datas) {
-
+                console.log(datas)
                     let filteredDatas = datas;
                     //風格條件篩選
                     if (sId != 100) {
@@ -275,14 +133,15 @@
                             return item.fStyleId == sId;
                         });
                     }
-
                     //關鍵字篩選
-                if (keyword != '') {
+                    if (keyword) {
                         filteredDatas = filteredDatas.filter(item => {
                             // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
-                            return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
+                                    return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
                         });
                     }
+                    console.log(filteredDatas);
+
                     dataCount = filteredDatas.length;
 
                     //獲得限定頁面資料
@@ -290,38 +149,42 @@
 
                     const docFrag = $(document.createDocumentFragment())
                     $.each(limitdatas, function (index, item) {
-
                         const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                        const card = $(`
-                            <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
-                                    <div class="col-12 mb-2"></div>
-                                    <div class="row playlist-item" style="margin: 0;">
-                                        <div class="col-2" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
-                                        <div class="col-10" style="margin:0px">
-                                            <div class="row">
-                                                <div class="col-12 mb-4"></div>
-                                                <div class="col-12 text-center">
-                                                    <div class="row">
-                                                        <div class="col-10">
-                                                            <h5>${item.fWorkName}</h5>
-                                                        </div>
-                                                        <div class="col-2"></div>
-                                                        <div class="row"></div>
-                                                        <div class="col-12 mb-2"></div>
-                                                        <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
+                        const card = $(   `
+                    <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                        <div class="col-12 mb-2"></div>
+                        <div class="row playlist-item" style="margin: 0;">
+                            <div class="col-2" style="margin:0px">
+                                                <img src="/img/Works/${item.fThumbnail}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
+                            </div>
+                            <div class="col-10" style="margin:0px">
+                                <div class="row">
+                                    <div class="col-12 mb-4"></div>
+                                    <div class="col-12 text-center">
+                                        <div class="row">
+                                            <div class="col-10">  <h5>${item.fWorkName}</h5></div>
+                                            <div class="col-2"></div>
+                                                <div class="row">
                                                     </div>
-                                                </div>
-                                                <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;
-                                                <p style="margin:0px">點閱數：${item.fClick}</p>
-                                            </div>
+                                                            <div class="col-12 mb-2"></div>
+                                                        <p style=" font-size: 20px, margin:0px">${item.fDescription}</p>
                                         </div>
-                                        <div class="col-12">
-                                            <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                         </div>
+                                        <p style="margin:0px">${item.fUsername}</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <audio controls style="width:100%">
+                                            <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                        </audio>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-2"></div>
-                        `);
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-12 mb-2"></div>
+    `
+                        );
                         docFrag.append(card);
                     })
                     divList.html(docFrag)
@@ -341,44 +204,48 @@
 
                     const docFrag = $(document.createDocumentFragment())
                     $.each(limitdatas, function (index, item) {
-                    console.log(item.fWorkId);
                     const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                    const card = $(`
-                        <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
+                               const card = $(`
+                            <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
                                 <div class="col-12 mb-2"></div>
                                 <div class="row playlist-item" style="margin: 0;">
-                                    <div class="col-2" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
+                                    <div class="col-2" style="margin:0px">
+                                                        <img src="/img/Works/${item.fThumbnail}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
+                                    </div>
                                     <div class="col-10" style="margin:0px">
                                         <div class="row">
                                             <div class="col-12 mb-4"></div>
                                             <div class="col-12 text-center">
                                                 <div class="row">
-                                                    <div class="col-10">
-                                                        <h5>${item.fWorkName}</h5>
-                                                    </div>
+                                                    //<div class="col-10">  <h5>${item.fWorkName}</h5></div>
                                                     <div class="col-2"></div>
-                                                    <div class="row"></div>
-                                                    <div class="col-12 mb-2"></div>
-                                                    <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
+                                                        <div class="row">
+                                                            </div>
+                                                                    <div class="col-12 mb-2"></div>
+                                                        <p style=" font-size: 20px, margin:0px">${item.fDescription}</p>
                                                 </div>
+                                                </div>
+                                                <p style="margin:0px">${item.fUsername}</p>
                                             </div>
-                                            <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;
-                                            <p style="margin:0px">點閱數：${item.fClick}</p>
+                                            </div>
+                                            <div class="col-12">
+                                                <audio controls style="width:100%">
+                                                    <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                                </audio>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 mb-2"></div>
-                        `);
+                        <div class="col-12 mb-2"></div>
+            `
+                              );
                         docFrag.append(card);
                     })
                     divList.html(docFrag)
                 })
             }
-        firstLoad(1);
+            Load(1);
 
             //DIv01 資料
             function LoadDiv01() {
@@ -390,10 +257,11 @@
                             `
                             <div class="col-md-4">
                                 <div class="category-item">
+                                        
                                             <img src="/img/Member/${item.fPhotoPath}" alt=""  style="width="200" height="200"">
+                                    
                                     <div class="ci-text">
                                         <h4>${item.fUsername}</h4>
-                                                 <a class="btn btn-secondary" href="/MemberPage/Details/${item.fMemberId}">個人資訊</a>
                                     </div>                                    
                                 </div>
                             </div>
@@ -423,48 +291,12 @@
             const isLogin = await response.json();
 
             if (isLogin) {
-
+                // 如果已登錄，導航到 ClassController/Create
+                window.location.href = "@Url.Action("Create1", "TWorks")";
             } else {
                 // 如果未登錄，導航到 Home/Login
                 window.location.href = "@Url.Action("Login", "Home")";
             }
         }
-
-
-
-        function PlusOne(workId) {
-            // 使用 AJAX 向 apiTWorkController 的 PlusOne 方法發送請求
-            $.ajax({
-                url: `/apiTWork/PlusOne/?id=${workId}`,  // 請根據你的實際路由進行修改
-                type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
-                success: function (response) {
-                    console.log('PlusOne successful');
-                },
-                error: function (error) {
-                    console.error('Error calling PlusOne:', error);
-                }
-            });
-        }
-        function handlePlayEnded(audioElement) {
-    // 在這裡執行你想要的操作
-            console.log(audioElement);
-                alert('播音结束');
-            const idd = audioElement.value;
-            $.ajax({
-                url: `/apiTWork/PlusOne/?id=${idd}`,  // 請根據你的實際路由進行修改
-                type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
-                success: function (response) {
-                    console.log('PlusOne successful');
-                },
-                error: function (error) {
-                    console.error('Error calling PlusOne:', error);
-                }
-            });
-}
-
-
-
-
-
     </script>
 }

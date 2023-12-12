@@ -36,18 +36,6 @@ namespace prjMusicBetter.Controllers
         }
         public async Task<IActionResult> Details(int? id)
         {
-            TMember member = _userInfoService.GetMemberInfo();
-            ViewBag.Fav = 0;
-            ViewBag.MemberId = 0;
-            if (member != null)
-            {
-                ViewBag.MemberId = member.FMemberId;
-                TMemberRelation fav = _context.TMemberRelations.FirstOrDefault(f => f.FMemberId == member.FMemberId && f.FRelationMemberId == id);
-                if (fav != null && fav.FMemberRelationStatusId == 1)
-                {
-                    ViewBag.Fav = 1;
-                }
-            }
 
             if (id == null || _context.TMembers == null)
             {
@@ -97,43 +85,6 @@ namespace prjMusicBetter.Controllers
         {
             var dbSoundBetterContext = _context.TArticles.Where(c => c.FMemberId == id);
             return Json(dbSoundBetterContext);
-        }
-        //===新增追蹤===
-        [HttpPost]
-        public IActionResult favMember(int id, TMemberRelation fav)
-        {
-            if (fav != null)
-            {
-                TMemberRelation fDb = _context.TMemberRelations.FirstOrDefault(f => f.FMemberId == fav.FMemberId && f.FRelationMemberId == fav.FRelationMemberId);
-                if (fDb == null)
-                {
-                    DateTime now = DateTime.Now;
-                    fav.FRelationMemberId = id;
-                    fav.FMemberRelationStatusId = 1;
-                    _context.Add(fav);
-                    _context.SaveChanges();
-                    return Content("追蹤成功");
-                }
-                else {
-                    fDb.FMemberRelationStatusId = 1;
-                    _context.SaveChanges();
-                    return Content("追蹤成功");
-                }
-            }
-            return Content("錯誤");
-        }
-        //===取消追蹤===
-        [HttpPost]
-        public IActionResult DisFavMember(TMemberRelation fav)
-        {
-            TMemberRelation fDb = _context.TMemberRelations.FirstOrDefault(f => f.FMemberId == fav.FMemberId && f.FRelationMemberId == fav.FRelationMemberId);
-            if (fDb != null)
-            {
-                fDb.FMemberRelationStatusId = 2;
-                _context.SaveChanges();
-                return Content("取消追蹤");
-            }
-            return Content("錯誤");
         }
     }
 }

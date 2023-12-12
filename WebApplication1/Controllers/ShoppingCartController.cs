@@ -3,7 +3,6 @@ using prjMusicBetter.Helpers;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
-using System.Formats.Asn1;
 
 namespace prjMusicBetter.Controllers
 {
@@ -18,10 +17,6 @@ namespace prjMusicBetter.Controllers
             _context = dbSoundBetterContext;
         }
 
-        /// <summary>
-        /// 購物車
-        /// </summary>
-        /// <returns></returns>
         public IActionResult List()
         {
             // 取得Session
@@ -54,46 +49,16 @@ namespace prjMusicBetter.Controllers
             return View(cart);
         }
 
-        /// <summary>
-        /// 結帳處理
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
         public IActionResult CheckOut_Rst()
         {
-            
-            // 取得Session
-            int memberId = _userInfoService.GetMemberId();
-            var cart = HttpContext.Session.Get<List<ShoppingCartVM>>($"ShoppingCart_{memberId}") ?? new List<ShoppingCartVM>();
-
-            cart = checkShoppingCart(cart);
-
-            // 算總價
-            var totalPrice = 0;
-            foreach (var item in cart)
-            {
-                totalPrice += Convert.ToInt32(item.ProductPrice * item.ProductCount);
-            }
-            // 儲存至資料表DealClass
-            TDealClass dealClass = new TDealClass();
-            dealClass.FMemberId = memberId;
-            dealClass.FDealdate = DateTime.Now;
-            dealClass.FPrice = totalPrice;
-            
-            _context.Add(dealClass);
-            _context.SaveChanges();
-
-            //// 儲存至資料表DealClassDetail
-            //TDealClassDetail dealClassDetail = new TDealClassDetail();
-            //dealClassDetail.FMemberId = memberId;
-            ////dealClassDetail.FDealClassId = 
-            //dealClassDetail.FClassId = 
-
-            
+            // 
 
 
 
-            return Json(new { success = true, message = "更新成功" });
+
+
+
+            return View();
         }
 
 
@@ -109,7 +74,6 @@ namespace prjMusicBetter.Controllers
                 
                 if (classData != null )
                 {
-
                     item.ProductName = classData.FClassName;
                     item.ProductPrice = classData.FPrice;
                     item.ProductDesc = classData.FDescription;
@@ -122,13 +86,6 @@ namespace prjMusicBetter.Controllers
                     {
                         item.ProductStatus = 9999;
                     }
-
-                    // 取得場地名稱
-                    item.SiteName = _context.TSites.Where(t => t.FSiteId == classData.FSiteId).Select(t => t.FSiteName).SingleOrDefault();
-
-                    // 取得教師名稱
-                    item.TeacherName = _context.TMembers.Where(t => t.FMemberId == classData.FTeacherId).Select(t => t.FName).SingleOrDefault();
-
                     item.ProductStatus = 0000;
                 }
                 
@@ -137,7 +94,6 @@ namespace prjMusicBetter.Controllers
             }
             return cart;
         }
-       
     }
 
 }

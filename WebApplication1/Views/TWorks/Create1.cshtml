@@ -115,7 +115,7 @@
             event.preventDefault();
             if (validateForm()) {
                 const formData = new FormData(document.querySelector('#workForm'));
-                fetch('@Url.Content("~/apiTWorks/Create")', {
+                fetch('@Url.Content("~/apiTWorks/Create1")', {
                     method: 'POST',
                     body: formData
                 })

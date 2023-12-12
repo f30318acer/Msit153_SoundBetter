@@ -101,10 +101,6 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TWorkType> TWorkTypes { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=192.168.22.199;Initial Catalog=dbSoundBetter;User ID=bbb;Password=123");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TApplicationRecord>(entity =>
@@ -331,24 +327,25 @@ public partial class dbSoundBetterContext : DbContext
 
         modelBuilder.Entity<TComment>(entity =>
         {
-            entity.HasKey(e => e.FCommentId);
+            entity.HasKey(e => e.FCommentID);
 
             entity.ToTable("tComment");
 
-            entity.Property(e => e.FCommentId).HasColumnName("fCommentID");
-            entity.Property(e => e.FArticleId).HasColumnName("fArticleID");
+            entity.Property(e => e.FCommentID).HasColumnName("fCommentID");
+            entity.Property(e => e.FArticleID).HasColumnName("fArticleID");
             entity.Property(e => e.FCommentContent).HasColumnName("fCommentContent");
             entity.Property(e => e.FCommentTime)
                 .HasColumnType("datetime")
                 .HasColumnName("fCommentTime");
-            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FMemberID).HasColumnName("fMemberID");
 
             entity.HasOne(d => d.FArticle).WithMany(p => p.TComments)
-                .HasForeignKey(d => d.FArticleId)
+                .HasForeignKey(d => d.FArticleID)
                 .HasConstraintName("FK_tComment_tArticle");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TComments)
-                .HasForeignKey(d => d.FMemberId)
+                .HasForeignKey(d => d.FMemberID)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tComment_tMember");
         });
 
@@ -1172,13 +1169,11 @@ public partial class dbSoundBetterContext : DbContext
 
         modelBuilder.Entity<TWorkClick>(entity =>
         {
-            entity.HasKey(e => e.FWorkClick).HasName("PK_fWorkClick");
+            entity.HasKey(e => e.FWorkClick);
 
             entity.ToTable("tWorkClick");
 
-            entity.Property(e => e.FWorkClick)
-                .ValueGeneratedNever()
-                .HasColumnName("fWorkClick");
+            entity.Property(e => e.FWorkClick).HasColumnName("fWorkClick");
             entity.Property(e => e.FClick).HasColumnName("fClick");
             entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
 

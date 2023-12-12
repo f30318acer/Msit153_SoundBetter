@@ -140,27 +140,6 @@
         background-color: transparent; /* 移除按鈕背景色 */
         cursor: pointer;
     }
-
-    .scroll-to-top-btn {
-        position: fixed;
-        bottom: 50px;
-        right: 50px;
-        background-color: #fc0254;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 20px;
-        display: none;
-        z-index: 999; /* 將按鈕置於最上層 */
-    }
-
-        .scroll-to-top-btn i {
-            font-size: 20px;
-            position: fixed;
-            z-index: 1000; /* 將 <i> 元素置於最上層 */
-        }
-
 </style>
 <!-- Playlist section -->
 <!-- 在<body>標籤內引入CKEditor 5腳本 -->
@@ -201,10 +180,6 @@
     </div>
     <div id="pageButtons" class="text-center">
         <!--分頁按鈕位置-->
-    </div>
-    <div id="scrollToTopBtn" class="scroll-to-top-btn">
-        <i></i>
-        ▲回到上方
     </div>
 </section>
 <!-- Playlist section end -->
@@ -256,7 +231,7 @@
                                      </div>
                                  </a>
                                  <button class="favorite-button" data-classid="${item.fClassId}">
-                                     <img src="${loveImgSrc}" class="favorite-icon" style="width: 32px; height: 30px;" />
+                                     <img src="${loveImgSrc}" class="favorite-icon" style="width: 30px; height: 30px;" />
                                  </button>
                              </div>`
                         );
@@ -388,7 +363,7 @@
                                     </div>
                                 </a>
                                 <button class="favorite-button" data-classid="${item.fClassId}">
-                                     <img src="${loveImgSrc}" class="favorite-icon" style="width: 32px; height: 30px;" />
+                                     <img src="${loveImgSrc}" class="favorite-icon" style="width: 30px; height: 30px;" />
                                 </button>
                             </div>`
                         );
@@ -546,26 +521,5 @@
                 }
             });
         }
-
-
-        //▲回到上方
-        document.addEventListener("DOMContentLoaded", function () {
-            var scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-            window.onscroll = function () {
-                // 顯示或隱藏按鈕根據滾動位置
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    scrollToTopBtn.style.display = "block";
-                } else {
-                    scrollToTopBtn.style.display = "none";
-                }
-            };
-
-            scrollToTopBtn.addEventListener("click", function () {
-                // 捲動到頁面頂部
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            });
-        });
     </script>
 }
