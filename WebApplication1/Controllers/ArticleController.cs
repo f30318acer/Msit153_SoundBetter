@@ -16,6 +16,7 @@ namespace prjMusicBetter.Controllers
         public ArticleController(dbSoundBetterContext context, UserInfoService userInfoService)
         {
             _context = context;
+
             _userInfoService = userInfoService;
         }
         public IActionResult List()
@@ -41,6 +42,16 @@ namespace prjMusicBetter.Controllers
 		}
         public IActionResult Create()
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                // 處理會員資料不存在的情況，導向登入頁面
+                return RedirectToAction("Login", "Home"); // 導向登入頁面
+            }
+            if (member != null)
+            {
+                ViewBag.MemberId = member.FMemberId;
+            }
             return View();
         }
         public async Task<IActionResult> Details(int? id)
