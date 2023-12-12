@@ -3,100 +3,68 @@
     ViewData["Title"] = "ForgetPwd";
 }
 
-<h1>忘記密碼</h1>
-
-<div id="VuePage">
-    <!--使用 Bootstrap 設計表單-->
-    <div class="panel panel-primary">
-        <div class="panel-heading"></div>
-        <div class="panel-body">
-            <div class="form-group">
-                <label>請輸入您註冊時的Email</label>
-                <input type="text" class="form-control" placeholder="請輸入Email" id="inputEmail">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">忘記密碼</h2>
+                    <div class="form-group">
+                        <label for="inputEmail">請輸入您註冊時的Email</label>
+                        <input type="text" class="form-control" placeholder="請輸入Email" id="inputEmail" name="Email">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block" onclick="compareEmail()">寄送密碼</button>
+                </div>
             </div>
-        </div>
-        <div class="panel-footer">
-            <button type="button" class="btn btn-primary" onclick="compareEmail()">寄送驗證碼</button>
         </div>
     </div>
-
-    <!--使用 Bootstrap Modal 樣式，當執行有錯誤時，顯示錯誤訊息-->
-    <div class="modal fade" id="ErrorAlert" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">錯誤訊息</h4>
-                </div>
-                <div class="modal-body" id="ErrorMsg" style="overflow-x:auto;width:100%;">
-                </div>
-            </div>
-        </div>
-    </div><!-- /.modal -->
 </div>
+
 @section scripts{
     <script>
+
         function compareEmail() {
             var inputEmailValue = $('#inputEmail').val();
 
             $.getJSON('/Home/ForgetPwdMember', function (datas) {
                 let match = false;
+                let userName = '';
+                let userPassword = '';
                 $.each(datas, function (index, item) {
                     if (item.fEmail === inputEmailValue) {
                         match = true;
+                        userName = item.fName;
+                        userPassword = item.fPassword;
                         return false;
                     }
                 });
 
                 if (match) {
-                    alert('Email 與 JSON 數據中的至少一個會員相匹配');
+
+                    var formData = new FormData();
+                    formData.append('Email', inputEmailValue);
+                    formData.append('Name', userName);
+                    formData.append('Subject', '找回密碼');
+                    formData.append('Message', '您的密碼是：' + userPassword);
+
+                    fetch('@Url.Content("~/Home/123/")', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert("已送出Email");
+                                location.href = '@Url.Content("~/Home/Login/")';
+                            }
+                            else {
+                                alert("連線失敗");
+                            }
+                        })
                 } else {
-                    alert('在 JSON 數據中找不到該郵件地址');
+                    alert('此Email尚未註冊');
                 }
             });
-
         }
-        // var VuePage = new Vue({
-        //     el: '#VuePage'
-        //     , data: function () {
-        //         var data = {
-        //             form: {}
-        //         };
-        //         return data;
-        //     }
-        //     , methods: {
-        //         // 前端驗證權杖
-        //         GetToken: function () {
-        //             var token = '@Html.AntiForgeryToken()';
-        //             token = $(token).val();
-        //             return token;
-        //         }
-        //         // 寄送驗證碼
-        //         , SendMailToken: function () {
-        //             var self = this;
-        //             // 組合表單資料
-        //             var postData = {};
-        //             postData['UserID'] = self.form.UserID;
-        //             // 使用 jQuery Ajax 傳送至後端
-        //             $.ajax({
-        //                 url: '@Url.Action("SendMailToken", "Member")',
-        //                 method: 'POST',
-        //                 dataType: 'json',
-        //                 data: { inModel: postData, __RequestVerificationToken: self.GetToken() },
-        //                 success: function (datas) {
-        //                     if (datas.ErrMsg) {
-        //                         alert(datas.ErrMsg);
-        //                         return;
-        //                     }
-        //                     alert(datas.ResultMsg);
-        //                 },
-        //                 error: function (err) {
-        //                     $('#ErrorMsg').html(err.responseText);
-        //                     $('#ErrorAlert').modal('toggle');
-        //                 }
-        //             });
-        //         }
-        //     }
-        // })
+
     </script>
 }
