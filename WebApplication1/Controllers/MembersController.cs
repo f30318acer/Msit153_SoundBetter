@@ -11,6 +11,8 @@ using prjMusicBetter.Models.EFModels;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.Services;
 using prjMusicBetter.Models.ViewModels;
+using System.Linq;
+using System.Net.WebSockets;
 
 namespace prjMusicBetter.Controllers
 {
@@ -321,36 +323,77 @@ namespace prjMusicBetter.Controllers
         }
 
 
-        public async Task<IActionResult> MemberWorks(string search, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10)
         {
+           
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
                 return RedirectToAction("Members", "Index");// 如果未找到會員，重定向到登入頁面
             }
-            var works = await _context.TWorks.Where(w => w.FMemberId == member.FMemberId)
-                           .ToListAsync();// 獲取該會員的所有作品
+            var memberworkIds = _context.TWorks
+                .Where(x=>x.FMemberId==member.FMemberId)
+                .Select(x=>x.FWorkId);
+
+            var query = _context.TWorks.AsQueryable();
+            if(!string.IsNullOrWhiteSpace(search)) 
+            {
+                query = query.Where(c => c.FWorkName.Contains(search));
+            }
+
+            var memberworks = query.Where(c=>memberworkIds.Contains(c.FWorkId))
+                ;// 獲取該會員的所有作品
+
+            //先計算總數量
+            var totalItems = await memberworks.CountAsync();
+
+            var pageWorkList = await memberworks.Skip((page-1)*pageSize).ToListAsync();
+
             var viewModel = new MemberWorksVM
             {
                 Member = member,
-                Works = works // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
+               Works = pageWorkList,
+                CurrentPage=page,
+                TotalPages = (int)Math.Ceiling((double)totalItems/pageSize),
+                PageSize = pageSize,
+                 // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
             };
+
             return PartialView(viewModel);
         }
 
-        public async Task<IActionResult> MemberProject()
+        public async Task<IActionResult> MemberProject(string search, int page = 1, int pageSize = 10)
         {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
                 return RedirectToAction("Members", "Index");
             }
-            var project = await _context.TProjects.Where(p => p.FMemberId == member.FMemberId)
-                .ToListAsync();
+
+            var projectIds = _context.TProjects
+                .Where(p => p.FMemberId == member.FMemberId)
+                .Select(x=>x.FProjectId);
+
+            var query = _context.TProjects.AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(search))
+            {
+               query=query.Where(c =>c.FName.Contains(search));
+            }
+
+           var memberProjects = query.Where(c =>projectIds.Contains(c.FProjectId));
+
+            var totalItems = await memberProjects.CountAsync();
+
+            var pageProjectList = await memberProjects.Skip((page - 1) * pageSize).ToListAsync();
+
             var viewModel = new MemberProjectVM
             {
                 Member = member,
-                Project = project
+                Project = pageProjectList,
+                CurrentPage=page,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                PageSize = pageSize,
             };
             return PartialView(viewModel);
         }

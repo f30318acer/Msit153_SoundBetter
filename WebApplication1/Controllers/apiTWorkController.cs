@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace prjSoundBetterApi.Controllers
 {
@@ -43,7 +44,9 @@ namespace prjSoundBetterApi.Controllers
             var dbSoundBetterContext = from w in _context.TWorks
                                        join m in _context.TMembers
                                        on w.FMemberId equals m.FMemberId
-                                       select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyleId, w.FThumbnail,w.FWorkName, w.FWorkId };
+                                       join c in _context.TWorkClicks
+                                       on w.FWorkId equals c.FWorkId
+                                       select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyleId, w.FThumbnail,w.FWorkName, w.FWorkId, c.FClick };
 
             return Json(dbSoundBetterContext);
         }
@@ -145,5 +148,17 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("刪除失敗");
         }
+
+        public IActionResult PlusOne(int?id)
+        {
+            var WorkClick = _context.TWorkClicks.FirstOrDefault(c => c.FWorkId == 1025);
+            if (WorkClick != null)
+            {
+                WorkClick.FClick++;//點閱數+1
+            }
+            _context.SaveChanges();
+            return Content("新增成功");
+        }
+
     }
 }

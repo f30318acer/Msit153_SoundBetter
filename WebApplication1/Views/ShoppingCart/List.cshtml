@@ -47,7 +47,9 @@
                                     </p>
                                     @* 課程起始日 *@
                                     <p>@item.ProductStartDate</p>
-                                    @* 課程結束日 *@
+                                    @* 授課老師 *@
+                                    <p>@item.TeacherName</p>
+                                    @* 授課地點 *@
                                     <p>@item.SiteName</p>
 
                                 </div>
@@ -133,7 +135,7 @@
                             </li>
                         </ul>
                         @* 結帳Button *@
-                        <a id="checkOutButton" href="/ShoppingCart/Checkout"  type="button" class="btn btn-primary btn-lg btn-block">結帳</a>
+                        <a id="checkOutButton" href="/ShoppingCart/Checkout"  type="button" class="btn btn-primary btn-lg btn-block">前往結帳</a>
 
                     </div>
                 </div>
@@ -238,6 +240,8 @@
 
             $("#totalSumPrice").text(totalSum)
         }
+
+
 
     </script>
 }

@@ -255,11 +255,9 @@
                     if (keyword) {
                         filteredDatas = filteredDatas.filter(item => {
                             // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
-                                    return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
+                            return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
                         });
                     }
-                    console.log(filteredDatas);
-
                     dataCount = filteredDatas.length;
 
                     //獲得限定頁面資料
@@ -267,42 +265,38 @@
 
                     const docFrag = $(document.createDocumentFragment())
                     $.each(limitdatas, function (index, item) {
+
                         const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                        const card = $(   `
-                    <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
-                        <div class="col-12 mb-2"></div>
-                        <div class="row playlist-item" style="margin: 0;">
-                            <div class="col-2" style="margin:0px">
-                                                <img  src="/img/Works/${item.fThumbnail}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
-                            </div>
-                            <div class="col-10" style="margin:0px">
-                                <div class="row">
-                                    <div class="col-12 mb-4"></div>
-                                    <div class="col-12 text-center">
-                                        <div class="row">
-                                            <div class="col-10">  <h5>${item.fWorkName}</h5></div>
-                                            <div class="col-2"></div>
-                                                <div class="row">
+                        const card = $(`
+                            <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
+                                    <div class="col-12 mb-2"></div>
+                                    <div class="row playlist-item" style="margin: 0;">
+                                        <div class="col-2" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
+                                        <div class="col-10" style="margin:0px">
+                                            <div class="row">
+                                                <div class="col-12 mb-4"></div>
+                                                <div class="col-12 text-center">
+                                                    <div class="row">
+                                                        <div class="col-10">
+                                                            <h5>${item.fWorkName}</h5>
+                                                        </div>
+                                                        <div class="col-2"></div>
+                                                        <div class="row"></div>
+                                                        <div class="col-12 mb-2"></div>
+                                                        <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
                                                     </div>
-                                                            <div class="col-12 mb-2"></div>
-                                                        <p style=" font-size: 20px, margin:0px">${item.fDescription}</p>
+                                                </div>
+                                                <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;
+                                                <p style="margin:0px">點閱數：${item.fClick}</p>
+                                            </div>
                                         </div>
+                                        <div class="col-12">
+                                            <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                         </div>
-                                        <p style="margin:0px">${item.fUsername}</p>
-                                    </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <audio controls style="width:100%">
-                                            <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
-                                        </audio>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-12 mb-2"></div>
-    `
-                        );
+                                <div class="col-12 mb-2"></div>
+                        `);
                         docFrag.append(card);
                     })
                     divList.html(docFrag)
@@ -321,42 +315,38 @@
 
                     const docFrag = $(document.createDocumentFragment())
                     $.each(limitdatas, function (index, item) {
+                    console.log(item.fWorkId);
                     const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                               const card = $(`
-                            <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                    const card = $(`
+                        <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
                                 <div class="col-12 mb-2"></div>
                                 <div class="row playlist-item" style="margin: 0;">
-                                    <div class="col-2" style="margin:0px">
-                                                        <img src="/img/Works/${item.fThumbnail}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
-                                    </div>
+                                    <div class="col-2" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
                                     <div class="col-10" style="margin:0px">
                                         <div class="row">
                                             <div class="col-12 mb-4"></div>
                                             <div class="col-12 text-center">
                                                 <div class="row">
-                                                    //<div class="col-10">  <h5>${item.fWorkName}</h5></div>
+                                                    <div class="col-10">
+                                                        <h5>${item.fWorkName}</h5>
+                                                    </div>
                                                     <div class="col-2"></div>
-                                                        <div class="row">
-                                                            </div>
-                                                                    <div class="col-12 mb-2"></div>
-                                                        <p style=" font-size: 20px, margin:0px">${item.fDescription}</p>
+                                                    <div class="row"></div>
+                                                    <div class="col-12 mb-2"></div>
+                                                    <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
                                                 </div>
-                                                </div>
-                                                <p style="margin:0px">${item.fUsername}</p>
                                             </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <audio controls style="width:100%">
-                                                    <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg" />
-                                                </audio>
-                                            </div>
+                                            <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;
+                                            <p style="margin:0px">點閱數：${item.fClick}</p>
                                         </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                     </div>
                                 </div>
                             </div>
-                        <div class="col-12 mb-2"></div>
-            `
-                              );
+                            <div class="col-12 mb-2"></div>
+                        `);
                         docFrag.append(card);
                     })
                     divList.html(docFrag)
@@ -374,11 +364,10 @@
                             `
                             <div class="col-md-4">
                                 <div class="category-item">
-                                        
                                             <img src="/img/Member/${item.fPhotoPath}" alt=""  style="width="200" height="200"">
-                                    
                                     <div class="ci-text">
                                         <h4>${item.fUsername}</h4>
+                                                 <a class="btn btn-secondary" href="/MemberPage/Details/${item.fMemberId}">個人資訊</a>
                                     </div>                                    
                                 </div>
                             </div>
@@ -414,5 +403,42 @@
                 window.location.href = "@Url.Action("Login", "Home")";
             }
         }
+
+
+
+        function PlusOne(workId) {
+            // 使用 AJAX 向 apiTWorkController 的 PlusOne 方法發送請求
+            $.ajax({
+                url: `/apiTWork/PlusOne/?id=${workId}`,  // 請根據你的實際路由進行修改
+                type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
+                success: function (response) {
+                    console.log('PlusOne successful');
+                },
+                error: function (error) {
+                    console.error('Error calling PlusOne:', error);
+                }
+            });
+        }
+        function handlePlayEnded(audioElement) {
+    // 在這裡執行你想要的操作
+            console.log(audioElement);
+                alert('播音结束');
+            const idd = audioElement.value;
+            $.ajax({
+                url: `/apiTWork/PlusOne/?id=${idd}`,  // 請根據你的實際路由進行修改
+                type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
+                success: function (response) {
+                    console.log('PlusOne successful');
+                },
+                error: function (error) {
+                    console.error('Error calling PlusOne:', error);
+                }
+            });
+}
+
+
+
+
+
     </script>
 }

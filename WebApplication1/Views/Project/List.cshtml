@@ -262,6 +262,7 @@
 					return item.fDescription.includes(keyword) || item.fName.includes(keyword);
 				});
 			}
+
 			//Skill條件
 			if (skillID != 100) {
 				filteredData = filteredData.filter(item => item.fSkillId == skillID);
