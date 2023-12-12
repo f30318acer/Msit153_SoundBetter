@@ -35,7 +35,8 @@ namespace prjMusicBetter.Controllers
                                        on s.FTeacherId equals m.FMemberId
                                        join t in _context.TSites
                                        on s.FSiteId equals t.FSiteId
-									   where s.FEnddate >= DateTime.Now
+                                       
+                                       where s.FEnddate >= DateTime.Now
                                        orderby s.FClassId descending
                                        select new
                                        {
@@ -49,7 +50,7 @@ namespace prjMusicBetter.Controllers
                                            fDescription = ReplaceHtmlTag(s.FDescription),
                                            fClick = c.FClick,
                                            fTeacherNmae = m.FName,
-                                           fSiteName = t.FSiteName
+                                           fSiteName = t.FSiteName,
                                        };
 
             return Json(dbSoundBetterContext);
@@ -68,7 +69,9 @@ namespace prjMusicBetter.Controllers
 									   on s.FClassId equals c.FClassId
 									   join m in _context.TMembers
 									   on s.FTeacherId equals m.FMemberId
-									   where s.FTeacherId == id
+                                       join d in _context.TDealClassDetails
+                                       on s.FTeacherId equals d.FMemberId
+                                       where s.FTeacherId == id
                                        orderby s.FClassId descending
                                        select new
 									   {
@@ -83,6 +86,7 @@ namespace prjMusicBetter.Controllers
 										   fClick = c.FClick,
 										   fTeacherNmae = m.FName,
                                            fEnddate = s.FEnddate,
+                                           fDealClass = d.FClassId,//我買了那些課
                                        };
 			if (dbSoundBetterContext == null)
 			{
@@ -320,6 +324,23 @@ namespace prjMusicBetter.Controllers
                              fEnddate = s.FEnddate,
                          };
             return Json(result.ToList());
+        }
+
+        //fCurrentStudent + 1
+        public IActionResult Currentplus(int? id)
+        {
+            if (id == null || _context.TClasses == null)
+            {
+                return NotFound();
+            }
+
+            var tProject = _context.TClasses.FirstOrDefault(m => m.FClassId == id);
+            if (tProject != null)
+            {
+                tProject.FCurrentStudent++;//點閱數+1
+            }
+            _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

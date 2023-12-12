@@ -138,6 +138,9 @@ namespace prjMusicBetter.Controllers
             var Address = _context.TSites.Where(t => t.FSiteId == tClass.FSiteId).Select(t => t.FAddress).SingleOrDefault();
             ViewBag.Address = Address;//地點
 
+            var DealClass = _context.TDealClassDetails.Where(t => t.FClassId == tClass.FClassId).Select(t => t.FMemberId).Any(id => id == member.FMemberId);
+            ViewBag.DealClass = DealClass;
+
             return View(tClass);
 		}
 
