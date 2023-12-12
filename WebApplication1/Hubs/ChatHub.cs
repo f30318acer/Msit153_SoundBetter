@@ -77,5 +77,11 @@ namespace CoreMVC_SignalR_Chat.Hubs
                 await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
             }
         }
+        public async Task<string> GetMemberId()
+        {
+            // 假設會員 ID 存儲在用戶的認證中
+            var memberId = Context.User.Identity.Name;
+            return await Task.FromResult(memberId);
+        }
     }
 }
