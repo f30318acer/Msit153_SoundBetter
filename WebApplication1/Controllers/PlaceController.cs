@@ -137,6 +137,16 @@ namespace Music_matchmaking_platform.Controllers
 
 			return View(tSite);
 		}
+        public IActionResult GetClasses(int? fSiteId)
+        {
+            var sss = from s in _context.TSites
+                      join c in _context.TClasses
+                      on s.FSiteId equals c.FSiteId
+                      where s.FSiteId == fSiteId
+                      select c;
+
+            return Json(sss);
+        }
         //public IActionResult GetMemberNameandEmail()
         //{
         //    TMember member = _userInfoService.GetMemberInfo();
