@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Create";
 }
-
+<input type="hidden" id="loginId" class="form-control" name="fMemberId" value="@ViewBag.MemberId" />
 <section class="intro-section spad">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -13,17 +13,17 @@
                                 <p class="text-center h1 fw-bold @*mb-5*@ mx-1 mx-md-4 mt-4">建立文章</p>
 
 
-                                <form class="mx-1 mx-md-4">
-
+                                <form id="createForm" class="mx-1 mx-md-4">
+                                    <input type="hidden" class="form-control" name="fMemberId" value="@ViewBag.MemberId" />
                                     <div class="photo-button mb-3">
                                         <div class="photo-card mb-2 d-flex justify-content-center">
                                             <div class="photo">
-                                                <img src="~/img/playlist/13.jpg" style="border-radius:10px">
+                                                <img id="imgPreview" src="~/img/playlist/13.jpg" style="border-radius:10px">
                                                 
                                             </div>
                                         </div>
                                         <div class="photo-upload mb-2 d-flex justify-content-center">
-                                            <input type="file" name="Photo" @* style="display: none;"*@class="btn btn-primary">
+                                            <input id="imgFile" type="file" name="formFilePhoto" @* style="display: none;"*@class="btn btn-primary">
                                             
                                         </div>
                                     </div>
@@ -31,7 +31,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">文章標題</label>
-                                            <input type="text" id="fTitle" class="form-control" />
+                                            <input type="text" id="fTitle" name="fTitle" class="form-control" />
 
                                         </div>
                                     </div>
@@ -39,21 +39,21 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example4c">文章風格</label>
-                                            <select id="selectStyle" class="form-select"></select>
+                                            <select id="selectStyle" class="form-select" name="fStyleId"></select>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">文章內容</label>
-                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fContent" style="height: 100px"></textarea>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fContent" name="fContent" style="height: 100px"></textarea>
 
                                         </div>
                                     </div>
 
 
                                     <div class="text-right">
-                                        <a href="~/VCProject/List" type="button" class="btn btn-secondary">取消</a>
+                                        <a href="~/Article/List" type="button" class="btn btn-secondary">取消</a>
                                         <button type="button" class="btn btn-success" id="buttonSend">確認建立</button>
                                     </div>
                                 </form>
@@ -72,31 +72,48 @@
 
 @section Scripts{
     <script>
-        const url = '/apiTArticle/Create';
         const selStyle = document.querySelector('#selectStyle');
-        $('#buttonSend').click(function () {
+        //圖片預覽
+        var arrayBuffer;
 
-            // 獲取當前的本地時間
-            const currentDate = new Date();
-            const jsonData = JSON.stringify({
-                fMemberId: 1,
-                fTitle: $('#fTitle'),
-                fContent: $('#fContent'),
-                fStyleId: selStyle.value
-            })
-            console.log(jsonData)
-            $.ajax({
-                url: url,
-                type: 'POST',
-                contentType: 'application/json',
-                data: jsonData
-            }).done(function (data) {
-                alert("新增成功")
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log("POST request failed: " + textStatus + ", " + errorThrown);
-                alert("新增失敗");
-            });
+        $("#imgFile").bind("change", function () {
+            var file = this.files[0];
+            var allowType = "image.*";
+            if (file.type.match(allowType)) {
+                //預覽
+                var reader = new FileReader();
+                reader.onload = function () {
+                    arrayBuffer = this.result;
+                    var blob = new Blob([arrayBuffer], {
+                        type: "image/jpeg"
+                    });
+                    var urlCreator = window.URL || window.webkitURL;
+                    var imageURL = urlCreator.createObjectURL(blob);
+                    $("#imgPreview").attr("src", imageURL);
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+            else {
+                alert("不支援的檔案類型");
+            }
         });
+        //送出創建資料
+        $('#buttonSend').click(function () {
+            const formData = new FormData(document.querySelector('#createForm'));
+            fetch('@Url.Content("~/apiTArticle/Create")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("創立成功");
+                        location.href = '@Url.Content("~/Article/List")';
+                    }
+                    else {
+                        alert("連線失敗");
+                    }
+                })
+        })
         //Style選擇器
         async function loadStyle() {
             const response = await fetch('@Url.Content("~/apiTStyle/List")');

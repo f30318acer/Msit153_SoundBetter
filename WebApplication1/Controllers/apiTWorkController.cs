@@ -32,21 +32,32 @@ namespace prjSoundBetterApi.Controllers
 
         public IActionResult MemberList()
         {
-            var x = from m in _context.TMembers
-                    join w in _context.TWorks on m.FMemberId equals w.FMemberId
-                   
-                    select new {w.FWorkId,m.FMemberId ,m.FUsername,w.FFilePath,w.FWorkName ,m.FPhotoPath};
-            var y = x.Take(3);
-            return Json(y); 
+            var topMembers = _context.TWorks
+    .OrderByDescending(w => w.FClick)
+    .Take(3)
+    .Join(
+        _context.TMembers,
+        work => work.FMemberId,
+        member => member.FMemberId,
+        (work, member) => new
+        {
+            work.FWorkId,
+            member.FMemberId,
+            member.FUsername,
+            work.FFilePath,
+            work.FWorkName,
+            member.FPhotoPath
+        }
+    );
+
+            return Json(topMembers);
         }
         public IActionResult ListWithUserName()
         {
             var dbSoundBetterContext = from w in _context.TWorks
                                        join m in _context.TMembers
                                        on w.FMemberId equals m.FMemberId
-                                       join c in _context.TWorkClicks
-                                       on w.FWorkId equals c.FWorkId
-                                       select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyleId, w.FThumbnail,w.FWorkName, w.FWorkId, c.FClick };
+                                       select new { m.FUsername, w.FDescription, w.FFilePath, w.FStyleId, w.FThumbnail,w.FWorkName, w.FWorkId, w.FClick};
 
             return Json(dbSoundBetterContext);
         }
@@ -109,18 +120,15 @@ namespace prjSoundBetterApi.Controllers
                 }
                 DateTime now = DateTime.Now;
                 work.FUpdateTime= now;
+                work.FClick = 0;
                 _context.Add(work);
                 _context.SaveChanges();
 
                 // 新增 TClassClicks 資料
-                TWorkClick  workClick = new TWorkClick
-                {
-                    FWorkId = work.FWorkId, // 使用 TClass 資料的 FClassId
-                    FClick = 0
-                };
+              
 
-                _context.Add(workClick);
-                _context.SaveChanges();
+               
+              
                 return Content("新增成功");
             }
             return Content("錯誤");
@@ -151,7 +159,7 @@ namespace prjSoundBetterApi.Controllers
 
         public IActionResult PlusOne(int?id)
         {
-            var WorkClick = _context.TWorkClicks.FirstOrDefault(c => c.FWorkId == id);
+            var WorkClick = _context.TWorks.FirstOrDefault(c => c.FWorkId == id);
             if (WorkClick != null)
             {
                 WorkClick.FClick++;//點閱數+1
