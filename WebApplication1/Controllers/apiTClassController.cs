@@ -155,6 +155,37 @@ namespace prjMusicBetter.Controllers
 
                 _context.Add(classClick);
                 _context.SaveChanges();
+
+                // 取得 TSites 的相關資料
+                var siteData = _context.TSites.SingleOrDefault(s => s.FSiteId == project.FSiteId);
+
+                // 假設 TSites 中有相對應的資料
+                if (siteData == null)
+                {
+                    // 整理資料
+                    TSite newSiteData = new TSite
+                    {
+                        // 設定屬性值，可根據 TSites 的屬性進行調整
+                        FSiteName = siteData.FSiteName,
+                        FMemberId = siteData.FMemberId,
+                        FSiteType = siteData.FSiteType,
+                        FCityId = siteData.FCityId,
+                        FAddress = siteData.FAddress,
+                    };
+
+                    // 新增到 _context.TSites
+                    _context.TSites.Add(newSiteData);
+
+                    // 提交更改以確保新站點數據被保存
+                    _context.SaveChanges();
+
+                    // 更新 project 的 FSiteId
+                    project.FSiteId = newSiteData.FSiteId;
+
+                    // 再次保存對 project 的更改
+                    _context.SaveChanges();
+                }
+
                 return Content("新增成功");
 			}
 			return Content("錯誤");
@@ -333,11 +364,10 @@ namespace prjMusicBetter.Controllers
             {
                 return NotFound();
             }
-
             var tProject = _context.TClasses.FirstOrDefault(m => m.FClassId == id);
             if (tProject != null)
             {
-                tProject.FCurrentStudent++;//點閱數+1
+                tProject.FCurrentStudent++;//現在學生數+1
             }
             _context.SaveChangesAsync();
             return Ok();
