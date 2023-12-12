@@ -9,11 +9,11 @@ public partial class TComment
 {
     public int FCommentID { get; set; }
 
-<<<<<<< HEAD
+
     public int FMemberID { get; set; }
-=======
+
     public int? FMemberId { get; set; }
->>>>>>> 6690e5a6dd5ce57df76fb624453c14bc3cdef981
+
 
     public string FCommentContent { get; set; }
 
