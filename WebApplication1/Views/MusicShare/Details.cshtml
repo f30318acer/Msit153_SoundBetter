@@ -225,8 +225,9 @@
                 // 清空現有按鈕
                 pageButtonsContainer.empty();
                 for (let i = 1; i <= pageCount; i++) {
-                    let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+                    let button = $(`<button class="btn btn-secondary mr-2" onclick="load(${i})">${i}</button>`);
                     button.click(function () {
+                        console.log("HAhaH"+i);
                         load(i);
                     });
                     pageButtonsContainer.append(button);
@@ -236,6 +237,7 @@
             
             //載入資料
             function load(pageNumber) {
+                console.log("HAHAH");
                 const divList = $('#divList')
                 const sId = $('#selectStyle').val();
                 const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
@@ -305,11 +307,12 @@
 
             //第一次讀取
             function firstLoad(pageNumber) {
+                console.log("ABC")
                 const divList = $('#divList')
                 //divList.empty();
 
                      $.getJSON('/apiTWork/ListWithUserName', function (datas) {
-                    console.log(datas);
+
                     //獲得限定頁面資料
                     const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
 
@@ -352,7 +355,7 @@
                     divList.html(docFrag)
                 })
             }
-            firstLoad(1);
+            Load(1);
 
             //DIv01 資料
             function LoadDiv01() {
