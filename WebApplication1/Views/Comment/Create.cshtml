@@ -38,20 +38,20 @@
 
                                         <div class="form-group">
                                             <label asp-for="FCommentContent" class="control-label">新增留言</label>
-                                            <input asp-for="FCommentContent" class="form-control" id="FCommentContent" />
+                                            <input asp-for="FCommentContent" class="form-control" id="fCommentContent" />
                                             <span asp-validation-for="FCommentContent" class="text-danger"></span>
                                         </div>
 
-                                       @*  <div class="d-flex flex-row align-items-center mb-4">
+@*                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label" for="form3Example3c">新增留言</label>
-                                                <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fCommentContent" style="height: 100px"></textarea>
+                                        <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fCommentContent" style="height: 100px"></textarea>
 
                                             </div>
                                         </div> *@
 
 
-
+                                        
 
                                         <div class="text-right">
                                             <a href="@Url.Action("List","Comment")" type="button" class="btn btn-secondary">取消/回到列表</a>
@@ -84,12 +84,12 @@
     const url = '/Comment/Create';
     $('#buttonSend').click(function () {
 
-        // 獲取當前的本地時間
+       
         const currentDate = new Date();
         const jsonData = JSON.stringify({
             
-            fMemberId: 1,
-            fArticleId: 20,
+            fMemberId: $('#fMemberId'),
+            fArticleId: $('#fArticleId'),
             fCommentContent: $('#fCommentContent'),
             currentDate: $('#fCommentTime')
         })
@@ -101,10 +101,12 @@
             data: jsonData /* '$("#jsonData").val()' */
         }).done(function (data) {
             alert("新增成功")
+            window.location.href = "@Url.Action("List","Comment")"
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.log("POST request failed: " + textStatus + ", " + errorThrown);
             alert("新增失敗");
+            window.location.href = "@Url.Action("List", "Comment")"
         });
     });
 
