@@ -151,7 +151,7 @@ namespace prjSoundBetterApi.Controllers
 
         public IActionResult PlusOne(int?id)
         {
-            var WorkClick = _context.TWorkClicks.FirstOrDefault(c => c.FWorkId == 1025);
+            var WorkClick = _context.TWorkClicks.FirstOrDefault(c => c.FWorkId == id);
             if (WorkClick != null)
             {
                 WorkClick.FClick++;//點閱數+1
