@@ -43,14 +43,37 @@
             <div class="category-items col-md-10">
                 <div id="div01" class="row">
                     <!--List_-->
-                    
+                   
 
                 </div>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
-    
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>音樂播放器</title>
+        <!-- 引入你的樣式表和其他必要的庫 -->
+    </head>
+    <body>
+        <div id="player">
+            <audio id="audioPlayer" controls>
+                <!-- 在這裡放置初始歌曲的路徑 -->
+                <source src="/path/to/your/initial/song.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <div>
+                <button onclick="playPrevious()">上一首</button>
+                <button onclick="playPause()">播放/暫停</button>
+                <button onclick="playNext()">下一首</button>
+            </div>
+        </div>
+
+        <script src="your-scripts.js"></script> <!-- 引入你的 JavaScript 文件 -->
+    </body>
+</html>
 </section>
 <!-- Category section end --> 
 <section class="songs-section spad">
@@ -120,11 +143,14 @@
             </div>
         </div>
     </div>
-
+ 
 
 </section>
 @section Scripts{
         <script>
+
+
+
 
             const selStyle = document.querySelector('#selectStyle');
             const selStyle2 = document.querySelector('#selectStyle2');
