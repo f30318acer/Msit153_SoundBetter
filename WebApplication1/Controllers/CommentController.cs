@@ -44,15 +44,18 @@ namespace prjMusicBetter.Controllers
 
 
         public IActionResult Create()
-        { return View(); }
+        { 
+            return View(); 
+        }
         [HttpPost]
         public IActionResult Create(CommentDto dto)
         {
 
             dto.ArticleId = 20;
+            //dto.Content = "test123";
             _context.TComments.Add(new TComment()
             {
-                FMemberId = dto.MemberId,
+                //FMemberId = dto.MemberId,
                 FCommentContent = dto.Content,
                 FArticleId = dto.ArticleId,
                 FCommentTime = DateTime.Now,
@@ -87,14 +90,16 @@ namespace prjMusicBetter.Controllers
         //    return RedirectToAction("List");
         //}
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.TComments == null) { return NotFound(); }
             var tComment = await _context.TComments.FindAsync(id);
             if (tComment == null) { return NotFound(); }
 
+            tComment.FCommentTime = DateTime.Now;
             ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
             ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
+            ViewData["FCommentTime"] = new SelectList(_context.TComments, "FCommentTime", "FCommentTime", tComment.FCommentTime);
 
             return View(tComment);
 
@@ -118,9 +123,10 @@ namespace prjMusicBetter.Controllers
                 }
                 return RedirectToAction(nameof(List));
             }
+            tComment.FCommentTime = DateTime.Now;
             ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
             ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
-
+            ViewData["FCommentTime"] = new SelectList(_context.TComments, "FCommentTime", "FCommentTime", tComment.FCommentTime);
             return View(tComment);
 
         }
