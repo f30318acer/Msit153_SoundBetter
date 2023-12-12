@@ -32,12 +32,25 @@ namespace prjSoundBetterApi.Controllers
 
         public IActionResult MemberList()
         {
-            var x = from m in _context.TMembers
-                    join w in _context.TWorks on m.FMemberId equals w.FMemberId
-                   
-                    select new {w.FWorkId,m.FMemberId ,m.FUsername,w.FFilePath,w.FWorkName ,m.FPhotoPath};
-            var y = x.Take(3);
-            return Json(y); 
+            var topMembers = _context.TWorks
+    .OrderByDescending(w => w.FClick)
+    .Take(3)
+    .Join(
+        _context.TMembers,
+        work => work.FMemberId,
+        member => member.FMemberId,
+        (work, member) => new
+        {
+            work.FWorkId,
+            member.FMemberId,
+            member.FUsername,
+            work.FFilePath,
+            work.FWorkName,
+            member.FPhotoPath
+        }
+    );
+
+            return Json(topMembers);
         }
         public IActionResult ListWithUserName()
         {
