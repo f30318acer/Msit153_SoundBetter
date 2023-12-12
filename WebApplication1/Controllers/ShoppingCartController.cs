@@ -150,7 +150,19 @@ namespace prjMusicBetter.Controllers
             }
             return cart;
         }
-       
+        [HttpPost]
+        public IActionResult ClearCart()
+        {
+            // 取得Session
+            int memberId = _userInfoService.GetMemberId();
+
+            // 清除购物车信息
+            HttpContext.Session.Remove($"ShoppingCart_{memberId}");
+            return Ok();
+        }
     }
 
+
 }
+
+
