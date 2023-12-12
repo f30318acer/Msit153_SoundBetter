@@ -398,6 +398,21 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> DeleteMemberWork(int workId)
+        //{
+        //    var workToDelete = await _context.TWorks.FirstOrDefaultAsync(w => w.FWorkId == workId);
+        //    if (workToDelete == null)
+        //    {
+        //        return NotFound();
+
+        //    }
+        //    _context.TWorks.Remove(workToDelete);
+        //    await _context.SaveChangesAsync();
+
+        //    // 刪除後重定向回作品列表，或返回一個成功訊息
+        //    return RedirectToAction("MemberWorks");
+        //}
 
     }
 }
