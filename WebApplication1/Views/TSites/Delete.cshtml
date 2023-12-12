@@ -5,55 +5,75 @@
     Layout = "_Layout2";
 }
 <main id="main" class="main">
-<h1>Delete</h1>
+<h1>刪除場地</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>請問您確定要刪除此場地嗎？</h3>
 <div>
-    <h4>TSite</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FPhone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FPhone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FSiteType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FSiteType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FAddress)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FAddress)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FCity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FCity.FCityId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FMember)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FMember.FMemberId)
-        </dd>
+            <dt class="col-sm-2">
+                場地名稱
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FSiteName)
+            </dd>
+            <br />
+            <dt class="col-sm-2">
+                電話
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FPhone)
+            </dd>
+            <br />
+            <dt class="col-sm-2">
+                場地類型
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    string siteTypeText = "";
+                    switch (Model.FSiteType)
+                    {
+                        case 1:
+                            siteTypeText = "錄音室";
+                            break;
+                        case 2:
+                            siteTypeText = "音樂教室";
+                            break;
+                        default:
+                            siteTypeText = "其他";
+                            break;
+                    }
+                }
+                @siteTypeText
+            </dd>
+            <br />
+            <dt class="col-sm-2">
+                地址
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FAddress)
+            </dd>
+            <br />
+            <dt class="col-sm-2">
+                城市
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FCity.FCity)
+            </dd>
+            <br />
+            <dt class="col-sm-2">
+                會員
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FMember.FName)
+            </dd>
+            <br />
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="FSiteId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="刪除場地" class="btn btn-danger" /> |
+        <a asp-action="Index">回場地列表</a>
     </form>
 </div>
 </main>
