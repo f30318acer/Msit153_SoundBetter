@@ -135,6 +135,7 @@
 <input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="budget" value="@Html.DisplayFor(model => model.FBudget)" />
 <input type="hidden" id="pID" value="@Html.DisplayFor(model => model.FProjectId)" />
+<input type="hidden" id="pStatus" value="@Html.DisplayFor(model => model.FProjectStatusId)" />
 <input type="hidden" id="loginId" value="@ViewBag.MemberId" />
 <input type="hidden" id="favYes" value="@ViewBag.Fav" />
 
@@ -152,7 +153,7 @@
                     <h2>@Model.FName</h2>
                     <div class="mb-3"></div>
                     <h5 id="txtskill" style="color:gray;"></h5>
-                    <h4 style="color:gray;"></h4>
+                    <h4 id="styleName" style="color:gray;"></h4>
                     <div class="mb-3"></div>
                     <p>@Html.DisplayFor(model => model.FDescription)</p>
                 </div>
@@ -163,6 +164,8 @@
                     <button id="btnEdit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal" style="display:none;">修改專案</button>
                     <div class="mb-2"></div>
                     <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>  
+                    <button id="btnAppliCheck" class="btn btn-primary" style="display:none;">應徵檢視</button>
+                    <div class="mb-2"></div>
                     <button id="btnDelete" class="btn btn-danger" style="display:none;">刪除專案</button>
                 </div>
             </div>
@@ -349,7 +352,52 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal3 -->
+<div class="modal fade" id="addModa3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">檢視應徵 <span></span></h5>
+                @*      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>*@
+                @*<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">取消</button>*@
+            </div>
+            <div class="modal-body">
+                <form id="appliCheckForm">
+                    <input type="hidden" name="id" id="fProjectId" value="@Html.DisplayFor(model => model.FProjectId)">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table id="appliTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>會員名稱</th>
+                                        <th>自我介紹</th>
+                                        <th>聯絡電話</th>
+                                        <th>編輯</th>
+                                    </tr>
+                                </thead>
+                                <tbody><!--資料位置--></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 取消</button>
+                <button type="button" class="btn btn-primary" id="btnAppliSend"><i class="bi bi-send-check-fill"></i> 應徵 </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Intro section end -->
+
+
 
 
 @section Scripts{
@@ -358,16 +406,18 @@
 		const memberId = $('#memberId').val();
         const projectID = $('#pID').val();
         const loginID = $('#loginId').val();
+        const pStatus = $('#pStatus').val();
         const favYes = $('#favYes').val();
         const btnEdit = document.getElementById('btnEdit');
         const btnAppli = document.getElementById('btnAppli');
+        const btnAppliCheck = document.getElementById('btnAppliCheck');
         const btnDelete = document.getElementById('btnDelete');
         const btnFev = document.getElementById('btnFev');
         const btnDisFev = document.getElementById('btnDisFev');
         
         //取得風格資訊
-		$.getJSON(`/apiTStyle/QueryById/${styleId}`, function (datas) {
-			$('#styleName').html(`製作風格 : ${datas[0].fName}`);
+        $.get(`/apiTProjects/GetProjectStatusInfoInString/${projectID}`, function (datas) {
+			$('#styleName').html(datas);
 		})
 
         //根據登入狀況顯示按鈕        
@@ -379,6 +429,7 @@
             if (loginID == memberId) {
                 btnEdit.style.display = 'block';
                 btnDelete.style.display = 'block';
+                btnAppliCheck.style.display = 'block';
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
                 btnDisFev.style.display = 'none';
