@@ -721,17 +721,29 @@
 
         //載入錄取者資訊
         function AcceptMemberInfo(){
+            const divacceptMember = $('#acceptMember');
             $.getJSON(`/apiTProjects/GetAcceptMemberInfo/${projectID}`, function (datas) {
-                console.log(datas);
-                $('#acceptMember').html(`
-                <div class="col-6">
-                    <h3>${datas.fName}</h3>
-                    <div class="mb-2"></div>
-                    <h5>Email : ${datas.fEmail}</h5>
-                </div>
-                <div class="col-6">
-                </div>
-                `);
+                const docFrag = $(document.createDocumentFragment());
+                var data = datas[0];
+                console.log(data);
+                (async function () {
+                    const card = $(`
+                        <div class="col-6">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 230px;">
+                                     <img src="/img/Member/${data.fPhotoPath}" style="height: 200px;width: 200px" alt="">
+                                </div>
+                            <h3>${data.fName}</h3>
+                            <div class="mb-2"></div>
+                            <h5>Email : ${data.fEmail}</h5>
+                            <div class="mb-2"></div>
+                            <h5>Phone : ${data.fPhone}</h5>
+                        </div>
+                        <div class="col-6">
+                            <h5>${data.fIntroduction}<h5>
+                        </div>
+                    `)
+                    divacceptMember.html(card);
+                })();
             })
         }
         AcceptMemberInfo()
