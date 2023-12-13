@@ -234,7 +234,7 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
-<<<<<<< HEAD
+
         //===取得應徵資料===
         public IActionResult GetAppliInfo(int? id)
         {
@@ -273,7 +273,6 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
-=======
->>>>>>> d0f78e4013f2fabcfa25f89923c45083a214de1d
+
     }
 }
