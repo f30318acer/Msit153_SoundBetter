@@ -22,7 +22,24 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FSiteName)</td>
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FPhone)</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FSiteType)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                @{
+                                    string siteTypeText = "";
+                                    switch (site.FSiteType)
+                                    {
+                                        case 1:
+                                            siteTypeText = "錄音室";
+                                            break;
+                                        case 2:
+                                            siteTypeText = "音樂教室";
+                                            break;
+                                        default:
+                                            siteTypeText = "其他";
+                                            break;
+                                    }
+                                }
+                                @siteTypeText
+                            </td>
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FAddress)</td>
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                 @if (!string.IsNullOrEmpty(site.FPicture))
