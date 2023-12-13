@@ -15,10 +15,17 @@
                         <form asp-action="Edit" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <input type="hidden" asp-for="FMemberId" />
+                            <div class="form-group" >
+                                <input type="hidden" asp-for="FMemberId" class="form-control" />
+                                <span asp-validation-for="FMemberId" class="text-danger"></span>
+                            </div>
 
-                            <input type="hidden" asp-for="FArticleId" />
+                            <div class="form-group">
+                                <input type="hidden" asp-for="FArticleId" class="form-control" />
+                                <span asp-validation-for="FArticleId" class="text-danger"></span>
+                            </div>
 
+                            
                             <div class="form-group">
                                 <label asp-for="FCommentContent" class="control-label">編輯留言</label>
                                 <input asp-for="FCommentContent" class="form-control" />
@@ -27,11 +34,14 @@
 
 
 
-                            <div class="form-group">
-                                <input type="submit" value="儲存" class="btn btn-primary" onclick="confirmEdit" /> |
+@*                             <div class="form-group">
+                                <input type="submit" value="儲存" class="btn btn-primary" onclick="confirmEdit"  /> |
                                 <a asp-action="List" class="btn btn-secondary">取消/回列表</a>
+                            </div> *@
 
-
+                            <div class="text-right">
+                                <a href="@Url.Action("List","Comment")" type="button" class="btn btn-secondary">取消/回到列表</a>
+                                <button type="button" class="btn btn-success" id="buttonSend">確認修改</button>
                             </div>
 
                         </form>
@@ -46,9 +56,60 @@
 </div>
 
 <script>
-    function confirmEdit() {
-        return confirm('確定要更新嗎？');
-    }
+
+
+
+    // $('#buttonSend').click(function () {
+    //     $.ajax({
+    //         url: '/Comment/Edit',
+    //         type: 'POST',
+    //         data:
+    //         {
+    //             fMemberId: $('#fMemberId').val(),
+    //             fArticleId: $('#fArticleId').val(),
+    //             fCommentContent: $('#fCommentContent').val(),
+    //         },
+    //     }).done(function (data) {
+    //         alert("修改成功")
+    //         location.href = "@Url.Action("List", "Comment")"
+
+    //     }).fail(function (jqXHR, textStatus, errorThrown) {
+    //         console.log("POST request failed: " + textStatus + ", " + errorThrown);
+    //         alert("修改失敗");
+    //         location.href = "@Url.Action("List", "Comment")"
+    //     });
+    // });
+
+    // function confirmEdit() {
+    //     return confirm('確定要修改好了嗎？');
+    // }
+
+
+    $('#buttonSend').click(function () {
+        var commentData = {
+            fCommentID: $('#fCommentId').val(),
+            fMemberId: $('#fMemberId').val(),
+            fArticleId: $('#fArticleId').val(),
+            fCommentContent: $('#fCommentContent').val(),
+            fCommentTime: new Date().toISOString()
+        };
+
+        $.ajax({
+            url: '/Comment/Edit',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(commentData),
+        }).done(function (data) {
+            alert("修改成功");
+            location.href = "@Url.Action("List", "Comment")";
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log("POST request failed: " + textStatus + ", " + errorThrown);
+            alert("修改失敗");
+            location.href = "@Url.Action("List", "Comment")";
+        });
+    });
+
+
 </script>
 
 @section Scripts {

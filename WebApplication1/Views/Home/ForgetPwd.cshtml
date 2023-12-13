@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "ForgetPwd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <div class="container mt-5">
@@ -47,7 +49,7 @@
                     formData.append('Subject', '找回密碼');
                     formData.append('Message', '您的密碼是：' + userPassword);
 
-                    fetch('@Url.Content("~/Home/123/")', {
+                    fetch('@Url.Content("~/Home/sendEmail/")', {
                         method: 'POST',
                         body: formData
                     })

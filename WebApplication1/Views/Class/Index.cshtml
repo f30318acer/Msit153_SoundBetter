@@ -1,4 +1,4 @@
-﻿0@model IEnumerable<prjMusicBetter.Models.TClass>
+﻿@model IEnumerable<prjMusicBetter.Models.TClass>
 @{
     ViewData["Title"] = "Index";
 }
@@ -194,15 +194,6 @@
         </div>
         <div class="clearfix"></div>
         <div id="divList" class="row playlist-area">
-            @*<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-            <a href="/Class/Viewclass?id=${item.fClassId}">
-            <div class="playlist-item">
-            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-            <span>${item.fClick}</span>
-            <h5>${item.fClassName}</h5>
-            </div>
-            </a>
-            </div>*@
             <!--List內容-->
         </div>
     </div>
@@ -302,27 +293,6 @@
                 callback(isFavorite);
             });
         }
-
-
-        //let showFavorites = false;//跟踪最愛課程的顯示状态
-        //function toggleFavorites() {
-        //    var btn = document.getElementById("btnShowFavorites");
-        //    // 切换按钮文本内容
-        //    btn.innerText = btn.innerText === "顯示最愛" ? "顯示全部" : "顯示最愛";
-        //    // 切换按钮颜色
-        //    if (btn.classList.contains("btn-primary")) {
-        //        btn.classList.remove("btn-primary");
-        //        btn.classList.add("btn-danger");
-        //    } else {
-        //        btn.classList.remove("btn-danger");
-        //        btn.classList.add("btn-primary");
-        //    }
-
-        //    // 切换显示最愛卡片的状态
-        //    showFavorites = !showFavorites;
-        //    console.log(showFavorites);
-        //}
-
 
         
         //載入資料

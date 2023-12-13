@@ -5,120 +5,138 @@
         body, html {
             height: 100%;
             margin: 0;
+
         }
 
-        #page-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        .chat-container {
+            max-width: 800px; /* Max width for the chat container */
+            margin: auto; /* Center the container */
+            padding: 20px;
+            background-color: white; /* White background for the chat area */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            border-radius: 8px; /* Slightly rounded corners */
         }
 
-        #content-wrap {
-            flex: 1;
+        .header {
+            padding: 10px;
+            border-bottom: 2px solid #eee; /* Light grey border for separation */
+            text-align: center; /* Center header text */
         }
 
-        .footer {
-            background: #333; /* Footer 背景色 */
-            color: white; /* Footer 文字色 */
-            padding: 20px 0; /* Footer 內距 */
-            position: absolute;
+        .message-input, .id-input {
+            padding: 10px;
+            margin-bottom: 10px; /* Space between input fields */
+            border: 2px solid #ddd; /* Light grey border */
+            border-radius: 4px; /* Slightly rounded borders */
+            width: 100%; /* Full width inputs */
+        }
+
+        .send-button {
+            width: 100%;
+            background-color: #007bff; /* Blue background for the button */
+            color: white; /* White text for contrast */
+            padding: 10px;
+            border: none;
+            border-radius: 4px; /* Slightly rounded borders */
+            cursor: pointer; /* Cursor change to indicate clickable */
+        }
+
+            .send-button:hover {
+                background-color: #0056b3; /* Darker blue on hover */
+            }
+
+        .id-list, .chat-content {
+            max-height: 300px;
+            overflow-y: auto; /* Scrollable when content exceeds max height */
+            border: 2px solid #ddd; /* Light grey border */
+            border-radius: 5px; /* Slightly rounded corners */
+            padding: 10px; /* Padding inside the containers */
+            margin-bottom: 10px; /* Space below the containers */
+        }
+
+        .list-group-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee; /* Light grey border between items */
+        }
+
+            .list-group-item:last-child {
+                border-bottom: none; /* No border for the last item */
+            }
+
+        .fixed-footer {
+            position: fixed;
+            left: 0;
             bottom: 0;
             width: 100%;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 10px;
-        }
-
-        .row {
-            margin-bottom: 20px;
-        }
-
-        #SelfID {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        #IDList, #Content {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .list-group {
-            margin-bottom: 5px;
-            border: 3px solid #ddd;
-            border-radius: 5px;
-        }
-
-        #sendButton {
-            width: 100%;
-        }
-
-        .li {
-            background-color: gray
+            background-color: #333; /* 頁腳的背景顏色 */
+            color: white; /* 頁腳的文字顏色 */
+            text-align: center;
+            padding: 10px 0; /* 頁腳的內距 */
         }
     </style>
 </head>
 <body>
-    <div class="row">
-        <div class="col-8">
-            <h2>公開匿名聊天室</h2>
+    <div class="chat-container">
+        <div class="header">
+            <h2>聊天室</h2>
             <h4>個人 ID: <span id="SelfID"></span></h4>
-            <div class="mb-4">
-                <label for="message" class="form-label">發送訊息</label>
-                <input type="text" class="form-control" id="message">
-            </div>
-            <div class="mb-5">
-                <label for="sendToID" class="form-label">指定 ID</label>
-                <input type="text" class="form-control" id="sendToID">
-            </div>
-            <button type="button" class="btn btn-primary" id="sendButton">傳送訊息</button>
         </div>
-        <div class="col-4">
-            <h4>連線 ID 列表</h4>
-            <ul class="list-group" id="IDList">
-            </ul>
+
+        <input type="text" class="message-input" id="message" placeholder="發送訊息">
+        <input type="text" class="id-input" id="sendToID" placeholder="指定 ID">
+        <button type="button" class="send-button" id="sendButton">傳送訊息</button>
+
+        <div class="row">
+            <div class="col-12">
+                <h4>連線 ID 列表</h4>
+                <ul class="id-list" id="IDList"></ul>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-12">
+                <h3>聊天內容</h3>
+                <ul class="chat-content" id="Content"></ul>
+            </div>
         </div>
     </div>
-    <div id="page-container">
-        <div id="content-wrap">
-            <h3>聊天內容</h3>
-            <ul class="list-group" id="Content">
-            </ul>
-        </div>
-    </div>
-    <div class="footer"></div>
+
 </body>
 </html>
 
 
-    @section scripts {
-        <script src="~/js/signalr/dist/browser/signalr.js"></script>
-        <script>
-            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+@section scripts {
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-            //與Server建立連線
-            connection.start().then(function () {
-                console.log("Hub 連線完成");
-                //呼叫後端方法以獲取會員 ID
-                connection.invoke("GetMemberId").then(function (memberId) {
-                    // 使用從後端獲取的會員 ID
-                    $('#SelfID').html(memberId);
+        //與Server建立連線
+        connection.start().then(function () {
+            console.log("Hub 連線完成");
+            //呼叫後端方法以獲取會員 ID
+            connection.invoke("GetMemberId").then(function (memberId) {
+                // 使用從後端獲取的會員 ID
+                $('#SelfID').html(memberId);
+            });
+
+        }).catch(function (err) {
+            alert('連線錯誤: ' + err.toString());
+        });
+
+        // 更新連線 ID 列表事件
+        connection.on("UpdList", function (jsonList) {
+            var list = JSON.parse(jsonList);
+            $("#IDList").empty();
+            list.forEach(function (id) {
+                var listItem = $("<li></li>").attr("class", "list-group-item").text(id);
+                listItem.on('click', function () {
+                    $('#sendToID').val(id); // 点击时设置 sendToID
                 });
-
-            }).catch(function (err) {
-                alert('連線錯誤: ' + err.toString());
+                $("#IDList").append(listItem);
             });
+        });
 
-            // 更新連線 ID 列表事件
-            connection.on("UpdList", function (jsonList) {
-                var list = JSON.parse(jsonList);
-                $("#IDList li").remove();
-                for (i = 0; i < list.length; i++) {
-                    $("#IDList").append($("<li></li>").attr("class", "list-group-item").text(list[i]));
-                }
-            });
 
 
         connection.invoke("GetMemberId").then(function (memberId) {
@@ -128,26 +146,26 @@
 
 
 
-            // // 更新用戶個人連線 ID 事件
-            // connection.on("UpdSelfID", function (id) {
-            //     $('#SelfID').html(id);
-            // });
+        // // 更新用戶個人連線 ID 事件
+        // connection.on("UpdSelfID", function (id) {
+        //     $('#SelfID').html(id);
+        // });
 
-            // 更新聊天內容事件
-            connection.on("UpdContent", function (msg) {
-                $("#Content").append($("<li></li>").attr("class", "list-group-item").text(msg));
+        // 更新聊天內容事件
+        connection.on("UpdContent", function (msg) {
+            $("#Content").append($("<li></li>").attr("class", "list-group-item").text(msg));
+        });
+
+        //傳送訊息
+        $('#sendButton').on('click', function () {
+            let selfID = $('#SelfID').html();
+            let message = $('#message').val();
+            let sendToID = $('#sendToID').val();
+            connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
+                alert('傳送錯誤: ' + err.toString());
             });
-
-            //傳送訊息
-            $('#sendButton').on('click', function () {
-                let selfID = $('#SelfID').html();
-                let message = $('#message').val();
-                let sendToID = $('#sendToID').val();
-                connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
-                    alert('傳送錯誤: ' + err.toString());
-                });
-            });
-        </script>
+        });
+    </script>
 
 
-    }
+}

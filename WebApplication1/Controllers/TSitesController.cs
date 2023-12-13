@@ -68,16 +68,16 @@ namespace prjMusicBetter.Controllers
             {
                 if (formFile != null)
                 {
-                    _context.Add(tSite);
-                    _context.SaveChanges();
-
                     string photoName = $"place{tSite.FSiteId}.jpg";
                     tSite.FPicture = photoName;
                     formFile.CopyTo(new FileStream(_environment.WebRootPath + "/img/Place/" + photoName, FileMode.Create));
 
+                    _context.Add(tSite);
                     _context.SaveChanges();
                     return Content("新增成功");
                 }
+                _context.Add(tSite);
+                _context.SaveChanges();
             }
             return Content("錯誤");
         }

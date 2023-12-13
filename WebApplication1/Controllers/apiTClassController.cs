@@ -35,7 +35,8 @@ namespace prjMusicBetter.Controllers
                                        on s.FTeacherId equals m.FMemberId
                                        join t in _context.TSites
                                        on s.FSiteId equals t.FSiteId
-									   where s.FEnddate >= DateTime.Now
+                                       
+                                       where s.FEnddate >= DateTime.Now
                                        orderby s.FClassId descending
                                        select new
                                        {
@@ -49,7 +50,7 @@ namespace prjMusicBetter.Controllers
                                            fDescription = ReplaceHtmlTag(s.FDescription),
                                            fClick = c.FClick,
                                            fTeacherNmae = m.FName,
-                                           fSiteName = t.FSiteName
+                                           fSiteName = t.FSiteName,
                                        };
 
             return Json(dbSoundBetterContext);
@@ -62,13 +63,12 @@ namespace prjMusicBetter.Controllers
 				return NotFound();
 			}
 
-			//var tProject = _context.TClasses.Where(m => m.FTeacherId == id);
 			var dbSoundBetterContext = from s in _context.TClasses
 									   join c in _context.TClassClicks
 									   on s.FClassId equals c.FClassId
 									   join m in _context.TMembers
 									   on s.FTeacherId equals m.FMemberId
-									   where s.FTeacherId == id
+                                       where s.FTeacherId == id
                                        orderby s.FClassId descending
                                        select new
 									   {
@@ -84,7 +84,7 @@ namespace prjMusicBetter.Controllers
 										   fTeacherNmae = m.FName,
                                            fEnddate = s.FEnddate,
                                        };
-			if (dbSoundBetterContext == null)
+            if (dbSoundBetterContext == null)
 			{
 				return NotFound();
 			}
@@ -151,12 +151,43 @@ namespace prjMusicBetter.Controllers
 
                 _context.Add(classClick);
                 _context.SaveChanges();
+
+                // 取得 TSites 的相關資料
+                var siteData = _context.TSites.SingleOrDefault(s => s.FSiteId == project.FSiteId);
+
+                // 假設 TSites 中有相對應的資料
+                if (siteData == null)
+                {
+                    // 整理資料
+                    TSite newSiteData = new TSite
+                    {
+                        // 設定屬性值，可根據 TSites 的屬性進行調整
+                        FSiteName = siteData.FSiteName,
+                        FMemberId = siteData.FMemberId,
+                        FSiteType = siteData.FSiteType,
+                        FCityId = siteData.FCityId,
+                        FAddress = siteData.FAddress,
+                    };
+
+                    // 新增到 _context.TSites
+                    _context.TSites.Add(newSiteData);
+
+                    // 提交更改以確保新站點數據被保存
+                    _context.SaveChanges();
+
+                    // 更新 project 的 FSiteId
+                    project.FSiteId = newSiteData.FSiteId;
+
+                    // 再次保存對 project 的更改
+                    _context.SaveChanges();
+                }
+
                 return Content("新增成功");
 			}
 			return Content("錯誤");
 		}
 		//===修改===
-		public IActionResult Edit(int id, TClass project, IFormFile formFile)
+		public IActionResult Edit(TClass project, IFormFile formFile)
 		{
 			if (project != null)
 			{
@@ -320,6 +351,67 @@ namespace prjMusicBetter.Controllers
                              fEnddate = s.FEnddate,
                          };
             return Json(result.ToList());
+        }
+
+        [HttpPost]
+        public IActionResult DelDeal(int? id, int? classId)
+        {
+            if (id == null || classId == null)
+            {
+                return BadRequest("參數不正確");
+            }
+
+            try
+            {
+                // 根據你的需求，進行 TDealClassDetails 的刪除操作
+                var dealToRemove = _context.TDealClassDetails.FirstOrDefault(d => d.FClassId == classId && d.FMemberId == id);
+
+                if (dealToRemove != null)
+                {
+                    _context.TDealClassDetails.Remove(dealToRemove);
+                    _context.SaveChanges();
+                    // 刪除成功的處理，這裡可以根據需要進行其他操作
+                    return Ok("成功刪除");
+                }
+                else
+                {
+                    // 找不到對應的資料
+                    return NotFound("找不到對應的資料");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 處理例外情況
+                return StatusCode(500, "刪除失敗");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateSite(TSite? tSite)
+        {
+            if (tSite != null)
+            {
+                _context.Add(tSite);
+                _context.SaveChanges();
+                return Json(new { fSiteId = tSite.FSiteId, fSiteName = tSite.FSiteName });
+            }
+            return Content("錯誤");
+        }
+
+        //fCurrentStudent + 1
+        public IActionResult Currentplus(int? id)
+        {
+            if (id == null || _context.TClasses == null)
+            {
+                return NotFound();
+            }
+            var tProject = _context.TClasses.FirstOrDefault(m => m.FClassId == id);
+            if (tProject != null)
+            {
+                tProject.FCurrentStudent++;//現在學生數+1
+            }
+            _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
