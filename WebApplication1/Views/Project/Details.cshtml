@@ -415,6 +415,31 @@
         </div>
     </div>
 </div>
+
+<!-- Modal5 -->
+<div class="modal fade" id="addModa5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">已錄取會員 <span></span></h5>
+            </div>
+            <div class="modal-body">
+                <form id="selfIntroForm">
+                    <div id="acceptMember" class="row">                       
+                        <!--自我介紹彈出視窗-->                          
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 取消</button>
+                <button type="button" class="btn btn-primary" id="btnAppliSend"><i class="bi bi-send-check-fill"></i> 應徵 </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Intro section end -->
 
 
@@ -479,7 +504,7 @@
 		$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
 			$('#memberInfo').html(`
 				<div class="col-lg-6" >
-					<h5>製作發案人 : ${datas.fUsername}</h5>
+					<h5>製作人 : ${datas.fUsername}</h5>
                     <div class="mb-3"></div>
                     <a class="btn btn-secondary" href="/MemberPage/Details/${datas.fMemberId}">更多發案人資訊</a>
 				</div>
@@ -596,7 +621,7 @@
         //重啟專案
         $('#btnRevive').click(function () {
             fetch(`/apiTProjects/Revive/${projectID}`, {
-                method: 'DELETE',
+                method: 'POST',
             })
                 .then(response => {
                     if (!response.ok) {
@@ -665,8 +690,11 @@
         LoadAppliInfo();
         //接受應徵
         function AcceptAppli(id){
+            var confirmAccept = window.confirm('確定要錄取嗎？');
+
+            if (confirmAccept) {
             fetch(`/apiTProjects/AcceptAppli/${id}`, {
-                method: 'DELETE',
+                method: 'POST',
             })
                 .then(response => {
                     if (!response.ok) {
@@ -682,6 +710,7 @@
                     console.error('錄取失敗', error);
                     // 在這裡處理刪除失敗後的操作
                 });
+            }else{}
         }
         //改變應徵檢視狀態
         function ChangeAppliStatus(appliId){
@@ -689,6 +718,35 @@
                 method: 'POST',
             })
         }
+
+        //載入錄取者資訊
+        function AcceptMemberInfo(){
+            const divacceptMember = $('#acceptMember');
+            $.getJSON(`/apiTProjects/GetAcceptMemberInfo/${projectID}`, function (datas) {
+                const docFrag = $(document.createDocumentFragment());
+                var data = datas[0];
+                console.log(data);
+                (async function () {
+                    const card = $(`
+                        <div class="col-6">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 230px;">
+                                     <img src="/img/Member/${data.fPhotoPath}" style="height: 200px;width: 200px" alt="">
+                                </div>
+                            <h3>${data.fName}</h3>
+                            <div class="mb-2"></div>
+                            <h5>Email : ${data.fEmail}</h5>
+                            <div class="mb-2"></div>
+                            <h5>Phone : ${data.fPhone}</h5>
+                        </div>
+                        <div class="col-6">
+                            <h5>${data.fIntroduction}<h5>
+                        </div>
+                    `)
+                    divacceptMember.html(card);
+                })();
+            })
+        }
+        AcceptMemberInfo()
         //載入應徵者自我介紹
         function LoadSelfIntro(userName,selfIntro){
             $('#divSelfIntro').html(

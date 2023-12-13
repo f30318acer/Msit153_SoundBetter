@@ -312,6 +312,7 @@
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         //我建立的課程
+
         function firstLoad(pageNumber) {
             const divList = $('#divList');
             //讀取Json資料
@@ -481,9 +482,9 @@
         }
         
 
-
         ///////////////////////////////////////////////////////////////////////////////////////////
         //我買的課程
+
         function firstLoad2(pageNumber) {
             const divList = $('#divList2');
             //讀取Json資料
@@ -507,28 +508,29 @@
                     const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                            <a href="/Class/Viewclass?id=${item.fClassId}">
-                                        <div style="position: relative;">
-                                            <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
-                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
-                                            </span>
-                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                                    <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
-                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
-                                                 </span>
-                                        </div>
-                                        <div>
-                                            <div class="ClassName">
-                                                <h5>${item.fClassName}</h5>
-                                            </div>
-                                                    <p>${Description}</p>
-                                        </div>
-                                        <div>
-                                            <h5>導師：${item.fTeacherNmae}</h5>
-                                            <p>點閱數：${item.fClick}</p>
-                                        </div>
-                                    </a>
-                                </div>`
+                            <button class="btn btn-primary" style="width: 100%;" onclick="confirmAndRedirectToDelDeal(event, ${item.fClassId})">退出課程</button>
+                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                <div style="position: relative;">
+                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
+                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                    </span>
+                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                    <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                       ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                    </span>
+                                </div>
+                                <div>
+                                    <div class="ClassName">
+                                        <h5>${item.fClassName}</h5>
+                                    </div>
+                                    <p>${Description}</p>
+                                </div>
+                                <div>
+                                    <h5>導師：${item.fTeacherNmae}</h5>
+                                    <p>點閱數：${item.fClick}</p>
+                                </div>
+                            </a>
+                         </div>`
                     );
                     docFrag.append(card);
                 });
@@ -591,28 +593,29 @@
                     const Description = item.fDescription.length > 15 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
                     const card = $(
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                            <a href="/Class/Viewclass?id=${item.fClassId}">
-                                        <div style="position: relative;">
-                                            <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
-                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
-                                            </span>
-                                            <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                                    <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
-                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
-                                                 </span>
-                                        </div>
-                                        <div>
-                                            <div class="ClassName">
-                                                <h5>${item.fClassName}</h5>
-                                            </div>
-                                                    <p>${Description}</p>
-                                        </div>
-                                        <div>
-                                            <h5>導師：${item.fTeacherNmae}</h5>
-                                            <p>點閱數：${item.fClick}</p>
-                                        </div>
-                                    </a>
-                                </div>`
+                            <a href="/Class/Viewclass?id=${item.fClassId}">
+                                <button class="btn btn-primary" style="width: 100%;" onclick="confirmAndRedirectToDelDeal(event, ${item.fClassId})">退出課程</button>
+                                <div style="position: relative;">
+                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
+                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                    </span>
+                                    <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                    <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                       ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                    </span>
+                                </div>
+                                <div>
+                                    <div class="ClassName">
+                                        <h5>${item.fClassName}</h5>
+                                    </div>
+                                    <p>${Description}</p>
+                                </div>
+                                <div>
+                                    <h5>導師：${item.fTeacherNmae}</h5>
+                                    <p>點閱數：${item.fClick}</p>
+                                </div>
+                            </a>
+                         </div>`
                     );
                     docFrag.append(card);
                 });
@@ -658,9 +661,9 @@
         }
         
 
-
         ///////////////////////////////////////////////////////////////////////////////////////////
         //我的最愛
+
         function firstLoad3(pageNumber) {
             const divList = $('#divList3');
             //讀取Json資料
@@ -938,6 +941,10 @@
             }
         }
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
+
         //開網頁時觸發
         window.onload = function () {
             loadPage();
@@ -976,7 +983,7 @@
             loadPage3();
         });
 
-        //跑到新建頁面
+        //跑到建立新課程頁面
         async function CheckLoginAndNavigate() {
                 window.location.href = "@Url.Action("Create", "Class")";
         }
@@ -1001,6 +1008,7 @@
             });
         });
 
+        //查看已購買學生
         function redirectToStudentPage(event, classId) {
             // 阻止事件冒泡
             event.stopPropagation();
@@ -1012,7 +1020,7 @@
                 success: function (result) {
                     if (result) {
                         // 如果有結果，表示可以跳轉頁面
-                        window.location.href = `/Class/student?id=${classId}`;
+                        window.location.href = `/Class/studentEdit?id=${classId}`;
                     } else {
                         // 如果沒有結果，可以選擇執行其他操作或顯示提示
                         alert('沒有學生購買該課程');
@@ -1024,5 +1032,41 @@
                 }
             });
         }
+
+        //確定要退出課程嗎
+        function confirmAndRedirectToDelDeal(event, classId) {
+            // 阻止事件冒泡
+            event.stopPropagation();
+
+            // 使用 confirm 函數顯示確認提示框
+            var confirmResult = confirm('確定要退出課程嗎？');
+
+            if (confirmResult) {
+                // 用戶確認後，執行 DelDeal 操作
+                redirectToDelDeal(classId);
+                location.reload();
+            } else {
+                // 用戶取消，不執行任何操作
+            }
+        }
+
+        // 使用 jQuery 刪除TDealClassDetails
+        function redirectToDelDeal(classId) {
+            // 使用 jQuery AJAX 進行後端操作
+            $.ajax({
+                type: 'POST',
+                url: '/apiTClass/DelDeal',
+                data: { id: @ViewBag.MemberId, classId: classId },
+                success: function (result) {
+                    // 處理成功的情況，這裡可以根據需要進行其他操作
+                    alert(result);
+                },
+                error: function () {
+                    // 處理錯誤情況
+                    alert('刪除失敗。');
+                }
+            });
+        }
+
 	</script>
 }

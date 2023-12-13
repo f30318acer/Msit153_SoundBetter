@@ -332,6 +332,26 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
+        //===取得錄取者資訊===
+        public IActionResult GetAcceptMemberInfo(int? id)
+        {
+            if (id != null)
+            {
+                TApplicationRecord rec = _context.TApplicationRecords.Where(a => a.FProjectId == id).FirstOrDefault(a => a.FApplicationStatusId == 4);
+                var member = from m in _context.TMembers
+                                 where m.FMemberId == rec.FMemberId
+                                 select new { 
+                                 m.FMemberId,
+                                 m.FUsername,
+                                 m.FName,
+                                 m.FPhone,
+                                 m.FEmail,
+                                 m.FIntroduction,
+                                 m.FPhotoPath};
+                return Json(member);
+            }
+            return Content("錯誤");
+        }
 
     }
 }
