@@ -219,8 +219,16 @@
                 <h3 style="text-align: center">@Model.FEnddate</h3>
                 <h2 class="price">報名人數</h2>
                 <h3 style="text-align: center">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
+                @if (Model.FCurrentStudent != 0)
+                {
+                    <a href="@Url.Action("student", "Class", new { id = Model.FClassId })" class="btn">
+                        查看已購買學生
+                    </a>
+                }
                 <div>
-                    <button name="createClass" onclick="checkQuota()" class="btm">購買課程</button>
+                    <button name="createClass" onclick="@((bool)ViewBag.DealClass ? "alreadybuy()" : "checkQuota()")" class="btm" style="background-color: @(ViewBag.DealClass == true ? "#fc0254" : "#0080FF");">
+                        @((bool)ViewBag.DealClass ? "已購買課程" : "購買課程")
+                    </button>
                 </div>
             </div>
         </div>
@@ -289,6 +297,9 @@
                 alert("不好意思，課程名額已滿");
                 return false;
             }
+        }
+        function alreadybuy() {
+            alert("您已購買此課程");
         }
 
         function firstLoad(pageNumber) {

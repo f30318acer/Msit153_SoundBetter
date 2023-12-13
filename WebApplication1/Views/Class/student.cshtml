@@ -1,0 +1,81 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TMember>
+@{
+    ViewData["Title"] = "student";
+}
+<section class="playlist-section spad">
+    <div class="container-fluid">
+        <div class="section-title">
+            <h1>課程學生一覽表</h1>
+        </div>
+        @*@using (Html.BeginForm())
+        {
+        @:關鍵字 @Html.TextBox("txtKeyword")
+        <input type="submit" value="查詢" />
+        }
+        <p>
+        <a asp-action="Create">新增產品</a>
+        </p>*@
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        序號
+                    </th>
+                    <th>
+                        用戶暱稱
+                    </th>
+                    <th>
+                        連絡電話
+                    </th>
+                    <th>
+                        電子信箱
+                    </th>
+                    <th>
+                        自述
+                    </th>
+                    <th>
+                        大頭貼
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 0;
+                    foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FUsername)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FPhone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FEmail)
+                            </td>
+                            <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                @Html.Raw(item.FIntroduction.Length > 30 ? $"{item.FIntroduction.Substring(0, 30)}..." : item.FIntroduction)
+                            </td>
+                            <td>
+                                <img src="~/img/Member/@item.FPhotoPath" width="100" height="100">
+                            </td>
+                            <td>
+                                @Html.ActionLink("查看個人檔案", "Details", "MemberPage", new { id = item.FMemberId }, null)
+                            </td>
+                            @*<td>
+                    @Html.ActionLink("修改", "Edit", "Product", new { id = item.FId }, null) |
+                    @Html.ActionLink("刪除", "Delete", "Product", new { id = item.FId },
+                    new { onclick = "return confirm('確定要刪除嗎?')" })
+                    </td>*@
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
