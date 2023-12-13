@@ -3,11 +3,9 @@ using Newtonsoft.Json;
 
 namespace CoreMVC_SignalR_Chat.Hubs
 {
-    
+
     public class ChatHub : Hub
     {
-        public static Dictionary<string, string> memberToConnectionMap = new Dictionary<string, string>();
-
         // 用戶連線 ID 列表
         public static List<string> ConnIDList = new List<string>();
 
@@ -17,24 +15,20 @@ namespace CoreMVC_SignalR_Chat.Hubs
         /// <returns></returns>
         public override async Task OnConnectedAsync()
         {
-            var memberId = Context.User.Identity.Name ?? Context.ConnectionId; // 如果會員 ID 為空，則使用連線 ID;
 
-            if (!memberToConnectionMap.ContainsKey(memberId))
+            if (ConnIDList.Where(p => p == Context.ConnectionId).FirstOrDefault() == null)
             {
-                memberToConnectionMap.Add(memberId, Context.ConnectionId);
-                ConnIDList.Add(memberId); // 確保將會員 ID 添加到 ConnIDList
+                ConnIDList.Add(Context.ConnectionId);
             }
-
-           
             // 更新連線 ID 列表
             string jsonString = JsonConvert.SerializeObject(ConnIDList);
             await Clients.All.SendAsync("UpdList", jsonString);
 
             // 更新個人 ID
-            await Clients.Client(Context.ConnectionId).SendAsync("UpdSelfID",memberId);
+            await Clients.Client(Context.ConnectionId).SendAsync("UpdSelfID", Context.ConnectionId);
 
             // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", "新連線 ID: " +memberId);
+            await Clients.All.SendAsync("UpdContent", "新連線 ID: " + Context.ConnectionId);
 
             await base.OnConnectedAsync();
         }
@@ -46,18 +40,17 @@ namespace CoreMVC_SignalR_Chat.Hubs
         /// <returns></returns>
         public override async Task OnDisconnectedAsync(Exception ex)
         {
-            var memberId = Context.User.Identity.Name;
-
-            if (memberToConnectionMap.ContainsKey(memberId))
+            string id = ConnIDList.Where(p => p == Context.ConnectionId).FirstOrDefault();
+            if (id != null)
             {
-                memberToConnectionMap.Remove(memberId);
+                ConnIDList.Remove(id);
             }
             // 更新連線 ID 列表
-            string jsonString = JsonConvert.SerializeObject(memberToConnectionMap.Keys);
+            string jsonString = JsonConvert.SerializeObject(ConnIDList);
             await Clients.All.SendAsync("UpdList", jsonString);
 
             // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", "已離線 ID: " +memberId);
+            await Clients.All.SendAsync("UpdContent", "已離線 ID: " + Context.ConnectionId);
 
             await base.OnDisconnectedAsync(ex);
         }
@@ -77,22 +70,11 @@ namespace CoreMVC_SignalR_Chat.Hubs
             }
             else
             {
-                if(memberToConnectionMap.TryGetValue(sendToID, out var sendToConnectionId))
-                {               
                 // 接收人
-                await Clients.Client(sendToConnectionId).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
+                await Clients.Client(sendToID).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
 
                 // 發送人
                 await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
-
-                }
-                else
-                {
-                    await Clients.Client(memberToConnectionMap[selfID]).SendAsync("UpdContent", "無法找到用戶: " + sendToID);
-
-                }
-                //var sendToConnectionId = memberToConnectionMap[sendToID];
-
             }
         }
         public async Task<string> GetMemberId()
