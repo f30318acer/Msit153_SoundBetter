@@ -138,6 +138,9 @@ namespace prjMusicBetter.Controllers
             var Address = _context.TSites.Where(t => t.FSiteId == tClass.FSiteId).Select(t => t.FAddress).SingleOrDefault();
             ViewBag.Address = Address;//地點
 
+            var DealClass = _context.TDealClassDetails.Where(t => t.FClassId == tClass.FClassId).Select(t => t.FMemberId).Any(id => id == member.FMemberId);
+            ViewBag.DealClass = DealClass;
+
             return View(tClass);
 		}
 
@@ -183,5 +186,58 @@ namespace prjMusicBetter.Controllers
 
             return View(tClass);
         }
+
+
+        /*=======學生一覽===============*/
+
+        public IActionResult student(int? id)
+        {
+            // 找出TDealClassDetails表中符合FClassId == id的所有FMemberId
+            var DealClass = _context.TDealClassDetails
+                                    .Where(d => d.FClassId == id)
+                                    .OrderBy(d => d.FDealClassDetailId)
+                                    .Select(d => d.FMemberId)
+                                    .ToList();
+
+            if (DealClass != null && DealClass.Any())
+            {
+                // 在TMembers表中找出FMemberId等於DealClass的學生資訊
+                var students = _context.TMembers
+                                      .Where(m => DealClass.Contains(m.FMemberId))
+                                      .ToList();
+                return View(students);
+            }
+            else { return NotFound(); }
+        }
+
+
+        /*=======學生編輯===============*/
+
+        public IActionResult studentEdit(int? id)
+        {
+            // 找出TDealClassDetails表中符合FClassId == id的所有FMemberId
+            var DealClass = _context.TDealClassDetails
+                                    .Where(d => d.FClassId == id)
+                                    .OrderBy(d => d.FDealClassDetailId)
+                                    .Select(d => d.FMemberId)
+                                    .ToList();
+
+            if (DealClass != null && DealClass.Any())
+            {
+                // 在TMembers表中找出FMemberId等於DealClass的學生資訊
+                var students = _context.TMembers
+                                      .Where(m => DealClass.Contains(m.FMemberId))
+                                      .ToList();
+                return View(students);
+            }
+            else { return NotFound(); }
+        }
+        //是否有學生
+        public IActionResult CheckDealClass(int id)
+        {
+            var isClassIdIncluded = _context.TDealClassDetails.Any(d => d.FClassId == id);
+            return Json(isClassIdIncluded);
+        }
+
     }
 }
