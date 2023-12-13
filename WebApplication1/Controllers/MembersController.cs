@@ -322,7 +322,25 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
+        public async Task<IActionResult> MemberSite()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Members", "Index");
+            }
 
+            var memberSites = await _context.TSites
+                .Where(x => x.FMemberId == member.FMemberId)
+                .ToListAsync();
+
+            var viewModel = new MemberSiteVM
+            {
+                Member = member,
+                Sites = memberSites
+            };
+            return PartialView(viewModel);
+        }
         public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10)
         {
            

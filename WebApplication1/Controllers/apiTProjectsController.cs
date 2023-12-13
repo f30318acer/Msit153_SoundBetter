@@ -51,6 +51,23 @@ namespace prjSoundBetterApi.Controllers
             }
             return Json(tProject);
         }
+        //===專案資訊===
+        public IActionResult PrjSkillStyleInfo(int? id)
+        {
+            if (id != null)
+            {
+                TProject prj = _context.TProjects.FirstOrDefault(p => p.FProjectId == id);
+                if (prj != null)
+                {
+                    string skillName = _context.TSkills.FirstOrDefault(s => s.FSkillId == prj.FSkillId).FName;
+                    string styleName = _context.TStyles.FirstOrDefault(s => s.FStyleId == prj.FStyleId).FName;
+                    string prjStatus = _context.TProjectStatuses.FirstOrDefault(s => s.FProjectStatusId == prj.FProjectStatusId).FDescription;
+                    return Content($"專案風格 : {styleName} / 需求技能 : {skillName} / 專案狀態 : {prjStatus}");
+                }
+                
+            }
+            return NotFound();
+        }
 		//===AppliNum_By_ProjectID===
 		public IActionResult QueryApppliNumById(int? id)//ProjectId
 		{

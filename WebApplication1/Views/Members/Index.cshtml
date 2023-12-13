@@ -78,6 +78,12 @@
                     </div>
                 </div>
                 <div class=" border-bottom align-items-center d-flex">
+                    <div class="btnOptions d-flex p-2 gap-3" id="myMemberSite">
+                        <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
+                        我的場地
+                    </div>
+                </div>
+                <div class=" border-bottom align-items-center d-flex">
                     <div class="btnOptions d-flex p-2 gap-3" id="myMemberCoupon">
                         <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mycoupon.JPG")" alt="">
                         我的優惠券
@@ -198,7 +204,11 @@
         $('#myProject').click(function () {
             $('#divPartial').load('@Url.Content("~/Members/MemberProject")')
         })
+        //將會員資料(場地)回傳至這裡
 
+        $('#myMemberSite').click(function () {
+            $('#divPartial').load('@Url.Content("~/Members/MemberSite")')
+        })
 
         //忘記密碼
         $('#password').click(function () {
