@@ -62,9 +62,8 @@ namespace prjSoundBetterApi.Controllers
                     string skillName = _context.TSkills.FirstOrDefault(s => s.FSkillId == prj.FSkillId).FName;
                     string styleName = _context.TStyles.FirstOrDefault(s => s.FStyleId == prj.FStyleId).FName;
                     string prjStatus = _context.TProjectStatuses.FirstOrDefault(s => s.FProjectStatusId == prj.FProjectStatusId).FDescription;
-                    return Content($"專案風格 : {styleName} / 需求技能 : {skillName} / 專案狀態 : {prjStatus}");
-                }
-                
+                    return Content($"專案風格 : {styleName} / 需求技能 : {skillName} / 專案狀態 : [{prjStatus}]");
+                }               
             }
             return NotFound();
         }

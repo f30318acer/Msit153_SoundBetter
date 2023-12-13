@@ -152,7 +152,8 @@
                     <h2>@Model.FName</h2>
                     <div class="mb-3"></div>
                     <h5 id="txtskill" style="color:gray;"></h5>
-                    <h4 style="color:gray;"></h4>
+                    <div class="mb-2"></div>
+                    <h5 id="budgetDisplay" style="color:gray;"></h5>
                     <div class="mb-3"></div>
                     <p>@Html.DisplayFor(model => model.FDescription)</p>
                 </div>
@@ -473,6 +474,14 @@
         const budget = $('#budget').val();
         var roundedBudget = Math.floor(budget);
         $('#budgetDisplay').html(`預算 : ${roundedBudget}`);
+
+        //取得專案資訊
+        function GetPrjInfo(id){
+            $.get('@Url.Content("~/apiTProjects/PrjSkillStyleInfo/")' + id, (data) => {
+                $('#txtskill').text(data);
+            })
+        }
+        GetPrjInfo(projectID);
 
         //Style選擇器
         const selStyle = document.querySelector('#selectStyle');
