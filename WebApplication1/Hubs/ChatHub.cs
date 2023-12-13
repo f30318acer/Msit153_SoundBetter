@@ -71,6 +71,13 @@ namespace CoreMVC_SignalR_Chat.Hubs
         /// <returns></returns>
         public async Task SendMessage(string selfID, string message, string sendToID)
         {
+            if (selfID == sendToID)
+            {
+                await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "不能給自己發送消息。");
+                return;
+            }
+
+
             if (string.IsNullOrEmpty(sendToID))
             {
                 await Clients.All.SendAsync("UpdContent", selfID + " 說: " + message);
@@ -79,11 +86,11 @@ namespace CoreMVC_SignalR_Chat.Hubs
             {
                 if(memberToConnectionMap.TryGetValue(sendToID, out var sendToConnectionId))
                 {               
-                // 接收人
-                await Clients.Client(sendToConnectionId).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
+                  // 接收人
+                  await Clients.Client(sendToConnectionId).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
 
-                // 發送人
-                await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
+                  // 發送人
+                  await Clients.Client(memberToConnectionMap[selfID]).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
 
                 }
                 else
