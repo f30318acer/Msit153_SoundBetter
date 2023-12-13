@@ -163,11 +163,9 @@
                     <button id="btnEdit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal" style="display:none;">修改專案</button>
                     <div class="mb-2"></div>
                     <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>  
-<<<<<<< HEAD
                     <button id="btnAppliCheck" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModa3" style="display:none;">檢視應徵</button>
                     <div class="mb-2"></div>
-=======
->>>>>>> d0f78e4013f2fabcfa25f89923c45083a214de1d
+
                     <button id="btnDelete" class="btn btn-danger" style="display:none;">刪除專案</button>
                 </div>
             </div>
@@ -354,7 +352,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 
 
 <!-- Modal3 -->
@@ -390,8 +387,6 @@
         </div>
     </div>
 </div>
-=======
->>>>>>> d0f78e4013f2fabcfa25f89923c45083a214de1d
 <!-- Intro section end -->
 
 
@@ -404,6 +399,7 @@
         const favYes = $('#favYes').val();
         const btnEdit = document.getElementById('btnEdit');
         const btnAppli = document.getElementById('btnAppli');
+        const btnAppliCheck = document.getElementById('btnAppliCheck');
         const btnDelete = document.getElementById('btnDelete');
         const btnFev = document.getElementById('btnFev');
         const btnDisFev = document.getElementById('btnDisFev');
@@ -422,6 +418,7 @@
             if (loginID == memberId) {
                 btnEdit.style.display = 'block';
                 btnDelete.style.display = 'block';
+                btnAppliCheck.style.display = 'block';
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
                 btnDisFev.style.display = 'none';
