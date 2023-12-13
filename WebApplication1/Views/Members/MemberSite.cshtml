@@ -4,57 +4,86 @@
 }
 <script src="https://cdn.tailwindcss.com"></script>
 <body class="bg-gray-100">
-    <div class="container mx-auto p-6">
+    <div class="container mx-auto p-6" id="siteListContainer">
         <div class="bg-white shadow-lg rounded-lg p-6">
-            <table class="min-w-full leading-normal">
-                <thead>
-                    <tr class="bg-yellow-300">
-                        <th class="text-center py-2">場地名稱</th>
-                        <th class="text-center py-2">連絡電話</th>
-                        <th class="text-center py-2">場地類型</th>
-                        <th class="text-center py-2">地址</th>
-                        <th class="text-center py-2">照片</th>
-                    </tr>
-                </thead>
-                <tbody id="memberTable">
-                    @foreach (var site in Model.Sites)
-                    {
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FSiteName)</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FPhone)</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">
-                                @{
-                                    string siteTypeText = "";
-                                    switch (site.FSiteType)
-                                    {
-                                        case 1:
-                                            siteTypeText = "錄音室";
-                                            break;
-                                        case 2:
-                                            siteTypeText = "音樂教室";
-                                            break;
-                                        default:
-                                            siteTypeText = "其他";
-                                            break;
-                                    }
-                                }
-                                @siteTypeText
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FAddress)</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">
-                                @if (!string.IsNullOrEmpty(site.FPicture))
-                                {
-                                    <img src="@Url.Content("~/img/Place/" + site.FPicture)" alt="Coupon Image" class="w-24 h-auto rounded-md" />
-                                }
-                                else
-                                {
-                                    <span class="text-gray-500">No Image</span>
-                                }
-                            </td>
+            <div class="container mx-auto p-6">
+                <!-- Filter dropdown -->
+
+                <div class="mb-4">
+                    <label for="siteTypeFilter" class="block text-gray-700 text-sm font-bold mb-2">Filter by Site Type:</label>
+                    <select id="siteTypeFilter" onchange="filterSites()" class="shadow border rounded py-2 px-3 text-gray-700">
+                        <option value="0">All</option>
+                        <option value="1">錄音室</option>
+                        <option value="2">音樂教室</option>
+                        <option value="3">其他</option>
+                    </select>
+                </div>
+
+                <!-- Existing table -->
+                <table class="min-w-full leading-normal">
+                    <thead>
+                        <tr class="bg-yellow-300">
+                            <th class="text-center py-2">場地名稱</th>
+                            <th class="text-center py-2">連絡電話</th>
+                            <th class="text-center py-2">場地類型</th>
+                            <th class="text-center py-2">地址</th>
+                            <th class="text-center py-2">照片</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="memberTable">
+                        @foreach (var site in Model.Sites)
+                        {
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FSiteName)</td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FPhone)</td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                    @{
+                                        string siteTypeText = "";
+                                        switch (site.FSiteType)
+                                        {
+                                            case 1:
+                                                siteTypeText = "錄音室";
+                                                break;
+                                            case 2:
+                                                siteTypeText = "音樂教室";
+                                                break;
+                                            default:
+                                                siteTypeText = "其他";
+                                                break;
+                                        }
+                                    }
+                                    @siteTypeText
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FAddress)</td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                    @if (!string.IsNullOrEmpty(site.FPicture))
+                                    {
+                                        <img src="@Url.Content("~/img/Place/" + site.FPicture)" alt="Coupon Image" class="w-24 h-auto rounded-md" />
+                                    }
+                                    else
+                                    {
+                                        <span class="text-gray-500">No Image</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>      
         </div>
     </div>
 </body>
+<script>
+    function filterSites() {
+        var siteType = document.getElementById('siteTypeFilter').value;
+        $.ajax({
+            url: '@Url.Action("MemberSite", "Members")', // 确保这是正确的 URL
+            data: { siteType: siteType },
+            success: function (data) {
+                // 确保您的页面上有一个 ID 为 'siteListContainer' 的元素
+                $('#siteListContainer').html(data);
+            }
+        });
+    }
+
+</script>
