@@ -134,6 +134,7 @@
 <input type="hidden" id="styleId" value="@Html.DisplayFor(model => model.FStyleId)" />
 <input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="budget" value="@Html.DisplayFor(model => model.FBudget)" />
+<input type="hidden" id="prjStatus" value="@Html.DisplayFor(model => model.FProjectStatusId)" />
 <input type="hidden" id="pID" value="@Html.DisplayFor(model => model.FProjectId)" />
 <input type="hidden" id="loginId" value="@ViewBag.MemberId" />
 <input type="hidden" id="favYes" value="@ViewBag.Fav" />
@@ -165,6 +166,7 @@
                     <div class="mb-2"></div>
                     <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>  
                     <button id="btnAppliCheck" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModa3" style="display:none;">檢視應徵</button>
+                    <button id="btnAppliCheck2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModa5" style="display:none;">檢視錄取</button>
                     <div class="mb-2"></div>
 
                     <button id="btnDelete" class="btn btn-danger" style="display:none;">刪除專案</button>
@@ -420,6 +422,7 @@
 		const styleId = $('#styleId').val();
 		const memberId = $('#memberId').val();
         const projectID = $('#pID').val();
+        const prjStatusID = $('#prjStatus').val();
         const loginID = $('#loginId').val();
         const favYes = $('#favYes').val();
         const btnEdit = document.getElementById('btnEdit');

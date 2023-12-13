@@ -197,7 +197,8 @@ namespace prjSoundBetterApi.Controllers
 
             if (project != null)
             {
-                _context.TProjects.Remove(project);
+                project.FProjectStatusId = 4;
+                //_context.TProjects.Remove(project);
                 _context.SaveChanges();
                 return Content("刪除成功");
             }
