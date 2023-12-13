@@ -197,12 +197,35 @@ namespace prjSoundBetterApi.Controllers
 
             if (project != null)
             {
-                _context.TProjects.Remove(project);
+                project.FProjectStatusId = 4;
+                //_context.TProjects.Remove(project);
                 _context.SaveChanges();
-                return Content("刪除成功");
+                return Content("取消成功");
             }
 
-            return Content("刪除失敗");
+            return Content("取消失敗");
+        }
+
+        //===重啟===
+
+        public IActionResult Revive(int id)
+        {
+            if (_context.TProjects == null)
+            {
+                return Problem("連線錯誤");
+            }
+
+            var project = _context.TProjects.FirstOrDefault(c => c.FProjectId == id);
+
+            if (project != null)
+            {
+                project.FProjectStatusId = 1;
+                //_context.TProjects.Remove(project);
+                _context.SaveChanges();
+                return Content("重啟成功");
+            }
+
+            return Content("重啟失敗");
         }
         private bool TProjectExists(int id)
         {
@@ -286,6 +309,26 @@ namespace prjSoundBetterApi.Controllers
                 record.FApplicationStatusId = 2;
                 _context.SaveChanges();
                 return Content("檢視成功");
+            }
+            return Content("錯誤");
+        }
+        //===錄取===
+        public IActionResult AcceptAppli(int? id)
+        {
+            if (id != null)
+            {
+                var record = _context.TApplicationRecords.FirstOrDefault(a => a.FApplicationRecordId == id);
+                int prjID = record.FProjectId;
+                var allrecord = _context.TApplicationRecords.Where(a => a.FProjectId ==  prjID);
+                foreach (var item in allrecord)
+                {
+                    item.FApplicationStatusId = 3;
+                }
+                record.FApplicationStatusId = 4;
+                TProject prj = _context.TProjects.FirstOrDefault(a => a.FProjectId == prjID);
+                prj.FProjectStatusId = 2;
+                _context.SaveChanges();
+                return Content("錄取成功");
             }
             return Content("錯誤");
         }

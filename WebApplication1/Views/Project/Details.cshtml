@@ -134,6 +134,7 @@
 <input type="hidden" id="styleId" value="@Html.DisplayFor(model => model.FStyleId)" />
 <input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="budget" value="@Html.DisplayFor(model => model.FBudget)" />
+<input type="hidden" id="prjStatus" value="@Html.DisplayFor(model => model.FProjectStatusId)" />
 <input type="hidden" id="pID" value="@Html.DisplayFor(model => model.FProjectId)" />
 <input type="hidden" id="loginId" value="@ViewBag.MemberId" />
 <input type="hidden" id="favYes" value="@ViewBag.Fav" />
@@ -165,9 +166,11 @@
                     <div class="mb-2"></div>
                     <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>  
                     <button id="btnAppliCheck" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModa3" style="display:none;">檢視應徵</button>
+                    <button id="btnAppliCheck2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModa5" style="display:none;">檢視錄取</button>
                     <div class="mb-2"></div>
 
-                    <button id="btnDelete" class="btn btn-danger" style="display:none;">刪除專案</button>
+                    <button id="btnDelete" class="btn btn-danger" style="display:none;">取消專案</button>
+                    <button id="btnRevive" class="btn btn-danger" style="display:none;">重啟專案</button>
                 </div>
             </div>
         </div>
@@ -420,12 +423,15 @@
 		const styleId = $('#styleId').val();
 		const memberId = $('#memberId').val();
         const projectID = $('#pID').val();
+        const prjStatusID = $('#prjStatus').val();
         const loginID = $('#loginId').val();
         const favYes = $('#favYes').val();
         const btnEdit = document.getElementById('btnEdit');
         const btnAppli = document.getElementById('btnAppli');
         const btnAppliCheck = document.getElementById('btnAppliCheck');
+        const btnAppliCheck2 = document.getElementById('btnAppliCheck2');
         const btnDelete = document.getElementById('btnDelete');
+        const btnRevive = document.getElementById('btnRevive');
         const btnFev = document.getElementById('btnFev');
         const btnDisFev = document.getElementById('btnDisFev');
         
@@ -441,9 +447,21 @@
                 btnAppli.setAttribute('data-bs-target', '#addModa2');
             }
             if (loginID == memberId) {
-                btnEdit.style.display = 'block';
-                btnDelete.style.display = 'block';
-                btnAppliCheck.style.display = 'block';
+                btnEdit.style.display = 'block';              
+                if (prjStatusID == 1)
+                {
+                    btnDelete.style.display = 'block';
+                    btnAppliCheck.style.display = 'block';
+                }
+                if (prjStatusID == 2)
+                {
+                    btnDelete.style.display = 'block';
+                    btnAppliCheck2.style.display = 'block';
+                }
+                if (prjStatusID == 4)
+                {
+                    btnRevive.style.display = 'block';
+                }
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
                 btnDisFev.style.display = 'none';
@@ -461,7 +479,7 @@
 		$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
 			$('#memberInfo').html(`
 				<div class="col-lg-6" >
-					<h5>製作發案人 : ${datas.fUsername}</h5>
+					<h5>製作人 : ${datas.fUsername}</h5>
                     <div class="mb-3"></div>
                     <a class="btn btn-secondary" href="/MemberPage/Details/${datas.fMemberId}">更多發案人資訊</a>
 				</div>
@@ -553,7 +571,7 @@
                 }
             })
         })
-        //刪除專案
+        //取消專案
         $('#btnDelete').click(function(){
             fetch(`/apiTProjects/Delete/${projectID}`, {
                 method: 'DELETE',
@@ -567,11 +585,33 @@
                 .then(data => {
                     console.log(data); // 這裡的 data 是從後端返回的內容，這裡假設後端返回的是文字
                     // 在這裡處理刪除成功後的操作
-                    alert("刪除成功");
+                    alert("取消成功");
                     window.location.href = "/Members/Index";
                 })
                 .catch(error => {
                     console.error('刪除失敗', error);
+                    // 在這裡處理刪除失敗後的操作
+                });
+        })
+        //重啟專案
+        $('#btnRevive').click(function () {
+            fetch(`/apiTProjects/Revive/${projectID}`, {
+                method: 'POST',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('重啟失敗');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // 這裡的 data 是從後端返回的內容，這裡假設後端返回的是文字
+                    // 在這裡處理刪除成功後的操作
+                    alert("重啟成功");
+                    window.location.href = "/Members/Index";
+                })
+                .catch(error => {
+                    console.error('重啟失敗', error);
                     // 在這裡處理刪除失敗後的操作
                 });
         })
@@ -613,7 +653,7 @@
                     const cell22 = $('<td></td>').html(`<button class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#addModa4" onclick="LoadSelfIntro(${item.fUsername},${item.fSelfIntroduction})")">查看自我介紹</button>`);
                     const cell3 = $('<td></td>').text(`Email : ${item.fEmail}`);
                     const cell4 = $('<td></td>').html(`<a class="btn btn-primary m-1" href="/MemberPage/Details/${item.fMemberId}" target="_blank" onclick="ChangeAppliStatus(${item.fApplicationRecordId})">會員資訊</a>`)
-                    const cell5 = $('<td></td>').html(`<button class="btn btn-danger m-1">錄取應徵會員</button>`);
+                    const cell5 = $('<td></td>').html(`<button class="btn btn-danger m-1" onclick="AcceptAppli(${item.fApplicationRecordId})">錄取應徵會員</button>`);
 
                     const row = $('<tr></tr>').append([cell1, cell2, cell22])
                     const row2 = $('<tr></tr>').append([cell3, cell4, cell5])
@@ -623,6 +663,26 @@
             })
         }
         LoadAppliInfo();
+        //接受應徵
+        function AcceptAppli(id){
+            fetch(`/apiTProjects/AcceptAppli/${id}`, {
+                method: 'POST',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('錄取失敗');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    alert("錄取成功");
+                    window.location.href = "/Members/Index";
+                })
+                .catch(error => {
+                    console.error('錄取失敗', error);
+                    // 在這裡處理刪除失敗後的操作
+                });
+        }
         //改變應徵檢視狀態
         function ChangeAppliStatus(appliId){
             fetch(`/apiTProjects/ChangeAppliStatus/${appliId}`, {
