@@ -325,6 +325,8 @@ namespace prjSoundBetterApi.Controllers
                     item.FApplicationStatusId = 3;
                 }
                 record.FApplicationStatusId = 4;
+                TProject prj = _context.TProjects.FirstOrDefault(a => a.FProjectId == prjID);
+                prj.FProjectStatusId = 2;
                 _context.SaveChanges();
                 return Content("錄取成功");
             }
