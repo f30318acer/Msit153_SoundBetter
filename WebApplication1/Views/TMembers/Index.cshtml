@@ -15,6 +15,23 @@
     .main-content {
         padding-left: 30rem; /* 根据侧边栏宽度调整 */
     }
+    /* 為父容器設置 display: flex */
+    .container {
+        display: flex;
+        flex-wrap: wrap; /* 如果需要，可以在小屏幕上換行 */
+    }
+
+    /* 為導航欄設置 flex: 0 0 auto; 保證它不被壓縮 */
+    .navbar {
+        flex: 0 0 auto; /* 根據實際類名調整 */
+        width: 250px; /* 或者其他固定寬度 */
+    }
+
+    /* 為主內容設置 flex-grow: 1; 使其佔據剩余空間 */
+    .main-content {
+        flex-grow: 1;
+        padding-left: 1rem; /* 或根據實際需要調整 */
+    }
 
 </style>
 
@@ -60,9 +77,9 @@
                         <th class="py-3 px-6 text-left">密碼</th>
                         <th class="py-3 px-6 text-left">電話號碼</th>
                         <th class="py-3 px-6 text-left">信箱</th>
-                        <th class="py-3 px-6 text-left">性別</th>
+                        <th class="py-3 px-6 text-left" >性別</th>
                         <th class="py-3 px-6 text-left">生日</th>
-                        <th class="py-3 px-6 text-left">建立時間</th>
+                        <th class="py-3 px-6 text-left" hidden>建立時間</th>
                         <th class="py-3 px-6 text-left" hidden>自我介紹</th>
                         <th class="py-3 px-6 text-left">照片</th>
                         <th class="py-3 px-6 text-center font-bold">操作</th>
@@ -87,13 +104,13 @@
                             <td class="text-base p-4">
                                 @Html.DisplayFor(modelItem => item.FEmail)
                             </td>
-                            <td class="text-base p-4">
+                            <td class="text-base p-4" >
                                 @Html.DisplayFor(modelItem => item.FGender)
                             </td>
                             <td class="text-base p-4">
                                 @Html.DisplayFor(modelItem => item.FBirthday)
                             </td>
-                            <td class="text-base p-4">
+                            <td class="text-base p-4" hidden>
                                 @Html.DisplayFor(modelItem => item.FCreationTime)
                             </td>
                             <td class="text-base p-4" hidden>

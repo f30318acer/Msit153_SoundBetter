@@ -16,10 +16,12 @@ namespace prjMusicBetter.Controllers
     public class apiTArticleController : Controller
     {
         private readonly UserInfoService _userInfoService;
+        private IWebHostEnvironment _enviro = null;
         private readonly dbSoundBetterContext _context;
-        public apiTArticleController(dbSoundBetterContext context, UserInfoService userInfoService)
+        public apiTArticleController(IWebHostEnvironment p,dbSoundBetterContext context, UserInfoService userInfoService)
         {
             _context = context;
+            _enviro = p;
             _userInfoService = userInfoService;
         }
         //===List_All===
@@ -60,12 +62,31 @@ namespace prjMusicBetter.Controllers
         }
         //===新增===
         [HttpPost]
-        public IActionResult Create([FromBody] TArticle? article)
+        public IActionResult Create(TArticle? Article, IFormFile formFilePhoto)
         {
-            if (article != null)
+            if (Article != null)
             {
-                _context.Add(article);
+                if (formFilePhoto != null)
+                {
+                    string photoName = Guid.NewGuid().ToString() + ".jpg";
+                    Article.FPhotoPath = photoName;
+                    formFilePhoto.CopyTo(new FileStream(_enviro.WebRootPath + "/img/Article/" + photoName, FileMode.Create));
+                }
+                else
+                {
+                    Article.FPhotoPath = "1.jpg";
+                }
+               
+                DateTime now = DateTime.Now;
+                Article.FUpdateTime = now;
+                _context.Add(Article);
                 _context.SaveChanges();
+
+                // 新增 TClassClicks 資料
+
+
+
+
                 return Content("新增成功");
             }
             return Content("錯誤");

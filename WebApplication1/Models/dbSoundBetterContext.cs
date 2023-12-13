@@ -1134,6 +1134,7 @@ public partial class dbSoundBetterContext : DbContext
             entity.ToTable("tWork");
 
             entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
+            entity.Property(e => e.FClick).HasColumnName("fClick");
             entity.Property(e => e.FDescription)
                 .HasMaxLength(50)
                 .HasColumnName("fDescription");
@@ -1168,17 +1169,13 @@ public partial class dbSoundBetterContext : DbContext
 
         modelBuilder.Entity<TWorkClick>(entity =>
         {
-            entity.HasKey(e => e.FWorkClick).HasName("PK_fWorkClick");
+            entity.HasKey(e => e.FWorkClick);
 
             entity.ToTable("tWorkClick");
 
             entity.Property(e => e.FWorkClick).HasColumnName("fWorkClick");
             entity.Property(e => e.FClick).HasColumnName("fClick");
             entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
-
-            entity.HasOne(d => d.FWork).WithMany(p => p.TWorkClicks)
-                .HasForeignKey(d => d.FWorkId)
-                .HasConstraintName("FK_tWorkClick_tWork");
         });
 
         modelBuilder.Entity<TWorkFav>(entity =>

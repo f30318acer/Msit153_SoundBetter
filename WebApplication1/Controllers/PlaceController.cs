@@ -137,19 +137,19 @@ namespace Music_matchmaking_platform.Controllers
 
 			return View(tSite);
 		}
-        //public IActionResult GetMemberNameandEmail()
-        //{
-        //    TMember member = _userInfoService.GetMemberInfo();
-        //    var name = member?.FName;
-        //    var email = member?.FEmail;
-        //    var result = new
-        //    {
-        //        Name = name,
-        //        Email = email
-        //    };
+        public IActionResult GetMemberNameandEmail()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            var name = member?.FName;
+            var email = member?.FEmail;
+            var result = new
+            {
+                Name = name,
+                Email = email
+            };
 
-        //    return Json(result);
-        //}
+            return Json(result);
+        }
         public IActionResult GetClasses(int? fSiteId)
         {
             var sss = from s in _context.TSites
@@ -166,7 +166,7 @@ namespace Music_matchmaking_platform.Controllers
             try
             {
                 // 發送 Email
-                SendReservationConfirmationEmail(formData2.Email, formData2.Name, formData2.Subject, formData2.Message);
+                SendReservationConfirmationEmail(formData2.Email, formData2.Name, formData2.Subject, formData2.Message, formData2.ReserName);
 
                 return Ok(); // 或其他適合的回應
             }
@@ -175,15 +175,15 @@ namespace Music_matchmaking_platform.Controllers
                 return BadRequest(ex.Message); // 適當地處理錯誤
             }
         }
-        public void SendReservationConfirmationEmail(string Email, string Name, string Subject, string Message)
+        public void SendReservationConfirmationEmail(string Email, string Name, string Subject, string Message, string ReserName)
         {
-            string apiKey = ""; // 替換為你的 SendGrid API Key
+            string apiKey = "SG.lHmKulaIQviZJqGMxJASPw.cfzz大家好SXXTSASxSUZKidD0AzgEGqaVsxpJm3tW5qv5ga0"; // 替換為你的 SendGrid API Key
 
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("zackyandjacky@gmail.com", "SoundBetter"); // 替換為實際的寄件者 Email 和名稱
             var to = new EmailAddress(Email, Name);
-            var plainTextContent = $"親愛的 {Name}，\n\n{Subject}。以下是預約詳情：\n\n預約會員：{Subject}\n訊息：{Message}";
-            var htmlContent = $"<p>親愛的 {Name}，</p><p>{Subject}。以下是預約詳情：</p><p><strong>預約會員：</strong>{Subject}</p><p><strong>訊息：</strong>{Message}</p>";
+            var plainTextContent = $"親愛的 {Name}，\n\n{Subject}。以下是預約詳情：\n\n預約會員：{ReserName}\n訊息：{Message}";
+            var htmlContent = $"<p>親愛的 {Name}，</p><p>{Subject}。以下是預約詳情：</p><p><strong>預約會員：</strong>{ReserName}</p><p><strong>訊息：</strong>{Message}</p>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, Subject, plainTextContent, htmlContent);
 

@@ -22,57 +22,55 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                      
+
                         <div class="datatable-container">
                             <table class="table">
                                 <!-- 表格標題和內容... -->
-                                <div>
-                                    <hr />
-                                    <dl class="row">
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FCouponContent)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FCouponContent)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FCouponCode)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FCouponCode)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FDescription)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FDescription)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FStartdate)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FStartdate)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FEnddate)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FEnddate)
-                                        </dd>
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.FPicture)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.FPicture)
-                                        </dd>
+                                <dl class="row">
+                                    <dl class="col-md-4">
+                                        <form asp-action="Delete">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-group">
+                                                <label asp-for="FCouponContent" class="control-label">優惠券內容</label>
+                                                <input asp-for="FCouponContent" class="form-control" />
+                                                <span asp-validation-for="FCouponContent" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FCouponCode" class="control-label">優惠券代碼</label>
+                                                <input asp-for="FCouponCode" class="form-control" />
+                                                <span asp-validation-for="FCouponCode" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FDescription" class="control-label">描述</label>
+                                                <input asp-for="FDescription" class="form-control" />
+                                                <span asp-validation-for="FDescription" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FStartdate" class="control-label">開始日</label>
+                                                <input asp-for="FStartdate" class="form-control" />
+                                                <span asp-validation-for="FStartdate" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FStartdate" class="control-label">結束日</label>
+                                                <input asp-for="FStartdate" class="form-control" />
+                                                <span asp-validation-for="FStartdate" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FPicture" class="control-label">圖片</label>
+                                                <input asp-for="FPicture" class="form-control" />
+                                                <span asp-validation-for="FPicture" class="text-danger"></span>
+                                            </div>
+                                        </form>
                                     </dl>
-                                    <form asp-action="Delete">
-                                        <input type="hidden" asp-for="FCouponId" />
-                                        <input type="submit" value="Delete" class="btn btn-danger" onclick="confirmDelete"/> |
-                                        <a asp-action="Index" class="btn btn-primary">首頁</a>
-                                    </form>
-                                </div>
+                                </dl>
+                                <hr />
+                                <form asp-action="Delete">
+                                    <input type="hidden" asp-for="FCouponId" />
+                                    <input type="submit" value="Delete" class="btn btn-danger" onclick="confirmDelete" />
+                                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                </form>
                             </table>
+                          
                         </div>
                     </div>
                 </div>

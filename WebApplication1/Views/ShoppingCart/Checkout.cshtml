@@ -172,7 +172,8 @@
 
                         <hr class="my-4">
                     </div>
-                    <button class="w-100 btn btn-primary btn-lg" type="submit" onclick="checkOut()">結帳</button>
+                    @*<a href="/ShoppingCart/CheckOut_Fin" class="btn btn-primary btn-lg" role="button" onclick="checkOut()">結帳</a>*@
+                    <a href="/ShoppingCart/CheckOut_Fin" class="btn btn-primary btn-lg" role="button" onclick="checkoutAndClear()">結帳</a>
 
 
 
@@ -278,15 +279,44 @@
         $(`#${formType}-card-csv`).prop('readonly', isBlocking)
         $(`#${formType}-card-error`).text('')
     }
-    function checkOut() {
-        console.log(12)
 
+    //function checkOut() {
+    //    console.log(12)
+
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/ShoppingCart/CheckOut_Rst", // 修改成你的 API 端點
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+           
+    //        success: function (response) {
+    //            // 處理成功的回應
+    //            alert(response.message);
+    //            // 刷新購物車Icon
+    //            UpdateShoppingCartIcon();
+    //        },
+    //        error: function (error) {
+    //            // 處理錯誤
+    //            alert(response.message);
+    //        }
+    //    });
+
+       
+    //}
+
+    function checkoutAndClear() {
+        checkOut(); // 先觸發 checkOut 函數
+        clearShoppingCart(); // 再觸發 clearShoppingCart 函數
+    }
+
+    function checkOut() {
+       
         $.ajax({
             type: "POST",
             url: "/ShoppingCart/CheckOut_Rst", // 修改成你的 API 端點
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-           
+
             success: function (response) {
                 // 處理成功的回應
                 alert(response.message);
@@ -296,6 +326,17 @@
             error: function (error) {
                 // 處理錯誤
                 alert(response.message);
+            }
+        });
+    }
+
+    function clearShoppingCart() {
+        $.ajax({
+            type: "POST",
+            url: "/ShoppingCart/ClearCart",
+            success: function () {
+            },
+            error: function () {
             }
         });
     }

@@ -316,7 +316,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
+                                                    <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%" ><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                         </div>
                                     </div>
                                 </div>
@@ -367,7 +367,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(this)" style="width: 100%"><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
+                                    <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%" ><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                     </div>
                                 </div>
                             </div>
@@ -445,13 +445,13 @@
                 }
             });
         }
-        function handlePlayEnded(audioElement) {
+        function handlePlayEnded(id) {
     // 在這裡執行你想要的操作
-            console.log(audioElement);
-                alert('播音结束');
-            const idd = audioElement.value;
+            console.log(id);
+              
+            console.log(id);
             $.ajax({
-                url: `/apiTWork/PlusOne/?id=${idd}`,  // 請根據你的實際路由進行修改
+                url: `/apiTWork/PlusOne/?id=${id}`,  // 請根據你的實際路由進行修改
                 type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
                 success: function (response) {
                     console.log('PlusOne successful');

@@ -205,15 +205,13 @@
                                                             <source src="~/ProjectDemo/@Html.DisplayFor(model => model.FDemoFilePath)" type="audio/mp3">
                                                             Your browser does not support the audio element.
                                                         </audio>
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-		                    </div>
-		
+		                    </div>		
 	                    </div>
 	                    <div class="container">
 		                    <div class="row">
@@ -369,7 +367,6 @@
         
         //取得風格資訊
 		$.getJSON(`/apiTStyle/QueryById/${styleId}`, function (datas) {
-			console.log(datas);
 			$('#styleName').html(`製作風格 : ${datas[0].fName}`);
 		})
 
@@ -397,7 +394,6 @@
 
         //取得會員資訊
 		$.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
-			console.log(datas);
 			$('#memberInfo').html(`
 				<div class="col-lg-6" >
 					<h5>製作發案人 : ${datas.fUsername}</h5>
@@ -483,6 +479,28 @@
                     alert("連線失敗");
                 }
             })
+        })
+        //刪除專案
+        $('#btnDelete').click(function(){
+            fetch(`/apiTProjects/Delete/${projectID}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('刪除失敗');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // 這裡的 data 是從後端返回的內容，這裡假設後端返回的是文字
+                    // 在這裡處理刪除成功後的操作
+                    alert("刪除成功");
+                    window.location.href = "/Members/Index";
+                })
+                .catch(error => {
+                    console.error('刪除失敗', error);
+                    // 在這裡處理刪除失敗後的操作
+                });
         })
         //送出應徵資料
         $('#btnAppliSend').click(function () {

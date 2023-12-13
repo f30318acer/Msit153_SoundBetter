@@ -1,7 +1,7 @@
 ﻿@model prjMusicBetter.Models.TMember;
 
 @{
-    ViewData["Title"] = "Edit";   
+    ViewData["Title"] = "Edit";
     Layout = "_Layout2";
 }
 @* =================================================================================== *@
@@ -27,7 +27,7 @@
                                 <!-- 表格標題和內容... -->
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <form asp-action="Edit" method="post"enctype="multipart/form-data">
+                                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                             <input type="hidden" asp-for="FMemberId" />
                                             <div class="form-group">
@@ -56,8 +56,17 @@
                                                 <span asp-validation-for="FEmail" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label asp-for="FGender" class="control-label">性別</label>
-                                                <input asp-for="FGender" class="form-control" />
+                                                <label class="control-label">性別</label>
+                                                <div>
+                                                    <label>
+                                                        <input type="radio" asp-for="FGender" value="true" class="form-control" />
+                                                        男
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" asp-for="FGender" value="false" class="form-control" />
+                                                        女
+                                                    </label>
+                                                </div>
                                                 <span asp-validation-for="FGender" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
@@ -80,28 +89,28 @@
                                                 <select asp-for="FPermissionId" class="form-control" asp-items="ViewBag.FPermissionId"></select>
                                                 <span asp-validation-for="FPermissionId" class="text-danger"></span>
                                             </div>
-                                          @*   <div class="form-group">
-                                                <label asp-for="FPhotoPath" class="control-label"></label>
-                                                <input asp-for="FPhotoPath" class="form-control" />
-                                                <span asp-validation-for="FPhotoPath" class="text-danger"></span>
+                                            @*   <div class="form-group">
+                                            <label asp-for="FPhotoPath" class="control-label"></label>
+                                            <input asp-for="FPhotoPath" class="form-control" />
+                                            <span asp-validation-for="FPhotoPath" class="text-danger"></span>
                                             </div> *@
-                                           
+
                                             <div class="form-group">
                                                 <label asp-for="FPhotoPath" class="control-label">圖片</label>
                                                 @if (Model.FPhotoPath != null)
                                                 {
                                                     <img src="@Url.Content("~/img/Member/" + Model.FPhotoPath)" alt="Current Image" style="width:150px;" />
                                                 }
-                                                <input type ="file" asp-for="FPhotoPath" class="form-control" />
-                                                <span asp-validation-for="FPhotoPath"class="text-danger"></span>
+                                                <input type="file" asp-for="FPhotoPath" class="form-control" />
+                                                <span asp-validation-for="FPhotoPath" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" value="儲存"class="btn btn-primary" />
+                                                <input type="submit" value="儲存" class="btn btn-primary" />
                                                 <a asp-action="Index" class="btn btn-primary">首頁</a>
                                             </div>
                                         </form>
                                     </div>
-                                </div>  
+                                </div>
                             </table>
                         </div>
                     </div>
@@ -119,5 +128,7 @@
 </script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

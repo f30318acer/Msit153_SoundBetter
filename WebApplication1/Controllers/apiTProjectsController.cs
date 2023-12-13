@@ -168,20 +168,24 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
-        //===刪除===
-        public IActionResult Delete(int id)
+		//===刪除===
+		
+		public IActionResult Delete(int id)
         {
             if (_context.TProjects == null)
             {
                 return Problem("連線錯誤");
             }
-            var project = _context.TProjects.Where(c => c.FProjectId == id).FirstOrDefault();
+
+            var project = _context.TProjects.FirstOrDefault(c => c.FProjectId == id);
+
             if (project != null)
             {
                 _context.TProjects.Remove(project);
                 _context.SaveChanges();
                 return Content("刪除成功");
             }
+
             return Content("刪除失敗");
         }
         private bool TProjectExists(int id)

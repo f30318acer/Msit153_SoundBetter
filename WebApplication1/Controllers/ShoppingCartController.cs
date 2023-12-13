@@ -83,17 +83,30 @@ namespace prjMusicBetter.Controllers
             _context.Add(dealClass);
             _context.SaveChanges();
 
-            //// 儲存至資料表DealClassDetail
-            //TDealClassDetail dealClassDetail = new TDealClassDetail();
-            //dealClassDetail.FMemberId = memberId;
-            ////dealClassDetail.FDealClassId = 
-            //dealClassDetail.FClassId = 
+            //儲存至資料表DealClassDetail
+            foreach (var item in cart) {
+                TDealClassDetail dealClassDetail = new TDealClassDetail();
+                dealClassDetail.FMemberId = memberId;
+                dealClassDetail.FDealClassId = dealClass.FDealClassId;
+                dealClassDetail.FClassId = item.ProductId;
+                dealClassDetail.FStartDate = item.ProductStartDate;
+                dealClassDetail.FEndDate = item.ProductEndDate;
 
-            
+                _context.Add(dealClassDetail);
+                _context.SaveChanges();
+            }
 
 
+            return Json(new { success = true, message = "購買成功" });
 
-            return Json(new { success = true, message = "更新成功" });
+        }
+
+
+        public IActionResult CheckOut_Fin()
+        {
+           
+
+            return View();
         }
 
 
@@ -137,7 +150,19 @@ namespace prjMusicBetter.Controllers
             }
             return cart;
         }
-       
+        [HttpPost]
+        public IActionResult ClearCart()
+        {
+            // 取得Session
+            int memberId = _userInfoService.GetMemberId();
+
+            // 清除购物车信息
+            HttpContext.Session.Remove($"ShoppingCart_{memberId}");
+            return Ok();
+        }
     }
 
+
 }
+
+
