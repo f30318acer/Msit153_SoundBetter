@@ -18,7 +18,7 @@ https://github.com/robotze/GithubDesktopZhTool/releases
 
 姚宇謙
 
-蔡亞哲
+蔡亞哲:註冊登入系統、會員中心系統、signalr聊天室、powerBI、HighChart、Google Cloud API、前後台部分UI設計。
 
 洪培庭
 
