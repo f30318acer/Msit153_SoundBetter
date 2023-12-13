@@ -415,6 +415,31 @@
         </div>
     </div>
 </div>
+
+<!-- Modal5 -->
+<div class="modal fade" id="addModa5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">已錄取會員 <span></span></h5>
+            </div>
+            <div class="modal-body">
+                <form id="selfIntroForm">
+                    <div id="acceptMember" class="row">                       
+                        <!--自我介紹彈出視窗-->                          
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 取消</button>
+                <button type="button" class="btn btn-primary" id="btnAppliSend"><i class="bi bi-send-check-fill"></i> 應徵 </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Intro section end -->
 
 
@@ -665,6 +690,9 @@
         LoadAppliInfo();
         //接受應徵
         function AcceptAppli(id){
+            var confirmAccept = window.confirm('確定要錄取嗎？');
+
+            if (confirmAccept) {
             fetch(`/apiTProjects/AcceptAppli/${id}`, {
                 method: 'POST',
             })
@@ -682,6 +710,7 @@
                     console.error('錄取失敗', error);
                     // 在這裡處理刪除失敗後的操作
                 });
+            }else{}
         }
         //改變應徵檢視狀態
         function ChangeAppliStatus(appliId){
@@ -689,6 +718,23 @@
                 method: 'POST',
             })
         }
+
+        //載入錄取者資訊
+        function AcceptMemberInfo(){
+            $.getJSON(`/apiTProjects/GetAcceptMemberInfo/${projectID}`, function (datas) {
+                console.log(datas);
+                $('#acceptMember').html(`
+                <div class="col-6">
+                    <h3>${datas.fName}</h3>
+                    <div class="mb-2"></div>
+                    <h5>Email : ${datas.fEmail}</h5>
+                </div>
+                <div class="col-6">
+                </div>
+                `);
+            })
+        }
+        AcceptMemberInfo()
         //載入應徵者自我介紹
         function LoadSelfIntro(userName,selfIntro){
             $('#divSelfIntro').html(
