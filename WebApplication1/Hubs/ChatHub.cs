@@ -90,12 +90,12 @@ namespace CoreMVC_SignalR_Chat.Hubs
                   await Clients.Client(sendToConnectionId).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
 
                   // 發送人
-                  await Clients.Client(sendToConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
+                  await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
 
                 }
                 else
                 {
-                    await Clients.Client(memberToConnectionMap[selfID]).SendAsync("UpdContent", "無法找到用戶: " + sendToID);
+                    await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "無法找到用戶: " + sendToID);
                 }
                 //var sendToConnectionId = memberToConnectionMap[sendToID];
 
