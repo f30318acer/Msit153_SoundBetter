@@ -1,6 +1,7 @@
 # Msit153_SoundBetter 音樂媒合社群平台
-GitHub desktop 漢化
-https://github.com/robotze/GithubDesktopZhTool/releases
+
+GOOGLE雲端檔案連結:
+https://drive.google.com/drive/folders/1LXkLsAOi_OKo0AVolVu96GcszJWRvt0s
 
 專案說明
 這款基於MVC架構的音樂社群平台，專為音樂創作者和愛好者打造。它不僅促進用戶間的互動交流，還提供了一個共享和發現音樂的獨特空間。用戶可以發布自己的作品，
