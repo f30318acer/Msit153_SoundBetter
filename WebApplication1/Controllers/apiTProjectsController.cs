@@ -27,7 +27,7 @@ namespace prjSoundBetterApi.Controllers
         //===List_All===
         public IActionResult List()
         {
-            var dbSoundBetterContext = _context.TProjects;
+            var dbSoundBetterContext = _context.TProjects.Where(p => p.FProjectStatusId == 1);
             return Json(dbSoundBetterContext);
         }
 		public IActionResult SkillsList()
@@ -234,5 +234,45 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
+
+        //===取得應徵資料===
+        public IActionResult GetAppliInfo(int? id)
+        {
+            if (id == null || _context.TApplicationRecords == null)
+            {
+                return NotFound();
+            }
+            var appliInfo = from a in _context.TApplicationRecords
+                            join m in _context.TMembers on a.FMemberId equals m.FMemberId
+                            join s in _context.TApplicationStatuses on a.FApplicationStatusId equals s.FApplicationStatus
+                            where a.FProjectId == id
+                            select new
+                            {
+                                a.FApplicationRecordId,
+                                a.FMemberId,
+                                a.FApplicationStatusId,
+                                s.FDescription,
+                                a.FSelfIntroduction,
+                                m.FUsername,
+                                m.FName,
+                                m.FEmail,
+                                m.FPhone
+                            };
+            return Json(appliInfo);
+        }
+        //===改變應徵紀錄檢視狀態===
+        [HttpPost]
+        public IActionResult ChangeAppliStatus(int? id)
+        {
+            if (id != null)
+            {
+                var record = _context.TApplicationRecords.FirstOrDefault(a => a.FApplicationRecordId == id);
+                record.FApplicationStatusId = 2;
+                _context.SaveChanges();
+                return Content("檢視成功");
+            }
+            return Content("錯誤");
+        }
+
     }
 }

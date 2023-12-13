@@ -163,6 +163,9 @@
                     <button id="btnEdit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addModal" style="display:none;">修改專案</button>
                     <div class="mb-2"></div>
                     <button id="btnAppli" class="btn btn-danger" style="display:block;" >應徵專案</button>  
+                    <button id="btnAppliCheck" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModa3" style="display:none;">檢視應徵</button>
+                    <div class="mb-2"></div>
+
                     <button id="btnDelete" class="btn btn-danger" style="display:none;">刪除專案</button>
                 </div>
             </div>
@@ -349,6 +352,41 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal3 -->
+<div class="modal fade" id="addModa3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">檢視應徵 <span></span></h5>
+                @*      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>*@
+                @*<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">取消</button>*@
+            </div>
+            <div class="modal-body">
+                <form id="appliCheckForm">
+                    <input type="hidden" name="id" id="fProjectId" value="@Html.DisplayFor(model => model.FProjectId)">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table id="appliTable" class="table table-bordered">
+                                <tbody><!--資料位置--></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 取消</button>
+                <button type="button" class="btn btn-primary"><i class="bi bi-send-check-fill"></i> 應徵 </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Intro section end -->
 
 
@@ -361,6 +399,7 @@
         const favYes = $('#favYes').val();
         const btnEdit = document.getElementById('btnEdit');
         const btnAppli = document.getElementById('btnAppli');
+        const btnAppliCheck = document.getElementById('btnAppliCheck');
         const btnDelete = document.getElementById('btnDelete');
         const btnFev = document.getElementById('btnFev');
         const btnDisFev = document.getElementById('btnDisFev');
@@ -379,6 +418,7 @@
             if (loginID == memberId) {
                 btnEdit.style.display = 'block';
                 btnDelete.style.display = 'block';
+                btnAppliCheck.style.display = 'block';
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
                 btnDisFev.style.display = 'none';
@@ -525,6 +565,37 @@
                 $('#txtIntro').val(datas.fIntroduction);
             })
         })
+
+        //載入應徵會員資訊
+        function LoadAppliInfo() {
+            const appliTable = $('#appliTable>tbody')
+
+            $.getJSON(`/apiTProjects/GetAppliInfo/${projectID}`, function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    console.log(item);
+                    const descriSub = item.fSelfIntroduction.length > 15 ? item.fSelfIntroduction.substring(0, 15) + '...' : item.fSelfIntroduction;
+                    const cell1 = $('<td></td>').text(`[${item.fDescription}] / ${item.fUsername} / ${item.fName}`);
+                    const cell2 = $('<td></td>').text(descriSub);
+                    const cell22 = $('<td></td>').html(`<button class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#addModa4")">查看自我介紹</button>`);
+                    const cell3 = $('<td></td>').text(`Email : ${item.fEmail}`);
+                    const cell4 = $('<td></td>').html(`<a class="btn btn-secondary m-1" href="/MemberPage/Details/${item.fMemberId}" target="_blank" onclick="ChangeAppliStatus(${item.fApplicationRecordId})">會員資訊</a>`)
+                    const cell5 = $('<td></td>').html(`<button class="btn btn-secondary m-1">錄取應徵會員</button>`);
+
+                    const row = $('<tr></tr>').append([cell1, cell2, cell22])
+                    const row2 = $('<tr></tr>').append([cell3, cell4, cell5])
+                    docFrag.append([row, row2])
+                })
+                appliTable.html(docFrag)
+            })
+        }
+        LoadAppliInfo();
+        //改變應徵檢視狀態
+        function ChangeAppliStatus(appliId){
+            fetch(`/apiTProjects/ChangeAppliStatus/${appliId}`, {
+                method: 'POST',
+            })
+        }
         //判斷是否登入
         async function CheckLoginAndNavigate(btnID) {
             const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
