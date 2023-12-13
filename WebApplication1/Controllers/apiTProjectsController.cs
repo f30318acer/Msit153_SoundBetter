@@ -253,5 +253,29 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
+        //===取得應徵資料===
+        public IActionResult GetAppliInfo(int? id)
+        {
+            if (id == null || _context.TApplicationRecords == null)
+            {
+                return NotFound();
+            }
+            var appliInfo = from a in _context.TApplicationRecords
+                            join m in _context.TMembers on a.FMemberId equals m.FMemberId
+                            join s in _context.TApplicationStatuses on a.FApplicationStatusId equals s.FApplicationStatus
+                            where a.FProjectId == id
+                            select new
+                            {
+                                a.FMemberId,
+                                a.FApplicationStatusId,
+                                s.FDescription,
+                                a.FSelfIntroduction,
+                                m.FUsername,
+                                m.FName,
+                                m.FEmail,
+                                m.FPhone
+                            };
+            return Json(appliInfo);
+        }
     }
 }

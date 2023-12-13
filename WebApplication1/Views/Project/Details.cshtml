@@ -371,13 +371,17 @@
                     <input type="hidden" name="id" id="fProjectId" value="@Html.DisplayFor(model => model.FProjectId)">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="FBudget">自我介紹 : </label>
-                                <input type="hidden" name="fMemberId" value="@ViewBag.MemberId" />
-                                <textarea id="txtIntro" class="form-control" name="fSelfIntroduction" style="height: 200px;">製作人您好，我對這個職位有強烈興趣，希望能得到合作的機會，謝謝。</textarea>
-                                <div class="mb-2"></div>
-                                <button type="button" id="btnDefault" class="btn btn-secondary">套用會員介紹</button>
-                            </div>
+                            <table id="appliTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>會員名稱</th>
+                                        <th>自我介紹</th>
+                                        <th>聯絡電話</th>
+                                        <th>編輯</th>
+                                    </tr>
+                                </thead>
+                                <tbody><!--資料位置--></tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="form-group">
