@@ -148,20 +148,24 @@ namespace prjMusicBetter.Controllers
         [HttpPost]
         public IActionResult Edit(TComment paf, [FromBody] CommentDto dto)
         {
-            
-            TComment pDB = _context.TComments.FirstOrDefault(p => p.FCommentId == paf.FCommentId);
-            
 
-
-            if (pDB != null)
-            {   
-                pDB.FMemberId = paf.FMemberId;
-                pDB.FArticleId = paf.FArticleId;
-                pDB.FCommentContent = paf.FCommentContent;
-                pDB.FCommentTime = DateTime.Now;
-                _context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                TComment pDB = _context.TComments.FirstOrDefault(p => p.FCommentId == paf.FCommentId);
+            
+                if (pDB != null)
+                 {   
+                     pDB.FMemberId = paf.FMemberId;
+                     pDB.FArticleId = paf.FArticleId;
+                     pDB.FCommentContent = paf.FCommentContent;
+                     pDB.FCommentTime = DateTime.Now;
+                    _context.SaveChanges();
+                 }
+                 return RedirectToAction("List");
+            
             }
-            return RedirectToAction("List");
+
+            return View(paf);
         }
 
 
