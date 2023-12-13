@@ -116,19 +116,20 @@
             type: 'POST',
             data: 
             {
-                fMemberId: $('#fMemberId').val(),
+                // fMemberId: $('#fMemberId').val(),
+                fMemberId: 20,
                 fArticleId: $('#fArticleId').val(),
                 fCommentContent: $('#fCommentContent').val(),
-                currentDate: new Date(),
+                // currentDate: new Date().toISOString(),
             },
         }).done(function (data) {
             alert("新增成功")
-            // location.href = "@Url.Action("List", "Comment")"
+            location.href = "@Url.Action("List", "Comment")"
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.log("POST request failed: " + textStatus + ", " + errorThrown);
             alert("新增失敗");
-            // location.href = "@Url.Action("List", "Comment")"
+            location.href = "@Url.Action("List", "Comment")"
         });
     });
 

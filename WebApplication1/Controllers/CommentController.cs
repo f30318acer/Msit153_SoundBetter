@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.Dtos;
 using prjMusicBetter.Models.Dtos.Comment;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
@@ -45,42 +46,30 @@ namespace prjMusicBetter.Controllers
         }
 
 
+
+
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(CommentDto dto)
+        public IActionResult Create(CommentDto dto, FMemberDto mdto)
         {
 
-            dto.ArticleId = 20;
-            //dto.Content = "test123";
+            dto.FArticleId = 20;
+
 
             _context.TComments.Add(new TComment()
             {
-                //FMemberId = dto.MemberId,
-                FCommentContent = dto.Content,
-                FArticleId = dto.ArticleId,
+                FMemberId = mdto.FMemberID,
+                FCommentContent = dto.FCommentContent,
+                FArticleId = dto.FArticleId,
                 FCommentTime = DateTime.Now,
             });
             _context.SaveChanges();
 
             return Ok();
         }
-        //[HttpPost]
-        //public IActionResult Create(CommentDto dto, TComment comment)
-        //{
-        //    dto.ArticleId = 20;
-        //    comment.FMemberId = dto.MemberId;
-        //    comment.FArticleId = dto.ArticleId;
-        //    comment.FCommentContent = dto.Content;
-        //    comment.FCommentTime = DateTime.Now;
-        //    _context.Add(comment);
-        //    _context.SaveChanges();
-        //    return Ok();
-        //}
-
-
 
         //public IActionResult Edit(int? id)
         //{
@@ -152,20 +141,23 @@ namespace prjMusicBetter.Controllers
         {
             
             TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == id);
-            if (comment != null)
-                return RedirectToAction("List");
-            return View();
+            if (comment == null)
+            { return RedirectToAction("List"); }
+            return View(comment);
         }
         [HttpPost]
-        public IActionResult Edit(TComment pIN)
+        public IActionResult Edit(TComment paf, [FromBody] CommentDto dto)
         {
             
-            TComment pDB = _context.TComments.FirstOrDefault(p => p.FCommentId == pIN.FCommentId);
+            TComment pDB = _context.TComments.FirstOrDefault(p => p.FCommentId == paf.FCommentId);
+            
+
+
             if (pDB != null)
             {   
-                pDB.FArticleId = pIN.FArticleId;
-                pDB.FCommentContent = pIN.FCommentContent;
-                pDB.FMemberId = pIN.FMemberId;
+                pDB.FMemberId = paf.FMemberId;
+                pDB.FArticleId = paf.FArticleId;
+                pDB.FCommentContent = paf.FCommentContent;
                 pDB.FCommentTime = DateTime.Now;
                 _context.SaveChanges();
             }
