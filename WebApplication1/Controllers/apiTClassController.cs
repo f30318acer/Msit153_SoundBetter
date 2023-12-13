@@ -63,14 +63,11 @@ namespace prjMusicBetter.Controllers
 				return NotFound();
 			}
 
-			//var tProject = _context.TClasses.Where(m => m.FTeacherId == id);
 			var dbSoundBetterContext = from s in _context.TClasses
 									   join c in _context.TClassClicks
 									   on s.FClassId equals c.FClassId
 									   join m in _context.TMembers
 									   on s.FTeacherId equals m.FMemberId
-                                       join d in _context.TDealClassDetails
-                                       on s.FTeacherId equals d.FMemberId
                                        where s.FTeacherId == id
                                        orderby s.FClassId descending
                                        select new
@@ -86,9 +83,8 @@ namespace prjMusicBetter.Controllers
 										   fClick = c.FClick,
 										   fTeacherNmae = m.FName,
                                            fEnddate = s.FEnddate,
-                                           fDealClass = d.FClassId,//我買了那些課
                                        };
-			if (dbSoundBetterContext == null)
+            if (dbSoundBetterContext == null)
 			{
 				return NotFound();
 			}
