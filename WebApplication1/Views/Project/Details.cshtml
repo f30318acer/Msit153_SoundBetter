@@ -170,6 +170,7 @@
                     <div class="mb-2"></div>
 
                     <button id="btnDelete" class="btn btn-danger" style="display:none;">取消專案</button>
+                    <button id="btnRevive" class="btn btn-danger" style="display:none;">重啟專案</button>
                 </div>
             </div>
         </div>
@@ -430,6 +431,7 @@
         const btnAppliCheck = document.getElementById('btnAppliCheck');
         const btnAppliCheck2 = document.getElementById('btnAppliCheck2');
         const btnDelete = document.getElementById('btnDelete');
+        const btnRevive = document.getElementById('btnRevive');
         const btnFev = document.getElementById('btnFev');
         const btnDisFev = document.getElementById('btnDisFev');
         
@@ -445,15 +447,20 @@
                 btnAppli.setAttribute('data-bs-target', '#addModa2');
             }
             if (loginID == memberId) {
-                btnEdit.style.display = 'block';
-                btnDelete.style.display = 'block';
+                btnEdit.style.display = 'block';              
                 if (prjStatusID == 1)
                 {
+                    btnDelete.style.display = 'block';
                     btnAppliCheck.style.display = 'block';
                 }
                 if (prjStatusID == 2)
                 {
+                    btnDelete.style.display = 'block';
                     btnAppliCheck2.style.display = 'block';
+                }
+                if (prjStatusID == 4)
+                {
+                    btnRevive.style.display = 'block';
                 }
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
@@ -564,7 +571,7 @@
                 }
             })
         })
-        //刪除專案
+        //取消專案
         $('#btnDelete').click(function(){
             fetch(`/apiTProjects/Delete/${projectID}`, {
                 method: 'DELETE',
@@ -578,11 +585,33 @@
                 .then(data => {
                     console.log(data); // 這裡的 data 是從後端返回的內容，這裡假設後端返回的是文字
                     // 在這裡處理刪除成功後的操作
-                    alert("刪除成功");
+                    alert("取消成功");
                     window.location.href = "/Members/Index";
                 })
                 .catch(error => {
                     console.error('刪除失敗', error);
+                    // 在這裡處理刪除失敗後的操作
+                });
+        })
+        //重啟專案
+        $('#btnRevive').click(function () {
+            fetch(`/apiTProjects/Revive/${projectID}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('重啟失敗');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // 這裡的 data 是從後端返回的內容，這裡假設後端返回的是文字
+                    // 在這裡處理刪除成功後的操作
+                    alert("重啟成功");
+                    window.location.href = "/Members/Index";
+                })
+                .catch(error => {
+                    console.error('重啟失敗', error);
                     // 在這裡處理刪除失敗後的操作
                 });
         })
@@ -634,6 +663,26 @@
             })
         }
         LoadAppliInfo();
+        //接受應徵
+        function AcceptAppli(id){
+            fetch(`/apiTProjects/Revive/${id}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('錄取失敗');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    alert("錄取成功");
+                    window.location.href = "/Members/Index";
+                })
+                .catch(error => {
+                    console.error('錄取失敗', error);
+                    // 在這裡處理刪除失敗後的操作
+                });
+        }
         //改變應徵檢視狀態
         function ChangeAppliStatus(appliId){
             fetch(`/apiTProjects/ChangeAppliStatus/${appliId}`, {
