@@ -418,8 +418,11 @@
                 const ulElement = $('<ul style="list-style-image: linear-gradient(to left bottom, red, blue);">');
 
                 $.each(datas, function (index, item) {
+                    console.log(item);
                     const liElement = $(`
-                        <li style="font-size: 20px">${item.fClassName}</li>
+                        <li style="font-size: 20px">
+                            <a href="/Class/Viewclass?id=${item.fClassId}" style="color:#5F9EA0;">${item.fClassName}</a>
+                        </li>
                     `);
                     ulElement.append(liElement);
                 })
