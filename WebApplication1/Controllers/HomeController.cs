@@ -17,6 +17,8 @@ using System.Text;
 using System.Text.Json;
 using prjMusicBetter.Models.Services;
 using Google.Apis.Auth;
+using SendGrid.Helpers.Mail;
+using SendGrid;
 
 
 namespace WebApplication1.Controllers
@@ -305,6 +307,36 @@ namespace WebApplication1.Controllers
             return Json(query);
         }
 
+        [HttpPost]
+        public IActionResult sendEmail(EmailVM? formData)
+        {
+            try
+            {
+                // 發送 Email
+                SendReservationConfirmationEmail(formData.Email, formData.Name, formData.Subject, formData.Message);
+
+                return Ok(); // 或其他適合的回應
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); // 適當地處理錯誤
+            }
+        }
+
+        public void SendReservationConfirmationEmail(string Email, string Name, string Subject, string Message)
+        {
+            string apiKey = "SG.lHmKulaIQviZJqGMxJASPw.cfzz大家好SXXTSASxSUZKidD0AzgEGqaVsxpJm3tW5qv5ga0"; // 替換為你的 SendGrid API Key
+
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("zackyandjacky@gmail.com", "SoundBetter"); // 替換為實際的寄件者 Email 和名稱
+            var to = new EmailAddress(Email, Name);
+            var plainTextContent = $"親愛的 {Name}，\n\n{Message}。";
+            var htmlContent = $"<p>親愛的 {Name}，</p><p>{Message}。";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, Subject, plainTextContent, htmlContent);
+
+            client.SendEmailAsync(msg);
+        }
         public IActionResult FAQ()
         {
             return View();
