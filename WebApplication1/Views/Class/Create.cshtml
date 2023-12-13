@@ -245,7 +245,7 @@
         });
 
 
-
+        // 獲取TSitesTSkill資料
         function load() {
             // 獲取TSites資料
             fetch('@Url.Content("~/Place/List")')
@@ -314,7 +314,6 @@
         //上傳資料///////////////////////////////////////////////////////////////////////
 
         const btn = document.querySelector('#buttonSubmit');
-
         btn.addEventListener('click', event => {
 
             event.preventDefault();//不讓submit運作
@@ -344,12 +343,9 @@
             }
         })
 
-
-
         //預覽圖片///////////////////////////////////////////////////////////////////////
 
         var arrayBuffer;
-
         $("#formFile").bind("change", function () {
             var file = this.files[0];
             var allowType = "image.*";
@@ -371,7 +367,6 @@
                 alert("不支援的檔案類型");
             }
         });
-
 
 
         //Demo用按鈕///////////////////////////////////////////////////////////////////////
