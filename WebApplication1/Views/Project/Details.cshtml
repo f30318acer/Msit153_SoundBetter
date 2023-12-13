@@ -428,6 +428,7 @@
         const btnEdit = document.getElementById('btnEdit');
         const btnAppli = document.getElementById('btnAppli');
         const btnAppliCheck = document.getElementById('btnAppliCheck');
+        const btnAppliCheck2 = document.getElementById('btnAppliCheck2');
         const btnDelete = document.getElementById('btnDelete');
         const btnFev = document.getElementById('btnFev');
         const btnDisFev = document.getElementById('btnDisFev');
@@ -446,7 +447,14 @@
             if (loginID == memberId) {
                 btnEdit.style.display = 'block';
                 btnDelete.style.display = 'block';
-                btnAppliCheck.style.display = 'block';
+                if (prjStatusID == 1)
+                {
+                    btnAppliCheck.style.display = 'block';
+                }
+                if (prjStatusID == 2)
+                {
+                    btnAppliCheck2.style.display = 'block';
+                }
                 btnAppli.style.display = 'none';
                 btnFev.style.display = 'none';
                 btnDisFev.style.display = 'none';

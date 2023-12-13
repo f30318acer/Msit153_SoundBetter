@@ -200,10 +200,10 @@ namespace prjSoundBetterApi.Controllers
                 project.FProjectStatusId = 4;
                 //_context.TProjects.Remove(project);
                 _context.SaveChanges();
-                return Content("刪除成功");
+                return Content("取消成功");
             }
 
-            return Content("刪除失敗");
+            return Content("取消失敗");
         }
         private bool TProjectExists(int id)
         {
