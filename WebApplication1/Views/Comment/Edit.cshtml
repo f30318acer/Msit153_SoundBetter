@@ -15,10 +15,17 @@
                         <form asp-action="Edit" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <input type="hidden" asp-for="FMemberId" />
+                            <div class="form-group" >
+                                <input type="hidden" asp-for="FMemberId" class="form-control" />
+                                <span asp-validation-for="FMemberId" class="text-danger"></span>
+                            </div>
 
-                            <input type="hidden" asp-for="FArticleId" />
+                            <div class="form-group">
+                                <input type="hidden" asp-for="FArticleId" class="form-control" />
+                                <span asp-validation-for="FArticleId" class="text-danger"></span>
+                            </div>
 
+                            
                             <div class="form-group">
                                 <label asp-for="FCommentContent" class="control-label">編輯留言</label>
                                 <input asp-for="FCommentContent" class="form-control" />
@@ -47,7 +54,7 @@
 
 <script>
     function confirmEdit() {
-        return confirm('確定要更新嗎？');
+        return confirm('確定要修改好了嗎？');
     }
 </script>
 

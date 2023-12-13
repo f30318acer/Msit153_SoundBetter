@@ -13,11 +13,13 @@ namespace prjMusicBetter.Controllers
     {
         private readonly dbSoundBetterContext _context;
         private readonly UserInfoService _userInfoService;
+        private IWebHostEnvironment _environment = null;
 
-        public CommentController(dbSoundBetterContext context, UserInfoService userInfoService)
+        public CommentController(dbSoundBetterContext context, UserInfoService userInfoService, IWebHostEnvironment environment)
         {
             _context = context;
             _userInfoService = userInfoService;
+            _environment = environment;
         }
 
         public IActionResult Index()
@@ -44,8 +46,8 @@ namespace prjMusicBetter.Controllers
 
 
         public IActionResult Create()
-        { 
-            return View(); 
+        {
+            return View();
         }
         [HttpPost]
         public IActionResult Create(CommentDto dto)
@@ -53,6 +55,7 @@ namespace prjMusicBetter.Controllers
 
             dto.ArticleId = 20;
             //dto.Content = "test123";
+
             _context.TComments.Add(new TComment()
             {
                 //FMemberId = dto.MemberId,
@@ -64,6 +67,20 @@ namespace prjMusicBetter.Controllers
 
             return Ok();
         }
+        //[HttpPost]
+        //public IActionResult Create(CommentDto dto, TComment comment)
+        //{
+        //    dto.ArticleId = 20;
+        //    comment.FMemberId = dto.MemberId;
+        //    comment.FArticleId = dto.ArticleId;
+        //    comment.FCommentContent = dto.Content;
+        //    comment.FCommentTime = DateTime.Now;
+        //    _context.Add(comment);
+        //    _context.SaveChanges();
+        //    return Ok();
+        //}
+
+
 
         //public IActionResult Edit(int? id)
         //{
@@ -90,98 +107,87 @@ namespace prjMusicBetter.Controllers
         //    return RedirectToAction("List");
         //}
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.TComments == null) { return NotFound(); }
-            var tComment = await _context.TComments.FindAsync(id);
-            if (tComment == null) { return NotFound(); }
-
-            tComment.FCommentTime = DateTime.Now;
-            ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
-            ViewData["FCommentTime"] = new SelectList(_context.TComments, "FCommentTime", "FCommentTime", tComment.FCommentTime);
-
-            return View(tComment);
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FCommentId,FMenberId,FArticleId,FCommentContent,FCommentTime")] TComment tComment)
-        {
-            if (id != tComment.FCommentId) { return NotFound(); }
-            if (ModelState.IsValid)
-            {
-                try 
-                {
-                    _context.Update(tComment);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TCommentExitsts(tComment.FCommentId)) { return NotFound(); }
-                    else { throw; }
-                }
-                return RedirectToAction(nameof(List));
-            }
-            tComment.FCommentTime = DateTime.Now;
-            ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
-            ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
-            ViewData["FCommentTime"] = new SelectList(_context.TComments, "FCommentTime", "FCommentTime", tComment.FCommentTime);
-            return View(tComment);
-
-        }
-
-
-
-        //public IActionResult Delete(int? id)
+        //public async Task<IActionResult> Edit(int? id)
         //{
-        //    dbSoundBetterContext db = new dbSoundBetterContext();
-        //    TComment x = db.TComments.FirstOrDefault(p => p.FCommentId == id);
-        //    if (x != null)
+        //    if (id == null || _context.TComments == null) { return NotFound(); }
+        //    var tComment = await _context.TComments.FindAsync(id);
+        //    if (tComment == null) { return NotFound(); }
+
+        //    tComment.FCommentTime = DateTime.Now;
+        //    ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
+        //    ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
+        //    ViewData["FCommentTime"] = new SelectList(_context.TComments, "FCommentTime", "FCommentTime", tComment.FCommentTime);
+
+        //    return View(tComment);
+
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("FCommentId,FMenberId,FArticleId,FCommentContent,FCommentTime")] TComment tComment)
+        //{
+        //    if (id != tComment.FCommentId) { return NotFound(); }
+        //    if (ModelState.IsValid)
         //    {
-        //        db.TComments.Remove(x);
-        //        db.SaveChanges();
+        //        try 
+        //        {
+        //            _context.Update(tComment);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!TCommentExitsts(tComment.FCommentId)) { return NotFound(); }
+        //            else { throw; }
+        //        }
+        //        return RedirectToAction(nameof(List));
         //    }
-        //    return RedirectToAction("List");
+        //    tComment.FCommentTime = DateTime.Now;
+        //    ViewData["FArticleId"] = new SelectList(_context.TArticles, "FArticleId", "FArticle", tComment.FArticleId);
+        //    ViewData["FMemberId"] = new SelectList(_context.TMembers, "FMemberId", "FMemberId", tComment.FMemberId);
+        //    ViewData["FCommentTime"] = new SelectList(_context.TComments, "FCommentTime", "FCommentTime", tComment.FCommentTime);
+        //    return View(tComment);
+
         //}
 
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Edit(int? id)
         {
-            if (id == null || _context.TComments == null)
-            {
-                return NotFound();
-            }
-
-            var tComment = await _context.TComments
-                .Include(t => t.FArticle)
-                .Include(t => t.FMember)
-                .FirstOrDefaultAsync(m => m.FCommentId == id);
-            if (tComment == null)
-            {
-                return NotFound();
-            }
-
-            return View(tComment);
+            
+            TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == id);
+            if (comment != null)
+                return RedirectToAction("List");
+            return View();
         }
+        [HttpPost]
+        public IActionResult Edit(TComment pIN)
+        {
+            
+            TComment pDB = _context.TComments.FirstOrDefault(p => p.FCommentId == pIN.FCommentId);
+            if (pDB != null)
+            {   
+                pDB.FArticleId = pIN.FArticleId;
+                pDB.FCommentContent = pIN.FCommentContent;
+                pDB.FMemberId = pIN.FMemberId;
+                pDB.FCommentTime = DateTime.Now;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("List");
+        }
+
+
+
+        public IActionResult Delete(int? id)
+        {
+            TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == id);
+            if (comment != null)
+            {
+                _context.TComments.Remove(comment);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("List");
+        }
+
+
 
         
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.TComments == null)
-            {
-                return Problem("Entity set 'dbSoundBetterContext.TComments'  is null.");
-            }
-            var tComment = await _context.TComments.FindAsync(id);
-            if (tComment != null)
-            {
-                _context.TComments.Remove(tComment);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(List));
-        }
         private bool TCommentExitsts(int id)
         {
             return (_context.TComments?.Any(e=>e.FCommentId==id)).GetValueOrDefault();

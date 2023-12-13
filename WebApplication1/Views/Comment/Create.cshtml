@@ -81,32 +81,54 @@
  *@
 
 <script>
-    const url = '/Comment/Create';
-    $('#buttonSend').click(function () {
+    // const url = '@Url.Content("~/Comment/Create")';
+    // $('#buttonSend').click(function () {
 
        
-        const currentDate = new Date();
-        const jsonData = JSON.stringify({
+    //     const currentDate = new Date();
+    //     const jsonData = JSON.stringify({
             
-            fMemberId: $('#fMemberId'),
-            fArticleId: $('#fArticleId'),
-            fCommentContent: $('#fCommentContent'),
-            currentDate: $('#fCommentTime')
-        })
-        console.log(jsonData)
+    //         // fMemberId: $('#fMemberId'),
+    //         fArticleId: $('#fArticleId'),
+    //         fCommentContent: $('#fCommentContent'),
+    //         // currentDate: $('#fCommentTime')
+    //     })
+    //     console.log(jsonData)
+    //     $.ajax({
+    //         url: '/Comment/Create',
+    //         type: 'POST',
+    //         contentType: 'application/json',
+    //         data: jsonData /* '$("#jsonData").val()' */
+    //     }).done(function (data) {
+    //         alert("新增成功")
+    //         location.href = "@Url.Action("List","Comment")"
+
+    //     }).fail(function (jqXHR, textStatus, errorThrown) {
+    //         console.log("POST request failed: " + textStatus + ", " + errorThrown);
+    //         alert("新增失敗");
+    //         location.href = "@Url.Action("List", "Comment")"
+    //     });
+    // });
+
+    $('#buttonSend').click(function () {
         $.ajax({
-            url: url,
+            url: '/Comment/Create',
             type: 'POST',
-            contentType: 'application/json',
-            data: jsonData /* '$("#jsonData").val()' */
+            data: 
+            {
+                fMemberId: $('#fMemberId').val(),
+                fArticleId: $('#fArticleId').val(),
+                fCommentContent: $('#fCommentContent').val(),
+                currentDate: new Date(),
+            },
         }).done(function (data) {
             alert("新增成功")
-            window.location.href = "@Url.Action("List","Comment")"
+            // location.href = "@Url.Action("List", "Comment")"
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.log("POST request failed: " + textStatus + ", " + errorThrown);
             alert("新增失敗");
-            window.location.href = "@Url.Action("List", "Comment")"
+            // location.href = "@Url.Action("List", "Comment")"
         });
     });
 
@@ -116,4 +138,4 @@
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-}
+
