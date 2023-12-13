@@ -114,10 +114,14 @@
         // 更新連線 ID 列表事件
         connection.on("UpdList", function (jsonList) {
             var list = JSON.parse(jsonList);
-            $("#IDList li").remove();
-            for (i = 0; i < list.length; i++) {
-                $("#IDList").append($("<li></li>").attr("class", "list-group-item").text(list[i]));
-            }
+            $("#IDList").empty();
+            list.forEach(function (id) {
+                var listItem = $("<li></li>").attr("class", "list-group-item").text(id);
+                listItem.on('click', function () {
+                    $('#sendToID').val(id); // 点击时设置 sendToID
+                });
+                $("#IDList").append(listItem);
+            });
         });
 
 
