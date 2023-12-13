@@ -1,0 +1,43 @@
+﻿@model prjMusicBetter.Models.ViewModels.MemberSiteVM
+@{
+    ViewData["Title"] = "MemberSite";
+}
+<script src="https://cdn.tailwindcss.com"></script>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr class="bg-yellow-300">
+                        <th class="text-center py-2">場地名稱</th>
+                        <th class="text-center py-2">連絡電話</th>
+                        <th class="text-center py-2">場地類型</th>
+                        <th class="text-center py-2">地址</th>
+                        <th class="text-center py-2">照片</th>
+                    </tr>
+                </thead>
+                <tbody id="memberTable">
+                    @foreach (var site in Model.Sites)
+                    {
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FSiteName)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FPhone)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FSiteType)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => site.FAddress)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                @if (!string.IsNullOrEmpty(site.FPicture))
+                                {
+                                    <img src="@Url.Content("~/img/Place/" + site.FPicture)" alt="Coupon Image" class="w-24 h-auto rounded-md" />
+                                }
+                                else
+                                {
+                                    <span class="text-gray-500">No Image</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
