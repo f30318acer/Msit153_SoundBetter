@@ -23,8 +23,8 @@
                     <tr class="bg-yellow-300">
                         <th class="text-center py-2">專案名稱</th>
                         <th class="text-center py-2">預算</th>
-                        <th class="text-center py-2">開始日期</th>
-                        <th class="text-center py-2">結束日期</th>
+                        <th class="text-center py-2">專案狀態</th>
+                        <th class="text-center py-2">專案期限</th>
                         <th class="text-center py-2">Detail</th> <!-- New column for details button -->
 
                     </tr>
@@ -35,10 +35,10 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FName )</td>
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FBudget)</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FStartdate)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FProjectStatusId)</td>
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FEnddate)</td>
                             <td class="text-center border-b border-gray-200">
-                                <a href="@Url.Action("Details", "Project", new { id = project.FProjectId })" class="text-blue-500 hover:text-blue-600">專案詳細</a>
+                                <a href="@Url.Action("Details", "Project", new { id = project.FProjectId })" class="text-blue-500 hover:text-blue-600">詳細</a>
                             </td>
                         </tr>
                     }

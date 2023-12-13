@@ -596,7 +596,7 @@
         //重啟專案
         $('#btnRevive').click(function () {
             fetch(`/apiTProjects/Revive/${projectID}`, {
-                method: 'DELETE',
+                method: 'POST',
             })
                 .then(response => {
                     if (!response.ok) {
@@ -666,7 +666,7 @@
         //接受應徵
         function AcceptAppli(id){
             fetch(`/apiTProjects/AcceptAppli/${id}`, {
-                method: 'DELETE',
+                method: 'POST',
             })
                 .then(response => {
                     if (!response.ok) {
