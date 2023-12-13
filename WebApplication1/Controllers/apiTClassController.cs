@@ -187,7 +187,7 @@ namespace prjMusicBetter.Controllers
 			return Content("錯誤");
 		}
 		//===修改===
-		public IActionResult Edit(int id, TClass project, IFormFile formFile)
+		public IActionResult Edit(TClass project, IFormFile formFile)
 		{
 			if (project != null)
 			{
@@ -352,6 +352,41 @@ namespace prjMusicBetter.Controllers
                          };
             return Json(result.ToList());
         }
+
+        [HttpPost]
+        public IActionResult DelDeal(int? id, int? classId)
+        {
+            if (id == null || classId == null)
+            {
+                return BadRequest("參數不正確");
+            }
+
+            try
+            {
+                // 根據你的需求，進行 TDealClassDetails 的刪除操作
+                var dealToRemove = _context.TDealClassDetails.FirstOrDefault(d => d.FClassId == classId && d.FMemberId == id);
+
+                if (dealToRemove != null)
+                {
+                    _context.TDealClassDetails.Remove(dealToRemove);
+                    _context.SaveChanges();
+                    // 刪除成功的處理，這裡可以根據需要進行其他操作
+                    return Ok("成功刪除");
+                }
+                else
+                {
+                    // 找不到對應的資料
+                    return NotFound("找不到對應的資料");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 處理例外情況
+                return StatusCode(500, "刪除失敗");
+            }
+        }
+
+
 
         //fCurrentStudent + 1
         public IActionResult Currentplus(int? id)

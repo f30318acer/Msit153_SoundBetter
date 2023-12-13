@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
+using System.Formats.Asn1;
 
 namespace prjMusicBetter.Controllers
 {
@@ -209,7 +210,12 @@ namespace prjMusicBetter.Controllers
             }
             else { return NotFound(); }
         }
-
+        //是否有學生
+        public IActionResult CheckDealClass(int id)
+        {
+            var isClassIdIncluded = _context.TDealClassDetails.Any(d => d.FClassId == id);
+            return Json(isClassIdIncluded);
+        }
 
         /*=======學生編輯===============*/
 
@@ -222,6 +228,8 @@ namespace prjMusicBetter.Controllers
                                     .Select(d => d.FMemberId)
                                     .ToList();
 
+            ViewBag.Id = id;//課程id
+
             if (DealClass != null && DealClass.Any())
             {
                 // 在TMembers表中找出FMemberId等於DealClass的學生資訊
@@ -230,14 +238,17 @@ namespace prjMusicBetter.Controllers
                                       .ToList();
                 return View(students);
             }
-            else { return NotFound(); }
+            else {
+                return RedirectToAction("NoStudentsError");
+            }
         }
-        //是否有學生
-        public IActionResult CheckDealClass(int id)
+        //沒有學生時
+        public IActionResult NoStudentsError()
         {
-            var isClassIdIncluded = _context.TDealClassDetails.Any(d => d.FClassId == id);
-            return Json(isClassIdIncluded);
+            return View();
         }
 
+
+        /*=======退出課程===============*/
     }
 }
