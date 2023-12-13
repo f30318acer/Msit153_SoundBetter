@@ -40,6 +40,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tChatMessage]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tCity]",
          "ObjectType": 0
       },

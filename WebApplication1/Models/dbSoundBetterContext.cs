@@ -29,6 +29,8 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TArticlePicture> TArticlePictures { get; set; }
 
+    public virtual DbSet<TChatMessage> TChatMessages { get; set; }
+
     public virtual DbSet<TCity> TCities { get; set; }
 
     public virtual DbSet<TClass> TClasses { get; set; }
@@ -231,6 +233,21 @@ public partial class dbSoundBetterContext : DbContext
                 .HasForeignKey(d => d.FArticleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tArticlePicture_tArticle");
+        });
+
+        modelBuilder.Entity<TChatMessage>(entity =>
+        {
+            entity.HasKey(e => e.FChatId);
+
+            entity.ToTable("tChatMessage");
+
+            entity.Property(e => e.FChatId).HasColumnName("fChatID");
+            entity.Property(e => e.FContent).HasColumnName("fContent");
+            entity.Property(e => e.FReceiveMemberId).HasColumnName("fReceiveMemberID");
+            entity.Property(e => e.FSendMemberId).HasColumnName("fSendMemberID");
+            entity.Property(e => e.FTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fTime");
         });
 
         modelBuilder.Entity<TCity>(entity =>
