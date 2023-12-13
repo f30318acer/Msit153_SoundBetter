@@ -27,7 +27,7 @@ namespace prjSoundBetterApi.Controllers
         //===List_All===
         public IActionResult List()
         {
-            var dbSoundBetterContext = _context.TProjects;
+            var dbSoundBetterContext = _context.TProjects.Where(p => p.FProjectStatusId == 1);
             return Json(dbSoundBetterContext);
         }
 		public IActionResult SkillsList()
