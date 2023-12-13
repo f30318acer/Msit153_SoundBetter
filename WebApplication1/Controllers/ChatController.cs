@@ -22,21 +22,10 @@ namespace prjMusicBetter.Controllers
             _environment = environment;
             
         }
-        
+
         public IActionResult Index()
         {
             return View();
         }
-        //public async Task<string> GetMemberId()
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
-        //    if (user != null)
-        //    {
-        //        return user.FName;
-        //    }
-        //    return null;
-        //}
-
-
     }
 }
