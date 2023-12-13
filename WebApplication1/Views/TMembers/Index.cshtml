@@ -5,158 +5,117 @@
     Layout = "_Layout2";
 }
 
-<style>
-    /* 为顶部标题添加上边距 */
-    h1 {
-        padding-top: 4rem; /* 根据顶部导航栏的高度调整 */
-    }
-
-    /* 为整个内容区域添加左边距 */
-    .main-content {
-        padding-left: 30rem; /* 根据侧边栏宽度调整 */
-    }
-    /* 為父容器設置 display: flex */
-    .container {
-        display: flex;
-        flex-wrap: wrap; /* 如果需要，可以在小屏幕上換行 */
-    }
-
-    /* 為導航欄設置 flex: 0 0 auto; 保證它不被壓縮 */
-    .navbar {
-        flex: 0 0 auto; /* 根據實際類名調整 */
-        width: 250px; /* 或者其他固定寬度 */
-    }
-
-    /* 為主內容設置 flex-grow: 1; 使其佔據剩余空間 */
-    .main-content {
-        flex-grow: 1;
-        padding-left: 1rem; /* 或根據實際需要調整 */
-    }
-
-</style>
-
-
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<body class="bg-gray-100">
-    <div class="container mx-auto px-16">
-        <h1 class="text-3xl font-bold text-center my-4">會員管理</h1>
-        <div class="d-flex justify-content-between px-4">
+<main id="main" class="main">
+    <h1 class="text-3xl font-bold text-center my-4">會員管理</h1>
 
-            <div class="d-flex align-items-center gap-2">
-                @Html.ActionLink("新增會員", "create", "TMembers", "", new { @class = "btn btn-dark" })
-            </div>
+    <div class="d-flex align-items-center gap-2">
+        @Html.ActionLink("新增會員", "create", "TMembers", "", new { @class = "btn btn-dark" })
+    </div>
 
-            <div>
-                <span class="mr-2">每頁顯示 :</span>
-                <select class="form-select block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                </select>
-            </div>
-
-
-            <div class="flex justify-end items-center">
-                <form asp-action="Index" method="get">
-                    <div class="form-group">
-                        <label for="search" class="mb-0 mx-3">搜尋關鍵字:</label>
-                        <input type="text" class="form-control" id="search" name="search" placeholder="請輸入關鍵字" value="@ViewData["CurrentFilter"]" />
-                        <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">搜尋</button>
-                    </div>
-                </form>
-            </div>
+    <div class="flex justify-end items-center">
+        <div class="flex justify-end items-center">
+            <form asp-action="Index" method="get">
+                <div class="form-group">
+                    <label for="search" class="mb-0 mx-3">搜尋關鍵字:</label>
+                    <input type="text" class="form-control" id="search" name="search" placeholder="請輸入關鍵字" value="@ViewData["CurrentFilter"]" />
+                    <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">搜尋</button>
+                </div>
+            </form>
         </div>
-        <div class="bg-white shadow-md rounded my-6">
-            <table class="min-w-max w-full table-auto">
-                <thead>
-                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th class="py-3 px-6 text-left">使用者姓名</th>
-                        <th class="py-3 px-6 text-left">姓名</th>
-                        <th class="py-3 px-6 text-left">密碼</th>
-                        <th class="py-3 px-6 text-left">電話號碼</th>
-                        <th class="py-3 px-6 text-left">信箱</th>
-                        <th class="py-3 px-6 text-left" >性別</th>
-                        <th class="py-3 px-6 text-left">生日</th>
-                        <th class="py-3 px-6 text-left" hidden>建立時間</th>
-                        <th class="py-3 px-6 text-left" hidden>自我介紹</th>
-                        <th class="py-3 px-6 text-left">照片</th>
-                        <th class="py-3 px-6 text-center font-bold">操作</th>
-                    </tr>
-                </thead>
-                <tbody id="memberTable" class="text-gray-600 text-sm font-light">
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td class="text-base p-4">
-                                @Html.DisplayFor(modelItem => item.FUsername)
-                            </td>
-                            <td class="text-base p-4">
-                                @Html.DisplayFor(modelItem => item.FName)
-                            </td>
-                            <td class="text-base p-4">
-                                @Html.DisplayFor(modelItem => item.FPassword)
-                            </td>
-                            <td class="text-base p-4">
-                                @Html.DisplayFor(modelItem => item.FPhone)
-                            </td>
-                            <td class="text-base p-4">
-                                @Html.DisplayFor(modelItem => item.FEmail)
-                            </td>
-                            <td class="text-base p-4" >
-                                @Html.DisplayFor(modelItem => item.FGender)
-                            </td>
-                            <td class="text-base p-4">
-                                @Html.DisplayFor(modelItem => item.FBirthday)
-                            </td>
-                            <td class="text-base p-4" hidden>
-                                @Html.DisplayFor(modelItem => item.FCreationTime)
-                            </td>
-                            <td class="text-base p-4" hidden>
-                                @Html.DisplayFor(modelItem => item.FIntroduction)
-                            </td>
-                            <td class="text-base p-4">
-                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
-                                {
-                                    <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" style="width:100px; height:auto;" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="py-3 px-6 text-center" >
+                    使用者姓名
+                </th>
+                <th class="py-3 px-6 text-center">
+                    姓名
+                </th>
+                <th class="py-3 px-6 text-center">
+                    密碼
+                </th>
+                <th class="py-3 px-6 text-center">
+                    電話號碼
+                </th>
+                <th class="py-3 px-6 text-center">
+                    信箱
+                </th>
+                <th hidden class="py-3 px-6 text-center">
+                    性別
+                </th>
+                <th class="py-3 px-6 text-center ">
+                    生日
+                </th>
+                <th hidden class="py-3 px-6 text-cente ">
+                    建立時間
+                </th>
+                <th hidden class="py-3 px-6 text-center" >
+                    自我介紹
+                </th>
+                 <th class="py-3 px-6 text-center">
+                    照片
+                </th>
+                <th class="py-3 px-6 text-center font-bold">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td >
+                        @Html.DisplayFor(modelItem => item.FUsername)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FPassword)                    
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FEmail)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.FGender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FBirthday)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.FCreationTime)
+                    </td>
+                    <td hidden >
+                        @Html.DisplayFor(modelItem => item.FIntroduction)
+                    </td>
 
-                                }
-                                else
-                                {
-                                    @:No Image
-                                }
+                    <td class="text-base p-4">
+                        @if (!string.IsNullOrEmpty(item.FPhotoPath))
+                        {
+                            <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" style="width:100px; height:auto;" />
 
-                            </td>
-                            <td hidden>
-                                @Html.DisplayFor(modelItem => item.FPermission)
-                            </td>
-                            <td class="text-center font-bold">
+                        }
+                        else
+                        {
+                            @:No Image
+                        }
+                    </td>
+                    <td class="text-center font-bold">
                                 <a asp-action="Edit" asp-route-id="@item.FMemberId" class="text-lg bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">修改</a>
                                 @* <a asp-action="Details" asp-route-id="@item.FMemberId">細節</a> | *@
                                 <a asp-action="Delete" asp-route-id="@item.FMemberId" class="text-lg bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700 ml-2">刪除</a>
                             </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="flex flex-col items-center my-12">
-            <div class="flex text-gray-700">
-                <div class="h-10 w-10 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                </div>
-                <div class="flex h-10 font-medium rounded-full bg-gray-200">
-                    <!-- Pagination numbers go here -->
-                </div>
-                <div class="h-10 w-10 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </div>     
-        </div>
-    </div>
-</body>
-
-
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>
 
 <!-- End #main -->

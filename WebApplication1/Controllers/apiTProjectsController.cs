@@ -27,7 +27,7 @@ namespace prjSoundBetterApi.Controllers
         //===List_All===
         public IActionResult List()
         {
-            var dbSoundBetterContext = _context.TProjects;
+            var dbSoundBetterContext = _context.TProjects.Where(p => p.FProjectStatusId == 1);
             return Json(dbSoundBetterContext);
         }
 		public IActionResult SkillsList()
@@ -50,6 +50,22 @@ namespace prjSoundBetterApi.Controllers
                 return NotFound();
             }
             return Json(tProject);
+        }
+        //===專案資訊===
+        public IActionResult PrjSkillStyleInfo(int? id)
+        {
+            if (id != null)
+            {
+                TProject prj = _context.TProjects.FirstOrDefault(p => p.FProjectId == id);
+                if (prj != null)
+                {
+                    string skillName = _context.TSkills.FirstOrDefault(s => s.FSkillId == prj.FSkillId).FName;
+                    string styleName = _context.TStyles.FirstOrDefault(s => s.FStyleId == prj.FStyleId).FName;
+                    string prjStatus = _context.TProjectStatuses.FirstOrDefault(s => s.FProjectStatusId == prj.FProjectStatusId).FDescription;
+                    return Content($"專案風格 : {styleName} / 需求技能 : {skillName} / 專案狀態 : [{prjStatus}]");
+                }               
+            }
+            return NotFound();
         }
 		//===AppliNum_By_ProjectID===
 		public IActionResult QueryApppliNumById(int? id)//ProjectId
@@ -181,12 +197,35 @@ namespace prjSoundBetterApi.Controllers
 
             if (project != null)
             {
-                _context.TProjects.Remove(project);
+                project.FProjectStatusId = 4;
+                //_context.TProjects.Remove(project);
                 _context.SaveChanges();
-                return Content("刪除成功");
+                return Content("取消成功");
             }
 
-            return Content("刪除失敗");
+            return Content("取消失敗");
+        }
+
+        //===重啟===
+
+        public IActionResult Revive(int id)
+        {
+            if (_context.TProjects == null)
+            {
+                return Problem("連線錯誤");
+            }
+
+            var project = _context.TProjects.FirstOrDefault(c => c.FProjectId == id);
+
+            if (project != null)
+            {
+                project.FProjectStatusId = 1;
+                //_context.TProjects.Remove(project);
+                _context.SaveChanges();
+                return Content("重啟成功");
+            }
+
+            return Content("重啟失敗");
         }
         private bool TProjectExists(int id)
         {
@@ -234,5 +273,65 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
+
+        //===取得應徵資料===
+        public IActionResult GetAppliInfo(int? id)
+        {
+            if (id == null || _context.TApplicationRecords == null)
+            {
+                return NotFound();
+            }
+            var appliInfo = from a in _context.TApplicationRecords
+                            join m in _context.TMembers on a.FMemberId equals m.FMemberId
+                            join s in _context.TApplicationStatuses on a.FApplicationStatusId equals s.FApplicationStatus
+                            where a.FProjectId == id
+                            select new
+                            {
+                                a.FApplicationRecordId,
+                                a.FMemberId,
+                                a.FApplicationStatusId,
+                                s.FDescription,
+                                a.FSelfIntroduction,
+                                m.FUsername,
+                                m.FName,
+                                m.FEmail,
+                                m.FPhone
+                            };
+            return Json(appliInfo);
+        }
+        //===改變應徵紀錄檢視狀態===
+        [HttpPost]
+        public IActionResult ChangeAppliStatus(int? id)
+        {
+            if (id != null)
+            {
+                var record = _context.TApplicationRecords.FirstOrDefault(a => a.FApplicationRecordId == id);
+                record.FApplicationStatusId = 2;
+                _context.SaveChanges();
+                return Content("檢視成功");
+            }
+            return Content("錯誤");
+        }
+        //===錄取===
+        public IActionResult AcceptAppli(int? id)
+        {
+            if (id != null)
+            {
+                var record = _context.TApplicationRecords.FirstOrDefault(a => a.FApplicationRecordId == id);
+                int prjID = record.FProjectId;
+                var allrecord = _context.TApplicationRecords.Where(a => a.FProjectId ==  prjID);
+                foreach (var item in allrecord)
+                {
+                    item.FApplicationStatusId = 3;
+                }
+                record.FApplicationStatusId = 4;
+                TProject prj = _context.TProjects.FirstOrDefault(a => a.FProjectId == prjID);
+                prj.FProjectStatusId = 2;
+                _context.SaveChanges();
+                return Content("錄取成功");
+            }
+            return Content("錯誤");
+        }
+
     }
 }

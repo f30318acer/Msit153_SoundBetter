@@ -322,7 +322,25 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
+        public async Task<IActionResult> MemberSite()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Members", "Index");
+            }
 
+            var memberSites = await _context.TSites
+                .Where(x => x.FMemberId == member.FMemberId)
+                .ToListAsync();
+
+            var viewModel = new MemberSiteVM
+            {
+                Member = member,
+                Sites = memberSites
+            };
+            return PartialView(viewModel);
+        }
         public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10)
         {
            
@@ -398,6 +416,21 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> DeleteMemberWork(int workId)
+        //{
+        //    var workToDelete = await _context.TWorks.FirstOrDefaultAsync(w => w.FWorkId == workId);
+        //    if (workToDelete == null)
+        //    {
+        //        return NotFound();
+
+        //    }
+        //    _context.TWorks.Remove(workToDelete);
+        //    await _context.SaveChangesAsync();
+
+        //    // 刪除後重定向回作品列表，或返回一個成功訊息
+        //    return RedirectToAction("MemberWorks");
+        //}
 
     }
 }

@@ -10,7 +10,7 @@
                 序
             </th>
             <th>
-                會員名稱
+                @* 會員名稱 *@
             </th>
             <th>
                 留言內容
@@ -19,7 +19,7 @@
                 留言時間
             </th>
             <th>
-                
+
             </th>
             <th>
 
@@ -34,7 +34,7 @@
                     @(index + 1)
                 </td>
                 <td>
-                    @Model.Comments[index].FMember.FName
+                    @* @Model.Comments[index].FMember.FName *@
                 </td>
                 <td>
                     @Model.Comments[index].FCommentContent
@@ -45,33 +45,37 @@
                 <td>
                 </td>
                 <td>
+                    @Html.ActionLink("修改", "Edit", "Comment", new { id = Model.Comments[index].FCommentId }, null) |
+                    @Html.ActionLink("刪除", "Delete", "Comment", new { id = Model.Comments[index].FCommentId },
+                             new { onclick = "return confirm('確定要刪除嗎?')" })
                 </td>
             </tr>
         }
     </tbody>
-@*     <tbody>
-            <tr>
-                <td>
-                   
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
- 
+    @*     <tbody>
+    <tr>
+    <td>
+
+    </td>
+    <td>
+
+    </td>
+    <td>
+
+    </td>
+    <td>
+
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+    </tr>
+
     </tbody> *@
 </table>
 
+<a href="@Url.Action("Create","Comment")"><button class="btn btn-primary" type="button">留言</button></a>
 
 
 @* <table>
