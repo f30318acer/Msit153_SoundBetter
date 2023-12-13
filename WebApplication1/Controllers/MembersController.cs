@@ -322,7 +322,7 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
-        public async Task<IActionResult> MemberSite()
+        public async Task<IActionResult> MemberSite(int? siteType)
         {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
@@ -330,10 +330,14 @@ namespace prjMusicBetter.Controllers
                 return RedirectToAction("Members", "Index");
             }
 
-            var memberSites = await _context.TSites
-                .Where(x => x.FMemberId == member.FMemberId)
-                .ToListAsync();
+            IQueryable<TSite> memberSitesQuery = _context.TSites.Where(x => x.FMemberId == member.FMemberId);
 
+            if (siteType.HasValue)
+            {
+                memberSitesQuery = memberSitesQuery.Where(x => x.FSiteType == siteType.Value);
+            }
+
+            var memberSites = await memberSitesQuery.ToListAsync();
             var viewModel = new MemberSiteVM
             {
                 Member = member,
@@ -341,6 +345,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
+       
         public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10)
         {
            
