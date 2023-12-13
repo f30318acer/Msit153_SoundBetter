@@ -266,6 +266,7 @@ namespace prjSoundBetterApi.Controllers
                             where a.FProjectId == id
                             select new
                             {
+                                a.FApplicationRecordId,
                                 a.FMemberId,
                                 a.FApplicationStatusId,
                                 s.FDescription,
@@ -276,6 +277,19 @@ namespace prjSoundBetterApi.Controllers
                                 m.FPhone
                             };
             return Json(appliInfo);
+        }
+        //===改變應徵紀錄檢視狀態===
+        [HttpPost]
+        public IActionResult ChangeAppliStatus(int? id)
+        {
+            if (id != null)
+            {
+                var record = _context.TApplicationRecords.FirstOrDefault(a => a.FApplicationRecordId == id);
+                record.FApplicationStatusId = 2;
+                _context.SaveChanges();
+                return Content("檢視成功");
+            }
+            return Content("錯誤");
         }
     }
 }
