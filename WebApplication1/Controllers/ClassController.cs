@@ -247,8 +247,5 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
-
-
-        /*=======退出課程===============*/
     }
 }

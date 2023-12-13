@@ -386,7 +386,17 @@ namespace prjMusicBetter.Controllers
             }
         }
 
-
+        [HttpPost]
+        public IActionResult CreateSite(TSite? tSite)
+        {
+            if (tSite != null)
+            {
+                _context.Add(tSite);
+                _context.SaveChanges();
+                return Json(new { fSiteId = tSite.FSiteId, fSiteName = tSite.FSiteName });
+            }
+            return Content("錯誤");
+        }
 
         //fCurrentStudent + 1
         public IActionResult Currentplus(int? id)
