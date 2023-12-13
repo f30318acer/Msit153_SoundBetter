@@ -13,7 +13,7 @@ namespace prjMusicBetter.Controllers
         private readonly dbSoundBetterContext _context;
         private readonly UserInfoService _userInfoService;
         private readonly IWebHostEnvironment _environment;
-        //private readonly UserManager<TMember> _userManager;
+
 
         public ChatController(dbSoundBetterContext context, UserInfoService userInfoService, IWebHostEnvironment environment)
         {

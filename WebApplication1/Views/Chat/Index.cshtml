@@ -61,17 +61,6 @@
     </style>
 </head>
 <body>
-    <div class="message">
-        <div class="message__outer">
-            <div class="message__avatar"></div>
-            <div class="message__inner">
-                <div class="message__bubble"></div>
-                <div class="message__actions"></div>
-                <div class="message__spacer"></div>
-            </div>
-            <div class="message__status"></div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-8">
             <h2>公開匿名聊天室</h2>
@@ -104,32 +93,32 @@
 </html>
 
 
-    @section scripts {
-        <script src="~/js/signalr/dist/browser/signalr.js"></script>
-        <script>
-            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+@section scripts {
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-            //與Server建立連線
-            connection.start().then(function () {
-                console.log("Hub 連線完成");
-                //呼叫後端方法以獲取會員 ID
-                connection.invoke("GetMemberId").then(function (memberId) {
-                    // 使用從後端獲取的會員 ID
-                    $('#SelfID').html(memberId);
-                });
-
-            }).catch(function (err) {
-                alert('連線錯誤: ' + err.toString());
+        //與Server建立連線
+        connection.start().then(function () {
+            console.log("Hub 連線完成");
+            //呼叫後端方法以獲取會員 ID
+            connection.invoke("GetMemberId").then(function (memberId) {
+                // 使用從後端獲取的會員 ID
+                $('#SelfID').html(memberId);
             });
 
-            // 更新連線 ID 列表事件
-            connection.on("UpdList", function (jsonList) {
-                var list = JSON.parse(jsonList);
-                $("#IDList li").remove();
-                for (i = 0; i < list.length; i++) {
-                    $("#IDList").append($("<li></li>").attr("class", "list-group-item").text(list[i]));
-                }
-            });
+        }).catch(function (err) {
+            alert('連線錯誤: ' + err.toString());
+        });
+
+        // 更新連線 ID 列表事件
+        connection.on("UpdList", function (jsonList) {
+            var list = JSON.parse(jsonList);
+            $("#IDList li").remove();
+            for (i = 0; i < list.length; i++) {
+                $("#IDList").append($("<li></li>").attr("class", "list-group-item").text(list[i]));
+            }
+        });
 
 
         connection.invoke("GetMemberId").then(function (memberId) {
@@ -139,26 +128,26 @@
 
 
 
-            // // 更新用戶個人連線 ID 事件
-            // connection.on("UpdSelfID", function (id) {
-            //     $('#SelfID').html(id);
-            // });
+        // // 更新用戶個人連線 ID 事件
+        // connection.on("UpdSelfID", function (id) {
+        //     $('#SelfID').html(id);
+        // });
 
-            // 更新聊天內容事件
-            connection.on("UpdContent", function (msg) {
-                $("#Content").append($("<li></li>").attr("class", "list-group-item").text(msg));
+        // 更新聊天內容事件
+        connection.on("UpdContent", function (msg) {
+            $("#Content").append($("<li></li>").attr("class", "list-group-item").text(msg));
+        });
+
+        //傳送訊息
+        $('#sendButton').on('click', function () {
+            let selfID = $('#SelfID').html();
+            let message = $('#message').val();
+            let sendToID = $('#sendToID').val();
+            connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
+                alert('傳送錯誤: ' + err.toString());
             });
-
-            //傳送訊息
-            $('#sendButton').on('click', function () {
-                let selfID = $('#SelfID').html();
-                let message = $('#message').val();
-                let sendToID = $('#sendToID').val();
-                connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
-                    alert('傳送錯誤: ' + err.toString());
-                });
-            });
-        </script>
+        });
+    </script>
 
 
-    }
+}
