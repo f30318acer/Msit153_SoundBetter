@@ -55,7 +55,10 @@ namespace prjMusicBetter.Controllers
                 var transaction = session.PaymentIntentId.ToString();
                 return View("Success");
             }
-            return View("Login");         
+            else
+            {
+                return View("Login");
+            }
         }
         public IActionResult Success()
         {
@@ -82,11 +85,11 @@ namespace prjMusicBetter.Controllers
                 });
             }
 
-            var domain = "http://localhost:7078/";
+            var domain = "https://localhost:7078/";
 
             var options = new SessionCreateOptions
             {
-                SuccessUrl = domain + $"CheckOut/OrderConfirmation",//付款完出現
+                SuccessUrl = domain + "CheckOut/OrderConfirmation",//付款完出現
                 CancelUrl = domain + "CheckOut/Login",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
