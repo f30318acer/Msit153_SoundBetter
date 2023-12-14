@@ -44,8 +44,6 @@ namespace prjMusicBetter.Controllers
             };
             return View(productList);
         }
-
-
         public IActionResult OrderConfirmation()
         {
             var service = new SessionService();
@@ -55,15 +53,9 @@ namespace prjMusicBetter.Controllers
             if (session.PaymentStatus == "paid")
             {
                 var transaction = session.PaymentIntentId.ToString();
-
                 return View("Success");
             }
-            else
-            {
-                return View("Login");
-            }
-
-
+            return View("Login");         
         }
         public IActionResult Success()
         {
@@ -94,12 +86,11 @@ namespace prjMusicBetter.Controllers
 
             var options = new SessionCreateOptions
             {
-                SuccessUrl = domain + "CheckOut/OrderConfirmation",//付款完出現
+                SuccessUrl = domain + $"CheckOut/OrderConfirmation",//付款完出現
                 CancelUrl = domain + "CheckOut/Login",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
                 CustomerEmail = $"{email}"
-
             };
             foreach (var item in productList)
             {
@@ -112,7 +103,6 @@ namespace prjMusicBetter.Controllers
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = item.Product.ToString(),
-
                         }
                     },
                     Quantity = item.Quantity,
