@@ -11,6 +11,12 @@
         <div class="bg-white shadow-lg rounded-lg p-6">
             <div id="searchResults"></div>
             <div class="flex items-center my-4">
+                <!-- 新增的排序選項 -->
+                <select id="sortOrder" class="form-select border border-gray-300 rounded-md p-2">
+                    <option value="newest" selected>更新時間（最新）</option>
+                    <option value="oldest">更新時間（最舊）</option>
+                </select>
+                <button onclick="applySort()" class="ml-2 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Sort</button>
                 <form id="searchForm" method="get" action="@Url.Action("MemberWorks", "Members")" class="flex-grow flex items-center mr-2">
                     <input type="text" name="search" id="search" placeholder="Search..." class="form-input border border-gray-300 rounded-md p-2 mr-2">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
@@ -92,6 +98,13 @@
                 }
             });
         }
+    }
+
+   @*  新增的排序選項 *@
+    function applySort() {
+        var sortOrder = $('#sortOrder').val();
+        var searchTerm = $('#search').val();
+        $('#divPartial').load(`@Url.Content("~/Members/MemberWorks")?search=${searchTerm}&sortBy=${sortOrder}`);
     }
 
 </script>

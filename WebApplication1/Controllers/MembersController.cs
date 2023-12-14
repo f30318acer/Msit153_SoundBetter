@@ -346,7 +346,7 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
        
-        public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10)
+        public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10, string sortBy = "newest")
         {
            
             TMember member = _userInfoService.GetMemberInfo();
@@ -354,6 +354,7 @@ namespace prjMusicBetter.Controllers
             {
                 return RedirectToAction("Members", "Index");// 如果未找到會員，重定向到登入頁面
             }
+          
             var memberworkIds = _context.TWorks
                 .Where(x=>x.FMemberId==member.FMemberId)
                 .Select(x=>x.FWorkId);
@@ -363,6 +364,17 @@ namespace prjMusicBetter.Controllers
             {
                 query = query.Where(c => c.FWorkName.Contains(search));
             }
+
+            // 添加排序邏輯
+            if (sortBy == "newest")
+            {
+                query = query.OrderByDescending(c => c.FUpdateTime);
+            }
+            else if (sortBy == "oldest")
+            {
+                query = query.OrderBy(c => c.FUpdateTime);
+            }
+
 
             var memberworks = query.Where(c=>memberworkIds.Contains(c.FWorkId))
                 ;// 獲取該會員的所有作品
@@ -419,24 +431,7 @@ namespace prjMusicBetter.Controllers
                 PageSize = pageSize,
             };
             return PartialView(viewModel);
-        }
-
-        //[HttpPost]
-        //public async Task<IActionResult> DeleteMemberWork(int workId)
-        //{
-        //    var workToDelete = await _context.TWorks.FirstOrDefaultAsync(w => w.FWorkId == workId);
-        //    if (workToDelete == null)
-        //    {
-        //        return NotFound();
-
-        //    }
-        //    _context.TWorks.Remove(workToDelete);
-        //    await _context.SaveChangesAsync();
-
-        //    // 刪除後重定向回作品列表，或返回一個成功訊息
-        //    return RedirectToAction("MemberWorks");
-        //}
-
+        }  
     }
 }
 
