@@ -43,7 +43,11 @@ namespace prjMusicBetter.Controllers
 
                 return View("Success");
             }
-            return View("Login");
+            else
+            {
+                return View("Login");
+            }
+
 
         }
         public IActionResult Success()
