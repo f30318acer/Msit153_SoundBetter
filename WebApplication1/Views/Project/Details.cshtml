@@ -874,7 +874,10 @@
             //divList.empty();
 
             $.getJSON('/apiTProjects/List', function (datas) {
-                let filteredDatas = datas;
+
+                filteredDatas = datas.filter(item => {
+                    return item.fProjectId != projectID; // 如果符合條件要移除，則返回 false
+                });
                 //獲得限定頁面資料
                 //Skill條件
                 if (skillId != 100) {
