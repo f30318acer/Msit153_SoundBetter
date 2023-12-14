@@ -12,14 +12,6 @@ namespace prjMusicBetter.Controllers
 {
     public class CheckOutController : Controller
     {
-        private readonly UserInfoService _userInfoService;
-        private readonly dbSoundBetterContext _context;
-
-        public CheckOutController(UserInfoService userInfoService, dbSoundBetterContext dbSoundBetterContext)
-        {
-            _userInfoService = userInfoService;
-            _context = dbSoundBetterContext;
-        }
         public IActionResult Index()
         {
             List<ProductEntity> productList = new List<ProductEntity>();
@@ -71,6 +63,7 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+        [HttpPost]
         public IActionResult CheckOut(List<OrderVM> orderItems, int totalPrice)
         {
             List<ProductEntity> productList = new List<ProductEntity>();
@@ -81,7 +74,7 @@ namespace prjMusicBetter.Controllers
                     Product = item.ProductName,
                     Rate = item.ProductPrice,
                     Quantity = item.ProductCount,
-                    ImagePath = "img/Image1.jpg" // You might want to update this path based on your actual requirements
+                    ImagePath = "img/Image1.jpg"
                 });
             }
 
@@ -102,8 +95,8 @@ namespace prjMusicBetter.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions()
                     {
-                        UnitAmount = (long)(item.Rate * item.Quantity),
-                        Currency = "inr",
+                        UnitAmount = (long)(item.Rate * item.Quantity * 100),
+                        Currency = "TWD",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = item.Product.ToString(),
@@ -121,70 +114,7 @@ namespace prjMusicBetter.Controllers
 
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
-
         }
 
-        public IActionResult Checkout2()
-        {
-            // 取得Session
-            int memberId = _userInfoService.GetMemberId();
-
-            var cart = HttpContext.Session.Get<List<ShoppingCartVM>>($"ShoppingCart_{memberId}") ?? new List<ShoppingCartVM>();
-            cart = checkShoppingCart(cart);
-
-            // 可能缺貨 => 回傳此問題，讓使用者重新確認
-            if (cart.Count == 0)
-            {
-                return RedirectToAction(nameof(List));
-            }
-
-            // 成功才跳轉
-            return View(cart);
-        }
-
-        public List<ShoppingCartVM> checkShoppingCart(List<ShoppingCartVM> cart)
-        {
-            foreach (ShoppingCartVM item in cart)
-            {
-                // 購物車內Class資料更新，檢查待補
-                var classData = _context.TClasses.FirstOrDefault(m => m.FClassId == item.ProductId);
-
-                if (classData != null)
-                {
-
-                    item.ProductName = classData.FClassName;
-                    item.ProductPrice = classData.FPrice;
-                    item.ProductDesc = classData.FDescription;
-                    item.ProductThumbnailPath = classData.FThumbnailPath;
-                    item.ProductStartDate = classData.FStartdate;
-                    item.ProductEndDate = classData.FEnddate;
-
-                    // 如果出現售完、已刪除等等
-                    if (classData.FCurrentStudent >= classData.FMaxStudent)
-                    {
-                        item.ProductStatus = 9999;
-                    }
-
-                    // 取得場地名稱
-                    item.SiteName = _context.TSites.Where(t => t.FSiteId == classData.FSiteId).Select(t => t.FSiteName).SingleOrDefault();
-
-                    // 取得教師名稱
-                    item.TeacherName = _context.TMembers.Where(t => t.FMemberId == classData.FTeacherId).Select(t => t.FName).SingleOrDefault();
-
-                    item.ProductStatus = 0000;
-                }
-            }
-            return cart;
-        }
-        public IActionResult List()
-        {
-            // 取得Session
-            int memberId = _userInfoService.GetMemberId();
-            var cart = HttpContext.Session.Get<List<ShoppingCartVM>>($"ShoppingCart_{memberId}") ?? new List<ShoppingCartVM>();
-
-            cart = checkShoppingCart(cart);
-
-            return View(cart);
-        }
     }
 }
