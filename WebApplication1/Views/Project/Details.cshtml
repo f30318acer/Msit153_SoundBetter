@@ -132,6 +132,7 @@
 </style>
 <!-- Intro section -->
 <input type="hidden" id="styleId" value="@Html.DisplayFor(model => model.FStyleId)" />
+<input type="hidden" id="skillId" value="@Html.DisplayFor(model => model.FSkillId)" />
 <input type="hidden" id="memberId" value="@Html.DisplayFor(model => model.FMemberId)" />
 <input type="hidden" id="budget" value="@Html.DisplayFor(model => model.FBudget)" />
 <input type="hidden" id="prjStatus" value="@Html.DisplayFor(model => model.FProjectStatusId)" />
@@ -243,6 +244,19 @@
     </div>
     
 </section>
+
+<div id="order" class="course-container">
+    <!-- Similar Songs section -->
+    <section class="similar-songs-section">
+        <div class="container-fluid">
+            <h3>你可能會想看的同類型其他專案</h3>
+            <div id="divList" class="row playlist-area">
+                <!--List內容-->
+            </div>
+        </div>
+    </section>
+    <!-- Similar Songs section end -->
+</div>
 
 <!-- Modal1 -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -446,6 +460,7 @@
 @section Scripts{
 	<script>
 		const styleId = $('#styleId').val();
+        const skillId = $('#skillId').val();
 		const memberId = $('#memberId').val();
         const projectID = $('#pID').val();
         const prjStatusID = $('#prjStatus').val();
@@ -853,5 +868,41 @@
             isAlertShown = false;
             return isValid;
         }
+        //讀取相似list
+        function firstLoad() {
+            const divList = $('#divList')
+            //divList.empty();
+
+            $.getJSON('/apiTProjects/List', function (datas) {
+                let filteredDatas = datas;
+                //獲得限定頁面資料
+                //Skill條件
+                if (skillId != 100) {
+                    filteredDatas = filteredDatas.filter(item => {
+                        return item.fSkillId == skillId;
+                    });
+                }
+                const limitdatas = filteredDatas.slice(0, 4);
+                const docFrag = $(document.createDocumentFragment());
+
+                (async function () {
+                    for (const item of limitdatas) {
+                        // 在這裡處理 memberName
+                        const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
+                                        <div class="playlist-item">
+                                            <img src="/img/project/${item.fThumbnailPath}" alt = "" >
+                                            <h5>${item.fName}</h5>
+                                            <p>${descriSub}</p>
+                                        </div>
+                                    </a>`);
+                        docFrag.append(card);
+                    }
+                    // 更新 divList
+                    divList.html(docFrag);
+                })();
+            });
+        }
+        firstLoad(1);
 	</script>
 }
