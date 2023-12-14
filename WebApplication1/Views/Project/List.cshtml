@@ -3,7 +3,7 @@
     ViewData["Title"] = "List";
 }
 
-<style>
+@*<style>
 	#divList {
 		display: flex;
 		flex-wrap: wrap;
@@ -15,6 +15,173 @@
 		/* 這裡可以添加卡片的樣式 */
 		margin: 10px; /* 可根據需要調整邊距 */
 	}
+</style>*@
+<style>
+	/*粉色底線*/
+	.ddd {
+		border-bottom: 2px solid #fc0254;
+	}
+
+	/*粉色按鈕*/
+	.btm {
+		height: 60px;
+		min-width: 167px;
+		right: 0;
+		top: 0;
+		border: none;
+		border-radius: 80px;
+		color: #fff;
+		font-size: 15px;
+		background: #fc0254;
+		float: right;
+	}
+
+	/*留空白用的*/
+	.container.ddd {
+		padding-top: 20px; /* 設置上邊距擴展的像素值 */
+		padding-bottom: 20px; /* 設置下邊距擴展的像素值 */
+	}
+
+	.mix {
+		position: relative;
+		overflow: hidden;
+		margin: 10px 0; /* 上下留白 */
+	}
+
+		.mix a {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			text-decoration: none; /* 避免超連結的下劃線 */
+		}
+
+		.mix div {
+			position: relative;
+			background-color: white;
+			color: black;
+			padding: 5px;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			height: 100%;
+		}
+
+		.mix img {
+			width: 100%;
+			height: auto;
+			display: block;
+			border-radius: 10px; /* 添加圓角效果，根據需要調整 */
+		}
+
+		.mix span {
+			background-color: white;
+			color: black;
+			padding: 5px;
+			border: 1px solid #fc0254; /* 粉框 */
+			border-radius: 5px; /* 添加圓角效果，根據需要調整 */
+		}
+
+		.mix h5, .mix p {
+			text-align: center;
+			margin: 5px 0; /* 上下留白 */
+		}
+
+		.mix p {
+			max-width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			text-align: left;
+			color: #888;
+			margin: 0;
+			display: block;
+			height: 75%;
+			font-size: 0.8em;
+		}
+
+	.ClassName {
+		margin: 0px auto;
+		margin-bottom: 5px;
+		text-align: center;
+		overflow: hidden;
+		height: 25px;
+		width: 90%;
+		line-height: 25px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		display: block;
+	}
+
+	.genres {
+		position: relative; /* 設置相對定位，讓內部元素可以使用絕對定位相對於這個容器 */
+	}
+
+		.genres div {
+			position: relative; /* 設置相對定位，讓內部元素可以使用絕對定位相對於這個容器 */
+		}
+
+	.gss {
+		position: absolute; /* 設置絕對定位 */
+		bottom: 0; /* 距離底部的距離 */
+		right: 0; /* 距離右邊的距離 */
+		background-color: white;
+		color: black;
+		padding: 5px;
+		/*border: 1px solid #fc0254;  粉框 */
+	}
+
+		.gss[data-course-type="offline"] {
+			background-color: #FFCBB3; /* 實體課程的背景顏色 */
+		}
+
+		.gss[data-course-type="online"] {
+			background-color: #A6FFFF; /* 線上課程的背景顏色 */
+		}
+
+	/* 調整其他樣式以避免重疊 */
+	.genres h5, .genres p, .genres span {
+		z-index: 1; /* 設置 z-index，確保文字和 span 在同一層次 */
+	}
+
+	.genres img {
+		width: 100%; /* 設定寬度為 100% */
+		height: 200px; /* 設定高度為 200 像素，可以根據需要調整 */
+		object-fit: cover; /* 保持原始比例並填滿指定的大小 */
+	}
+
+	.favorite-button {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 60px;
+		height: 50px;
+		background-size: cover; /* 調整圖片大小以填滿按鈕 */
+		border: none;
+		background-color: transparent; /* 移除按鈕背景色 */
+		cursor: pointer;
+	}
+
+	.scroll-to-top-btn {
+		position: fixed;
+		bottom: 50px;
+		right: 50px;
+		background-color: #fc0254;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		padding: 20px;
+		display: none;
+		z-index: 999; /* 將按鈕置於最上層 */
+	}
+
+		.scroll-to-top-btn i {
+			font-size: 20px;
+			position: fixed;
+			z-index: 1000; /* 將 <i> 元素置於最上層 */
+		}
+
 </style>
 <input type="hidden" id="loginId" value="@ViewBag.MemberId" />
 <!-- Playlist section -->
@@ -205,7 +372,7 @@
 		async function loadSkill() {
 			const response = await fetch('@Url.Content("~/apiTProjects/SkillsList")');
 			const data = await response.json();
-			const defaultBtn = '<div class="col-12 mb-3"><button value="100" class="btn btn-info mr-2 btnSkill activeSkill" style="width: 210px;height:40px;background-color: #fc0254;">所有技能</button></div>';
+			const defaultBtn = '<div class="col-12 mb-3"><button value="100" class="btn btn-info mr-2 btnSkill activeSkill" style="width: 190px;height:40px;background-color: #fc0254;">所有技能</button></div>';
 			const skillsBtn = data.map(s => `<div class="col-6 mb-3"><button value="${s.fSkillId}" class="btn btn-secondary mr-2 btnSkill" style="width: 90px;height: 40px">${s.fName}</button></div>`);
 			skillsBtn.unshift(defaultBtn);
 			skillList.innerHTML = skillsBtn.join("");
