@@ -397,7 +397,7 @@ namespace prjMusicBetter.Controllers
             return PartialView(viewModel);
         }
 
-        public async Task<IActionResult> MemberProject(string search, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> MemberProject(string search, int statusId = 0,int page = 1, int pageSize = 10)
         {
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
@@ -416,7 +416,12 @@ namespace prjMusicBetter.Controllers
                query=query.Where(c =>c.FName.Contains(search));
             }
 
-           var memberProjects = query.Where(c =>projectIds.Contains(c.FProjectId));
+            if (statusId > 0)
+            {
+                query = query.Where(p => p.FProjectStatusId == statusId);
+            }
+
+            var memberProjects = query.Where(c =>projectIds.Contains(c.FProjectId));
 
             var totalItems = await memberProjects.CountAsync();
 
