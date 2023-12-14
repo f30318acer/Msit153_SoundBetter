@@ -88,6 +88,7 @@
             <div class="col-md-12 pad">
                 <button id="btnFillDefaults" type="button" class="btn btn-secondary">填入預設資料</button>
             </div>
+            <input type="hidden" id="btnAddSiteClicked" name="btnAddSiteClicked" value="false" />
         </div>
     </div>
 </section>
@@ -118,11 +119,15 @@
             const siteContainer = document.getElementById('siteContainer');
             const originalSelect = document.getElementById('fSiteName');
 
+
             // 全域變數 inputAddress，避免重新宣告
             const inputAddress = document.getElementById('fAddress');
             const selectAdditional = document.getElementById('additionalSelect');
 
             btnAddSite.addEventListener('click', function () {
+
+                // 在動態添加場地的地方，設置 btnAddSiteClicked 為 true
+                document.getElementById('btnAddSiteClicked').value = 'true';
 
                 // 清空 siteContainer 的內容
                 siteContainer.innerHTML = '';
@@ -213,6 +218,9 @@
             });
 
             function confirmAddSite() {
+                // 在最後設置 btnAddSiteClicked 為 false
+                document.getElementById('btnAddSiteClicked').value = 'false';
+
                 // 獲取相關表單數據
                 const selectedCityID = document.getElementById('fCityID').value;
                 const inputSiteNameValue = document.getElementById('fSiteName').value;
@@ -274,7 +282,6 @@
                         console.error('錯誤:', error);
                     });
             }
-
         });
 
 
@@ -371,29 +378,39 @@
         btn.addEventListener('click', event => {
 
             event.preventDefault();//不讓submit運作
-            // 檢查是否存在 CKEditor 實例
-            if (editorInstance) {
-                // 將 CKEditor 5 的內容設定為 textarea 的值
-                const descriptionTextarea = document.querySelector('#fDescription');
-                descriptionTextarea.value = editorInstance.getData();
 
-                if (validateForm()) {
-                    // 傳整個 Form 的資料
-                    const formData = new FormData(document.querySelector('#classForm'));
+            // 檢查是否已經按下 "確認新增場地" 按鈕
+            const addSiteButtonClicked = document.getElementById('btnAddSiteClicked').value === 'true';
 
-                    fetch('@Url.Content("~/apiTClass/Create")', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                alert("新增成功");
-                                location.href = '@Url.Content("~/Members/Memberclass")';
-                            }
-                        });
+
+            if (addSiteButtonClicked) {
+                // 已經按下 "確認新增場地" 按鈕，禁止上傳
+                alert('請填寫完整新增場地');
+            }else{
+                // 檢查是否存在 CKEditor 實例
+                if (editorInstance) {
+                    // 將 CKEditor 5 的內容設定為 textarea 的值
+                    const descriptionTextarea = document.querySelector('#fDescription');
+                    descriptionTextarea.value = editorInstance.getData();
+
+                    if (validateForm()) {
+                        // 傳整個 Form 的資料
+                        const formData = new FormData(document.querySelector('#classForm'));
+
+                        fetch('@Url.Content("~/apiTClass/Create")', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert("新增成功");
+                                    location.href = '@Url.Content("~/Members/Memberclass")';
+                                }
+                            });
+                    }
+                } else {
+                    console.error('CKEditor 實例不存在或未正確加載。');
                 }
-            } else {
-                console.error('CKEditor 實例不存在或未正確加載。');
             }
         })
 

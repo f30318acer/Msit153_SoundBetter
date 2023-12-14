@@ -8,6 +8,14 @@
         <div class="bg-white shadow-lg rounded-lg p-6">
             <div id="searchResults"></div>
             <div class="flex items-center my-4">
+                <!-- 搜尋表單 ... -->
+                <select id="statusFilter" class="form-select border border-gray-300 rounded-md p-2">
+                    <option value="0">所有狀態</option>
+                    <option value="1">進行中</option>
+                    <option value="2">已完成</option>
+                    <option value="3">已取消</option>
+                    <option value="4">已延期</option>
+                </select>
                 <form id="searchForm" method="get" action="@Url.Action("MemberProject", "Members")" class="flex-grow flex items-center mr-2">
                     <input type="text" name="search" id="search" placeholder="Search..." class="form-input border border-gray-300 rounded-md p-2 mr-2">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
@@ -33,9 +41,9 @@
                     @foreach (var project in Model.Project)
                     {
                         <tr class="hover:bg-gray-50">
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FName )</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FName)</td>
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FBudget)</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FProjectStatusId)</td>
+                            <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FProjectStatusId)
                             <td class="px-5 py-5 border-b border-gray-200 text-sm">@Html.DisplayFor(modelItem => project.FEnddate)</td>
                             <td class="text-center border-b border-gray-200">
                                 <a href="@Url.Action("Details", "Project", new { id = project.FProjectId })" class="text-blue-500 hover:text-blue-600">詳細</a>
@@ -49,14 +57,22 @@
 </body>
 <script>
     //搜尋功能
-$('#searchForm').on('submit', function(event) {
-    event.preventDefault(); // 阻止表單的默認提交行為
-    var searchTerm = $('#search').val(); // 獲取搜索條件
-        $('#divPartial').load(`@Url.Content("~/Members/MemberProject")?search=${searchTerm}`); // 使用 AJAX 加載搜索結果
-});
-</script>
-<script>
+    $('#searchForm').on('submit', function (event) {
+        event.preventDefault();
+        var searchTerm = $('#search').val();
+        var selectedStatus = $('#statusFilter').val();
+        loadPage(1, searchTerm, selectedStatus);
+    });
     function loadPage(page) {
         $('#divPartial').load('@Url.Action("MemberProject", "Members")', { page: page });
     }
+    function loadPage(page, search = '', statusId = 0) {
+        $('#divPartial').load('@Url.Action("MemberProject", "Members")', {
+            page: page,
+            search: search,
+            statusId: statusId
+        });
+    }
+
 </script>
+

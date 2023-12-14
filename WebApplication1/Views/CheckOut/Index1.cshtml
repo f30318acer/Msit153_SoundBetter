@@ -26,26 +26,25 @@
                 </thead>
                 <tbody>
                     @* 每筆訂單資料 *@
-                        @for (int i = 0; i < Model.Count; i++)
-                        {
-                            var item = Model[i];
-                            totalPrice += Convert.ToInt32(item.ProductPrice * item.ProductCount);
+                    @foreach(var item in Model)
+                    {
+                        totalPrice += Convert.ToInt32(item.ProductPrice * item.ProductCount);
 
-                            <tr>
-                                <td>
-                                    <input type="text" name="OrderItems[@i].ProductName" value="@item.ProductName" readonly />
-                                </td>
-                                <td>
-                                    <input type="number" name="OrderItems[@i].ProductPrice" value="@Convert.ToInt32(item.ProductPrice)" readonly />
-                                </td>
-                                <td>
-                                    <input type="number" name="OrderItems[@i].ProductCount" value="@item.ProductCount" readonly />
-                                </td>
-                                <td>
-                                    <input type="number" name="OrderItems[@i].TotalPrice" value="@Convert.ToInt32(item.ProductPrice * item.ProductCount)" readonly />
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                            <td>
+                                <input type="text" name="ProductName" value="@item.ProductName" readonly />
+                            </td>
+                            <td>
+                                <input type="number" name="ProductPrice" value="@Convert.ToInt32(item.ProductPrice)" readonly />
+                            </td>
+                            <td>
+                                <input type="number" name="ProductCount" value="@item.ProductCount" readonly />
+                            </td>
+                            <td>
+                                <input type="number" name="TotalPrice" value="@Convert.ToInt32(item.ProductPrice * item.ProductCount)" readonly />
+                            </td>
+                        </tr>
+                    }
                     <tr>
 
                         <th scope="col"></th>
@@ -55,8 +54,8 @@
                     </tr>
                 </tbody>
             </table>
-                <button type="submit" onclick="checkoutAndClear()">提交訂單</button>
-            </form>
+            <button type="submit">提交訂單</button>
+           </form>
             <div>
             </div>
         </div>
@@ -316,14 +315,6 @@
     //}
 
     function checkoutAndClear() {
-         // 遍歷每一筆資料，呼叫 Currentplus 函數
-        @for (int i = 0; i < Model.Count; i++)
-    {
-        <text>
-        let productId = @Model[i].ProductId; // 取得每筆資料的ProductId
-        Currentplus(productId); // 將ProductId傳遞給Currentplus函數
-        </text>
-    }
         checkOut(); // 先觸發 checkOut 函數
         clearShoppingCart(); // 再觸發 clearShoppingCart 函數
     }
@@ -359,18 +350,4 @@
             }
         });
     }
-
-    function Currentplus(productId) {
-    $.ajax({
-        type: "POST",
-        url: "/apiTClass/Currentplus",
-        data: { id: productId }, // 將 productId 作為請求的資料傳遞到後端
-        success: function () {
-            // 成功時的處理
-        },
-        error: function () {
-            // 錯誤時的處理
-        }
-    });
-}
 </script>

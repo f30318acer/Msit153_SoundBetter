@@ -243,6 +243,10 @@ namespace prjMusicBetter.Controllers
                 // 刪除 TClassClick 中符合條件的資料
                 var relatedClicks = _context.TClassClicks.Where(click => click.FClassId == project.FClassId).ToList();
                 _context.TClassClicks.RemoveRange(relatedClicks);
+                // 刪除 TClassClick 中符合條件的資料
+                var relatedDeals = _context.TDealClassDetails.Where(click => click.FClassId == project.FClassId).ToList();
+                _context.TDealClassDetails.RemoveRange(relatedDeals);
+
                 _context.TClasses.Remove(project);
 				_context.SaveChanges();
 				return Content("刪除成功");
@@ -399,6 +403,7 @@ namespace prjMusicBetter.Controllers
         }
 
         //fCurrentStudent + 1
+        [HttpPost]
         public IActionResult Currentplus(int? id)
         {
             if (id == null || _context.TClasses == null)

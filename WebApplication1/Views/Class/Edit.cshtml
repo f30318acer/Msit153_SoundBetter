@@ -113,7 +113,17 @@
                 .catch(error => {
                     console.error(error);
                 });
+
+
+            // 獲取FThumbnailPath的值
+            var thumbnailPath = '@Model.FThumbnailPath';
+
+            // 如果FThumbnailPath有值，則設定img的src屬性
+            if (thumbnailPath) {
+                document.getElementById('imgPreview').src = `@Url.Content("~/img/classimg")/${thumbnailPath}`;
+            }
         });
+
         //讓上課地點選項顯示fSiteName
         const SiteID = document.querySelector('#fSiteID');
         const SiteName = document.querySelector('#fSiteName');
