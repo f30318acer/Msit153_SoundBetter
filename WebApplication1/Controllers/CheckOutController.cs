@@ -10,8 +10,18 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace prjMusicBetter.Controllers
 {
+
     public class CheckOutController : Controller
     {
+        private readonly dbSoundBetterContext _context;
+        private readonly IWebHostEnvironment _host;
+        private readonly UserInfoService _userInfoService;
+        public CheckOutController(IWebHostEnvironment host, dbSoundBetterContext context, UserInfoService userInfoService)
+        {
+            _host = host;
+            _context = context;
+            _userInfoService = userInfoService;//抓使用者
+        }
         public IActionResult Index()
         {
             List<ProductEntity> productList = new List<ProductEntity>();
@@ -66,6 +76,8 @@ namespace prjMusicBetter.Controllers
         [HttpPost]
         public IActionResult CheckOut(List<OrderVM> orderItems, int totalPrice)
         {
+            TMember member = _userInfoService.GetMemberInfo();
+            var email = member.FEmail;
             List<ProductEntity> productList = new List<ProductEntity>();
             foreach (var item in orderItems)
             {
@@ -86,7 +98,7 @@ namespace prjMusicBetter.Controllers
                 CancelUrl = domain + "CheckOut/Login",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
-                CustomerEmail = "f50318acer@gmail.com"
+                CustomerEmail = $"{email}"
 
             };
             foreach (var item in productList)
