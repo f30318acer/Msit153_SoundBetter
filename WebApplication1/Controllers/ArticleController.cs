@@ -153,8 +153,8 @@ namespace prjMusicBetter.Controllers
         public async Task<IActionResult> AddComment(int id, FMemberDto mdto, CommentDto cdto)
         {
 
-            id = cdto.FArticleId=1;
-            mdto.FMemberID = 1;
+            //id = cdto.FArticleId=1;
+            //mdto.FMemberID = 1;
             _context.TComments.Add(new TComment()
             {   
                 FCommentId = cdto.FCommentId,

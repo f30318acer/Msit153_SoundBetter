@@ -53,7 +53,7 @@ namespace prjMusicBetter.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(CommentDto dto, FMemberDto mdto)
+        public IActionResult Create(CommentDto dto)
         {
 
             dto.FArticleId = 20;
@@ -61,7 +61,7 @@ namespace prjMusicBetter.Controllers
 
             _context.TComments.Add(new TComment()
             {
-                FMemberId = mdto.FMemberID,
+                FMemberId = dto.FMemberId,
                 FCommentContent = dto.FCommentContent,
                 FArticleId = dto.FArticleId,
                 FCommentTime = DateTime.Now,
@@ -146,26 +146,31 @@ namespace prjMusicBetter.Controllers
             return View(comment);
         }
         [HttpPost]
-        public IActionResult Edit(TComment paf, [FromBody] CommentDto dto)
+        public IActionResult Edit(TComment pIn)
         {
 
             if (ModelState.IsValid)
             {
-                TComment pDB = _context.TComments.FirstOrDefault(p => p.FCommentId == paf.FCommentId);
-            
-                if (pDB != null)
-                 {   
-                     pDB.FMemberId = paf.FMemberId;
-                     pDB.FArticleId = paf.FArticleId;
-                     pDB.FCommentContent = paf.FCommentContent;
-                     pDB.FCommentTime = DateTime.Now;
-                    _context.SaveChanges();
-                 }
-                 return RedirectToAction("List");
+                TComment pDb = _context.TComments.FirstOrDefault(p => p.FCommentId == pIn.FCommentId);
+
+
+
+                if (pDb != null)
+                {
+                pDb.FMemberId = pIn.FMemberId;
+                pDb.FArticleId = pIn.FArticleId;
+                pDb.FCommentContent = pIn.FCommentContent;
+                pDb.FCommentTime = DateTime.Now;
+                _context.SaveChanges();
+                }
+
+
+
+                return RedirectToAction("List");
             
             }
 
-            return View(paf);
+            return View(pIn);
         }
 
 
