@@ -1,5 +1,6 @@
 ﻿@model prjMusicBetter.Models.TArticle
 
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -104,13 +105,13 @@
 <p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
 <div>
     @foreach (var comment in Model.TComments)
-    {
- 
+    {   
+            
         <div class="row m-3">
             <div class="col-1"><img src="@Url.Content($"~/img/Member/{Model.FMember.FPhotoPath}")" /></div>
             <div class="col-11" style="background-color: #f8f9fa">
                 <p>
-                    <span class="font-weight-bold">@Model.FMember.FName</span>
+                    <span class="font-weight-bold">@comment.FMemberId</span>
                     <span class="text-muted">． @comment.FCommentTime</span>
                 </p>
                 <p>@comment.FCommentContent</p>
@@ -118,6 +119,8 @@
         </div>
     }
 </div>
+
+
 
 
 

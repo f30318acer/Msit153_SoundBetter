@@ -66,6 +66,7 @@ namespace prjMusicBetter.Controllers
                 return NotFound();
             }
 
+            //原本的CODE
             //var tArticle = await _context.TArticles
             //    .Include(t => t.FMember)
             //    .Include(t => t.FStyle)
@@ -74,8 +75,10 @@ namespace prjMusicBetter.Controllers
             var tArticle = await _context.TArticles
               .Include(t => t.FMember)
               .Include(t => t.FStyle)
-              .Include(c => c.TComments)
+              .Include(c => c.TComments) //此行為下方留言功能用
               .FirstOrDefaultAsync(m => m.FArticleId == id);
+            //
+
 
             if (tArticle == null)
             {
@@ -154,10 +157,6 @@ namespace prjMusicBetter.Controllers
         }
 
 
-
-        //mdto.FMemberID = _userInfoService.GetMemberInfo().FMemberId;
-        //cdto.FArticleId= _context.TArticles.SingleOrDefault().FArticleId;
-
         ///留言功能
         [HttpPost]
         [Authorize]
@@ -166,6 +165,8 @@ namespace prjMusicBetter.Controllers
 
             cdto.FMemberId = _userInfoService.GetMemberInfo().FMemberId;
             cdto.FArticleId = _context.TArticles.Include(t => t.FMember).Include(t => t.FStyle).Where(e => e.FArticleId == id).SingleOrDefault().FArticleId;
+            
+
 
 
             _context.TComments.Add(new TComment()
@@ -185,18 +186,6 @@ namespace prjMusicBetter.Controllers
         }
 
 
-        //public IActionResult GetMemberNameandEmail()
-        //{
 
-        //    var name = member?.FName;
-        //    var email = member?.FEmail;
-        //    var result = new
-        //    {
-        //        Name = name,
-        //        Email = email
-        //    };
-
-        //    return Json(result);
-        //}
     }
 }
