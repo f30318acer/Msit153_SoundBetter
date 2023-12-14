@@ -316,6 +316,14 @@
     //}
 
     function checkoutAndClear() {
+         // 遍歷每一筆資料，呼叫 Currentplus 函數
+        @for (int i = 0; i < Model.Count; i++)
+    {
+        <text>
+        let productId = @Model[i].ProductId; // 取得每筆資料的ProductId
+        Currentplus(productId); // 將ProductId傳遞給Currentplus函數
+        </text>
+    }
         checkOut(); // 先觸發 checkOut 函數
         clearShoppingCart(); // 再觸發 clearShoppingCart 函數
     }
@@ -351,4 +359,18 @@
             }
         });
     }
+
+    function Currentplus(productId) {
+    $.ajax({
+        type: "POST",
+        url: "/apiTClass/Currentplus",
+        data: { id: productId }, // 將 productId 作為請求的資料傳遞到後端
+        success: function () {
+            // 成功時的處理
+        },
+        error: function () {
+            // 錯誤時的處理
+        }
+    });
+}
 </script>
