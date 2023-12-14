@@ -59,6 +59,9 @@ namespace prjMusicBetter.Controllers
             }
             return View();
         }
+
+
+   
         public async Task<IActionResult> Details(int? id)
         { 
             if (id == null || _context.TArticles == null)
@@ -162,28 +165,50 @@ namespace prjMusicBetter.Controllers
         [Authorize]
         public async Task<IActionResult> AddComment(int id, CommentDto cdto)
         {
+            try
+            {
+                // 获取当前用户的成员ID
+                cdto.FMemberId = _userInfoService.GetMemberInfo().FMemberId;
 
-            cdto.FMemberId = _userInfoService.GetMemberInfo().FMemberId;
-            cdto.FArticleId = _context.TArticles.Include(t => t.FMember).Include(t => t.FStyle).Where(e => e.FArticleId == id).SingleOrDefault().FArticleId;
-            
+                // 获取文章的成员ID
+                var article = await _context.TArticles
+                    .Include(t => t.FMember)
+                    .Include(t => t.FStyle)
+                    .Where(e => e.FArticleId == id)
+                    .SingleOrDefaultAsync();
 
+                if (article != null)
+                {
+                    cdto.FArticleId = article.FMember.FMemberId;
 
+                    // 添加评论
+                    _context.TComments.Add(new TComment()
+                    {
+                        FCommentId = cdto.FCommentId,
+                        FMemberId = cdto.FMemberId,
+                        FCommentContent = cdto.FCommentContent,
+                        FArticleId = cdto.FArticleId,
+                        FCommentTime = DateTime.Now,
+                    });
 
-            _context.TComments.Add(new TComment()
-            {   
-                FCommentId = cdto.FCommentId,
-                FMemberId = cdto.FMemberId,
-                FCommentContent = cdto.FCommentContent,
-                FArticleId = cdto.FArticleId,
-                FCommentTime = DateTime.Now,
-            });
-            _context.SaveChanges();
+                    // 保存更改
+                    await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", id);
-            //return RedirectToAction("Details","Article", cdto.FArticleId);
-
+                    return RedirectToAction("Details", new { id = id });
+                }
+                else
+                {
+                    // 处理文章未找到的情况
+                    return NotFound("Article not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 处理其他异常情况
+                return StatusCode(500, "An error occurred while adding the comment.");
+            }
         }
+
 
 
 
