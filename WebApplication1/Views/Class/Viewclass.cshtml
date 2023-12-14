@@ -221,7 +221,7 @@
                 <h3 style="text-align: center">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
                 @if (Model.FCurrentStudent != 0)
                 {
-                    <a href="@Url.Action("student", "Class", new { id = Model.FClassId })" class="btn">
+                    <a href="@Url.Action("student", "Class", new { id = Model.FClassId })" class="btn btn-primary">
                         查看已購買學生
                     </a>
                 }

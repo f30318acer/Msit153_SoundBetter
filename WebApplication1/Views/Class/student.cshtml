@@ -57,7 +57,7 @@
                                 <img src="~/img/Member/@item.FPhotoPath" width="100" height="100">
                             </td>
                             <td>
-                                @Html.ActionLink("查看個人檔案", "Details", "MemberPage", new { id = item.FMemberId }, null)
+                                @Html.ActionLink("查看個人檔案", "Details", "MemberPage", new { id = item.FMemberId }, new { @class = "btn btn-success" })
                             </td>
                             @*<td>
                     @Html.ActionLink("修改", "Edit", "Product", new { id = item.FId }, null) |
