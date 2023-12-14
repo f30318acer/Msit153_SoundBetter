@@ -197,6 +197,11 @@ namespace prjSoundBetterApi.Controllers
 
             if (project != null)
             {
+                var allRec = _context.TApplicationRecords.Where(c => c.FProjectId == id);
+                foreach (var rec in allRec) 
+                {
+                    rec.FApplicationStatusId = 3;
+                }
                 project.FProjectStatusId = 4;
                 //_context.TProjects.Remove(project);
                 _context.SaveChanges();
@@ -237,12 +242,20 @@ namespace prjSoundBetterApi.Controllers
         {
             if (appli != null)
             {
+                TApplicationRecord appliDb = _context.TApplicationRecords.Where(a => a.FProjectId == id).FirstOrDefault(a => a.FMemberId == appli.FMemberId);
+                if (appliDb != null) 
+                {
+                    appliDb.FSelfIntroduction = appli.FSelfIntroduction;
+                    appliDb.FApplicationStatusId = 1;
+                    _context.SaveChanges();
+                    return Content("應徵成功");
+                }
                 DateTime now = DateTime.Now;
                 appli.FProjectId = id;
                 appli.FApplicationStatusId = 1;
                 _context.Add(appli);
                 _context.SaveChanges();
-                return Content("新增成功");
+                return Content("應徵成功");
             }
             return Content("錯誤");
         }
