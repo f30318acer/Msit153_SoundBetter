@@ -82,7 +82,7 @@ namespace prjMusicBetter.Controllers
 
             var options = new SessionCreateOptions
             {
-                SuccessUrl = domain + $"CheckOut/OrderConfirmation",//付款完出現
+                SuccessUrl = domain + "CheckOut/OrderConfirmation",//付款完出現
                 CancelUrl = domain + "CheckOut/Login",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
