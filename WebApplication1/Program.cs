@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using System.Net.Mail;
 using System.Net;
 using prjMusicBetter.Models.Services;
+using Stripe;
 
 
 
@@ -68,6 +69,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseRouting();
 
+//Stripe
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 //================= AspNetCore.Authentication 用戶登入驗證操作機制使用=====
 //執行順序不能顛倒不然驗證功能會無法正常工作。

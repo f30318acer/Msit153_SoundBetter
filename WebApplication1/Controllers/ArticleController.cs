@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.Daos;
+using prjMusicBetter.Models.Dtos;
+using prjMusicBetter.Models.Dtos.Comment;
 using prjMusicBetter.Models.infra;
 using System.Linq.Expressions;
 
@@ -54,7 +58,7 @@ namespace prjMusicBetter.Controllers
             }
             return View();
         }
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, CommentDto cdto)
         { 
             if (id == null || _context.TArticles == null)
             {
@@ -95,7 +99,9 @@ namespace prjMusicBetter.Controllers
             ViewBag.AllArticle = _context.TArticles.Count();//有多少課程
 
 
-
+            //留言部分
+            await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
+            //留言部分
             return View(tArticle);
           
         }
@@ -144,23 +150,23 @@ namespace prjMusicBetter.Controllers
         ///留言功能
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddComment(int Id, string myComment)
-        {   
-            TComment comment = new TComment();
+        public async Task<IActionResult> AddComment(int id, FMemberDto mdto, CommentDto cdto)
+        {
 
-            var q = from m in _context.TArticles
-                    where m.FArticleId == comment.FArticleId
-                    select new TComment
-                    {
-                        FCommentId = Id,
-                        //FMemberId = HttpContext.User.Identity.Name,
-                        FCommentContent = myComment,
-                        FCommentTime = DateTime.Now
-                    };
+            id = cdto.FArticleId=1;
+            mdto.FMemberID = 1;
+            _context.TComments.Add(new TComment()
+            {   
+                FCommentId = cdto.FCommentId,
+                FMemberId = mdto.FMemberID,
+                FCommentContent = cdto.FCommentContent,
+                FArticleId = cdto.FArticleId,
+                FCommentTime = DateTime.Now,
+            });
+            _context.SaveChanges();
 
-            _context.Add(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Detail2", new { id = Id });			
+            return RedirectToAction("Details", id);			
 		}
 
 	}
