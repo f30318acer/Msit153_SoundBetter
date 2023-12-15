@@ -14,10 +14,67 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-    </style>
 
-}
+        }
+
+        .scroll-to-top-btn {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            background-color: gray;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+            .scroll-to-top-btn i {
+                font-size: 40px;
+                position: fixed;
+                z-index: 1000;
+            }
+
+
+        .btn-hover.color-8 {
+            background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+            box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+        }
+
+        .buttons11 {
+            margin: 10%;
+            text-align: center;
+        }
+
+        .btn-hover {
+            width:100px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 20px;
+            height: 55px;
+            text-align: center;
+            border: none;
+            background-size: 300% 100%;
+            border-radius: 50px;
+            transition: all .4s ease-in-out;
+        }
+
+            .btn-hover:hover {
+                background-position: 100% 0;
+                transition: all .4s ease-in-out;
+            }
+
+            .btn-hover:focus {
+                outline: none;
+            }
+        </style>
+        }
 <input type="hidden" id="loginId" value="@ViewBag.MemberId" />
 <!---->
 
@@ -58,23 +115,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>音樂播放器</title>
         <!-- 引入你的樣式表和其他必要的庫 -->
     </head>
     <body>
-        <div id="player">
-            <audio id="audioPlayer" controls  style="width:fit-content">
-                <!-- 在這裡放置初始歌曲的路徑 -->
-                <source src="/path/to/your/initial/song.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-            <div>
-                <button onclick="playPrevious()">上一首</button>
-                <button onclick="playPause()">播放/暫停</button>
-                <button onclick="playNext()">下一首</button>
-            </div>
-        </div>
-
         <script src="your-scripts.js"></script> <!-- 引入你的 JavaScript 文件 -->
     </body>
 </html>
@@ -85,6 +128,19 @@
     <div id="divList" class="row">
         <!--  new song -->       
     </div>
+    <div id="scrollToTopBtn" class="scroll-to-top-btn">
+        <div id="player">
+            <!-- 使用動態ID來設置音頻元素 -->
+            <audio controls id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%">
+                <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg">
+            </audio>
+            <div>
+                <button class="btn-hover color-8 buttons11" onclick="playPrevious()">上一首</button>
+                <button class="btn-hover color-8 buttons11" onclick="playNext()">下一首</button>
+            </div>
+        </div>
+    </div>
+
     <div class="row container">
         <div class=" text-center" id="pageButtons"><!--  分頁按鈕 -->  </div>
     </div>
@@ -491,6 +547,24 @@
                 }
             });
 }
+        document.addEventListener("DOMContentLoaded", function () {
+            var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+            window.onscroll = function () {
+                // 顯示或隱藏按鈕根據滾動位置
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    scrollToTopBtn.style.display = "block";
+                } else {
+                    scrollToTopBtn.style.display = "none";
+                }
+            };
+
+            scrollToTopBtn.addEventListener("click", function () {
+                // 捲動到頁面頂部
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            });
+        });
 
 
 
