@@ -71,6 +71,8 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TNotification> TNotifications { get; set; }
 
+    public virtual DbSet<TPlaylist> TPlaylists { get; set; }
+
     public virtual DbSet<TProject> TProjects { get; set; }
 
     public virtual DbSet<TProjectFav> TProjectFavs { get; set; }
@@ -724,6 +726,20 @@ public partial class dbSoundBetterContext : DbContext
             entity.HasOne(d => d.FMember).WithMany(p => p.TNotifications)
                 .HasForeignKey(d => d.FMemberId)
                 .HasConstraintName("FK_tNotification_tMember");
+        });
+
+        modelBuilder.Entity<TPlaylist>(entity =>
+        {
+            entity.HasKey(e => e.FPlaylistId);
+
+            entity.ToTable("tPlaylist");
+
+            entity.Property(e => e.FPlaylistId).HasColumnName("fPlaylistID");
+            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FUpdateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("fUpdateTime");
+            entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
         });
 
         modelBuilder.Entity<TProject>(entity =>

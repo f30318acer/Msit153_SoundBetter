@@ -333,8 +333,8 @@
                             <button class="btn btn-primary" style="width: 100%;" onclick="redirectToStudentPage(event, ${item.fClassId})">查看已購買學生</button>
                             <a href="/Class/Edit?id=${item.fClassId}">
                                 <div style="position: relative;">
-                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
-                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? 'block' : 'none'};">
+                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
@@ -418,8 +418,8 @@
                             <button class="btn btn-primary" style="width: 100%;" onclick="redirectToStudentPage(event, ${item.fClassId})">查看已購買學生</button>
                             <a href="/Class/Edit?id=${item.fClassId}">
                                 <div style="position: relative;">
-                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
-                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                            <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? 'block' : 'none'};">
+                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                             <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
@@ -511,8 +511,8 @@
                             <button class="btn btn-primary" style="width: 100%;" onclick="confirmAndRedirectToDelDeal(event, ${item.fClassId})">退出課程</button>
                             <a href="/Class/Viewclass?id=${item.fClassId}">
                                 <div style="position: relative;">
-                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
-                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                            <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? 'block' : 'none'};">
+                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
@@ -596,8 +596,8 @@
                             <a href="/Class/Viewclass?id=${item.fClassId}">
                                 <button class="btn btn-primary" style="width: 100%;" onclick="confirmAndRedirectToDelDeal(event, ${item.fClassId})">退出課程</button>
                                 <div style="position: relative;">
-                                    <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= item.fMaxStudent - 5 ? 'block' : 'none'};">
-                                        ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : ''))}
+                                            <span style="position: absolute; top: 0; left: 0; background-color: ${new Date(item.fEnddate) <= new Date() ? 'gray' : 'red'}; color: white; padding: 5px; margin: 5px; display: ${new Date(item.fEnddate) <= new Date() || item.fCurrentStudent >= item.fMaxStudent || item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? 'block' : 'none'};">
+                                                ${new Date(item.fEnddate) <= new Date() ? '已過期' : (item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : ''))}
                                     </span>
                                     <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                     <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
@@ -685,8 +685,8 @@
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                          <a href="/Class/Viewclass?id=${item.fClassId}">
                                              <div style="position: relative;">
-                                                 <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
-                                                     ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                                         <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
+                                                             ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
                                                  </span>
                                                  <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                                          <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
@@ -789,8 +789,8 @@
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                         <a href="/Class/Viewclass?id=${item.fClassId}">
                                             <div>
-                                                <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
-                                                    ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                                        <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
+                                                            ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
                                                 </span>
                                                 <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                                         <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">

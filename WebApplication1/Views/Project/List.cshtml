@@ -188,10 +188,15 @@
 <section class="playlist-section spad">
 	<div class="container-fluid">
 		<div class="row mb-3">
-			<div class="section-title col-lg-3">
-				<h2>找製作</h2>
+			<div class="row section-title col-lg-5" style="margin-bottom:0px;">
+				<div class="col-5">
+					<h2>找製作</h2>
+				</div>
+				<div class="col-7">
+					<h5 id="resultCount" style="margin-top:30px;margin-bottom:0px;"></h5>
+				</div>							
 			</div>
-			<div class="container col-lg-9">
+			<div class="container col-lg-7">
 				<div class="text-right">
 					<select id="selectStyle" class="form-select mr-2"></select>
 					<input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字"class="mr-2"/>
@@ -482,9 +487,8 @@
 				}
 
 				console.log(filteredDatas);
-
 				dataCount = filteredDatas.length;
-
+				$('#resultCount').text(`篩選結果 : ${dataCount}筆專案`);
 				//獲得限定頁面資料
 				const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
 				const docFrag = $(document.createDocumentFragment());
@@ -495,7 +499,7 @@
 						await LoadAppliNumber(item.fProjectId);
 						console.log(item.fDescription); // 在這裡處理 memberName
 						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
+						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}" style="height:280px;">
 								<div class="playlist-item">
 									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
 									<h5>${item.fName}</h5>
@@ -545,8 +549,8 @@
 						await LoadMemberInfo(item.fMemberId);
 						await LoadAppliNumber(item.fProjectId);
 						// 在這裡處理 memberName
-						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}">
+						const descriSub = item.fDescription.length > 30 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
+						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}" style="height:280px;">
 								<div class="playlist-item">
 									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
 									<h5>${item.fName}</h5>
