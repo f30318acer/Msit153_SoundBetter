@@ -140,7 +140,7 @@ namespace prjMusicBetter.Controllers
             ViewBag.Address = Address;//地點
 
             var DealClass = _context.TDealClassDetails.Where(t => t.FClassId == tClass.FClassId).Select(t => t.FMemberId).Any(id => id == member.FMemberId);
-            ViewBag.DealClass = DealClass;
+            ViewBag.DealClass = DealClass;//我有沒有買這堂課
 
             return View(tClass);
 		}
