@@ -61,7 +61,7 @@ namespace prjMusicBetter.Controllers
         [HttpPost]
         public IActionResult CheckOut_Rst()
         {
-            
+
             // 取得Session
             int memberId = _userInfoService.GetMemberId();
             var cart = HttpContext.Session.Get<List<ShoppingCartVM>>($"ShoppingCart_{memberId}") ?? new List<ShoppingCartVM>();
@@ -79,12 +79,13 @@ namespace prjMusicBetter.Controllers
             dealClass.FMemberId = memberId;
             dealClass.FDealdate = DateTime.Now;
             dealClass.FPrice = totalPrice;
-            
+
             _context.Add(dealClass);
             _context.SaveChanges();
 
             //儲存至資料表DealClassDetail
-            foreach (var item in cart) {
+            foreach (var item in cart)
+            {
                 TDealClassDetail dealClassDetail = new TDealClassDetail();
                 dealClassDetail.FMemberId = memberId;
                 dealClassDetail.FDealClassId = dealClass.FDealClassId;
@@ -104,7 +105,7 @@ namespace prjMusicBetter.Controllers
 
         public IActionResult CheckOut_Fin()
         {
-           
+
 
             return View();
         }
@@ -119,8 +120,8 @@ namespace prjMusicBetter.Controllers
             {
                 // 購物車內Class資料更新，檢查待補
                 var classData = _context.TClasses.FirstOrDefault(m => m.FClassId == item.ProductId);
-                
-                if (classData != null )
+
+                if (classData != null)
                 {
 
                     item.ProductName = classData.FClassName;
@@ -129,7 +130,7 @@ namespace prjMusicBetter.Controllers
                     item.ProductThumbnailPath = classData.FThumbnailPath;
                     item.ProductStartDate = classData.FStartdate;
                     item.ProductEndDate = classData.FEnddate;
-                   
+
                     // 如果出現售完、已刪除等等
                     if (classData.FCurrentStudent >= classData.FMaxStudent)
                     {
@@ -144,7 +145,7 @@ namespace prjMusicBetter.Controllers
 
                     item.ProductStatus = 0000;
                 }
-                
+
 
 
             }
@@ -160,9 +161,27 @@ namespace prjMusicBetter.Controllers
             HttpContext.Session.Remove($"ShoppingCart_{memberId}");
             return Ok();
         }
+
+       
+        [HttpPost]
+        public IActionResult ValidateCoupon(string couponCode)
+        {
+          
+
+            var coupon = _context.TCoupons.SingleOrDefault(c => c.FCouponCode == couponCode);
+
+            if (coupon != null)
+
+            {
+                return Json(new { valid = true, discount = coupon.FCouponContent });
+            }
+            else
+            {
+                return Json(new { valid = false, message = "無效的優惠券代碼" });
+            }
+        }
+
     }
-
-
 }
 
 

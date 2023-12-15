@@ -79,7 +79,7 @@
 <!---->
 
 <section class="category-section spad aaa">
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-top:30px">
         <div class="section-title">
             <h2>音樂探索</h2>
         </div>
@@ -118,27 +118,37 @@
         <!-- 引入你的樣式表和其他必要的庫 -->
     </head>
     <body>
-        <script src="your-scripts.js"></script> <!-- 引入你的 JavaScript 文件 -->
+        
     </body>
 </html>
 </section>
 <!-- Category section end -->
-<section class="songs-section spad aaa" style="margin: 0;">
+<section class="songs-section spad " style="padding-bottom:100px;">
     <div class="  container" />
     <div id="divList" class="row">
         <!--  new song -->
     </div>
+
+    
     <div id="scrollToTopBtn" class="scroll-to-top-btn">
-        <div id="player">
-            <!-- 使用動態ID來設置音頻元素 -->
-            <audio controls id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%">
-                <source src="/WorkFile/${item.fFilePath}" type="audio/mpeg">
-            </audio>
-            <div>
-                <button class="btn-hover color-8 buttons11" onclick="playPrevious()">上一首</button>
-                <button class="btn-hover color-8 buttons11" onclick="playNext()">下一首</button>
+        <div class="row">
+            <div id="player" class="col-12" style="display:none;">
+                <div id="divPlayList"></div>
+                <!-- 使用動態ID來設置音頻元素 -->
+                <audio controls id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%">
+                    @*<source src="/WorkFile/${item.fFilePath}" type="audio/mpeg">*@
+                </audio>
+                <div>
+                    <button class="btn-hover color-8 buttons11" onclick="playPrevious()">上一首</button>
+                    <button class="btn-hover color-8 buttons11" onclick="playNext()">下一首</button>
+                    <button id="btnCloseList" class="btn-hover color-8 buttons11 " onclick="closePlayer()">關閉撥放器</button>
+                </div>
+            </div>
+            <div class="col-12">
+                <button id="btnShowList" class="btn-hover color-8 buttons11 " onclick="openPlayer()">顯示撥放器</button>
             </div>
         </div>
+       
     </div>
 
     <div class="row container">
@@ -523,22 +533,26 @@
                 window.location.href = "@Url.Action("Login", "Home")";
             }
         }
-
+        //=======================
         function AddToList(id){
-          fetch('@Url.Content("~/apiTWork/AddToList/")'+id , {
-          method: 'Post'
-          })
-          .then(response=>{
+            if (loginID != 0){
+                fetch('@Url.Content("~/apiTWork/AddToList/")' + id, {
+                    method: 'Post'
+                })
+                    .then(response => {
 
-              if(response.ok){
-                  alert("加入成功");
-              }
-              else{
-                  alert("失敗");
-              }
-          })
+                        if (response.ok) {
+                            alert("加入成功");
+                        }
+                        else {
+                        }
+                    })
+            }     
+            else{
+                window.location.href = "@Url.Action("Login", "Home")";
+            }
         }
-
+        //=====================
         function PlusOne(workId) {
             // 使用 AJAX 向 apiTWorkController 的 PlusOne 方法發送請求
             $.ajax({
@@ -568,24 +582,74 @@
                 }
             });
         }
-        document.addEventListener("DOMContentLoaded", function () {
-            var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        //document.addEventListener("DOMContentLoaded", function () {
+        //    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        //    var playerContainer = document.getElementById("player");
 
-            window.onscroll = function () {
-                // 顯示或隱藏按鈕根據滾動位置     
-                    scrollToTopBtn.style.display = "block";
-            };
+        //    window.onscroll = function () {
+        //        // 顯示或隱藏按鈕根據滾動位置
+        //        scrollToTopBtn.style.display = "block";
+        //    };
 
-            scrollToTopBtn.addEventListener("click", function () {
-                // 捲動到頁面頂部
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            });
-        });
+        //    scrollToTopBtn.addEventListener("click", function () {
+        //        // 捲動到頁面頂部
+        //        document.body.scrollTop = 0;
+        //        document.documentElement.scrollTop = 0;
+        //    });
+        //});
 
+        // 新增一個函數來切換撥放器的顯示和隱藏
+        function togglePlayer() {
+            var playerContainer = document.getElementById("player");
+            // 切換撥放器容器的顯示和隱藏
+            playerContainer.style.display = (playerContainer.style.display === "none") ? "block" : "none";
+        }
+        function openPlayer(){
+            var playerContainer = document.getElementById("player");
+            var btnOpen = document.getElementById("btnShowList");
+            btnOpen.style.display="none";
+            playerContainer.style.display="block";
+        }
+        function closePlayer() {
+            var playerContainer = document.getElementById("player");
+            var btnOpen = document.getElementById("btnShowList");
+            btnOpen.style.display = "block";
+            playerContainer.style.display = "none";
+        }
+       function PlayListFirstLoad(){
+            const divPlayList = $('#divPlayList')
+            $.getJSON('/apiTWork/GetPlayList', function (datas) {
+                const docFrag=$(document.createDocumentFragment())
+                $.each(datas,function(index,item){
+                    //console.log(datas);
+                const card=$(
+                    `
+                            <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
+                                                    <div class="row playlist-item" style="margin: 0;">
+                                                        <div class="col-4" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
+                                                        <div class="col-8" style="margin:0px">
+                                                            <div class="row">
+                                                                <div class="col-12 text-center">
+                                                                    <div class="row">
+                                                                        <div class="col-10">
+                                                                            <h5>${item.fWorkName}</h5>
+                                                                        </div>
+                                                                        <div class="col-2"></div>
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                        </div>
+                                                                   <div class="col-2" style="margin:0px">   <button class="btn-hover color-8 buttons11" onclick="AddToList(${item.fWorkId})">移除清單</button></div>
+                                                    </div>
+                    `  )
+                    docFrag.append(card); 
+                    console.log(card);
+                })
+                divPlayList.html(docFrag);
+            })
 
-
-
+       }
+            PlayListFirstLoad();
 
     </script>
 }
