@@ -3,11 +3,16 @@
     ViewBag.Title = "留言板";
 }
 
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 序
+            </th>
+            <th>
+                文章ID
             </th>
             <th>
                 會員名稱
@@ -34,6 +39,9 @@
                     @(index + 1)
                 </td>
                 <td>
+                    
+                </td>
+                <td>
                     @Model.Comments[index].FMember.FName
                 </td>
                 <td>
@@ -52,51 +60,19 @@
             </tr>
         }
     </tbody>
-    @*     <tbody>
-    <tr>
-    <td>
-
-    </td>
-    <td>
-
-    </td>
-    <td>
-
-    </td>
-    <td>
-
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    </tr>
-
-    </tbody> *@
+   
 </table>
 
-<a href="@Url.Action("Create","Comment")"><button class="btn btn-primary" type="button">留言</button></a>
 
 
-@* <table>
-    <tr>
-        <td>
-            <div class="d-flex flex-row align-items-center mb-4">
-                <div class="form-outline flex-fill mb-0">
-                    <label class="form-label" for="form3Example3c">留言內容</label>
-                    <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fCommentContent" style="height: 100px"></textarea>
+<a href="@Url.Action("Create","Comment")"><button class="btn btn-primary" type="button">加入留言</button></a>
 
-                </div>
-            </div>
-        </td>
-        <td>
-            <div class="text-right">
-                <a href="@Url.Action("List","Comment")" type="button" class="btn btn-secondary">取消</a>
-                <button type="button" class="btn btn-success" id="buttonSend">確認建立</button>
-            </div>
-        </td>
-    </tr>
-</table> *@
+
+
+
 <script>
+
+   
+
 
 </script>
