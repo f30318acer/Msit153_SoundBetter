@@ -28,7 +28,8 @@
 
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
-    <script src="~/js/jquery-3.2.1.min.js"></script>
+
+
 
     <!-- Croppie -->
 @*     <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' />
@@ -337,20 +338,31 @@
                 </ul>
             </li><!-- End Icons Nav -->
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#class-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Chart</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="class-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="@Url.Content("~/Chart/Index")">
+                            <i class="bi bi-circle"></i><span>會員資料分析</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Content("~/Chart/classclick")">
+                            <i class="bi bi-circle"></i><span>課程分析</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
         <li class="nav-heading">Pages</li>
             <li class="nav-item">
                 <a class="nav-link " href="https://app.powerbi.com/view?r=eyJrIjoiNzkyNjg3YTAtOWY2ZS00OTM4LWFkNjItNjBhYjY3MGY2MmM1IiwidCI6ImE0M2Y2Y2QzLTU0MTItNGIxZi1hMTM0LTJjMjc3MzY0Y2FmNiIsImMiOjEwfQ%3D%3D">
                <i class="bi bi-person"></i>
-
                    <span>PowerBI</span>
                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="@Url.Content("~/Chart/Index")">
-                    <i class="bi bi-person"></i>
-                    <span>Char</span>
-                </a>
-            </li>
+            </li>      
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -365,7 +377,7 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script> 
+    <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>  
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/vendor/chart.js/chart.umd.js"></script>
     <script src="~/assets/vendor/echarts/echarts.min.js"></script>

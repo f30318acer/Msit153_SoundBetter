@@ -20,7 +20,11 @@ namespace prjMusicBetter.Controllers
         public IActionResult Index()
         {
             return View();
-        }      
+        }
+        public IActionResult classclick()
+        {
+            return View();
+        }    
         public IActionResult GenderRatio()
         {
 
@@ -33,6 +37,25 @@ namespace prjMusicBetter.Controllers
                 })
                 .ToList();
             return Json(genderCount);
-        }  
+        }
+
+        public IActionResult GetClassClicksData()
+        {
+            var classClicksData = _context.TClasses
+                .Join(_context.TClassClicks,
+                      c => c.FClassId,
+                      cc => cc.FClassId,
+                      (c, cc) => new { c.FClassName, cc.FClick })
+                .GroupBy(x => x.FClassName)
+                .Select(group => new
+                {
+                    ClassName = group.Key,
+                    TotalClicks = group.Sum(x => x.FClick)
+                })
+                .OrderBy(x => x.ClassName)
+                .ToList();
+
+            return Json(classClicksData);
+        }
     }
 }

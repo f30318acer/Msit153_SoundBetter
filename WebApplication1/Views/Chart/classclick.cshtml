@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "classclick";
+    Layout = "~/Views/Shared/ChartLayout.cshtml";
+}
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <!-- 長條圖顯示的位置 -->
+    <canvas id="myChart"></canvas>
+
+    <!-- 長條圖的原始程式碼, 可以移除掉長條圖就會消失 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const chartElement = document.getElementById('myChart');
+        new Chart(chartElement, {
+            type: 'bar',
+            data: {
+                labels: ['國一', '國二', '國三'],
+                datasets: [{
+                    label: '男生',
+                    data: [150, 130, 140],
+                }, {
+                    label: '女生',
+                    data: [120, 160, 100],
+                }],
+            }
+        });
+    </script>
+</body>
+
+</html>

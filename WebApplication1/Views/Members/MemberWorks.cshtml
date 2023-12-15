@@ -22,6 +22,9 @@
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Search</button>
                 </form>
             </div>
+            <div>
+                <h3>總共有 @Model.TotalItems 位作品</h3>
+            </div>
             <div class="pagination">
                 <a href="#" onclick="loadPage(@Model.CurrentPage - 1)">上一頁</a>
                 <span>第 @Model.CurrentPage 頁，共 @Model.TotalPages 頁</span>

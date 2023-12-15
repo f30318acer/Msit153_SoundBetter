@@ -1,5 +1,6 @@
 ﻿@model prjMusicBetter.Models.TArticle
 
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -100,16 +101,17 @@
               placeholder="請先登入再留言" name="FCommentContent"></textarea>
     <input class="btn btn-sm btn-primary" type="submit" value="送出" />
 </form>
+
 <p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
 <div>
     @foreach (var comment in Model.TComments)
-    {
+    {   
+            
         <div class="row m-3">
-             @*確認好指令再來修正圖片路徑 + item.FPhotoPath *@
-            <div class="col-1"><img src="@Url.Content("~/img/Member/default.jpg" )" /></div>
+            <div class="col-1"><img src="@Url.Content($"~/img/Member/{Model.FMember.FPhotoPath}")" /></div>
             <div class="col-11" style="background-color: #f8f9fa">
                 <p>
-                    <span class="font-weight-bold">@Model.FMember.FName</span>
+                    <span class="font-weight-bold">@comment.FMemberId</span>
                     <span class="text-muted">． @comment.FCommentTime</span>
                 </p>
                 <p>@comment.FCommentContent</p>
@@ -117,6 +119,8 @@
         </div>
     }
 </div>
+
+
 
 
 

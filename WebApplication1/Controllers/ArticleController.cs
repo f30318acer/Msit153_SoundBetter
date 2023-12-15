@@ -9,6 +9,7 @@ using prjMusicBetter.Models.Dtos;
 using prjMusicBetter.Models.Dtos.Comment;
 using prjMusicBetter.Models.infra;
 using System.Linq.Expressions;
+using System.Security.Claims;
 
 namespace prjMusicBetter.Controllers
 {
@@ -58,17 +59,27 @@ namespace prjMusicBetter.Controllers
             }
             return View();
         }
-        public async Task<IActionResult> Details(int? id, CommentDto cdto)
+        public async Task<IActionResult> Details(int? id)
         { 
             if (id == null || _context.TArticles == null)
             {
                 return NotFound();
             }
 
+            //原本的CODE
+            //var tArticle = await _context.TArticles
+            //    .Include(t => t.FMember)
+            //    .Include(t => t.FStyle)
+            //    .FirstOrDefaultAsync(m => m.FArticleId == id);
+
             var tArticle = await _context.TArticles
-                .Include(t => t.FMember)
-                .Include(t => t.FStyle)
-                .FirstOrDefaultAsync(m => m.FArticleId == id);
+              .Include(t => t.FMember)
+              .Include(t => t.FStyle)
+              .Include(c => c.TComments) //此行為下方留言功能用
+              .FirstOrDefaultAsync(m => m.FArticleId == id);
+            //
+
+
             if (tArticle == null)
             {
                 return NotFound();
@@ -100,7 +111,7 @@ namespace prjMusicBetter.Controllers
 
 
             //留言部分
-            await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
+            //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
             //留言部分
             return View(tArticle);
           
@@ -146,19 +157,22 @@ namespace prjMusicBetter.Controllers
         }
 
 
-
         ///留言功能
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddComment(int id, FMemberDto mdto, CommentDto cdto)
+        public async Task<IActionResult> AddComment(int id, CommentDto cdto)
         {
 
-            id = cdto.FArticleId=1;
-            mdto.FMemberID = 1;
+            cdto.FMemberId = _userInfoService.GetMemberInfo().FMemberId;
+            cdto.FArticleId = _context.TArticles.Include(t => t.FMember).Include(t => t.FStyle).Where(e => e.FArticleId == id).SingleOrDefault().FArticleId;
+            
+
+
+
             _context.TComments.Add(new TComment()
             {   
                 FCommentId = cdto.FCommentId,
-                FMemberId = mdto.FMemberID,
+                FMemberId = cdto.FMemberId,
                 FCommentContent = cdto.FCommentContent,
                 FArticleId = cdto.FArticleId,
                 FCommentTime = DateTime.Now,
@@ -166,8 +180,12 @@ namespace prjMusicBetter.Controllers
             _context.SaveChanges();
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", id);			
-		}
+            return RedirectToAction("Details", id);
+            //return RedirectToAction("Details","Article", cdto.FArticleId);
 
-	}
+        }
+
+
+
+    }
 }

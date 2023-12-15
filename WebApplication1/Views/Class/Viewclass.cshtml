@@ -175,19 +175,20 @@
         </div>
         <div class="wave-player-warp">
             <div class="wave-player-info">
-                <h2>@Model.FClassName</h2>
-                <h4 style="color:gray;">類型：@ViewBag.skillname</h4>
+                <h2 style ="margin-bottom: 10px;">@Model.FClassName</h2>
+                <h4 style="color:#fc0254; margin-bottom: 10px;">類型：@ViewBag.skillname</h4>
                     @if (Model.FOnLine == 0)
                     {
-                        <h4 style="color:gray;">場地：@ViewBag.SiteName</h4>
-                        <h4 style="color:gray;">地點：@ViewBag.Address</h4>
+                    <h4 style="color:gray; margin-bottom: 10px;">場地：@ViewBag.SiteName</h4>
+                    <h4 style="color:gray; margin-bottom: 10px;">地點：@ViewBag.Address</h4>
+                    <a href="@Url.Action("Details", "Place", new { id = Model.FSiteId })" class="btn btn-primary">查看場地</a>
                     }
                     else if (Model.FOnLine == 1)
                     {
-                        <h4 style="color:gray;">場地：線上課程</h4>
+                    <h4 style="color:gray; margin-bottom: 10px;">場地：線上課程</h4>
                     }
+                
             </div>
-
         </div>
     </div>
 </section>
@@ -218,16 +219,18 @@
                 <h3 style="text-align: center">~</h3>
                 <h3 style="text-align: center">@Model.FEnddate</h3>
                 <h2 class="price">報名人數</h2>
-                <h3 style="text-align: center">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
+                <h3 style="text-align: center; margin-bottom: 10px;">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
                 @if (Model.FCurrentStudent != 0)
                 {
-                    <a href="@Url.Action("student", "Class", new { id = Model.FClassId })" class="btn">
+                    <a href="@Url.Action("student", "Class", new { id = Model.FClassId })" class="btn btn-secondary">
                         查看已購買學生
                     </a>
                 }
-                <div>
-                    <button name="createClass" onclick="@((bool)ViewBag.DealClass ? "alreadybuy()" : "checkQuota()")" class="btm" style="background-color: @(ViewBag.DealClass == true ? "#fc0254" : "#0080FF");">
-                        @((bool)ViewBag.DealClass ? "已購買課程" : "購買課程")
+                <div style="margin: 10px;">
+                    <button name="createClass" onclick="@(Model.FCurrentStudent >= Model.FMaxStudent ? "fullstudent()" : ViewBag.DealClass == true ? "alreadybuy()":"checkQuota()")"
+                        class="btm" style="background-color: @(Model.FCurrentStudent >= Model.FMaxStudent ? "#CCCCCC" : (ViewBag.DealClass == true ? "#fc0254" : "#0080FF"));
+                        color: @(Model.FCurrentStudent >= Model.FMaxStudent ? "gray" : "white");">
+                        @(Model.FCurrentStudent >= Model.FMaxStudent ? "人數已滿" : (ViewBag.DealClass == true ? "已購買課程" : "購買課程"))
                     </button>
                 </div>
             </div>
@@ -262,14 +265,14 @@
 </div>
 @section Scripts {
     <script>
+        var dealClass = @((ViewBag.DealClass).ToString().ToLower());
         function checkQuota() {
             // 檢查是否符合課程名額條件
-            if (@Model.FCurrentStudent < @Model.FMaxStudent) {
+            if (@Html.Raw(@Model.FCurrentStudent) < @Html.Raw(@Model.FMaxStudent) && dealClass == false) {
                 // 準備要傳送的資料，將 Razor 模型轉換為 JSON 字串
 
                 var postData = {
                     ProductId: @Model.FClassId,
-                   
                 };
 
                 // 符合條件，執行頁面跳轉
@@ -287,7 +290,7 @@
                     },
                     error: function (error) {
                         // 處理錯誤
-                        alert(response.message);
+                        alert(error.message);
                     }
                 });
 
@@ -300,6 +303,9 @@
         }
         function alreadybuy() {
             alert("您已購買此課程");
+        }
+        function fullstudent() {
+            alert("此課程已滿人");
         }
 
         function firstLoad(pageNumber) {
