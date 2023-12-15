@@ -168,6 +168,10 @@
             z-index: 1000; /* 將 <i> 元素置於最上層 */
         }
 
+    .btn-group .btn.active {
+        background: #fc0254 !important;
+    }
+
 </style>
 <!-- Playlist section -->
 <!-- 在<body>標籤內引入CKEditor 5腳本 -->
@@ -181,11 +185,15 @@
                 <div class="text-right ">
                     @*<button type="button" id="btnShowFavorites" class="btn btn-primary mr-2" onclick="toggleFavorites()">顯示最愛</button>*@
                     <select id="selectSkill" class="form-select mr-2"></select>
-                    <select id="selectOnLine" class="form-select mr-2">
+                    @*<select id="selectOnLine" class="form-select mr-2">
                         <option value="0">請選擇線上或實體課程</option>
                         <option value="1">實體課程</option>
                         <option value="2">線上課程</option>
-                    </select>
+                    </select>*@
+                    <div class="btn-group" role="group" aria-label="Course Type">
+                        <button type="button" id="btnOffline" class="btn btn-secondary active mr-2">實體課程</button>
+                        <button type="button" id="btnOnline" class="btn btn-secondary active mr-2">線上課程</button>
+                    </div>
                     <input type="text" id="txtKeyword" name="keywords" placeholder="關鍵字" class="mr-2" value="" />
                     <button type="button" id="btnSearch" class="btn btn-secondary mr-2">條件搜尋</button>
                     <a href="javascript:void(0);" onclick="CheckLoginAndNavigate()" class="btn btn-success mr-2">新建課程</a>
@@ -213,7 +221,7 @@
         const onePage = 8;//一頁要有幾個課程
         const MemberId = @ViewBag.MemberId;
 
-
+        //載入卡片
         function firstLoad(pageNumber) {
             const divList = $('#divList');
             //讀取Json資料
@@ -236,7 +244,7 @@
                                  <a href="/Class/Viewclass?id=${item.fClassId}">
                                      <div style="position: relative;">
                                          <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
-                                             ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                                     ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
                                          </span>
                                          <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                          <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
@@ -296,13 +304,10 @@
 
         
         //載入資料
-
-
-        function load(pageNumber) {
+        function load(pageNumber, offlineEnabled, onlineEnabled) {
             const divList = $('#divList')
             const sId = $('#selectSkill').val();
             const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
-            const sOnLine = $('#selectOnLine').val();
 
 
             $.getJSON('/apiTClass/List', function (datas) {
@@ -323,12 +328,17 @@
                     });
                 }
                 //線上實體篩選
-                if (sOnLine != 0) {
-                    filteredDatas = filteredDatas.filter(item => {
-                        // 在此添加關鍵字搜尋條件，例如在 fClassName 和 fDescription 中搜尋關鍵字
-                        return item.fOnLine == sOnLine - 1;
-                    });
-                }
+                filteredDatas = filteredDatas.filter(item => {
+                    if (offlineEnabled && onlineEnabled) {
+                        return true; // 顯示所有
+                    } else if (offlineEnabled) {
+                        return item.fOnLine == 0;
+                    } else if (onlineEnabled) {
+                        return item.fOnLine == 1;
+                    } else {
+                        return false; // 兩個按鈕都關閉，不顯示任何數據
+                    }
+                });
 
                 dataCount = filteredDatas.length;
 
@@ -349,7 +359,7 @@
                                 <a href="/Class/Viewclass?id=${item.fClassId}">
                                     <div>
                                         <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= item.fMaxStudent - 5 ? '' : 'display: none;'}">
-                                            ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= item.fMaxStudent - 5 ? '即將額滿' : '')}
+                                                    ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
                                         </span>
                                         <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                         <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
@@ -417,6 +427,8 @@
             // 獲取所選風格的ID
             const sId = $('#selectSkill').val();
             const keyword = $('#txtKeyword').val();
+            let offlineEnabled = $('#btnOffline').hasClass('active');
+            let onlineEnabled = $('#btnOnline').hasClass('active');
 
             // 根據所選風格篩選數據
             let filteredData = data;
@@ -437,11 +449,13 @@
             for (let i = 1; i <= pageCount; i++) {
                 let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
                 button.click(function () {
-                    load(i);//加載第i頁
+                    load(i, offlineEnabled, onlineEnabled);//加載第i頁
                 });
                 pageButtonsContainer.append(button);
             }
         }
+
+        //回上一頁時不會丟失分頁按鈕
         window.onload = function () {
             loadPage();
         };
@@ -465,6 +479,7 @@
             //$('#txtKeyword').val('');
         });
 
+
         //判斷是否登入
         async function CheckLoginAndNavigate() {
             const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
@@ -480,6 +495,7 @@
         }
 
 
+        //愛心按鈕
         $(document).on('click', '.favorite-button', function () {
             // 獲取點擊的按鈕的 data-classid
             const button = $(this);
@@ -513,7 +529,6 @@
                 }
             });
         }
-
         // 新增 deleteFavorite 函數
         function deleteFavorite(classId, img) {
             // 呼叫 apiTClassFavs/Delete 方法刪除一筆 TClassFav 資料
@@ -550,5 +565,47 @@
                 document.documentElement.scrollTop = 0;
             });
         });
+
+
+        // 在document.ready中添加事件監聽器，監聽按鈕點擊事件
+        $(document).ready(function () {
+            // 預設都是啟動狀態
+            let offlineEnabled = true;
+            let onlineEnabled = true;
+
+            // 實體課程按鈕點擊事件
+            $('#btnOffline').click(function () {
+                offlineEnabled = !offlineEnabled; // 切換狀態
+                $(this).toggleClass('active', offlineEnabled); // 添加或刪除active類
+            });
+
+            // 線上課程按鈕點擊事件
+            $('#btnOnline').click(function () {
+                onlineEnabled = !onlineEnabled; // 切換狀態
+                $(this).toggleClass('active', onlineEnabled); // 添加或刪除active類
+            });
+
+            // 條件搜尋按鈕點擊事件
+            $('#btnSearch').click(function () {
+                // 加載符合條件的數據
+                load(1, offlineEnabled, onlineEnabled);
+                // 加載分頁頁碼
+                loadPage();
+            });
+        });
+
+
+        // 資料篩選邏輯，根據按鈕狀態進行篩選
+        function filterDatasByButtons(datas, isPhysicalEnabled, isOnlineEnabled) {
+            return datas.filter(item => {
+                if (isPhysicalEnabled && !isOnlineEnabled) {
+                    return item.fOnLine === 0;
+                } else if (!isPhysicalEnabled && isOnlineEnabled) {
+                    return item.fOnLine === 1;
+                } else {
+                    return true;
+                }
+            });
+        }
     </script>
 }
