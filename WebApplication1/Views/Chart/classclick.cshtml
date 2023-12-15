@@ -1,7 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "classclick";
-    Layout = "~/Views/Shared/ChartLayout.cshtml";
+    Layout = "_Layout2";
+    // Layout = "~/Views/Shared/ChartLayout.cshtml";
 }
 
 <html>
@@ -9,7 +10,22 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<style>
+    #myChart {
+        padding: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0px 0px 10px #aaa;
+        margin: 60px auto;
+        max-width: 2000px;
+        background: white;
+    }
 
+    body {
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
+</style>
 <body>
     <!-- 長條圖顯示的位置 -->
     <canvas id="myChart"></canvas>
@@ -18,19 +34,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+        
         const chartElement = document.getElementById('myChart');
+        const data = {
+            labels: [
+                '星期一', '星期二', '星期三', '星期四', '星期五' ,'星期六' ,'星期日',
+            ],
+            datasets: [{
+                label: '參加人數',
+                data: [130, 130, 140, 160, 130, 100, 200],
+            }]
+        };
         new Chart(chartElement, {
-            type: 'bar',
-            data: {
-                labels: ['國一', '國二', '國三'],
-                datasets: [{
-                    label: '男生',
-                    data: [150, 130, 140],
-                }, {
-                    label: '女生',
-                    data: [120, 160, 100],
-                }],
-            }
+            type: 'line',
+            data: data,
         });
     </script>
 </body>
