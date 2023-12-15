@@ -39,7 +39,7 @@
                     @(index + 1)
                 </td>
                 <td>
-                    
+                    @Model.Comments[index].FArticleId
                 </td>
                 <td>
                     @Model.Comments[index].FMember.FName
@@ -53,7 +53,6 @@
                 <td>
                 </td>
                 <td>
-@*                     @Html.ActionLink("修改", "Edit", "Comment", new { id = Model.Comments[index].FCommentId }, null) | *@
                     @Html.ActionLink("刪除", "Delete", "Comment", new { id = Model.Comments[index].FCommentId },
                              new { onclick = "return confirm('確定要刪除嗎?')" })
                 </td>
@@ -76,3 +75,5 @@
 
 
 </script>
+
+@*                     @Html.ActionLink("修改", "Edit", "Comment", new { id = Model.Comments[index].FCommentId }, null) | *@

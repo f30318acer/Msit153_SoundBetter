@@ -27,14 +27,22 @@ namespace prjMusicBetter.Controllers
             return View();
         }
 
-        public IActionResult List(int articleId)
+        //取得_文章所有留言資料
+        //
+        //
+
+        public IActionResult List(int articleId, int commentId)
         {
             //確認會員是否有登入
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null) { return RedirectToAction("Login", "Home"); }
-            //取得_文章所有留言資料
+
             articleId = 20;
-            var comments = _context.TComments.Include(e => e.FMember).Where(e => e.FArticleId == articleId).ToList();
+            var comments = _context.TComments
+                            .Include(e => e.FMember)
+                            .Where(e => e.FArticleId == articleId).ToList();
+                            //.Include(e => e.FCommentId)
+                            //.Where(e => e.FCommentId == commentId).ToList();
             var viewModel = new CommentListViewModel()
             {
                 Comments = comments,
