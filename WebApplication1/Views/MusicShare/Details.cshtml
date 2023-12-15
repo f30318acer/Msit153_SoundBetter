@@ -4,11 +4,19 @@
     ViewData["Title"] = "Details";
 }
 @section Styles
-{
+    {
     <style>
+<<<<<<< Updated upstream
         .aaa {
             padding-bottom: 0;
             padding-top:0;
+=======
+        /* .img {
+                  width:200px ;height:300px;
+                }*/
+        #div01 {
+            height: 90%;
+>>>>>>> Stashed changes
         }
        .imgmember {
             width: 100%;
@@ -104,13 +112,18 @@
             <div class="category-items col-md-10">
                 <div id="div01" class="row">
                     <!--List_-->
+<<<<<<< Updated upstream
                    
+=======
+
+>>>>>>> Stashed changes
 
                 </div>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
+<<<<<<< Updated upstream
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -121,12 +134,20 @@
         <script src="your-scripts.js"></script> <!-- 引入你的 JavaScript 文件 -->
     </body>
 </html>
+=======
+
+>>>>>>> Stashed changes
 </section>
 <!-- Category section end --> 
 <section class="songs-section spad aaa" style="margin: 0;">
     <div class="  container" />
     <div id="divList" class="row">
+<<<<<<< Updated upstream
         <!--  new song -->       
+=======
+        <!--  new song -->
+
+>>>>>>> Stashed changes
     </div>
     <div id="scrollToTopBtn" class="scroll-to-top-btn">
         <div id="player">
@@ -207,8 +228,9 @@
 
 </section>
 @section Scripts{
-        <script>
+    <script>
 
+<<<<<<< Updated upstream
 
 
 
@@ -314,13 +336,90 @@
             for (let i = 1; i <= pageCount; i++) {
                 let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
                 button.click(function () {
+=======
+        const selStyle = document.querySelector('#selectStyle');
+        const pageButtonsContainer = $('#pageButtons');
+        const onePage = 4;
+
+        //Style選擇器
+        async function loadStyle() {
+            const response = await fetch('@Url.Content("~/apiTStyle/List")');
+            const data = await response.json();
+            const defaultOption = '<option value="100">請選擇風格</option>';
+            const styleOptions = data.map(s => `<option value="${s.fStyleId}">${s.fName}</option>`);
+            styleOptions.unshift(defaultOption);
+            selStyle.innerHTML = styleOptions.join("");
+        }
+        loadStyle();
+
+
+        //分頁按鈕
+        async function loadPage() {
+            const response = await fetch('@Url.Content("~/apiTWork/ListWithUserName")');
+            const data = await response.json();
+            // 篩選條件
+            const sId = $('#selectStyle').val();
+            const keyword = $('#txtKeyword').val();
+
+            // 根據所選風格篩選數據
+            let filteredData = data;
+            if (sId != 100) {
+                filteredData = data.filter(item => item.fStyleId == sId);
+            }
+            //關鍵字篩選
+            if (keyword != '') {
+                filteredData = filteredData.filter(item => {
+                    // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+                    return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
+                });
+            }
+
+            const dataCount = filteredData.length;
+            const pageCount = Math.ceil(dataCount / onePage);
+
+            // 清空現有按鈕
+            pageButtonsContainer.empty();
+            for (let i = 1; i <= pageCount; i++) {
+                let button = $(`<button class="btn btn-secondary mr-2" onclick="load(${i})">${i}</button>`);
+                button.click(function () {
+                    console.log("HAhaH" + i);
+>>>>>>> Stashed changes
                     load(i);
                 });
                 pageButtonsContainer.append(button);
             }
+<<<<<<< Updated upstream
         }
 
        
+=======
+
+        }
+        //關鍵字篩選
+        if (keyword != '') {
+            filteredData = filteredData.filter(item => {
+                // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+                return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
+            });
+        }
+
+
+        const dataCount = filteredData.length;
+        const pageCount = Math.ceil(dataCount / onePage);
+
+        // 清空現有按鈕
+        pageButtonsContainer.empty();
+        for (let i = 1; i <= pageCount; i++) {
+            let button = $(`<button class="btn btn-secondary mr-2">${i}</button>`);
+            button.click(function () {
+                load(i);
+            });
+            pageButtonsContainer.append(button);
+        }
+                }
+
+
+>>>>>>> Stashed changes
 
         //第一次讀取分頁按鈕
         async function firstLoadPage() {
@@ -341,6 +440,7 @@
             }
         }
         firstLoadPage();
+<<<<<<< Updated upstream
             
             //載入資料
             function load(pageNumber) {
@@ -431,6 +531,48 @@
                     const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                     const card = $(`
                         <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
+=======
+
+        //載入資料
+        function load(pageNumber) {
+            console.log("HAHAH");
+            const divList = $('#divList')
+            const sId = $('#selectStyle').val();
+            const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
+            //divList.empty();
+            console.log("gay" + sId)
+
+            $.getJSON('/apiTWork/ListWithUserName', function (datas) {
+
+                let filteredDatas = datas;
+                //風格條件篩選
+                if (sId != 100) {
+                    filteredDatas = datas.filter(item => {
+                        // 在此添加筛选条件
+                        return item.fStyleId == sId;
+                    });
+                }
+
+                //關鍵字篩選
+                if (keyword != '') {
+                    filteredDatas = filteredDatas.filter(item => {
+                        // 在此添加關鍵字搜尋條件，例如在 fDescription 和 fName 中搜尋關鍵字
+                        return item.fDescription.includes(keyword) || item.fWorkName.includes(keyword);
+                    });
+                }
+                console.log(filteredDatas);
+
+                dataCount = filteredDatas.length;
+
+                //獲得限定頁面資料
+                const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                const docFrag = $(document.createDocumentFragment())
+                $.each(limitdatas, function (index, item) {
+                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(`
+                            <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+>>>>>>> Stashed changes
                                 <div class="col-12 mb-2"></div>
                                 <div class="row playlist-item" style="margin: 0;">
                                     <div class="col-2" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
@@ -439,6 +581,7 @@
                                             <div class="col-12 mb-4"></div>
                                             <div class="col-12 text-center">
                                                 <div class="row">
+<<<<<<< Updated upstream
                                                     <div class="col-10">
                                                         <h5>${item.fWorkName}</h5>
                                                     </div>
@@ -446,6 +589,14 @@
                                                     <div class="row"></div>
                                                     <div class="col-12 mb-2"></div>
                                                     <p style="font-size: 20px, margin:0px">${item.fDescription}</p>
+=======
+                                                    <div class="col-10">  <h5>${item.fWorkName}</h5></div>
+                                                    <div class="col-2"></div>
+                                                        <div class="row">
+                                                            </div>
+                                                                    <div class="col-12 mb-2"></div>
+                                                                <p style=" font-size: 20px, margin:0px">${item.fDescription}</p>
+>>>>>>> Stashed changes
                                                 </div>
                                             </div>
                                             <p style="margin:0px">${item.fUsername}</p>&nbsp;/&nbsp;
@@ -457,6 +608,7 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< Updated upstream
                             <div class="col-12 mb-2"></div>
                         `);
                         docFrag.append(card);
@@ -485,21 +637,108 @@
                             </div>
                             `
                         )
+=======
+                        <div class="col-12 mb-2"></div>
+            `
+                    );
+>>>>>>> Stashed changes
                     docFrag.append(card);
-                     })
-                div01.html(docFrag);
                 })
-            }
+                divList.html(docFrag)
+            })
+        }
+
+        //第一次讀取
+        function firstLoad(pageNumber) {
+            console.log("ABC")
+            const divList = $('#divList')
+            //divList.empty();
+
+            $.getJSON('/apiTWork/ListWithUserName', function (datas) {
+
+                //獲得限定頁面資料
+                const limitdatas = datas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
+                const docFrag = $(document.createDocumentFragment())
+                $.each(limitdatas, function (index, item) {
+                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                    const card = $(`
+                                    <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px; ">
+                                        <div class="col-12 mb-2"></div>
+                                        <div class="row playlist-item" style="margin: 0;">
+                                            <div class="col-2" style="margin:0px">
+                                                                <img src="/img/Works/${item.fThumbnail}" alt="" style="margin: 0;border-radius: 20px; width: 1px;"/>
+                                            </div>
+                                            <div class="col-10" style="margin:0px">
+                                                <div class="row">
+                                                    <div class="col-12 mb-4"></div>
+                                                    <div class="col-12 text-center">
+                                                        <div class="row">
+                                                            //<div class="col-10">  <h5>${item.fWorkName}</h5></div>
+                                                            <div class="col-2"></div>
+                                                                <div class="row">
+                                                                    </div>
+                                                                            <div class="col-12 mb-2"></div>
+                                                                <p style=" font-size: 20px, margin:0px">${item.fDescription}</p>
+                                                        </div>
+                                                        </div>
+                                                        <p style="margin:0px">${item.fUsername}</p>
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <audio controls style="width:100%">
+                                                            <source src="~/music-files/1.mp3" type="audio/mpeg" />
+                                                        </audio>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="col-12 mb-2"></div>
+                    `
+                    );
+                    docFrag.append(card);
+                })
+                divList.html(docFrag)
+            })
+        }
+        firstLoad(1);
+
+        //DIv01 資料
+        function LoadDiv01() {
+            const div01 = $('#div01')
+            $.getJSON('/apiTWork/MemberList', function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, item) {
+                    const card = $(
+                        `
+                                    <div class="col-md-4">
+                                        <div class="category-item">
+
+                                                    <img src="/img/Member/${item.fPhotoPath}" alt=""  style="width="200" height="200"">
+
+                                            <div class="ci-text">
+                                                <h4>${item.fUsername}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    `
+                    )
+                    docFrag.append(card);
+                })
+                div01.html(docFrag);
+            })
+        }
         $(document).ready(function () {
             LoadDiv01();
         });
-            //搜尋按鈕
-            $('#btnSearch').click(function () {
-                //讀取條件篩選後第一頁,重新讀取分頁頁碼
-                load(1);
-                loadPage();
-                //$('#txtKeyword').val('');
-            });
+        //搜尋按鈕
+        $('#btnSearch').click(function () {
+            //讀取條件篩選後第一頁,重新讀取分頁頁碼
+            load(1);
+            loadPage();
+            //$('#txtKeyword').val('');
+        });
 
 
 
