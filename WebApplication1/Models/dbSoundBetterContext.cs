@@ -730,14 +730,12 @@ public partial class dbSoundBetterContext : DbContext
 
         modelBuilder.Entity<TPlaylist>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("tPlaylist");
+            entity.HasKey(e => e.FPlaylistId);
 
+            entity.ToTable("tPlaylist");
+
+            entity.Property(e => e.FPlaylistId).HasColumnName("fPlaylistID");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-            entity.Property(e => e.FPlaylistId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("fPlaylistID");
             entity.Property(e => e.FUpdateTime)
                 .HasColumnType("datetime")
                 .HasColumnName("fUpdateTime");
