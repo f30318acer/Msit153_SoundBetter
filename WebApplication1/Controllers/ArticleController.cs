@@ -115,25 +115,23 @@ namespace prjMusicBetter.Controllers
 
             //留言部分
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
-            ViewData["UserName"] = _userInfoService.GetMemberInfo().FName; // 將值傳遞到視圖中
-            ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath; // 將值傳遞到視圖中
-            ViewData["CommenterName"] = _context.TComments
-                                      .Include(c => c.FMember)
-                                      .Where(c => c.FMemberId == id)
-                                      .Select(c => new
-                                        {
-                                          Comment = c,
-                                          MemberName = c.FMember.FName
-                                        }).SingleOrDefaultAsync();
-            ViewData["CommenterPhoto"] = _context.TComments
-                                      .Include(c => c.FMember)
-                                      .Where(c => c.FMemberId == id)
-                                      .Select(c => new
-                                      {
-                                          Comment = c,
-                                          MemberPhoto = c.FMember.FPhotoPath
-                                      }).SingleOrDefaultAsync();
+            ViewData["UserName"] = _userInfoService.GetMemberInfo().FName;
+            ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
+            
 
+
+            //          var commenterName = await _context.TComments
+            //                          .Where(c => c.FMemberId == id)
+            //                          .Include(c => c.FMember)
+            //                          .ThenInclude(c => c.FName)
+            //                          .SingleOrDefaultAsync();
+            //ViewData["CommenterName"] = commenterName;
+            //       var commenterPhoto = await _context.TComments
+            //                          .Where(c => c.FMemberId == id)
+            //                          .Include(c => c.FMember)
+            //                          .ThenInclude (c => c.FPhotoPath)
+            //                          .SingleOrDefaultAsync();
+            //ViewData["CommenterPhoto"] = commenterPhoto; 
             //留言部分
 
 
