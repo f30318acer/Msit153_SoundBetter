@@ -12,7 +12,9 @@ namespace prjMusicBetter.Models.Dtos.Comment
 
         public DateTime FCommentTime { get; set; }
 
-        public string FUsername { get; set; }
+        public string FName { get; set; }
+
+        public string FPhotoPath { get; set; }
 
 
 

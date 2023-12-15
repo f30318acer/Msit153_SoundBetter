@@ -403,6 +403,7 @@ namespace prjMusicBetter.Controllers
         }
 
         //fCurrentStudent + 1
+        [HttpPost]
         public IActionResult Currentplus(int? id)
         {
             if (id == null || _context.TClasses == null)

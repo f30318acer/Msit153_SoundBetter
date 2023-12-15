@@ -212,6 +212,8 @@ namespace prjMusicBetter.Controllers
                 Friends = pagedFriends,
                 CurrentPage = page,
                 TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                TotalItems = totalItems,
+
                 PageSize = pageSize
             };
 
@@ -287,7 +289,9 @@ namespace prjMusicBetter.Controllers
                 BlackList = pagedBlackList,
                 CurrentPage = page,
                 TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                TotalItems = totalItems,               
                 PageSize = pageSize,
+
             };
             ViewData["CurrentFilter"] = search;
             return PartialView(viewModel);
@@ -391,6 +395,7 @@ namespace prjMusicBetter.Controllers
                Works = pageWorkList,
                 CurrentPage=page,
                 TotalPages = (int)Math.Ceiling((double)totalItems/pageSize),
+                TotalItems = totalItems,
                 PageSize = pageSize,
                  // 假設 MemberWorksVM 有一個名為 Works 的屬性用來儲存作品列表
             };
@@ -434,6 +439,7 @@ namespace prjMusicBetter.Controllers
                 Project = pageProjectList,
                 CurrentPage=page,
                 TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                TotalItems = totalItems,
                 PageSize = pageSize,
             };
             return PartialView(viewModel);
