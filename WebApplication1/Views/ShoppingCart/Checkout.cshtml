@@ -47,15 +47,15 @@
                             </tr>
                         }
                     <tr>
-
+                            
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col">總價</th>
-                        <th scope="col">@(totalPrice)</th>
+                        <th scope="col"><span id="totalPrice">@(totalPrice)</span></th>
                     </tr>
                 </tbody>
             </table>
-                <button type="submit" onclick="checkoutAndClear()">提交訂單</button>
+               
             </form>
             <div>
             </div>
@@ -63,135 +63,16 @@
 
         <div class="row g-5">
 
-            <div class="col-md-7 col-lg-8">
-                <div class="col-md-6">
-                    <label for="cc-number" class="form-label">優惠券號碼</label>
-                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                    <button type="button" class="btn-primary">使用優惠券</button>
-                </div>
-
-                <div class="container card mt-3">
-                    <div class="form-group mt-3 mb-3">
-                        <label class="radio">
-                            <input type="radio" name='type' value='Donate-invoice' id="pay-Donate-invoice" checked='checked'> 捐贈發票
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name='type' value='No-invoice' id="pay-No-invoice"> 不捐贈發票
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name='type' value='tax-ID-number' id="pay-tax-ID-number"> 統編
-                        </label>
-                    </div>
-
-                    <div id='Donate-invoice-form' class="form">
-
-                        <div class="input-group mb-3">
-                        </div>
-                        <div class="input-group mb-3">
-
-                            <label class="radio">
-                                <input type="radio" name='type' value='lovecode' id="entercode"> 手動輸入愛心碼
-                                <input type="text" id="txt-enter-code">
-                            </label>
-
-                            <label class="radio" style="text-align:right">
-                                <input type="radio" name='type' value='lovecode' id="entercode"> 聯合勸募協會
-                                <input type="text" id="lovecode" value="7505" disabled="disabled">
-                            </label>
-                        </div>
-
-                    </div>
-
-                    <div id='No-invoice-form' style="display: none;" class="form">
-
-                        <div class="input-group mb-3">
-
-                            <div class="select-outer-block">
-                                <span>發票形式:</span>
-                                <label>電子發票</label>
-
-                                <div>
-                                    <span>收件人地址</span>
-                                    <input type="text" id="address">
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div id='tax-ID-number-form' style="display: none;">
-                        <div class="tax-id-area">
-                            <p>輸入統一編號資料</p>
-                            <div class="tax-id-list-content">
-                                <p>買受人</p>
-                                <input type="text" class="input-buyer" name="icompany" value="">
-                            </div>
-
-                            <div class="tax-id-list-content">
-                                <p>統一編號</p>
-                                <input type="text" class="input-taxid" name="icompany-code" value="">
-                            </div>
-
-                            <div class="tax-id-list-content">
-                                <p>收件地址</p>
-                                <input type="text" class="input-address" name="icompany-address" value="">
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-                        <hr class="my-4">
-
-                        <h4 class="mb-3">付款方式</h4>
-
-                        <div class="my-3">
-                            <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                                <label class="form-check-label" for="credit">信用卡</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="debit">Visa金融卡</label>
-                            </div>
-
-                        </div>
-
-                        <div class="row gy-3">
-                            <div class="col-md-6">
-                                <label for="cc-name" class="form-label">姓名</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="cc-number" class="form-label">信用卡號碼</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="cc-expiration" class="form-label">到期日</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="cc-cvv" class="form-label">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                            </div>
-                        </div>
-
-                        <hr class="my-4">
-                    </div>
-                    @*<a href="/ShoppingCart/CheckOut_Fin" class="btn btn-primary btn-lg" role="button" onclick="checkOut()">結帳</a>*@
-                    <a href="/ShoppingCart/CheckOut_Fin" class="btn btn-primary btn-lg" role="button" onclick="checkoutAndClear()">結帳</a>
-
-
-
-                </div>
+            <div class="col-md-6">
+                <label for="couponCode" class="form-label">優惠券號碼</label>
+                <input type="text" class="form-control" id="couponCode" placeholder="" required>
+                <button type="button" class="btn-primary" onclick="validateCoupon()">使用優惠券</button>
             </div>
+
+            </div>
+            <button type="submit" onclick="checkoutAndClear()">提交訂單</button>
         </div>
-    </main>
+    
 
     <footer class="my-5 pt-5 text-body-secondary text-center text-small">
         <p class="mb-1">&copy; 2017–2023 SoundBetter</p>
@@ -201,119 +82,12 @@
             <li class="list-inline-item"><a href="#">Support</a></li>
         </ul>
     </footer>
-</div>
+
 
 <script>
-    $('input[type=radio][name="type"]').on('change', function () {
-        switch ($(this).val()) {
-            case 'Donate-invoice':
-                $("#Donate-invoice-form").show()
-                $("#No-invoice-form").hide()
-                $("#tax-ID-number-form").hide()
-                break
-            case 'No-invoice':
-                $("#Donate-invoice-form").hide()
-                $("#No-invoice-form").show()
-                $("#tax-ID-number-form").hide()
-                break
-            case 'tax-ID-number':
-                $("#Donate-invoice-form").hide()
-                $("#No-invoice-form").hide()
-                $("#tax-ID-number-form").show()
-                break
-        }
-    })
+   
 
-    $('#domestic-submmit').on('click', function (event) {
-        event.preventDefault()
-
-        let cardNo = $("#domestic-card-no").val()
-        let cardMonth = $("#domestic-card-month").val()
-        let cardYear = $("#domestic-card-year").val()
-        let cardCSV = $("#domestic-card-csv").val()
-
-        let errors = validateForm(cardNo, cardMonth, cardYear, cardCSV)
-        if (errors.length) {
-            $("#domestic-card-error").text(errors.join(','))
-            return
-        }
-
-        blockForm('domestic', true)
-
-        // ajax event
-        // submitForm(cardNo, cardMonth, cardYear, cardCSV)
-    })
-
-    $('#aboard-submmit').on('click', function (event) {
-        event.preventDefault()
-
-        let cardNo = $("#aboard-card-no").val()
-        let cardMonth = $("#aboard-card-month").val()
-        let cardYear = $("#aboard-card-year").val()
-        let cardCSV = $("#aboard-card-csv").val()
-
-        let errors = validateForm(cardNo, cardMonth, cardYear, cardCSV)
-        if (errors.length) {
-            $("#aboard-card-error").text(errors.join(', '))
-            return
-        }
-
-        blockForm('aboard', true)
-
-        // ajax event
-        // submitForm(cardNo, cardMonth, cardYear, cardCSV)
-
-    })
-
-    $('#resetForm').on('click', function (event) {
-        event.preventDefault()
-        blockForm('domestic', false)
-        blockForm('aboard', false)
-    })
-
-    function validateForm(no, month, year, csv) {
-        let errors = []
-
-        if (no.split('').length !== 12) errors.push('invalid card number')
-        if (month.split('').length !== 2) errors.push('invalid card month')
-        if (year.split('').length !== 2) errors.push('invalid card year')
-        if (csv.split('').length !== 3) errors.push('invalid card csv')
-
-        return errors
-    }
-
-    function blockForm(formType, isBlocking) {
-        $('input[type=radio][name="type"]:not(:checked)').attr("disabled", isBlocking)
-        $(`#${formType}-card-no`).prop('readonly', isBlocking)
-        $(`#${formType}-card-month`).prop('readonly', isBlocking)
-        $(`#${formType}-card-year`).prop('readonly', isBlocking)
-        $(`#${formType}-card-csv`).prop('readonly', isBlocking)
-        $(`#${formType}-card-error`).text('')
-    }
-
-    //function checkOut() {
-    //    console.log(12)
-
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "/ShoppingCart/CheckOut_Rst", // 修改成你的 API 端點
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: "json",
-           
-    //        success: function (response) {
-    //            // 處理成功的回應
-    //            alert(response.message);
-    //            // 刷新購物車Icon
-    //            UpdateShoppingCartIcon();
-    //        },
-    //        error: function (error) {
-    //            // 處理錯誤
-    //            alert(response.message);
-    //        }
-    //    });
-
-       
-    //}
+  
 
     function checkoutAndClear() {
         checkOut(); // 先觸發 checkOut 函數
@@ -340,7 +114,7 @@
             }
         });
     }
-
+    //清除購物車內容
     function clearShoppingCart() {
         $.ajax({
             type: "POST",
@@ -350,5 +124,49 @@
             error: function () {
             }
         });
+    }
+
+    //優惠券驗證
+   
+    function validateCoupon() {
+
+
+        var couponCode = $("#couponCode").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/ShoppingCart/ValidateCoupon",
+            data: { couponCode: couponCode },
+            success: function (response) {
+                if (response.valid) {
+                    // 優惠券驗證成功，更新 UI 顯示折扣等信息
+                    alert("優惠券驗證成功，折扣：" + response.discount + "%off");
+                    updateTotalPrice(response.discount);
+                  
+                } else {
+                    // 優惠券驗證失敗，顯示錯誤訊息
+                    alert("優惠券驗證失敗：" + response.message);
+                }
+            },
+            error: function (error) {
+                // 處理錯誤
+                alert("發生錯誤：" + error.responseText);
+            }
+        });
+    }
+
+    //更新使用優惠券後的總價
+    function updateTotalPrice(discount) {
+        // 獲取總價元素
+        var totalPriceElement = $("#totalPrice");
+
+        // 獲取原始總價
+        var originalTotalPrice = parseInt(totalPriceElement.text());
+
+        // 計算折扣後的價格
+        var discountedPrice = originalTotalPrice * (1 - discount / 100);
+
+        // 更新總價
+        totalPriceElement.text(discountedPrice);
     }
 </script>

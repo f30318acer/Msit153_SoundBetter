@@ -70,6 +70,9 @@ namespace prjMusicBetter.Models.ViewModels
         /// 教師名稱
         /// </summary>
         public String TeacherName { get; set; }
+
+        [Display(Name = "優惠券號碼")]
+        public string CouponCode { get; set; }
     }
 }
 

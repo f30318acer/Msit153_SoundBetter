@@ -50,5 +50,22 @@ namespace prjMusicBetter.Models.infra
 
             return id;
         }
+        public int GetCouponId()
+        {
+            var claim = _contextAccessor.HttpContext.User.Claims.ToList();
+
+            var Couponid = claim.Where(c => c.Type == "fCouponID").FirstOrDefault();
+
+
+            if (Couponid == null)
+            {
+                return 0;
+            }
+
+            int id = Convert.ToInt32(Couponid.Value);
+
+            return id;
+        }
+
     }
 }
