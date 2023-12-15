@@ -60,6 +60,8 @@
             <div>
             </div>
         </div>
+    </main>
+
 
         <div class="row g-5">
 
@@ -83,7 +85,7 @@
         </ul>
     </footer>
 
-
+    @section Scripts{
 <script>
    
 
@@ -98,8 +100,10 @@
         Currentplus(productId); // 將ProductId傳遞給Currentplus函數
         </text>
     }
-        checkOut(); // 先觸發 checkOut 函數
-        clearShoppingCart(); // 再觸發 clearShoppingCart 函數
+                $.when(checkOut(), clearShoppingCart()).done(function () {
+                    // 當異步操作完成后提交表單
+                    document.getElementById("orderForm").submit();
+                });
     }
 
     function checkOut() {
@@ -133,6 +137,7 @@
             }
         });
     }
+
 
     //優惠券驗證
    
@@ -177,4 +182,20 @@
         // 更新總價
         totalPriceElement.text(discountedPrice);
     }
+
+    function Currentplus(productId) {
+    $.ajax({
+        type: "POST",
+        url: "/apiTClass/Currentplus",
+        data: { id: productId }, // 將 productId 作為請求的資料傳遞到後端
+        success: function () {
+            // 成功時的處理
+        },
+        error: function () {
+            // 錯誤時的處理
+        }
+    });
+    }
+
 </script>
+}
