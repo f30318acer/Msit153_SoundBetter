@@ -33,6 +33,19 @@ namespace prjMusicBetter.Controllers
                 })
                 .ToList();
             return Json(genderCount);
-        }  
+        }
+        public IActionResult SiteCityChart()
+        {
+            var siteCityCount = _context.TSites
+                .Include(s => s.FCity) // 確保包括City導航屬性
+                .GroupBy(s => s.FCity.FCityId)
+                .Select(group => new SiteCityViewModel
+                {
+                    CityName = group.Key,
+                    SiteCount = group.Count()
+                })
+                .ToList();
+            return Json(siteCityCount);
+        }
     }
 }
