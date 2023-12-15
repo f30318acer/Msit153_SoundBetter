@@ -54,7 +54,7 @@
                             <div>
                                 <input type="hidden" id="fSiteID" name="fSiteID" value="1" />
                                 <select id="fSiteName" name="fSiteName" required></select>
-                                <button type="button" id="btnAddSite">新增場地</button>
+                            <button type="button" id="btnAddSite" class="btn btn-primary">新增場地</button>
                             </div>
                     </div>
                     <div class="col-md-6 pad">
@@ -101,6 +101,9 @@
 
 @section Scripts {
     <script>
+        //頁面初始設定
+        // 將<textarea>元素轉換為CKEditor 5編輯器
+        //新建場地
         document.addEventListener('DOMContentLoaded', function () {
             // 將<textarea>元素轉換為CKEditor 5編輯器
             ClassicEditor
@@ -124,6 +127,7 @@
             const inputAddress = document.getElementById('fAddress');
             const selectAdditional = document.getElementById('additionalSelect');
 
+            //新增場地按鈕
             btnAddSite.addEventListener('click', function () {
 
                 // 在動態添加場地的地方，設置 btnAddSiteClicked 為 true
@@ -199,8 +203,14 @@
 
                 const btnConfirmAddSite = document.createElement('button');
                 btnConfirmAddSite.textContent = '確認新增場地';
-                btnConfirmAddSite.addEventListener('click', confirmAddSite);
-               
+                btnConfirmAddSite.className = 'btn btn-success ml-2 mr-2';
+
+
+                const btnCancelAddSite = document.createElement('button');
+                btnCancelAddSite.textContent = '取消新增場地';
+                btnCancelAddSite.className = 'btn btn-danger mr-2';
+                btnCancelAddSite.addEventListener('click', cancelAddSite);
+
 
                 // 添加元素到容器中
                 siteContainer.appendChild(inputMemberID);
@@ -211,12 +221,43 @@
                 siteContainer.appendChild(selectCityID);
                 siteContainer.appendChild(selectAdditional);
                 siteContainer.appendChild(btnConfirmAddSite);
+                siteContainer.appendChild(btnCancelAddSite);
 
                 // 隱藏原有的 fSiteName 元素
                 originalSelect.style.display = 'none';
                 btnAddSite.style.display = 'none';
+
+                //檢查必填項目是否都已填寫
+                btnConfirmAddSite.addEventListener('click', function () {
+                    // 檢查所有新增場地的項目是否都填寫了資料
+                    if (validateAddSiteFields()) {
+                        // 如果都有資料，則執行 confirmAddSite
+                        confirmAddSite();
+                    } else {
+                        // 如果有任何一個項目沒有填寫資料，顯示警告
+                        alert('請填寫所有新增場地項目');
+                    }
+                });
             });
 
+            
+            // 新增場地時的函數，用於檢查所有新增場地的項目是否都填寫了資料
+            function validateAddSiteFields() {
+                const inputSiteNameValue = document.getElementById('fSiteName').value;
+                const inputAddressValue = document.getElementById('fAddress').value;
+                const selectedCityID = document.getElementById('fCityID').value;
+                const selectAdditionalValue = document.getElementById('additionalSelect').value;
+
+                // 檢查是否有任何一個項目沒有填寫資料
+                if (!inputSiteNameValue || !inputAddressValue || !selectedCityID || !selectAdditionalValue) {
+                    return false; // 有缺少資料的項目，返回 false
+                }
+
+                // 如果都有資料，返回 true
+                return true;
+            }
+
+            //按下確認新增場地
             function confirmAddSite() {
                 // 在最後設置 btnAddSiteClicked 為 false
                 document.getElementById('btnAddSiteClicked').value = 'false';
@@ -281,6 +322,146 @@
                         // 處理錯誤，如果需要的話
                         console.error('錯誤:', error);
                     });
+            }
+
+            //按下取消新增場地
+            function cancelAddSite() {
+                // 重置 btnAddSiteClicked 為 false
+                document.getElementById('btnAddSiteClicked').value = 'false';
+
+                // 移除新增場地相關元件
+                while (siteContainer.firstChild) {
+                    siteContainer.removeChild(siteContainer.firstChild);
+                }
+
+                // 重新加入原本的元素
+                const originalElements = document.createElement('div');
+                originalElements.innerHTML = `
+                <label for="fSiteID">上課地點:</label>
+                <div>
+                    <input type="hidden" id="fSiteID" name="fSiteID" value="1" />
+                    <select id="fSiteName" name="fSiteName" required></select>
+                    <button type="button" id="btnAddSite" class="btn btn-primary">新增場地</button>
+                </div>
+            `;
+
+                siteContainer.appendChild(originalElements);
+
+                // 重新綁定事件監聽器
+                const btnAddSite = document.getElementById('btnAddSite');
+                btnAddSite.addEventListener('click', function () {
+                    // 在動態添加場地的地方，設置 btnAddSiteClicked 為 true
+                    document.getElementById('btnAddSiteClicked').value = 'true';
+
+                    // 清空 siteContainer 的內容
+                    siteContainer.innerHTML = '';
+
+                    // 動態添加場地相關元素
+                    const inputMemberID = document.createElement('input');
+                    inputMemberID.type = 'hidden';
+                    inputMemberID.name = 'fMemberID';
+                    inputMemberID.value = '@ViewBag.MemberId';
+
+                    const selectCityID = document.createElement('select');
+                    selectCityID.id = 'fCityID';
+                    selectCityID.name = 'fCityID';
+                    selectCityID.required = true;
+
+                    // 獲取城市數據
+                    fetch('@Url.Content("~/Place/GetCities")')
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(city => {
+                                const option = document.createElement('option');
+                                option.value = String(city.fCityId);
+                                option.text = city.fCity;
+                                selectCityID.appendChild(option);
+                            });
+                        });
+
+                    const labelSiteName = document.createElement('label');
+                    labelSiteName.for = 'fSiteName';
+                    labelSiteName.textContent = '請輸入地點名稱';
+
+                    const inputSiteName = document.createElement('input');
+                    inputSiteName.type = 'text';
+                    inputSiteName.id = 'fSiteName';
+                    inputSiteName.name = 'fSiteName';
+                    inputSiteName.required = true;
+
+                    const labelAddress = document.createElement('label');
+                    labelAddress.for = 'fAddress';
+                    labelAddress.textContent = '請輸入地點地址';
+
+                    const inputAddress = document.createElement('input');
+                    inputAddress.type = 'text';
+                    inputAddress.id = 'fAddress';
+                    inputAddress.name = 'fAddress';
+                    inputAddress.required = true;
+
+                    // 直接使用全域變數，避免重新宣告
+                    inputAddress.type = 'text';
+                    inputAddress.required = true;
+
+                    const selectAdditional = document.createElement('select');
+                    selectAdditional.id = 'additionalSelect';
+                    selectAdditional.name = 'additionalSelect';
+
+                    // 在第三個 select 中添加特定選項
+                    const additionalOptions = [
+                        { value: '1', text: '錄音室' },
+                        { value: '2', text: '音樂教室' },
+                        { value: '3', text: '其他' }
+                    ];
+
+                    additionalOptions.forEach(optionData => {
+                        const option = document.createElement('option');
+                        option.value = optionData.value;
+                        option.text = optionData.text;
+                        selectAdditional.appendChild(option);
+                    });
+
+                    const btnConfirmAddSite = document.createElement('button');
+                    btnConfirmAddSite.textContent = '確認新增場地';
+                    btnConfirmAddSite.className = 'btn btn-success ml-2 mr-2';
+
+
+                    const btnCancelAddSite = document.createElement('button');
+                    btnCancelAddSite.textContent = '取消新增場地';
+                    btnCancelAddSite.className = 'btn btn-danger mr-2';
+                    btnCancelAddSite.addEventListener('click', cancelAddSite);
+
+
+                    // 添加元素到容器中
+                    siteContainer.appendChild(inputMemberID);
+                    siteContainer.appendChild(labelSiteName);
+                    siteContainer.appendChild(inputSiteName);
+                    siteContainer.appendChild(labelAddress);
+                    siteContainer.appendChild(inputAddress);
+                    siteContainer.appendChild(selectCityID);
+                    siteContainer.appendChild(selectAdditional);
+                    siteContainer.appendChild(btnConfirmAddSite);
+                    siteContainer.appendChild(btnCancelAddSite);
+
+                    // 隱藏原有的 fSiteName 元素
+                    originalSelect.style.display = 'none';
+                    btnAddSite.style.display = 'none';
+
+                    //檢查必填項目是否都已填寫
+                    btnConfirmAddSite.addEventListener('click', function () {
+                        // 檢查所有新增場地的項目是否都填寫了資料
+                        if (validateAddSiteFields()) {
+                            // 如果都有資料，則執行 confirmAddSite
+                            confirmAddSite();
+                        } else {
+                            // 如果有任何一個項目沒有填寫資料，顯示警告
+                            alert('請填寫所有新增場地項目');
+                        }
+                    });
+                });
+
+                // 重新執行 load()
+                load();
             }
         });
 
@@ -441,7 +622,7 @@
 
 
         //Demo用按鈕///////////////////////////////////////////////////////////////////////
-
+        
         document.addEventListener('DOMContentLoaded', function () {
             // ... 其他代码
 
@@ -484,7 +665,6 @@
                 document.getElementById('fName').dispatchEvent(new Event('change'));
             });
         });
-
 
     </script>
     @{
