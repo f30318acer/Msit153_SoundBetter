@@ -24,7 +24,7 @@ namespace prjMusicBetter.Controllers
         public IActionResult classclick()
         {
             return View();
-        }
+        }    
         public IActionResult GenderRatio()
         {
 
@@ -38,6 +38,7 @@ namespace prjMusicBetter.Controllers
                 .ToList();
             return Json(genderCount);
         }
+
         public IActionResult GetClassClicksData()
         {
             var classClicksData = _context.TClasses

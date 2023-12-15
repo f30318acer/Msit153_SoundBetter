@@ -176,19 +176,35 @@ namespace prjSoundBetterApi.Controllers
             {
                 TMember member = _userInfoService.GetMemberInfo();
                 int memberId = member.FMemberId;
-                TPlaylist list = new TPlaylist();
-                list.FMemberId = memberId;
-                list.FWorkId = id;
-                list.FUpdateTime= DateTime.Now;
-                _context.Add(list);
-                _context.SaveChanges();
-                return Content("新增成功");
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
 
+                TPlaylist listDb = _context.TPlaylists.Where(p => p.FMemberId == memberId).FirstOrDefault(p => p.FWorkId == id);
+                if (listDb == null)
+                {
+                    TPlaylist list = new TPlaylist();
+                    list.FMemberId = memberId;
+                    list.FWorkId = id;
+                    list.FUpdateTime = DateTime.Now;
+                    _context.Add(list);
+                    _context.SaveChanges();
+                    return Content("新增成功");
+                }        
+            }
+            return NotFound();
+        }
+        public IActionResult GetPlayList() {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member != null) 
+            {
+                int memberId = member.FMemberId;
+                var list = from p in _context.TPlaylists
+                           join w in _context.TWorks on p.FWorkId equals w.FWorkId
+                           where p.FMemberId == memberId
+                           select new { w.FWorkId, w.FWorkName, w.FThumbnail };
+               
+                    return Json(list);
+            }
+
+            return NotFound();
+        }
     }
 }
