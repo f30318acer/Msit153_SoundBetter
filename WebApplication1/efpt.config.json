@@ -124,6 +124,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tPlaylist]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tProject]",
          "ObjectType": 0
       },
