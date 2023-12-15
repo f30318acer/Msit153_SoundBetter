@@ -404,7 +404,7 @@
                                                        
                                                     </div>       
                                                 </div>
-                                                           <div class="col-2" style="margin:0px">    <button class="btn-hover color-8 buttons11" onclick="playNext()">加入清單</button></div>
+                                                           <div class="col-2" style="margin:0px">    <button class="btn-hover color-8 buttons11" onclick="AddToList(${item.fWorkId})">加入清單</button></div>
                                                 <div class="col-12">
                                                             <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%" ><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                                 </div>
@@ -459,7 +459,7 @@
                                                 </div>
                                                         
                                             </div>
-                                                    <div class="col-2" style="margin:0px">    <button class="btn-hover color-8 buttons11" onclick="playNext()">加入清單</button></div>
+                                                      <div class="col-2" style="margin:0px">    <button class="btn-hover color-8 buttons11" onclick="AddToList(${item.fWorkId})">加入清單</button></div>
                                             <div class="col-12">
                                             <audio controls="" id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%" ><source src="/WorkFile/${item.fFilePath}" type="audio/mpeg"></audio>
                                             </div>
@@ -524,7 +524,20 @@
             }
         }
 
+        function AddToList(id){
+          fetch('@Url.Content("~/apiTWork/AddToList/")'+id , {
+          method: 'Post'
+          })
+          .then(response=>{
 
+              if(response.ok){
+                  alert("加入成功");
+              }
+              else{
+                  alert("失敗");
+              }
+          })
+        }
 
         function PlusOne(workId) {
             // 使用 AJAX 向 apiTWorkController 的 PlusOne 方法發送請求

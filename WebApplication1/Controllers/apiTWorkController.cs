@@ -170,6 +170,25 @@ namespace prjSoundBetterApi.Controllers
             _context.SaveChanges();
             return Content("新增成功");
         }
+        public IActionResult AddToList(int? id)
+        {
+            if (id != null)
+            {
+                TMember member = _userInfoService.GetMemberInfo();
+                int memberId = member.FMemberId;
+                TPlaylist list = new TPlaylist();
+                list.FMemberId = memberId;
+                list.FWorkId = id;
+                list.FUpdateTime= DateTime.Now;
+                _context.Add(list);
+                _context.SaveChanges();
+                return Content("新增成功");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
     }
 }
