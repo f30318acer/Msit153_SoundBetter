@@ -7,6 +7,7 @@ using System.Data;
 using System.Text.Json.Serialization;
 using prjMusicBetter.Models.ViewModels;
 
+
 namespace prjMusicBetter.Controllers
 {
     public class ChartController : Controller
@@ -38,24 +39,30 @@ namespace prjMusicBetter.Controllers
                 .ToList();
             return Json(genderCount);
         }
-
-        public IActionResult GetClassClicksData()
+        [HttpPost]
+        public List<object> GetClassClicksData()
         {
-            var classClicksData = _context.TClasses
-                .Join(_context.TClassClicks,
-                      c => c.FClassId,
-                      cc => cc.FClassId,
-                      (c, cc) => new { c.FClassName, cc.FClick })
-                .GroupBy(x => x.FClassName)
-                .Select(group => new
-                {
-                    ClassName = group.Key,
-                    TotalClicks = group.Sum(x => x.FClick)
-                })
-                .OrderBy(x => x.ClassName)
-                .ToList();
+            List<object> data = new List<object>();
 
-            return Json(classClicksData);
+            List<string> classes = _context.SalesDa
+
+
+            //var classClicksData = _context.TClasses
+            //    .Join(_context.TClassClicks,
+            //          c => c.FClassId,
+            //          cc => cc.FClassId,
+            //          (c, cc) => new { c.FClassName, cc.FClick })
+            //    .GroupBy(x => x.FClassName)
+            //    .Select(group => new
+            //    {
+            //        ClassName = group.Key,
+            //        TotalClicks = group.Sum(x => x.FClick)
+            //    })
+            //    .OrderBy(x => x.ClassName)
+            //    .ToList();
+
+            //return Json(classClicksData);
         }
+
     }
 }
