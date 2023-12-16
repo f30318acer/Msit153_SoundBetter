@@ -58,7 +58,7 @@
                 <p class="text-center text-gray-500">點擊數分析</p>
             </div>
         </div>
-        <div class="bg-white p-6 shadow rounded-lg mb-4">
+        <div class="chart-container bg-white p-6 shadow-md rounded-lg mb-4 transition-shadow duration-200 hover:shadow-lg">
             <h2 class="text-xl font-semibold text-gray-700 mb-3">xx</h2>
             <div class="h-64">
                 @Html.Partial("siteclick")
@@ -71,3 +71,64 @@
     </div>
 </body>
 </html>
+<script>
+    $(function () {
+        // 分別為每個圖表定義實例變量
+        var myChartInstance1 = null;
+        var myChartInstance2 = null; // 假設您有第二個圖表
+
+        // 頁面加載時自動載入第一個圖表
+        loadChartData('myChart4', 'bar', function (chartInstance) {
+            myChartInstance1 = chartInstance;
+        });
+
+        // 頁面加載時自動載入第二個圖表（如果需要）
+        // loadChartData('anotherChartId', 'bar', function(chartInstance) {
+        //     myChartInstance2 = chartInstance;
+        // });
+
+        // ...
+
+        function loadChartData(canvasId, chartType, callback) {
+            $.ajax({
+                // ...
+                success: function (data) {
+                    var chartInstance = renderChart(canvasId, chartType, data);
+                    if (callback) {
+                        callback(chartInstance);
+                    }
+                },
+                // ...
+            });
+        }
+
+        function renderChart(canvasId, chartType, data) {
+            var _data = data;
+            var _chartLabels = _data[0];
+            var _chartData = _data[1];
+            var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+
+            // 檢查是否已經有圖表實例存在，如果有，則先銷毀
+            if (window[canvasId]) {
+                window[canvasId].destroy();
+            }
+
+            var ctx = document.getElementById(canvasId).getContext('2d');
+            window[canvasId] = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: _chartLabels,
+                    datasets: [{
+                        backgroundColor: barColor,
+                        data: _chartData
+                    }]
+                },
+            });
+
+            return window[canvasId];
+        }
+
+        // ...
+    });
+
+</script>
