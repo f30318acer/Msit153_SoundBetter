@@ -1,16 +1,12 @@
 ﻿
 @{
-    ViewData["Title"] = "workclick";
-    Layout = "~/Views/Shared/ChartLayout.cshtml";
+    ViewData["Title"] = "siteclick";
 }
 
 <p>
     <div class="row">
-        <div class="col-1">
-            <label><b>Chart-Type</b></label>
-        </div>
         <div class="col-2">
-            <select id="ChartType1" class="form-control" style="150px">
+            <select id="ChartType4" class="form-control" style="150px">
                 <option selected>-Select Chart Type-</option>
                 <option>bar</option>
                 <option>line</option>
@@ -19,25 +15,25 @@
             </select>
         </div>
         <div class="col-4">
-            <input id="ID1" value="Show Graph" type="button" />
+            <input id="ID4" value="Show Graph" type="button" />
         </div>
     </div>
 </p>
 
 <br />
-<canvas id="myChart1" style="max-width:600px;max-height:400px"></canvas>
+<canvas id="myChart4" style="max-width:600px;max-height:400px"></canvas>
 <!-- 確保加入 jQuery 的引用 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#ID1").click(function () {
+        $("#ID4").click(function () {
 
-            var chartType = $("#ChartType1").val();
+            var chartType = $("#ChartType4").val();
 
             $.ajax({
                 type: "POST",
-                url: "/Chart/GetWorksClicksData",
+                url: "/Chart/GetSitesStatusData",
                 data: "",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -56,7 +52,7 @@
                     window.myChartInstance.destroy();
                 }
 
-                window.myChartInstance = new Chart("myChart1", {
+                window.myChartInstance = new Chart("myChart4", {
                     type: chartType,
                     data: {
                         labels: _chartLabels,
@@ -74,3 +70,4 @@
         });
     });
 </script>
+
