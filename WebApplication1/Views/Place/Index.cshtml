@@ -1,0 +1,111 @@
+﻿<style>
+    #container {
+        height: 500px;
+        min-width: 310px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .loading {
+        margin-top: 10em;
+        text-align: center;
+        color: gray;
+    }
+
+</style>
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+
+<div id="container"></div>
+
+@section Scripts{
+    <script>
+        (async () => {
+
+            const topology = await fetch(
+                'https://code.highcharts.com/mapdata/countries/tw/tw-all.topo.json'
+            ).then(response => response.json());
+
+            const nameMapping = {
+                "Pingtung": "屏東",
+                "Tainan City": "台南",
+                "Yilan": "宜蘭",
+                "Chiayi": "嘉義",
+                "Taitung": "台東",
+                "Penghu": "澎湖",
+                "Kinmen": "金門",
+                "Lienchiang": "馬祖",
+                "Taipei City": "台北",
+                "Chiayi City": " ",
+                "Yunlin": "雲林",
+                "Kaohsiung City": "高雄",
+                "New Taipei City": "新北",
+                "Hsinchu City": " ",
+                "Hsinchu": "新竹",
+                "Keelung City": "基隆",
+                "Miaoli": "苗栗",
+                "Taoyuan": "桃園",
+                "Changhua": "彰化",
+                "Hualien": "花蓮",
+                "Nantou": "南投",
+                "Taichung City": "台中"
+            };
+
+            topology.objects.default.geometries.forEach(geometry => {
+                const originalName = geometry.properties.name;
+                const chineseName = nameMapping[originalName];
+                if (chineseName) {
+                    geometry.properties.name = chineseName;
+                }
+            });
+
+            const data = [
+                ['tw-pt', 10], ['tw-tn', 11], ['tw-il', 12], ['tw-ch', 13],
+                ['tw-tt', 14], ['tw-ph', 15], ['tw-km', 16], ['tw-lk', 17],
+                ['tw-tw', 18], ['tw-cs', 19], ['tw-th', 20], ['tw-yl', 21],
+                ['tw-kh', 22], ['tw-tp', 23], ['tw-hs', 24], ['tw-hh', 25],
+                ['tw-cl', 26], ['tw-ml', 27], ['tw-ty', 28], ['tw-cg', 29],
+                ['tw-hl', 30], ['tw-nt', 31]
+            ];
+
+            // Create the chart
+            Highcharts.mapChart('container', {
+                chart: {
+                    map: topology
+                },
+
+                title: {
+                    text: '場地分布'
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+
+                colorAxis: {
+                    min: 0
+                },
+
+                series: [{
+                    data: data,
+                    name: 'Random data',
+                    states: {
+                        hover: {
+                            color: '#BADA55'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }]
+            });
+
+        })();
+
+    </script>
+}

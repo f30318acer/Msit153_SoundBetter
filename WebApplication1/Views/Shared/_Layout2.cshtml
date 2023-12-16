@@ -339,17 +339,17 @@
             </li><!-- End Icons Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#class-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" data-bs-target="#analy-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Chart</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="class-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="analy-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="@Url.Content("~/Chart/Index")">
                             <i class="bi bi-circle"></i><span>會員資料分析</span>
                         </a>
                     </li>
                     <li>
-                        <a href="@Url.Content("~/Chart/classclick")">
+                        <a href="@Url.Content("~/Chart/CombinedClicks")">
                             <i class="bi bi-circle"></i><span>課程分析</span>
                         </a>
                     </li>
@@ -367,6 +367,7 @@
 
     </aside><!-- End Sidebar-->
     <div>
+        <script src="~/js/jquery-3.2.1.min.js"></script>
         @RenderBody()
     </div>
 
@@ -385,7 +386,7 @@
     <script src="~/assets/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
-
+ 
     
 
     <!-- Template Main JS File -->

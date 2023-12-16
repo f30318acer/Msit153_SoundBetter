@@ -13,6 +13,66 @@
         width: 100%;
         margin-bottom: 22px;
     }
+
+    .dropbtn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        max-height: 300px; /* 設定最大高度，超過的部分會顯示滾動條 */
+        overflow-y: auto; /* 垂直方向上的滾動條，只在需要的時候顯示 */
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+
+    .dropdown-content a:active {
+  background-color: #2c662d; /* Change the background color when clicked */
+  color: white; /* Change the text color when clicked */
+}
+
+/* Optionally, you can add a transition effect for a smoother visual experience */
+.dropdown-content a {
+  transition: background-color 0.3s, color 0.3s;
+}
 </style>
 
 <section class="playlist-section spad">
@@ -23,7 +83,12 @@
             </div>
             <div class="container col-lg-9">
                 <div class="text-right">
-                    <select class="form-select" id="citySelect"></select>
+                    <div class="dropdown">
+                        <button class="dropbtn">請選擇縣市</button>
+                        <div class="dropdown-content" id="citySelect">
+                        </div>
+                    </div>
+@*                     <select class="form-select" id="citySelect"></select> *@
                 </div>
             </div>
         </div>    
@@ -179,12 +244,20 @@
         async function loadCity() {
             const response = await fetch('@Url.Content("~/Place/GetCities")');
             const data = await response.json();
-            const style = data.map(s => `<option value="${s.fCityId}">${s.fCity}</option>`);
-            slt.innerHTML = style.join("");
 
-            slt.addEventListener('change', async function () {
-                const cityval = $('#citySelect').val();
-                loadPlaceByCity(cityval);
+            const citySelect = document.getElementById('citySelect');
+
+            data.forEach(city => {
+                const a = document.createElement('a');
+                a.setAttribute('data-value', city.fCityId);
+                a.textContent = city.fCity;
+
+                a.addEventListener('click', async function () {
+                    const cityval = this.getAttribute('data-value');
+                    loadPlaceByCity(cityval);
+                });
+
+                citySelect.appendChild(a);
             });
         }
 
