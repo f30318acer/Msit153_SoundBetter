@@ -46,6 +46,7 @@
                             }
                             @siteTypeText / @Html.DisplayFor(model => model.FPhone)
                         </li>
+                        <li style="font-size: 20px">場地主：<a href="/MemberPage/Details/?id=@Html.DisplayFor(model => model.FMemberId)" style="color:#5F9EA0;">@Html.DisplayFor(model => model.FMember.FName)</a></li>
                     </ul>
                     <div id="siteclass"></div>
                     <form class="contact-from" id="reservationForm">
