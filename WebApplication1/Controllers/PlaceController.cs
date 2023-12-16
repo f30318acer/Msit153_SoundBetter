@@ -22,7 +22,50 @@ namespace Music_matchmaking_platform.Controllers
             _context = context;
             _userInfoService = userInfoService;//抓使用者
         }
-		public IActionResult List()
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        Dictionary<int, string> cityIdMapping = new Dictionary<int, string>
+        {
+            {1, "tw-cl"},
+            {2, "tw-tw"},
+            {3, "tw-tp"},
+            {4, "tw-ty"},
+            {5, "tw-hs"},
+            {6, "tw-hh"},
+            {7, "tw-ml"},
+            {8, "tw-th"},
+            {9, "tw-cg"},
+            {10, "tw-nt"},
+            {11, "tw-yl"},
+            {12, "tw-cs"},
+            {13, "tw-ch"},
+            {14, "tw-tn"},
+            {15, "tw-kh"},
+            {16, "tw-pt"},
+            {17, "tw-tt"},
+            {18, "tw-hl"},
+            {19, "tw-il"},
+            {20, "tw-ph"},
+            {21, "tw-km"},
+            {22, "tw-lk"}
+        };
+        public IActionResult CountSiteByCity()
+        {
+            var dbSoundBetterContext = _context.TSites
+                .GroupBy(t => t.FCityId)
+                .Select(t => new
+                {
+                    fCityId = t.Key,
+                    Count = t.Count()
+                })
+                .ToDictionary(x => x.fCityId, x => x.Count);
+
+            return Json(dbSoundBetterContext);
+        }
+        public IActionResult List()
 		{
 			var dbSoundBetterContext = _context.TSites
 				.Include(t => t.FCity)
