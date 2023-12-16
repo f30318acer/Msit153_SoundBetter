@@ -18,6 +18,7 @@ using Stripe;
 
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -29,6 +30,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<UserInfoService>();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
 
 
 //建立資料庫連接需要特別加這一段

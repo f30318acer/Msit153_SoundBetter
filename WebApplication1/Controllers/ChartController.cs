@@ -44,8 +44,13 @@ namespace prjMusicBetter.Controllers
         {
             List<object> data = new List<object>();
 
-            List<string> classes = _context.SalesDa
+            List<string> classes = _context.TClasses.Select(p=>p.FClassName).ToList();
 
+            data.Add(classes);
+
+            List<int> SalesClass = _context.TClasses.Select(p => p.FClassId).ToList();
+            data.Add(SalesClass);
+            return data;
 
             //var classClicksData = _context.TClasses
             //    .Join(_context.TClassClicks,
