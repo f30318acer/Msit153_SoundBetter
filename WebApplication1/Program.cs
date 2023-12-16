@@ -35,6 +35,8 @@ builder.Services.AddDbContext<dbSoundBetterContext>(
 
 //Chart.js
 builder.Services.AddScoped<MemberDataService>();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation() ;
+
 
 //建立聊天室連接需要特別加這一段
 builder.Services.AddSignalR();
