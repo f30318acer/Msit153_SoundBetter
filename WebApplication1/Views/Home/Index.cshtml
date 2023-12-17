@@ -2,15 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="~/css/Homestyle.css">
+
+
+
 <!-- Hero section -->
-<section class="hero-section">
+<section class="hero-section" >
+
     <div class="hero-slider owl-carousel">
         <div class="hs-item">           
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="hs-text">
-                            <h2><span>聆聽 </span> 好聲音 </h2>
+                            <h2 class="text-5xl font-bold"><span>聆聽 </span> 好聲音 </h2>
                             <p> 很久沒找到能讓你感動的好聲音嗎? 來這裡就對了!!! </p>
                             <a href="@Url.Action("List","MusicShare")" class="site-btn">音樂探索</a>
                             <a href="@Url.Action("List","Article")" class="site-btn sb-c2">好文分享</a>
@@ -18,7 +23,8 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="hr-img">
-                            <img src="~/img/hero-bg.png" alt="">
+                            <img src="~/img/marcela-laskoski-yrtflrlo2dq-unsplash.jpg" alt="" class="rounded-xl shadow-lg" />
+                            
                         </div>
                     </div>
                 </div>
@@ -29,7 +35,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="hs-text">
-                            <h2><span>創造</span> 好音樂 </h2>
+                            <h2 class="text-5xl font-bold"><span>創造</span> 好音樂 </h2>
                             <p> 優秀的音樂人才都在這，無論是混音師、作詞家、歌手都在這。在這完成你心目中最讚的音樂。 </p>
                             <a href="@Url.Action("List","Project")" class="site-btn">找專案?</a>
                             <a href="@Url.Action("Place","Place")" class="site-btn sb-c2">找場地?</a>
@@ -37,7 +43,8 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="hr-img">
-                            <img src="~/img/music_vj.png" alt="">
+                            <img src="~/img/danny-howe-bn-d2bcvpik-unsplash.jpg" class="rounded-xl shadow-lg" />
+                        @*     <img src="~/img/music_vj.png" alt="" class="rounded-xl shadow-lg"> *@
                         </div>
                     </div>
                 </div>
@@ -49,7 +56,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="hs-text">
-                            <h2><span>發現 </span> 新曲目 </h2>
+                            <h2 class="text-5xl font-bold"><span>發現 </span> 新曲目 </h2>
                             <p> 最新的創作都在這裡，讓你有新發現!!! </p>
                             <a href="@Url.Action("List","MusicShare")" class="site-btn">音樂探索</a>
                             <a href="@Url.Action("List","Blog")" class="site-btn sb-c2">好文分享</a>
@@ -57,7 +64,8 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="hr-img">
-                            <img src="~/img/music_ongaku_kansyou.png" alt="">
+                            <img src="~/img/jefferson-santos-fcejgbzakru-unsplash.jpg" class="rounded-xl shadow-lg" />
+               @*              <img src="~/img/music_ongaku_kansyou.png" alt="" class="rounded-xl shadow-lg"> *@
                         </div>
                     </div>
                 </div>
@@ -68,7 +76,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="hs-text">
-                            <h2><span>享受 </span> 好演出 </h2>
+                            <h2 class="text-5xl font-bold"><span>享受 </span> 好演出 </h2>
                             <p> 這裡有實力強勁的師資和場地，成就自己表演能力!!! </p>
                             <a href="@Url.Action("index","Class")" class="site-btn">找課程?</a>
                             <a href="@Url.Action("Place","Place")" class="site-btn sb-c2">找場地?</a>
@@ -76,7 +84,8 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="hr-img">
-                            <img src="~/img/music_band_visual.png" alt="">
+                            <img src="~/img/simon-noh-0rmby-3otei-unsplash.jpg" class="rounded-xl shadow-lg" />
+                           @*  <img src="~/img/music_band_visual.png" alt="" class="rounded-xl shadow-lg"> *@
                         </div>
                     </div>
                 </div>

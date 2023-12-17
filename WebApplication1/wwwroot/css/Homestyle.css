@@ -1,0 +1,35 @@
+.text-primary {
+	color: #eb2f96; /* 您网站的主色调 */
+}
+
+.bg-primary {
+	background-color: #eb2f96; /* 同上 */
+}
+
+.rounded-xl {
+	border-radius: 1rem; /* 更圆润的边角 */
+}
+
+.shadow-lg {
+	box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* 更深的阴影效果 */
+}
+
+/* 调整按钮样式 */
+.site-btn {
+	background-color: #eb2f96; /* 按钮背景色 */
+	color: white; /* 按钮文字色 */
+	padding: 10px 20px; /* 按钮内边距 */
+	border-radius: 0.5rem; /* 圆角 */
+	transition: background-color 0.3s; /* 过渡动画 */
+}
+
+	.site-btn:hover {
+		background-color: #c3146d; /* 按钮悬停效果 */
+	}
+
+/* 响应式设计的例子 */
+@media (max-width: 768px) {
+	.text-5xl {
+		font-size: 2rem; /* 小屏幕时减小字体大小 */
+	}
+}

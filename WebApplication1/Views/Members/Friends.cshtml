@@ -1,8 +1,19 @@
 ﻿@model prjMusicBetter.Models.ViewModels.FriendsViewModel
-@{
-    ViewData["Title"] = "Friends";
-}
- <script src="https://cdn.tailwindcss.com"></script> 
+
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    .hover\:color-coral:hover {
+        color: coral;
+    }
+   
+    .member-image {
+        width: 96px; /* 或您希望的任何其他固定尺寸 */
+        height: 96px; /* 或您希望的任何其他固定尺寸 */
+        object-fit: cover; /* 這將確保圖像覆蓋該區域同時保持比例 */
+        border-radius: 50%; /* 可選：如果您想要圓形圖像 */
+    }
+
+</style>
 
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
@@ -24,17 +35,24 @@
             <span>第 @Model.CurrentPage 頁，共 @Model.TotalPages 頁</span>
             <a href="#" onclick="loadPage(@Model.CurrentPage + 1)">下一頁</a>
         </div>
+        <script>
+            function loadPage(page) {
+                $('#divPartial').load('@Url.Action("Friends", "Members")', { page: page });
+            }
+        </script>
+
         <!-- Table Section -->
         <div class="bg-white shadow rounded-md overflow-hidden">
             <table class="w-full">
-                <thead>
+                <thead class="bg-gray-50">
                     <tr class="bg-yellow-300">
+                        <th class="text-center py-2">照片</th>
                         <th class="text-center py-2">姓名</th>
                         <th class="text-center py-2">電話號碼</th>
                         <th class="text-center py-2">信箱</th>
-                        <th class="text-center py-2">性別</th>
-                        <th class="text-center py-2">生日</th>
-                        <th class="text-center py-2">照片</th>
+                       @*  <th class="text-center py-2">性別</th> *@
+                        <th class="text-center py-2">生日</th> 
+
                         <th class="text-center py-2">Details</th>
                     </tr>
                 </thead>
@@ -42,6 +60,16 @@
                     @foreach (var item in Model.Friends)
                     {
                         <tr class="hover:bg-gray-100 hover:color-coral">
+                            <td class="py-2 px-4 rounded-td">
+                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
+                                {
+                                    <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" class="member-image" />
+                                }
+                                else
+                                {
+                                    @:No Image
+                                }
+                            </td>
                             <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FName)
                             </td>
@@ -51,22 +79,13 @@
                             <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FEmail)
                             </td>
-                            <td class="py-2 px-4 rounded-td">
+                           @*  <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FGender)
-                            </td>
-                            <td class="py-2 px-4 rounded-td">
+                            </td> *@
+                             <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FBirthday)
-                            </td>
-                            <td class="py-2 px-4 rounded-td">
-                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
-                                {
-                                    <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" class="w-24 h-auto rounded" />
-                                }
-                                else
-                                {
-                                    @:No Image
-                                }
-                            </td>
+                            </td> 
+
                             <td class="text-center border-b border-gray-200">
                                 <a href="@Url.Action("Details", "MemberPage", new { id = item.FMemberId })" class="text-blue-500 hover:text-blue-600">Detail</a>
                             </td>
@@ -77,9 +96,9 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        //搜尋功能  
+        //搜尋功能
         $('#searchForm').on('submit', function (event) {
             event.preventDefault(); // 阻止表單的默認提交行為
             var searchTerm = $('#search').val(); // 獲取搜索條件
@@ -88,8 +107,3 @@
 
     </script>
 </body>
-<script>
-    function loadPage(page) {
-        $('#divPartial').load('@Url.Action("Friends", "Members")', { page: page });
-    }
-</script>
