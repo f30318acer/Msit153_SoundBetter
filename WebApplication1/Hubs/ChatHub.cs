@@ -98,7 +98,8 @@ namespace CoreMVC_SignalR_Chat.Hubs
                     await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "無法找到用戶: " + sendToID);
                 }
                 //var sendToConnectionId = memberToConnectionMap[sendToID];
-
+                // 儲存訊息到資料庫
+             
             }
         }
         public async Task<string> GetMemberId()

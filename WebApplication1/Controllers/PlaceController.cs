@@ -54,16 +54,20 @@ namespace Music_matchmaking_platform.Controllers
         };
         public IActionResult CountSiteByCity()
         {
-            var dbSoundBetterContext = _context.TSites
-                .GroupBy(t => t.FCityId)
-                .Select(t => new
+            var dbSoundBetterContext =
+                from cityId in cityIdMapping.Keys
+                join site in _context.TSites on cityId equals site.FCityId into joinedData
+                from siteGroup in joinedData.DefaultIfEmpty()
+                group siteGroup by cityId into groupedData
+                select new
                 {
-                    fCityId = t.Key,
-                    Count = t.Count()
-                })
-                .ToDictionary(x => x.fCityId, x => x.Count);
+                    fCityId = cityIdMapping.ContainsKey(groupedData.Key) ? cityIdMapping[groupedData.Key] : "tw-tw",
+                    Count = groupedData.Count(item => item != null)
+                };
 
-            return Json(dbSoundBetterContext);
+            var result = dbSoundBetterContext.ToArray();
+
+            return Json(result);
         }
         public IActionResult List()
 		{

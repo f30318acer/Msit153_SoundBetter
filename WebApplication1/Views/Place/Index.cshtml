@@ -23,6 +23,8 @@
     <script>
         (async () => {
 
+            const siteData = await fetch('/Place/CountSiteByCity').then(response => response.json());
+
             const topology = await fetch(
                 'https://code.highcharts.com/mapdata/countries/tw/tw-all.topo.json'
             ).then(response => response.json());
@@ -60,14 +62,7 @@
                 }
             });
 
-            const data = [
-                ['tw-pt', 10], ['tw-tn', 11], ['tw-il', 12], ['tw-ch', 13],
-                ['tw-tt', 14], ['tw-ph', 15], ['tw-km', 16], ['tw-lk', 17],
-                ['tw-tw', 18], ['tw-cs', 19], ['tw-th', 20], ['tw-yl', 21],
-                ['tw-kh', 22], ['tw-tp', 23], ['tw-hs', 24], ['tw-hh', 25],
-                ['tw-cl', 26], ['tw-ml', 27], ['tw-ty', 28], ['tw-cg', 29],
-                ['tw-hl', 30], ['tw-nt', 31]
-            ];
+            const data = siteData.map(item => [item.fCityId, item.count]);
 
             // Create the chart
             Highcharts.mapChart('container', {
@@ -87,7 +82,11 @@
                 },
 
                 colorAxis: {
-                    min: 0
+                    min: 0,
+                    stops: [
+                        [0, '#52ACFF'], // 低值的顏色
+                        [1, '#FFE32C'] // 高值的顏色
+                    ]
                 },
 
                 series: [{
@@ -95,7 +94,7 @@
                     name: 'Random data',
                     states: {
                         hover: {
-                            color: '#BADA55'
+                            color: '#E0FFFF'
                         }
                     },
                     dataLabels: {
