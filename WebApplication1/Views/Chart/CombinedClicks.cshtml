@@ -8,60 +8,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>圖表展示</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <style>
         body {
+            background-color:cornflowerblue;
             font-family: 'Noto Sans SC', sans-serif;
         }
 
         .chart-container {
-            margin-bottom: 15rem; /* This adds space below the chart container */
+            margin-bottom: 3rem; /* 輕微調整底部間距 */
+            transition: all 0.3s ease; /* 添加過渡效果 */
         }
 
+            .chart-container:hover {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* 懸停效果 */
+            }
+
         .chart-card {
-            padding-bottom: 2rem; /* This adds space inside the bottom of the chart card */
-            /* ... your other styles ... */
+            padding-bottom: 2rem;
+            height: 20rem;
+            border-radius: 8px; /* 添加圓角 */
+        }
+
+        .chart-placeholder {
+            background-image: url('');
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
         }
     </style>
 </head>
 <body class="bg-gray-100 p-8">
     <h1 class="text-4xl font-bold text-gray-900 mb-6">圖表展示</h1>
-
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- 图表1的占位符 -->
         <div class="chart-container bg-white p-6 shadow-md rounded-lg mb-4 transition-shadow duration-200 hover:shadow-lg">
             <h2 class="text-xl font-semibold text-gray-700 mb-3">課程</h2>
-            <div class="h-64">
+            <div class="chart-card chart-placeholder">
                 @Html.Partial("classclick")
                 <!-- 在这里插入图表1的具体内容 -->
-                <p class="text-center text-gray-500">點擊數分析</p>
+                <p class="text-center text-gray-500 mt-96">點擊數分析</p>
             </div>
         </div>
 
         <!-- 图表2的占位符 -->
         <div class="chart-container bg-white p-6 shadow-md rounded-lg mb-4 transition-shadow duration-200 hover:shadow-lg">
             <h2 class="text-xl font-semibold text-gray-700 mb-3">作品</h2>
-            <div class="h-64">
+            <div class="chart-card chart-placeholder">
                 @Html.Partial("workclick")
                 <!-- 在这里插入图表2的具体内容 -->
-                <p class="text-center text-gray-500">點擊數分析</p>
+                <p class="text-center text-gray-500 mt-96">點擊數分析</p>
             </div>
         </div>
         <div class="chart-container bg-white p-6 shadow-md rounded-lg mb-4 transition-shadow duration-200 hover:shadow-lg">
             <h2 class="text-xl font-semibold text-gray-700 mb-3">專案狀態</h2>
-            <div class="h-64">
+            <div class="chart-card chart-placeholder">
                 @Html.Partial("projectclick")
                 <!-- 在这里插入图表2的具体内容 -->
-                <p class="text-center text-gray-500">狀態分析</p>
+                <p class="text-center text-gray-500 mt-96">狀態分析</p>
             </div>
         </div>
         <div class="chart-container bg-white p-6 shadow-md rounded-lg mb-4 transition-shadow duration-200 hover:shadow-lg">
             <h2 class="text-xl font-semibold text-gray-700 mb-3">場地出租狀態</h2>
-            <div class="h-64">
+            <div class="chart-card chart-placeholder">
                 @Html.Partial("siteclick")
                 <!-- 在这里插入图表2的具体内容 -->
-                <p class="text-center text-gray-500">狀態分析</p>
+                <p class="text-center text-gray-500 mt-96">狀態分析</p>
             </div>
         </div>
         <!-- 更多图表的占位符 -->
