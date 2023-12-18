@@ -116,7 +116,7 @@ namespace prjMusicBetter.Controllers
 
             //留言部分
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
-            ViewData["UserName"] = _userInfoService.GetMemberInfo().FName;
+            ViewData["UserName"] = _userInfoService.GetMemberInfo().FUsername;
             ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
 
 
@@ -124,7 +124,7 @@ namespace prjMusicBetter.Controllers
                         join member in _context.TMembers on comment.FMemberId equals member.FMemberId
                         select new
                         {
-                            MemberName = member.FName,
+                            MemberUserName = member.FUsername,
                             MemberPhotoPath = member.FPhotoPath
                         };
 
@@ -132,7 +132,7 @@ namespace prjMusicBetter.Controllers
 
             foreach (var commentermemberInfo in result)
             {
-                var commenterName = commentermemberInfo.MemberName;
+                var commenterName = commentermemberInfo.MemberUserName;
                 ViewData["CommenterName"] = commenterName;
                 var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
                 ViewData["CommenterPhoto"] = commenterPhotoPath;
@@ -204,8 +204,7 @@ namespace prjMusicBetter.Controllers
 
                 if (article != null)
                 {
-                    cdto.FArticleId = article.FMember.FMemberId;
-                    //cdto.FArticleId = article.FArticleId;
+                    cdto.FArticleId = article.FArticleId;
 
                     // 添加评论
                     _context.TComments.Add(new TComment()
