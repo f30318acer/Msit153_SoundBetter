@@ -10,43 +10,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-
     body {
         font-family: 'Roboto', sans-serif;
     }
-
 </style>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <body class="bg-gray-100">
     <div class="container mx-auto px-4">
         @foreach (var coupon in Model)
         {
-            <div class="max-w-2xl mx-auto mt-6">
-                <div class="bg-gray-800 text-white text-center p-6 relative">
-                    <span class="text-6xl font-bold">@coupon.FDescription</span>
-                    <h3 class="absolute top-6 right-6 font-bold">@coupon.FCouponId</h3>
+            <div class="flex flex-col md:flex-row justify-between items-center bg-gray-800 text-white my-4 p-6  rounded-lg">
+                <div class="flex flex-1 flex-col md:flex-row items-start md:items-center">
+                    <div class="text-4xl font-bold mr-4 mb-2 md:mb-0">@coupon.FDescription </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-1">使用代碼: @coupon.FCouponCode</h3>
+                        <p class="mb-1">起始日: @coupon.FStartdate</p>
+                        <p>結束日: @coupon.FEnddate</p>
+                    </div>
                 </div>
-                <div class="bg-white p-6 shadow-md">
-                    <h3 class="text-2xl font-bold mb-2">使用代碼:@coupon.FCouponCode</h3>
-                    <p class="text-gray-600">@coupon.FCouponContent</p>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="text-sm text-gray-600">@coupon.FStartdate</span>
-                        <span class="text-sm text-gray-600">@coupon.FEnddate</span>
-                    </div>
-                    <div class="flex items-center justify-between mt-4">
-                        @if (!string.IsNullOrEmpty(coupon.FPicture))
-                        {
-                            <img src="@Url.Content("~/img/CoolPon/"+coupon.FPicture)" alt="Coupon Image" style="width:100px;height=auto; " />
-                        }
-                        else
-                        {
-                            @:No Image
-                        }
-
-                    </div>
+                <div class="flex-shrink-0 mt-4 md:mt-0">
+                    @if (!string.IsNullOrEmpty(coupon.FPicture))
+                    {
+                        <img src="@Url.Content("~/img/CoolPon/"+coupon.FPicture)" alt="Coupon Image" style="width:100px;height=auto; " />
+                    }
+                    else
+                    {
+                        @:No Image
+                    }
                 </div>
             </div>
         }
