@@ -132,8 +132,8 @@ namespace prjMusicBetter.Controllers
 
             foreach (var commentermemberInfo in result)
             {
-                var commenterName = commentermemberInfo.MemberUserName;
-                ViewData["CommenterName"] = commenterName;
+                var commenterUserName = commentermemberInfo.MemberUserName;
+                ViewData["CommenterUserName"] = commenterUserName;
                 var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
                 ViewData["CommenterPhoto"] = commenterPhotoPath;
             }
