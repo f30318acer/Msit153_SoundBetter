@@ -635,7 +635,7 @@
 					console.log(item);
 					const nameSub = item.fName.length > 12 ? item.fName.substring(0, 12)+'...' : item.fName
 					const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-					const cell1 = $('<td></td>').text(nameSub);
+					const cell1 = $('<td></td>').html(`<h5>${nameSub}</h5>`);
 					const cell2 = $('<td></td>').text(`技能 : [${item.fSkill.fName}]`);
 					const cell3 = $('<td></td>').text(descriSub);
 					const cell4 = $('<td></td>').html(`<a class="btn btn-primary m-1" href="/Project/Details/${item.fProjectId}" target="_blank" onclick="ChangeAppliStatus(${item.fApplicationRecordId})">詳細</a>`);
