@@ -99,8 +99,7 @@ namespace CoreMVC_SignalR_Chat.Hubs
                 }
                 //var sendToConnectionId = memberToConnectionMap[sendToID];
                 // 儲存訊息到資料庫
-                var saveMessageTask = SaveMessageToDatabase(selfID, sendToID, message);
-                await saveMessageTask;
+             
             }
         }
         public async Task<string> GetMemberId()
