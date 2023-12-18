@@ -51,6 +51,11 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        public IActionResult CouponList()
+        {
+            var coupons = _context.TCoupons.ToList();
+            return View(coupons);
+        }
         public IActionResult BackgroundIndex()
         {
             return View();
