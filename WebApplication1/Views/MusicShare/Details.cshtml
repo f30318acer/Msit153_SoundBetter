@@ -135,8 +135,8 @@
             <div id="player" class="col-12" style="display:none;">
                 <div id="divPlayList"></div>
                 <!-- 使用動態ID來設置音頻元素 -->
-                <audio controls id="${item.fWorkId}" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%">
-                    @*<source src="/WorkFile/${item.fFilePath}" type="audio/mpeg">*@
+                <audio controls id="audioPlayer" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%">
+                    <source src="/WorkFile/${item.fFilePath}.mp3" type="audio/mpeg">
                 </audio>
                 <div>
                     <button class="btn-hover color-8 buttons11" onclick="playPrevious()">上一首</button>
@@ -354,12 +354,12 @@
 
         //載入資料
         function load(pageNumber) {
-            console.log("HAHAH");
+            //console.log("HAHAH");
             const divList = $('#divList')
             const sId = $('#selectStyle').val();
             const keyword = $('#txtKeyword').val(); // 新增的關鍵字搜尋
             //divList.empty();
-            console.log("gay" + sId)
+           // console.log("gay" + sId)
 
             $.getJSON('/apiTWork/ListWithUserName', function (datas) {
 
@@ -430,7 +430,7 @@
 
         //第一次讀取
         function firstLoad(pageNumber) {
-            console.log("ABC")
+            //console.log("ABC")
             const divList = $('#divList')
             //divList.empty();
 
@@ -441,7 +441,7 @@
 
                 const docFrag = $(document.createDocumentFragment())
                 $.each(limitdatas, function (index, item) {
-                    console.log(item.fWorkId);
+                    //console.log(item.fWorkId);
                     const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                     const card = $(`
                                 <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
@@ -568,9 +568,8 @@
         }
         function handlePlayEnded(id) {
             // 在這裡執行你想要的操作
-            console.log(id);
+            //console.log(id);
 
-            console.log(id);
             $.ajax({
                 url: `/apiTWork/PlusOne/?id=${id}`,  // 請根據你的實際路由進行修改
                 type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
@@ -616,41 +615,100 @@
             btnOpen.style.display = "block";
             playerContainer.style.display = "none";
         }
-       function PlayListFirstLoad(){
-            const divPlayList = $('#divPlayList')
-            $.getJSON('/apiTWork/GetPlayList', function (datas) {
-                const docFrag=$(document.createDocumentFragment())
-                $.each(datas,function(index,item){
-                    //console.log(datas);
-                const card=$(
-                    `
-                            <div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;">
-                                                    <div class="row playlist-item" style="margin: 0;">
-                                                        <div class="col-4" style="margin:0px"><img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;"></div>
-                                                        <div class="col-8" style="margin:0px">
-                                                            <div class="row">
-                                                                <div class="col-12 text-center">
-                                                                    <div class="row">
-                                                                        <div class="col-10">
-                                                                            <h5>${item.fWorkName}</h5>
-                                                                        </div>
-                                                                        <div class="col-2"></div>
-                                                                    </div>
-                                                                </div>
-                                                               
-                                                        </div>
-                                                         
-                                                                   <div class="col-2" style="margin:0px">   <button class="btn-hover color-8 buttons11" onclick="">移除清單</button></div>
-                                                    </div>
-                    `  )
-                    docFrag.append(card); 
-                    console.log(card);
-                })
-                divPlayList.html(docFrag);
-            })
+        let datas; // 儲存歌曲數據
+        let currentSongIndex = 0;
+        let currentItem; // 新增全局變數
 
-       }
-            PlayListFirstLoad();
+        function PlayListFirstLoad() {
+            const divPlayList = $('#divPlayList');
+            $.getJSON('/apiTWork/GetPlayList', function (playlistData) {
+                datas = playlistData; // 儲存歌曲數據
+                const docFrag = $(document.createDocumentFragment());
+
+                $.each(playlistData, function (index, item) {
+                    const card = $(
+                        `<div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;" onclick="playSongOnClick(${index})">
+                            <div class="row playlist-item" style="margin: 0;">
+                                <div class="col-4" style="margin:0px">
+                                    <img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;">
+                                </div>
+                                <div class="col-8" style="margin:0px">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <h5>${item.fWorkName}</h5>
+                                                </div>
+                                                <div class="col-2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="margin:0px">
+                                        <button class="btn-hover color-8 buttons11" onclick="">移除清單</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                    );
+                    docFrag.append(card);
+                });
+
+                divPlayList.html(docFrag);
+                // 初始化 currentSongIndex，這裡可以根據你的邏輯進行設置
+                currentSongIndex = 0;
+                // 調用播放函數
+                playSong(currentSongIndex);
+            });
+        }
+
+        // 新增的點擊事件處理函數
+        function playSongOnClick(index) {
+            // 使用點擊的索引來播放相應的歌曲
+            currentSongIndex = index;
+            currentItem = datas[index];
+            playSong(currentSongIndex);
+        }
+
+        PlayListFirstLoad();
+
+        function playPrevious() {
+            currentSongIndex = (currentSongIndex - 1 + datas.length) % datas.length;
+            currentItem = datas[currentSongIndex];
+            playSong(currentSongIndex);
+        }
+
+        function playNext() {
+            currentSongIndex = (currentSongIndex + 1) % datas.length;
+            currentItem = datas[currentSongIndex];
+            playSong(currentSongIndex);
+        }
+
+        function playSong(index) {
+            const audio = document.getElementById('audioPlayer');
+
+            // 檢查 currentItem 是否存在
+            if (!currentItem) {
+                console.error(`Invalid index or currentItem not found at index ${index}`);
+                return;
+            }
+
+            // 動態設置音頻文件的路徑
+            console.log(`Playing song: ${currentItem.fWorkName}`);
+            console.log(`File path: /WorkFile/${currentItem.fFilePath}`);
+            audio.src = `/WorkFile/${currentItem.fFilePath}`;
+
+            // 移除先前的事件監聽器，避免重複綁定
+            audio.removeEventListener('ended', handlePlayEnded);
+
+            // 添加新的事件監聽器
+            audio.addEventListener('ended', function () {
+                handlePlayEnded(currentItem.fWorkId);
+            });
+
+            // 其他播放相關邏輯，例如 audio.play()，根據你的實際需求添加
+            audio.play();  // 如果需要自動播放
+        }
+
 
     </script>
 }
