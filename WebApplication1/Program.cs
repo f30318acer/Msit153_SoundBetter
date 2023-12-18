@@ -17,6 +17,8 @@ using Stripe;
 
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -27,6 +29,10 @@ builder.Services.AddHttpContextAccessor();
 //自訂用戶登入資訊操作註冊DI
 builder.Services.AddScoped<UserInfoService>();
 
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+
+
 //建立資料庫連接需要特別加這一段
 builder.Services.AddDbContext<dbSoundBetterContext>(
     options => options.UseSqlServer(
@@ -35,6 +41,8 @@ builder.Services.AddDbContext<dbSoundBetterContext>(
 
 //Chart.js
 builder.Services.AddScoped<MemberDataService>();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation() ;
+
 
 //建立聊天室連接需要特別加這一段
 builder.Services.AddSignalR();

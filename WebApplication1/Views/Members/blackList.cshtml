@@ -9,6 +9,14 @@
     .rounded-td {
         border-radius: 0.375rem; /* This is Tailwind's 'rounded-md' utility equivalent */
     }
+
+    .member-image {
+        width: 96px; /* 或您希望的任何其他固定尺寸 */
+        height: 96px; /* 或您希望的任何其他固定尺寸 */
+        object-fit: cover; /* 這將確保圖像覆蓋該區域同時保持比例 */
+        border-radius: 50%; /* 可選：如果您想要圓形圖像 */
+    }
+
 </style>
 
 
@@ -44,12 +52,13 @@
             <table class="w-full">
                 <thead class="bg-gray-50">
                     <tr class="bg-yellow-300">
+                        <th class="text-center py-2">照片</th>
                         <th class="text-center py-2">姓名</th>
                         <th class="text-center py-2">電話號碼</th>
                         <th class="text-center py-2">信箱</th>
-                        <th class="text-center py-2">性別</th>
+                     @*    <th class="text-center py-2">性別</th> *@
                         <th class="text-center py-2">生日</th>
-                        <th class="text-center py-2">照片</th>
+                    
                         <th class="text-center py-2">Details</th>
                     </tr>
                 </thead>
@@ -57,6 +66,16 @@
                     @foreach (var item in Model.BlackList)
                     {
                         <tr class="hover:bg-gray-100 hover:color-coral">
+                            <td class="py-2 px-4 rounded-td">
+                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
+                                {
+                                    <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" class="member-image" />
+                                }
+                                else
+                                {
+                                    @:No Image
+                                }
+                            </td>
                             <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FName)
                             </td>
@@ -66,22 +85,13 @@
                             <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FEmail)
                             </td>
-                            <td class="py-2 px-4 rounded-td">
+                          @*   <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FGender)
-                            </td>
+                            </td> *@
                             <td class="py-2 px-4 rounded-td">
                                 @Html.DisplayFor(modelItem => item.FBirthday)
                             </td>
-                            <td class="py-2 px-4 rounded-td">
-                                @if (!string.IsNullOrEmpty(item.FPhotoPath))
-                                {
-                                    <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" class="w-24 h-auto rounded" />
-                                }
-                                else
-                                {
-                                    @:No Image
-                                }
-                            </td>
+                           
                             <td class="text-center border-b border-gray-200">
                                 <a href="@Url.Action("Details", "MemberPage", new { id = item.FMemberId })" class="text-blue-500 hover:text-blue-600">Detail</a>
                             </td>

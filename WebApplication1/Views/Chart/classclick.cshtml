@@ -2,37 +2,81 @@
 @{
     ViewData["Title"] = "classclick";
     Layout = "~/Views/Shared/ChartLayout.cshtml";
+
 }
+<p>
+    <div class="row">  
+        <div class="col-2">
+            <select id="ChartType2" class="form-control" style="150px">
+                <option selected>-Select Chart Type-</option>
+                <option>bar</option>
+                <option>line</option>
+                <option>pie</option>
+                <option>doughnut</option>
+            </select>
+        </div>
+        <div class="col-4">
+            <input id="ID2" value="顯示圖表" type="button"/>
+        </div>
+    </div>
+</p>
 
-<html>
+<br />
+<canvas id="myChart2" style="max-width:600px;max-height:400px" ></canvas>
+<!-- 確保加入 jQuery 的引用 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // 初始加載圖表
+        loadChartData('bar'); // 假設 'bar' 是預設圖表類型
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-    <!-- 長條圖顯示的位置 -->
-    <canvas id="myChart"></canvas>
-
-    <!-- 長條圖的原始程式碼, 可以移除掉長條圖就會消失 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        const chartElement = document.getElementById('myChart');
-        new Chart(chartElement, {
-            type: 'bar',
-            data: {
-                labels: ['國一', '國二', '國三'],
-                datasets: [{
-                    label: '男生',
-                    data: [150, 130, 140],
-                }, {
-                    label: '女生',
-                    data: [120, 160, 100],
-                }],
-            }
+        $("#ID2").click(function () {
+            var chartType = $("#ChartType2").val() || 'bar'; // 如果沒有選擇，則默認為 'bar'
+            loadChartData(chartType);
         });
-    </script>
-</body>
 
-</html>
+        function loadChartData(chartType) {
+            $.ajax({
+                type: "POST",
+                url: "/Chart/GetClassClicksData",
+                data: "",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    renderChart(chartType, data);
+                },
+                error: Onerror
+            });
+        }
+
+        function renderChart(chartType, data) {
+            var _data = data;
+            var _chartLabels = _data[0];
+            var _chartData = _data[1];
+            var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+
+            // 檢查是否已經有圖表實例存在，如果有，則先銷毀
+            if (window.myChartInstance) {
+                window.myChartInstance.destroy();
+            }
+
+            window.myChartInstance = new Chart("myChart2", {
+                type: chartType,
+                data: {
+                    labels: _chartLabels,
+                    datasets: [{
+                        backgroundColor: barColor,
+                        data: _chartData
+                    }]
+                },
+            });
+        }
+
+        function Onerror(err) {
+            console.error(err); // 或者展示一個用戶友好的錯誤信息
+        }
+    });
+
+</script>
+

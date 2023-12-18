@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "workclick";
+    Layout = "~/Views/Shared/ChartLayout.cshtml";
+}
+
+<p>
+    <div class="row">
+        <div class="col-2">
+            <select id="ChartType1" class="form-control" style="150px">
+                <option selected>-Select Chart Type-</option>
+                <option>bar</option>
+                <option>line</option>
+                <option>pie</option>
+                <option>doughnut</option>
+            </select>
+        </div>
+        <div class="col-4">
+            <input id="ID1" value="顯示圖表" type="button" />
+        </div>
+    </div>
+</p>
+
+<br />
+<canvas id="myChart1" style="max-width:600px;max-height:400px"></canvas>
+<!-- 確保加入 jQuery 的引用 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#ID1").click(function () {
+
+            var chartType = $("#ChartType1").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Chart/GetWorksClicksData",
+                data: "",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: OnSuccessResult,
+                error: Onerror
+            });
+
+            function OnSuccessResult(data) {
+                var _data = data;
+                var _chartLabels = _data[0];
+                var _chartData = _data[1];
+                var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+
+                // 檢查是否已經有圖表實例存在，如果有，則先銷毀
+                if (window.myChartInstance) {
+                    window.myChartInstance.destroy();
+                }
+
+                window.myChartInstance = new Chart("myChart1", {
+                    type: chartType,
+                    data: {
+                        labels: _chartLabels,
+                        datasets: [{  // datasets 的設置應根據圖表類型可能需要調整
+                            backgroundColor: barColor,
+                            data: _chartData
+                        }]
+                    },
+                });
+            }
+
+            function Onerror(err) {
+                console.error(err); // 增加錯誤日誌
+            }
+        });
+    });
+</script>
