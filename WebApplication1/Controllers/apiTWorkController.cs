@@ -198,8 +198,8 @@ namespace prjSoundBetterApi.Controllers
                 int memberId = member.FMemberId;
                 var list = from p in _context.TPlaylists
                            join w in _context.TWorks on p.FWorkId equals w.FWorkId
-                           where p.FMemberId == memberId
-                           select new { w.FWorkId, w.FWorkName, w.FThumbnail };
+                           where p.FMemberId == memberId orderby w.FUpdateTime
+                           select new { w.FWorkId, w.FWorkName, w.FThumbnail,w.FFilePath };
                
                     return Json(list);
             }
