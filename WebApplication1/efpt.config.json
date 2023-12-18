@@ -156,10 +156,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tSitePicture]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[tSkill]",
          "ObjectType": 0
       },
@@ -172,15 +168,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tVision]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[tWork]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tWorkClick]",
          "ObjectType": 0
       },
       {

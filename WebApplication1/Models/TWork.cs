@@ -25,7 +25,7 @@ public partial class TWork
 
     public string FFilePath { get; set; }
 
-    public int FClick { get; set; }
+    public int? FClick { get; set; }
 
     public virtual TMember FMember { get; set; }
 

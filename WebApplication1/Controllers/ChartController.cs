@@ -101,7 +101,7 @@ namespace prjMusicBetter.Controllers
 
             data.Add(works);
 
-            List<int> ClicksWorks = _context.TWorks.Select(c => c.FClick).ToList();
+            var ClicksWorks = _context.TWorks.Select(c => c.FClick).ToList();
             data.Add(ClicksWorks);
             return data;
 
