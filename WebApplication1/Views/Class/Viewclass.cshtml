@@ -265,7 +265,7 @@
 </div>
 @section Scripts {
     <script>
-        var dealClass = @((ViewBag.DealClass).ToString().ToLower());
+        var dealClass = @((ViewBag.DealClass).ToString().ToLower());//把ViewBag.DealClass轉小寫
         function checkQuota() {
             // 檢查是否符合課程名額條件
             if (@Html.Raw(@Model.FCurrentStudent) < @Html.Raw(@Model.FMaxStudent) && dealClass == false) {
@@ -275,7 +275,7 @@
                     ProductId: @Model.FClassId,
                 };
 
-                // 符合條件，執行頁面跳轉
+                // 符合條件，新增購物車
                 $.ajax({
                     type: "POST",
                     url: "/apiShoppingCart/AddClassToCart", // 修改成你的 API 端點
@@ -326,7 +326,6 @@
 
                     //讀出每個Json物件
                     $.each(limitdatas, function (index, item) {
-                        //const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                 <a href="/Class/Viewclass?id=${item.fClassId}">
