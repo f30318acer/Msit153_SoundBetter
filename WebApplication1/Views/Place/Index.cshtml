@@ -1,8 +1,14 @@
-﻿<style>
+﻿@{
+    Layout = "_Layout2";
+}
+
+<style>
     #container {
-        height: 500px;
+/*         height: 500px;
         min-width: 310px;
-        max-width: 800px;
+        max-width: 800px; */
+        height: 100%; /* 設定高度為100% */
+        width: 100%; /* 設定寬度為100% */
         margin: 0 auto;
     }
 
@@ -11,14 +17,13 @@
         text-align: center;
         color: gray;
     }
-
 </style>
 
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-
-<div id="container"></div>
-
+<main id="main" class="main">
+<div id="container" style="height: 800px"></div>
+</main>
 @section Scripts{
     <script>
         (async () => {
@@ -71,7 +76,11 @@
                 },
 
                 title: {
-                    text: '場地分布'
+                    text: '場地分布',
+                    style: {
+                        fontFamily: 'Microsoft JhengHei, sans-serif', // 設定字型
+                        fontSize: '30px' // 設定字體大小
+                    }
                 },
 
                 mapNavigation: {
@@ -91,7 +100,7 @@
 
                 series: [{
                     data: data,
-                    name: 'Random data',
+                    name: '場地數量',
                     states: {
                         hover: {
                             color: '#E0FFFF'
@@ -99,7 +108,11 @@
                     },
                     dataLabels: {
                         enabled: true,
-                        format: '{point.name}'
+                        format: '{point.name}',
+                        style: {
+                            fontFamily: 'Microsoft JhengHei, sans-serif', // 設定字型
+                            fontSize: '15px' // 設定字體大小
+                        }
                     }
                 }]
             });

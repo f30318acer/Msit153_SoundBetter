@@ -61,7 +61,7 @@
 
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <input type="text" name="query" placeholder="搜尋" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->
@@ -225,7 +225,7 @@
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
                             <h6>Kevin Anderson</h6>
-                            <span>Web Designer</span>
+                            <span>管理員</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -233,15 +233,15 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                                 <i class="bi bi-person"></i>
-                                <span>My Profile</span>
+                                <span>個人頁面</span>
                             </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                             <a class="dropdown-item d-flex align-items-center" href="#"> 
-                                 <i class="bi bi-box-arrow-right"></i> 
+@*                              <a class="dropdown-item d-flex align-items-center" href="#"> 
+                                 <i class="bi bi-box-arrow-right"></i>  *@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <a class="dropdown-item fs-12px" asp-action="Loginout" asp-controller="Home">登出</a>
@@ -268,7 +268,7 @@
 
                     <i class="bi bi-grid"></i>
 
-                    <span>Dashboard</span>
+                    <span>主控台</span>
                 </a>
             </li>
             
@@ -332,7 +332,7 @@
                 <ul id="work-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="@Url.Content("~/TWorks/Index")">
-                            <i class="bi bi-circle"></i><span>查詢</span>
+                            <i class="bi bi-circle"></i><span>作品管理</span>
                         </a>
                         <a href="@Url.Content("~/Comment/List")">
                             <i class="bi bi-circle"></i><span>文章評論留言管理</span>
@@ -343,7 +343,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#analy-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Chart</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-layout-text-window-reverse"></i><span>圖表分析</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="analy-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
