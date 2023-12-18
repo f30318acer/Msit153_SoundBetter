@@ -106,11 +106,11 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark" id="empList">
                                         <li class="d-flex align-items-center mx-2">
-                                            <img src="/img/icons/help_icon.png" class="width-16px" width="30" />
+                                            <img src="/img/icons/question.png" class="width-16px" width="30" />
                                             <a class="dropdown-item fs-12px" href="#">幫助中心</a>
                                         </li>
                                         <li class="d-flex align-items-center mx-2">
-                                            <img src="/img/icons/login.png" class="width-16px" width="30" />
+                                            <img src="/img/icons/user.png" class="width-16px" width="30" />
                                             @if (User.Identity.IsAuthenticated)
                                             {
                                                 <a class="dropdown-item" asp-action="Loginout" asp-controller="Home">登出</a>
@@ -208,24 +208,20 @@
                     官方社群
                 </div>
                 <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-facebook"></i></a>
+                    <a href=""><i class="fa fa-facebook-square"></i></a>
                     Facebook
-                </div>
-                <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-pinterest"></i></a>
-                    Line
                 </div>
                 <div class="lh-1 my-3 fs-12px">
                     <a href=""><i class="fa fa-instagram"></i></a>
                     Instagram
                 </div>
                 <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-youtube"></i></a>
+                    <a href=""><i class="fa fa-youtube-play"></i></a>
                     Youtube
                 </div>
                 <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-twitter"></i></a>
-                    Twitter
+                    <a href=""><i class="fa fa-github"></i></a>
+                    GitHub
                 </div>
             </div>
         </div>
