@@ -1,0 +1,75 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TCoupon>
+
+@{
+    ViewData["Title"] = "CouponList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+</style>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-red-600 my-4">優惠券列表</h1>
+        <div class="bg-white shadow-md rounded my-6">
+            <table class="text-left w-full border-collapse">
+                <thead>
+                    <tr class="text-sm font-medium text-gray-700 bg-gray-200">
+                       
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">優惠代碼</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">優惠描述</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">開始日期</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">結束日期</th>
+                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">優惠種類</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                          
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                @Html.DisplayFor(modelItem => item.FCouponCode)
+                            </td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <div class="truncate-text">
+                                    @Html.DisplayFor(modelItem => item.FDescription)
+                                </div>
+                            </td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                @Html.DisplayFor(modelItem => item.FStartdate)
+                            </td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                @Html.DisplayFor(modelItem => item.FEnddate)
+                            </td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <div class="truncate-text">
+                                    @if (!string.IsNullOrEmpty(item.FPicture))
+                                    {
+                                        <img src="@Url.Content("~/img/Coolpon/" + item.FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
+
+                                    }
+                                    else
+                                    {
+                                        @:No Image
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
