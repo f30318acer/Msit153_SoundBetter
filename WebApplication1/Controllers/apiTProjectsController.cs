@@ -286,6 +286,20 @@ namespace prjSoundBetterApi.Controllers
             }
             return Content("錯誤");
         }
+        //===取得追蹤的專案===
+        public IActionResult GetPrjFavByID(int? id)
+        {
+            if (id == null || _context.TProjectFavs == null)
+            {
+                return NotFound();
+            }
+            var prjFav = from f in _context.TProjectFavs
+                         join p in _context.TProjects
+                         on f.FProjectId equals p.FProjectId
+                         where f.FMemberId == id && p.FProjectStatusId == 1
+                         select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
+			return Json(prjFav);
+		}
 
         //===取得應徵資料===
         public IActionResult GetAppliInfo(int? id)
