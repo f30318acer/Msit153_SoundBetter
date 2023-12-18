@@ -1,79 +1,117 @@
-﻿@model prjMusicBetter.Models.ViewModels.CommentListViewModel
+﻿
+@model prjMusicBetter.Models.ViewModels.CommentListViewModel
+
+
+
+<!DOCTYPE html>
+
 @{
-    ViewBag.Title = "留言板";
+    ViewData["Title"] = "List";
+    Layout = "_Layout2";
 }
+<style>
+    dt {
+        font-size: 30px;
+        color: darkblue;
+        font-family: 'Microsoft JhengHei UI'
+    }
+
+    dd:not(#PlacePic) {
+        background-color: white;
+        font-size: 20px;
+        font-family: 'Microsoft JhengHei UI';
+    }
+</style>
+
+<html>
 
 
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>管理留言介面</title>
+</head>
+<main id="main" class="main">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                序
-            </th>
-            <th>
-                文章ID
-            </th>
-            <th>
-                會員名稱
-            </th>
-            <th>
-                留言內容
-            </th>
-            <th>
-                留言時間
-            </th>
-            <th>
+    <h2>管理留言介面</h2>
+    @using (Html.BeginForm("List", "Comment", FormMethod.Get))
+    {
+        <label for="articleId">文章編號:</label>
+        <input type="text" name="articleId" id="articleId" />
 
-            </th>
-            <th>
+        <button type="submit">查詢</button>
+    }
 
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (var index = 0; index < Model.Comments.Count; index++)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @(index + 1)
-                </td>
-                <td>
-                    @Model.Comments[index].FArticleId
-                </td>
-                <td>
-                    @Model.Comments[index].FMember.FName
-                </td>
-                <td>
-                    @Model.Comments[index].FCommentContent
-                </td>
-                <td>
-                    @Model.Comments[index].FCommentTime.Value.ToString("yyyy/MM/dd HH:mm")
-                </td>
-                <td>
-                </td>
-                <td>
-                    @Html.ActionLink("刪除", "Delete", "Comment", new { id = Model.Comments[index].FCommentId },
-                             new { onclick = "return confirm('確定要刪除嗎?')" })
-                </td>
+                <th>
+                    序
+                </th>
+                <th>
+                    文章編號
+                </th>
+                <th>
+                    評論者ID
+                </th>
+                <th>
+                    評論內容
+                </th>
+                <th>
+                    評論時間
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-   
-</table>
+        </thead>
+        <tbody>
+            @{
+                for (var index = 0; index < Model.Comments.Count; index++)
+                {
+
+                    <tr>
+                        <td>
+                            @(index + 1)
+                        </td>
+                        <td>
+                            @Model.Comments[index].FArticleId
+                        </td>
+                        <td>
+                            @Model.Comments[index].FMember.FName
+                        </td>
+                        <td>
+                            @Model.Comments[index].FCommentContent
+                        </td>
+                        <td>
+                            @Model.Comments[index].FCommentTime.Value.ToString("yyyy/MM/dd HH:mm")
+                        </td>
+                        <td>
+                            @Html.ActionLink("刪除", "Delete", "Comment", new { id = Model.Comments[index].FCommentId },
+                                 new { onclick = "return confirm('確定要刪除嗎?')" })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @* <a href="@Url.Action("Create","Comment")"><button class="btn btn-primary" type="button">加入留言</button></a> *@
+</main>
 
 
 
-<a href="@Url.Action("Create","Comment")"><button class="btn btn-primary" type="button">加入留言</button></a>
 
 
 
 
 <script>
 
-   
+
 
 
 </script>
 
 @*                     @Html.ActionLink("修改", "Edit", "Comment", new { id = Model.Comments[index].FCommentId }, null) | *@
+</html>
+
+
+
+
+
