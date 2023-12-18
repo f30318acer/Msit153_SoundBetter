@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace prjMusicBetter.Models;
 
@@ -88,19 +87,13 @@ public partial class dbSoundBetterContext : DbContext
 
     public virtual DbSet<TSitePeriodStatus> TSitePeriodStatuses { get; set; }
 
-    public virtual DbSet<TSitePicture> TSitePictures { get; set; }
-
     public virtual DbSet<TSkill> TSkills { get; set; }
 
     public virtual DbSet<TSkillCategory> TSkillCategories { get; set; }
 
     public virtual DbSet<TStyle> TStyles { get; set; }
 
-    public virtual DbSet<TVision> TVisions { get; set; }
-
     public virtual DbSet<TWork> TWorks { get; set; }
-
-    public virtual DbSet<TWorkClick> TWorkClicks { get; set; }
 
     public virtual DbSet<TWorkFav> TWorkFavs { get; set; }
 
@@ -1056,24 +1049,6 @@ public partial class dbSoundBetterContext : DbContext
                 .HasColumnName("fDescription");
         });
 
-        modelBuilder.Entity<TSitePicture>(entity =>
-        {
-            entity.HasKey(e => e.FSitePictureId);
-
-            entity.ToTable("tSitePicture");
-
-            entity.Property(e => e.FSitePictureId).HasColumnName("fSitePictureID");
-            entity.Property(e => e.FPicturePath)
-                .HasMaxLength(50)
-                .HasColumnName("fPicturePath");
-            entity.Property(e => e.FSiteId).HasColumnName("fSiteID");
-
-            entity.HasOne(d => d.FSite).WithMany(p => p.TSitePictures)
-                .HasForeignKey(d => d.FSiteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tSitePicture_tSite");
-        });
-
         modelBuilder.Entity<TSkill>(entity =>
         {
             entity.HasKey(e => e.FSkillId);
@@ -1137,30 +1112,6 @@ public partial class dbSoundBetterContext : DbContext
                 .HasColumnName("fThumbnailPath");
         });
 
-        modelBuilder.Entity<TVision>(entity =>
-        {
-            entity.HasKey(e => e.FVisionId);
-
-            entity.ToTable("tVision");
-
-            entity.Property(e => e.FVisionId).HasColumnName("fVisionID");
-            entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
-            entity.Property(e => e.FVisionDescription)
-                .HasMaxLength(50)
-                .HasColumnName("fVisionDescription");
-            entity.Property(e => e.FVisionName)
-                .HasMaxLength(50)
-                .HasColumnName("fVisionName");
-            entity.Property(e => e.FVisionPath)
-                .HasMaxLength(50)
-                .HasColumnName("fVisionPath");
-
-            entity.HasOne(d => d.FMember).WithMany(p => p.TVisions)
-                .HasForeignKey(d => d.FMemberId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tVision_tMember");
-        });
-
         modelBuilder.Entity<TWork>(entity =>
         {
             entity.HasKey(e => e.FWorkId);
@@ -1199,17 +1150,6 @@ public partial class dbSoundBetterContext : DbContext
             entity.HasOne(d => d.FWorkType).WithMany(p => p.TWorks)
                 .HasForeignKey(d => d.FWorkTypeId)
                 .HasConstraintName("FK_tWork_tWorkType");
-        });
-
-        modelBuilder.Entity<TWorkClick>(entity =>
-        {
-            entity.HasKey(e => e.FWorkClick);
-
-            entity.ToTable("tWorkClick");
-
-            entity.Property(e => e.FWorkClick).HasColumnName("fWorkClick");
-            entity.Property(e => e.FClick).HasColumnName("fClick");
-            entity.Property(e => e.FWorkId).HasColumnName("fWorkID");
         });
 
         modelBuilder.Entity<TWorkFav>(entity =>

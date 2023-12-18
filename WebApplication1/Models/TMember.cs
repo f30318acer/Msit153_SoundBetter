@@ -69,8 +69,6 @@ public partial class TMember
 
     public virtual ICollection<TSite> TSites { get; set; } = new List<TSite>();
 
-    public virtual ICollection<TVision> TVisions { get; set; } = new List<TVision>();
-
     public virtual ICollection<TWorkFav> TWorkFavs { get; set; } = new List<TWorkFav>();
 
     public virtual ICollection<TWork> TWorks { get; set; } = new List<TWork>();

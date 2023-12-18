@@ -150,9 +150,6 @@ namespace prjSoundBetterApi.Controllers
             var project = _context.TWorks.Where(c => c.FWorkId == id).FirstOrDefault();
             if (project != null)
             {
-                // 刪除 TClassClick 中符合條件的資料
-                var relatedClicks = _context.TWorkClicks.Where(click => click.FWorkId == project.FWorkId).ToList();
-                _context.TWorkClicks.RemoveRange(relatedClicks);
                 _context.TWorks.Remove(project);
                 _context.SaveChanges();
                 return Content("刪除成功");

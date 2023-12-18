@@ -36,6 +36,4 @@ public partial class TSite
     public virtual ICollection<TProject> TProjects { get; set; } = new List<TProject>();
 
     public virtual ICollection<TSitePeriod> TSitePeriods { get; set; } = new List<TSitePeriod>();
-
-    public virtual ICollection<TSitePicture> TSitePictures { get; set; } = new List<TSitePicture>();
 }
