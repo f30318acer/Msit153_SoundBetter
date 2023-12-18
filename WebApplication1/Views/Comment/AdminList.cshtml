@@ -1,0 +1,71 @@
+﻿@model IEnumerable<prjMusicBetter.Models.TComment>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AdminList</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                序
+            </th>
+            <th>
+                文章名稱
+            </th>
+            <th>
+                評論者ID
+            </th>
+            <th>
+                評論內容
+            </th>
+            <th>
+                評論時間
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @{
+                int count = 0;
+                foreach (var item in Model) {
+                    count++;
+                    <tr>
+            <td>
+            @count           
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.FArticle.FTitle)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.FMember.FMemberId)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.FCommentContent)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.FCommentTime) 
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FCommentId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FCommentId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FCommentId">Delete</a>
+            </td>
+        </tr>
+                }
+            }
+    </tbody>
+</table>
+</body>
+</html>
