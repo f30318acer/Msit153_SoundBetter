@@ -110,7 +110,7 @@
             <div class="col-1">
                 @if (comment.FMember != null)
                 {
-                    <img src="@Url.Content($"~/img/Member/{@ViewData["UserPhoto"]}")" />
+                    <img src="@Url.Content($"~/img/Member/{@ViewData["CommenterPhoto"]}")" />
                 }
                 else
                 {
@@ -121,7 +121,7 @@
                 <p>
                     @if (comment.FMember != null)
                     {
-                        <span class="font-weight-bold">@ViewData["UserName"]</span>
+                        <span class="font-weight-bold">@ViewData["CommenterName"]</span>
                         
                     }
                     else

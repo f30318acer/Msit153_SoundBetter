@@ -10,6 +10,7 @@ using prjMusicBetter.Models.Dtos.Comment;
 using prjMusicBetter.Models.infra;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace prjMusicBetter.Controllers
 {
@@ -117,21 +118,26 @@ namespace prjMusicBetter.Controllers
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
             ViewData["UserName"] = _userInfoService.GetMemberInfo().FName;
             ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
-            
 
 
-            //          var commenterName = await _context.TComments
-            //                          .Where(c => c.FMemberId == id)
-            //                          .Include(c => c.FMember)
-            //                          .ThenInclude(c => c.FName)
-            //                          .SingleOrDefaultAsync();
-            //ViewData["CommenterName"] = commenterName;
-            //       var commenterPhoto = await _context.TComments
-            //                          .Where(c => c.FMemberId == id)
-            //                          .Include(c => c.FMember)
-            //                          .ThenInclude (c => c.FPhotoPath)
-            //                          .SingleOrDefaultAsync();
-            //ViewData["CommenterPhoto"] = commenterPhoto; 
+            var query = from comment in _context.TComments
+                        join member in _context.TMembers on comment.FMemberId equals member.FMemberId
+                        select new
+                        {
+                            MemberName = member.FName,
+                            MemberPhotoPath = member.FPhotoPath
+                        };
+
+            var result = await query.ToListAsync();
+
+            foreach (var commentermemberInfo in result)
+            {
+                var commenterName = commentermemberInfo.MemberName;
+                ViewData["CommenterName"] = commenterName;
+                var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
+                ViewData["CommenterPhoto"] = commenterPhotoPath;
+            }
+             
             //留言部分
 
 
@@ -199,6 +205,7 @@ namespace prjMusicBetter.Controllers
                 if (article != null)
                 {
                     cdto.FArticleId = article.FMember.FMemberId;
+                    //cdto.FArticleId = article.FArticleId;
 
                     // 添加评论
                     _context.TComments.Add(new TComment()
