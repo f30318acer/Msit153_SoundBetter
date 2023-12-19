@@ -132,13 +132,13 @@ Commom elements
 .site-btn {
 	display: inline-block;
 	border: none;
-	font-size: 14px;
+	font-size: 20px;
 	font-weight: 500;
 	min-width: 195px;
 	padding: 23px 20px;
 	border-radius: 50px;
 	text-transform: uppercase;
-	background: #fc0254;
+	background: #FF6F61;
 	color: #fff;
 	line-height: normal;
 	cursor: pointer;
