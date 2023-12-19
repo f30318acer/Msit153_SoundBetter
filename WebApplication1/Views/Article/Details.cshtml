@@ -132,6 +132,16 @@
                     <span class="text-muted">． @comment.FCommentTime</span>
                 </p>
                 <p>@comment.FCommentContent</p>
+                @if (comment.FMemberId == Convert.ToInt32(ViewData["UserId"]))
+                {
+                    <div>
+                        @{
+                            var deleteUrl = Url.Action("DeleteComment", "Article", new { commentId = comment.FCommentId, articleId = comment.FArticleId });
+                        }
+
+                        <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除</button>
+                    </div>
+                }
             </div>
         </div>
     }
@@ -157,5 +167,12 @@
                 $(`#pic${i + 2}`).attr('src', `/img/Article/ArticlePicture/${x}`);
             }
         })
+
+        function confirmAndDelete(url) {
+            if (confirm('確定要刪除嗎?')) {
+                window.location.href = url;
+            }
+        }
+
     </script>
 }
