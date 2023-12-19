@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
@@ -8,15 +9,15 @@ using System.Text.RegularExpressions;
 
 namespace prjMusicBetter.Controllers
 {
-	public class apiTClassController : Controller
-	{
-		private readonly IWebHostEnvironment _host;
-		private readonly dbSoundBetterContext _context;
+    public class apiTClassController : Controller
+    {
+        private readonly IWebHostEnvironment _host;
+        private readonly dbSoundBetterContext _context;
         private readonly UserInfoService _userInfoService;
         public apiTClassController(IWebHostEnvironment host, dbSoundBetterContext context, UserInfoService userInfoService)
-		{
-			_host = host;
-			_context = context;
+        {
+            _host = host;
+            _context = context;
             _userInfoService = userInfoService;//抓使用者
         }
         //===去除資料的html標籤===
@@ -27,15 +28,15 @@ namespace prjMusicBetter.Controllers
         }
         //===全部課程的資料===
         public IActionResult List()
-		{
-			var dbSoundBetterContext = from s in _context.TClasses
-									   join c in  _context.TClassClicks
-									   on s.FClassId equals c.FClassId
+        {
+            var dbSoundBetterContext = from s in _context.TClasses
+                                       join c in _context.TClassClicks
+                                       on s.FClassId equals c.FClassId
                                        join m in _context.TMembers
                                        on s.FTeacherId equals m.FMemberId
                                        join t in _context.TSites
                                        on s.FSiteId equals t.FSiteId
-                                       
+
                                        where s.FEnddate >= DateTime.Now
                                        orderby s.FClassId descending
                                        select new
@@ -54,86 +55,86 @@ namespace prjMusicBetter.Controllers
                                        };
 
             return Json(dbSoundBetterContext);
-		}
-		//===用MemberID搜尋===
-		public IActionResult QueryByMember(int? id)//MemberId
-		{
-			if (id == null || _context.TClasses == null)
-			{
-				return NotFound();
-			}
+        }
+        //===用MemberID搜尋===
+        public IActionResult QueryByMember(int? id)//MemberId
+        {
+            if (id == null || _context.TClasses == null)
+            {
+                return NotFound();
+            }
 
-			var dbSoundBetterContext = from s in _context.TClasses
-									   join c in _context.TClassClicks
-									   on s.FClassId equals c.FClassId
-									   join m in _context.TMembers
-									   on s.FTeacherId equals m.FMemberId
+            var dbSoundBetterContext = from s in _context.TClasses
+                                       join c in _context.TClassClicks
+                                       on s.FClassId equals c.FClassId
+                                       join m in _context.TMembers
+                                       on s.FTeacherId equals m.FMemberId
                                        where s.FTeacherId == id
                                        orderby s.FClassId descending
                                        select new
-									   {
-										   fClassId = s.FClassId,
-										   fClassName = s.FClassName,
-										   fThumbnailPath = s.FThumbnailPath,
+                                       {
+                                           fClassId = s.FClassId,
+                                           fClassName = s.FClassName,
+                                           fThumbnailPath = s.FThumbnailPath,
                                            fCurrentStudent = s.FCurrentStudent,
                                            fMaxStudent = s.FMaxStudent,
                                            fSkillId = s.FSkillId,
-										   fDescription = ReplaceHtmlTag(s.FDescription),
-										   fOnLine = s.FOnLine,
-										   fClick = c.FClick,
-										   fTeacherNmae = m.FName,
+                                           fDescription = ReplaceHtmlTag(s.FDescription),
+                                           fOnLine = s.FOnLine,
+                                           fClick = c.FClick,
+                                           fTeacherNmae = m.FName,
                                            fEnddate = s.FEnddate,
                                        };
             if (dbSoundBetterContext == null)
-			{
-				return NotFound();
-			}
-			return Json(dbSoundBetterContext);
-		}
-		//===List_Status===
-		public IActionResult QueryBySkillID(int? id)
-		{
-			if (id == null || _context.TClasses == null)
-			{
-				return NotFound();
-			}
+            {
+                return NotFound();
+            }
+            return Json(dbSoundBetterContext);
+        }
+        //===List_Status===
+        public IActionResult QueryBySkillID(int? id)
+        {
+            if (id == null || _context.TClasses == null)
+            {
+                return NotFound();
+            }
 
-			var tProject = _context.TClasses.Where(m => m.FSkillId == id);
-			if (tProject == null)
-			{
-				return NotFound();
-			}
-			return Json(tProject);
-		}
-		//===搜尋id===
-		public IActionResult QueryById(int? id)
-		{
-			if (id == null || _context.TClasses == null)
-			{
-				return NotFound();
-			}
-
-			var tProject = _context.TClasses.FirstOrDefault(m => m.FClassId == id);
-			if (tProject == null)
-			{
-				return NotFound();
+            var tProject = _context.TClasses.Where(m => m.FSkillId == id);
+            if (tProject == null)
+            {
+                return NotFound();
             }
             return Json(tProject);
-		}
-		//===新增===
-		[HttpPost]
-		public IActionResult Create(TClass? project, IFormFile formFile)
-		{
-			if (project != null)
-			{
+        }
+        //===搜尋id===
+        public IActionResult QueryById(int? id)
+        {
+            if (id == null || _context.TClasses == null)
+            {
+                return NotFound();
+            }
+
+            var tProject = _context.TClasses.FirstOrDefault(m => m.FClassId == id);
+            if (tProject == null)
+            {
+                return NotFound();
+            }
+            return Json(tProject);
+        }
+        //===新增===
+        [HttpPost]
+        public IActionResult Create(TClass? project, IFormFile formFile)
+        {
+            if (project != null)
+            {
                 if (formFile != null)
                 {
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
                     project.FThumbnailPath = photoName;
                     formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
                 }
-				else
-				{
+                else
+                {
                     project.FThumbnailPath = "class_bg.jpg";
                 }
 
@@ -183,21 +184,21 @@ namespace prjMusicBetter.Controllers
                 }
 
                 return Content("新增成功");
-			}
-			return Content("錯誤");
-		}
-		//===修改===
-		public IActionResult Edit(TClass project, IFormFile formFile)
-		{
-			if (project != null)
-			{
-				try
-				{
-					//圖片有改就存下並修改
+            }
+            return Content("錯誤");
+        }
+        //===修改===
+        public IActionResult Edit(TClass project, IFormFile formFile)
+        {
+            if (project != null)
+            {
+                try
+                {
+                    //圖片有改就存下並修改
                     if (formFile != null)
                     {
                         string photoName = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
-                        if(photoName != "class_bg.jpg")
+                        if (photoName != "class_bg.jpg")
                         {
                             project.FThumbnailPath = photoName;
                             formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
@@ -209,37 +210,37 @@ namespace prjMusicBetter.Controllers
                     //圖片沒改就沿用
                     else
                     {
-						string Path = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
-						project.FThumbnailPath = Path;
+                        string Path = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
+                        project.FThumbnailPath = Path;
                     }
                     _context.Update(project);
-					_context.SaveChanges();
-					return Content("修改成功");
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!TProjectExists(project.FClassId))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-			}
-			return Content("錯誤");
-		}
-		//===刪除===
-		public IActionResult Delete(int id)
-		{
-			if (_context.TClasses == null)
-			{
-				return Problem("連線錯誤");
-			}
-			var project = _context.TClasses.Where(c => c.FClassId == id).FirstOrDefault();
-			if (project != null)
-			{
+                    _context.SaveChanges();
+                    return Content("修改成功");
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TProjectExists(project.FClassId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return Content("錯誤");
+        }
+        //===刪除===
+        public IActionResult Delete(int id)
+        {
+            if (_context.TClasses == null)
+            {
+                return Problem("連線錯誤");
+            }
+            var project = _context.TClasses.Where(c => c.FClassId == id).FirstOrDefault();
+            if (project != null)
+            {
                 // 刪除 TClassClick 中符合條件的資料
                 var relatedClicks = _context.TClassClicks.Where(click => click.FClassId == project.FClassId).ToList();
                 _context.TClassClicks.RemoveRange(relatedClicks);
@@ -248,15 +249,15 @@ namespace prjMusicBetter.Controllers
                 _context.TDealClassDetails.RemoveRange(relatedDeals);
 
                 _context.TClasses.Remove(project);
-				_context.SaveChanges();
-				return Content("刪除成功");
-			}
-			return Content("刪除失敗");
-		}
-		private bool TProjectExists(int id)
-		{
-			return (_context.TClasses?.Any(e => e.FClassId == id)).GetValueOrDefault();
-		}
+                _context.SaveChanges();
+                return Content("刪除成功");
+            }
+            return Content("刪除失敗");
+        }
+        private bool TProjectExists(int id)
+        {
+            return (_context.TClasses?.Any(e => e.FClassId == id)).GetValueOrDefault();
+        }
 
         public IActionResult classFav(int? id)
         {
@@ -270,9 +271,10 @@ namespace prjMusicBetter.Controllers
         {
             TMember member = _userInfoService.GetMemberInfo();
             var classfav = _context.TClassFavs.Where(m => m.FMemberId == member.FMemberId);
-			if(classfav.Count() > 0) {
-				return Json(classfav); 
-			}
+            if (classfav.Count() > 0)
+            {
+                return Json(classfav);
+            }
             return NotFound();
         }
         public IActionResult FavById(int id)
@@ -357,6 +359,7 @@ namespace prjMusicBetter.Controllers
             return Json(result.ToList());
         }
 
+        //退出課程
         [HttpPost]
         public IActionResult DelDeal(int? id, int? classId)
         {
@@ -369,9 +372,11 @@ namespace prjMusicBetter.Controllers
             {
                 // 根據你的需求，進行 TDealClassDetails 的刪除操作
                 var dealToRemove = _context.TDealClassDetails.FirstOrDefault(d => d.FClassId == classId && d.FMemberId == id);
-
-                if (dealToRemove != null)
+                var classCurrent = _context.TClasses.FirstOrDefault(c => c.FClassId == classId);
+                if (dealToRemove != null || classCurrent != null)
                 {
+                    --classCurrent.FCurrentStudent;
+
                     _context.TDealClassDetails.Remove(dealToRemove);
                     _context.SaveChanges();
                     // 刪除成功的處理，這裡可以根據需要進行其他操作
@@ -390,6 +395,7 @@ namespace prjMusicBetter.Controllers
             }
         }
 
+        //新增地點
         [HttpPost]
         public IActionResult CreateSite(TSite? tSite)
         {
@@ -402,21 +408,51 @@ namespace prjMusicBetter.Controllers
             return Content("錯誤");
         }
 
+        //完成結帳後的處理
         //fCurrentStudent + 1
         [HttpPost]
         public IActionResult Currentplus(int? id)
         {
-            if (id == null || _context.TClasses == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                TMember member = _userInfoService.GetMemberInfo();
+                var memberId = member.FMemberId;
+                var Class = _context.TClasses.FirstOrDefault(m => m.FClassId == id);
+                if (Class != null)
+                {
+                    Class.FCurrentStudent++;//現在學生數+1
+
+                    var studentID = Class.FTeacherId;
+                    var studentName = _context.TMembers.FirstOrDefault(m => m.FMemberId == memberId).FName;
+                    var ClassName = Class.FClassName;
+                    var Notifi = "有一名學生：" + studentName + "，加入了你的課程：" + ClassName;
+
+                    var tClassNotifi = new TNotification
+                    {
+                        FMemberId = studentID,
+                        FNotification = Notifi,
+                        FNotifiStatus = 1,
+                        FProjectId = 0,
+                        FClassId = id
+                    };
+                    _context.TNotifications.Add(tClassNotifi);
+                    _context.SaveChangesAsync();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
-            var tProject = _context.TClasses.FirstOrDefault(m => m.FClassId == id);
-            if (tProject != null)
+            catch (Exception ex)
             {
-                tProject.FCurrentStudent++;//現在學生數+1
+                // 在這裡處理異常情況，可以記錄異常，並返回相應的 HTTP 響應
+                return StatusCode(500, "Internal Server Error");
             }
-            _context.SaveChangesAsync();
-            return Ok();
         }
     }
 }

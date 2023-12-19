@@ -14,8 +14,13 @@
     .container{
         margin: 50px auto 20px auto;
     }
-</style>
 
+    iframe {
+        width: 1px;
+        min-width: 100%;
+    }
+</style>
+<script src="/js/iframeResizer.min.js"></script>
 <input type="hidden" value="@Html.DisplayFor(model => model.FArticleId)" id="articleId" />
 <!-- Blog section -->
 <section class="blog-section spad" style="background-image: url('/img/Article/musicbg.jpg'); background-size: cover;">
@@ -42,6 +47,7 @@
         <div class="detail-block">
             <span class="detail-wrapper" style="text-align: left;">
                 @Html.Raw(Model.FContent)
+                @*@Html.Raw("<p>" + Model.FContent + "</p>")*@
             </span>
         </div>
     </section>
