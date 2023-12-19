@@ -189,6 +189,17 @@
                 // 如果需要可以取消註釋這行，設置密碼
                 // $('#fPassword').val("123");
             });
+
+            $('#form-control').on('change', function () {
+                const file = this.files;
+                if (file.length === 0) {
+                    let imgDefault = '@Url.Content("~/img/Member/default.jpg")';
+                    $('#imgMember').attr('src', imgDefault);
+                } else {
+                    const url = URL.createObjectURL(file[0]);
+                    $('#imgMember').attr('src', url);
+                }
+            });
         });
 
         const photo = document.querySelector('#photo')
