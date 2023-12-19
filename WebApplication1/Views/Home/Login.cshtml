@@ -26,14 +26,6 @@
         bottom: 0;
         z-index: -1; /* Behind the content */
     }
-    .btn-dark btn-outline-dark btn btn-outline-secondary {
-        background-color: #000; /* 按钮背景颜色 */
-        border-radius: 10px; /* 按钮的边框圆角 */
-        color: #fff; /* 按钮文字颜色 */
-        padding: 10px 20px; /* 按钮内边距 */
-        font-size: 16px; /* 文字大小 */
-        border: none; /* 去除边框 */
-    }
 
     .form-control {
         border-radius: 10px; /* 输入框的边框圆角 */
@@ -88,14 +80,15 @@
                                             <!-- First Column for the Register Button -->
                                             @*登入平台*@
                                             <div class="p-2">
-                                                @Html.ActionLink("註冊", "Register", "Home", "", new { @class = "btn btn-outline-dark" })
-                                                <input type="submit" value="登入" id="Login" class="btn btn-dark fw-bold" />
+                                                @Html.ActionLink("註冊", "Register", "Home", "", new { @class = "btn btn-info" })
+                                                <input type="submit" value="登入" id="Login" class="btn btn-success fw-bold" />
+                                                @Html.ActionLink("忘記密碼", "ForgetPwd", "Home")
                                             </div>
 
                                             <div class=" p-2">
-                                                <input type="button" class="btn btn-outline-dark" value="DemoMember" id="DemoMember" />
+                                                <input type="button" class="btn btn-outline-dark" value="一般會員Demo" id="DemoMember" />
                                                 <div class="mb-2"></div>
-                                                <input type="button" class="btn btn-outline-dark" value="DemoAdministrator" id="DemoAdministrator" />
+                                                <input type="button" class="btn btn-outline-dark" value="管理員Demo" id="DemoAdministrator" />
                                             </div>
                                             <script src="https://accounts.google.com/gsi/client" async defer></script>
                                             <div id="g_id_onload"
@@ -110,9 +103,6 @@
                                                  data-text="sign_in_with"
                                                  data-shape="rectangular"
                                                  data-logo_alignment="left">
-                                            </div>
-                                            <div class="col">
-                                                @Html.ActionLink("忘記密碼","ForgetPwd","Home")
                                             </div>
                                         </div>
                                     </div>
