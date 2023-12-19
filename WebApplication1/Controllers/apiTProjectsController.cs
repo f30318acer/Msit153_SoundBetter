@@ -243,17 +243,48 @@ namespace prjSoundBetterApi.Controllers
             if (appli != null)
             {
                 TApplicationRecord appliDb = _context.TApplicationRecords.Where(a => a.FProjectId == id).FirstOrDefault(a => a.FMemberId == appli.FMemberId);
-                if (appliDb != null) 
+                if (appliDb != null)
                 {
+                    var prj = _context.TProjects.FirstOrDefault(p => p.FProjectId == id);
                     appliDb.FSelfIntroduction = appli.FSelfIntroduction;
                     appliDb.FApplicationStatusId = 1;
-                    _context.SaveChanges();
-                    return Content("應徵成功");
+                    var noti = _context.TNotifications.FirstOrDefault(a => a.FProjectId == appliDb.FProjectId && a.FMemberId == prj.FMemberId);
+                    if (noti != null)
+                    {
+                        noti.FNotifiStatus = 1;
+                    }
+                    else 
+                    {
+                        //通知===
+                        TNotification noti2 = new TNotification();                       
+                        noti2.FNotifiStatus = 1;
+                        noti2.FMemberId = prj.FMemberId;
+                        noti2.FProjectId = id;
+                        noti2.FClassId = 0;
+                        noti2.FNotification = $"專案{prj.FProjectId}有新應徵";
+                        _context.Add(noti2);
+                        //======
+                    }
                 }
-                DateTime now = DateTime.Now;
-                appli.FProjectId = id;
-                appli.FApplicationStatusId = 1;
-                _context.Add(appli);
+                else 
+                {
+                    DateTime now = DateTime.Now;
+                    appli.FProjectId = id;
+                    appli.FApplicationStatusId = 1;
+                    _context.Add(appli);
+
+                    //通知===
+                    TNotification noti = new TNotification();
+                    var prj = _context.TProjects.FirstOrDefault(p => p.FProjectId == appli.FProjectId);
+                    noti.FNotifiStatus = 1;
+                    noti.FMemberId = prj.FMemberId;
+                    noti.FProjectId = id;
+                    noti.FClassId = 0;
+                    noti.FNotification = $"專案{prj.FProjectId}有新應徵";
+                    _context.Add(noti);
+                    //======
+                }
+
                 _context.SaveChanges();
                 return Content("應徵成功");
             }
@@ -296,13 +327,33 @@ namespace prjSoundBetterApi.Controllers
             var prjFav = from f in _context.TProjectFavs
                          join p in _context.TProjects
                          on f.FProjectId equals p.FProjectId
-                         where f.FMemberId == id && p.FProjectStatusId == 1
+                         where f.FMemberId == id
                          select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
 			return Json(prjFav);
 		}
 
-        //===取得應徵資料===
-        public IActionResult GetAppliInfo(int? id)
+		//===取得被錄取專案===
+
+		public IActionResult GetPrjAcceptByID(int? id)
+		{
+			if (id == null || _context.TApplicationRecords == null)
+			{
+				return NotFound();
+			}
+			var prjAcc = from f in _context.TApplicationRecords
+						 join p in _context.TProjects
+						 on f.FProjectId equals p.FProjectId
+						 where f.FMemberId == id && f.FApplicationStatusId == 4
+						 select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
+            if (prjAcc != null) 
+            {
+				return Json(prjAcc);
+			}
+			return NotFound();
+		}
+
+		//===取得應徵資料===
+		public IActionResult GetAppliInfo(int? id)
         {
             if (id == null || _context.TApplicationRecords == null)
             {
@@ -354,6 +405,23 @@ namespace prjSoundBetterApi.Controllers
                 record.FApplicationStatusId = 4;
                 TProject prj = _context.TProjects.FirstOrDefault(a => a.FProjectId == prjID);
                 prj.FProjectStatusId = 2;
+                //通知===
+                var notiDb = _context.TNotifications.FirstOrDefault(n => n.FProjectId == prjID && n.FMemberId == record.FMemberId);
+                if (notiDb != null)
+                {
+                    notiDb.FNotifiStatus = 1;
+                }
+                else 
+                {
+                    TNotification noti = new TNotification();
+                    noti.FNotifiStatus = 1;
+                    noti.FMemberId = record.FMemberId;
+                    noti.FProjectId = prjID;
+                    noti.FClassId = 0;
+                    noti.FNotification = $"您被專案{prj.FProjectId}錄取了";
+                    _context.Add(noti);
+                }
+                //======
                 _context.SaveChanges();
                 return Content("錄取成功");
             }

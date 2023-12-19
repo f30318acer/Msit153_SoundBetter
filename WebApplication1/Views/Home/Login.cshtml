@@ -12,7 +12,7 @@
     }
 
     .card {
-        background: rgba(255, 255, 255, 0.5); /* 半透明背景 */
+        background: rgba(255, 255, 255, 0.8); /* 半透明背景 */
         border-radius: 15px; /* 边框圆角 */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
         z-index:2;
@@ -25,14 +25,6 @@
         right: 0;
         bottom: 0;
         z-index: -1; /* Behind the content */
-    }
-    .btn-dark btn-outline-dark btn btn-outline-secondary {
-        background-color: #000; /* 按钮背景颜色 */
-        border-radius: 10px; /* 按钮的边框圆角 */
-        color: #fff; /* 按钮文字颜色 */
-        padding: 10px 20px; /* 按钮内边距 */
-        font-size: 16px; /* 文字大小 */
-        border: none; /* 去除边框 */
     }
 
     .form-control {
@@ -70,7 +62,7 @@
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-7 order-2 order-lg-1">
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">登入系統</p>
                                 <form class="mx-1 mx-md-4" method="post" action="@Url.Action("Login","Home")">
                                     <div class="mb-3">                                     
                                         <label for="inputEmail">帳號:</label>
@@ -88,14 +80,15 @@
                                             <!-- First Column for the Register Button -->
                                             @*登入平台*@
                                             <div class="p-2">
-                                                @Html.ActionLink("註冊", "Register", "Home", "", new { @class = "btn btn-outline-dark" })
-                                                <input type="submit" value="登入" id="Login" class="btn btn-dark fw-bold" />
+                                                @Html.ActionLink("註冊", "Register", "Home", "", new { @class = "btn btn-info" })
+                                                <input type="submit" value="登入" id="Login" class="btn btn-success fw-bold" />
+                                                @Html.ActionLink("忘記密碼", "ForgetPwd", "Home")
                                             </div>
 
                                             <div class=" p-2">
-                                                <input type="button" class="btn btn-outline-dark" value="DemoMember" id="DemoMember" />
+                                                <input type="button" class="btn btn-outline-dark" value="一般會員Demo" id="DemoMember" />
                                                 <div class="mb-2"></div>
-                                                <input type="button" class="btn btn-outline-dark" value="DemoAdministrator" id="DemoAdministrator" />
+                                                <input type="button" class="btn btn-outline-dark" value="管理員Demo" id="DemoAdministrator" />
                                             </div>
                                             <script src="https://accounts.google.com/gsi/client" async defer></script>
                                             <div id="g_id_onload"
@@ -110,9 +103,6 @@
                                                  data-text="sign_in_with"
                                                  data-shape="rectangular"
                                                  data-logo_alignment="left">
-                                            </div>
-                                            <div class="col">
-                                                @Html.ActionLink("忘記密碼","ForgetPwd","Home")
                                             </div>
                                         </div>
                                     </div>
@@ -143,26 +133,26 @@
             $('#inputEmail').val(email)
             $('#inputPassword').val("123")
         })
-        window.onload = function () {
-            var image = document.getElementById('rainy');
-            if (image) {
-                // 創建一個新的圖片對象，用於雨滴效果
-                var img = new Image();
-                img.onload = function () {
-                    var engine = new RainyDay({
-                        image: this
-                    });
-                    engine.rain([[3, 3, 0.1], [5, 5, 0.2]], 100);
-                };
-                img.crossOrigin = 'anonymous';
-                img.src = '@Url.Content("~/assets/img/background/Rain.jpg")'; // 使用 ASP.NET Core 的 Url.Content 方法
+        // window.onload = function () {
+        //     var image = document.getElementById('rainy');
+        //     if (image) {
+        //         // 創建一個新的圖片對象，用於雨滴效果
+        //         var img = new Image();
+        //         img.onload = function () {
+        //             var engine = new RainyDay({
+        //                 image: this
+        //             });
+        //             engine.rain([[3, 3, 0.1], [5, 5, 0.2]], 100);
+        //         };
+        //         img.crossOrigin = 'anonymous';
+        //         img.src = '@Url.Content("~/assets/img/background/Rain.jpg")'; // 使用 ASP.NET Core 的 Url.Content 方法
 
-                img.style.width = '100%';
-                img.style.height = '100%';
+        //         img.style.width = '100%';
+        //         img.style.height = '100%';
 
-                // 將圖片加入到 #rainy 容器中
-                image.appendChild(img);
-            }
-        };
+        //         // 將圖片加入到 #rainy 容器中
+        //         image.appendChild(img);
+        //     }
+        // };
     </script>
 }

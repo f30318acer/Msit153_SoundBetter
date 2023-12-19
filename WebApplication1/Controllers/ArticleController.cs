@@ -9,6 +9,7 @@ using prjMusicBetter.Models.Dtos;
 using prjMusicBetter.Models.Dtos.Comment;
 using prjMusicBetter.Models.infra;
 using System.ComponentModel.Design;
+using System.Formats.Asn1;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -122,6 +123,9 @@ namespace prjMusicBetter.Controllers
             ViewData["UserId"] = _userInfoService.GetMemberInfo().FMemberId;
 
 
+
+
+
             var query = from comment in _context.TComments
                         join member in _context.TMembers on comment.FMemberId equals member.FMemberId
                         select new
@@ -142,6 +146,8 @@ namespace prjMusicBetter.Controllers
              
             //留言部分
 
+            var StyleId = _context.TStyles.Where(t => t.FStyleId == tArticle.FStyleId).Select(t => t.FName).SingleOrDefault();
+            ViewBag.StyleId = StyleId;//類型
 
             return View(tArticle);
           

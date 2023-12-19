@@ -54,11 +54,17 @@ namespace prjMusicBetter.Controllers
                          }).FirstOrDefault();
             return View(photo);
 
-
         }
         public IActionResult MemberInfo()
         {
+          
+
             TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Login", "Account");
+
+            }
             FMemberDto mem = (from m in _context.TMembers
                               where m.FMemberId == member.FMemberId
                               select new FMemberDto
@@ -72,6 +78,8 @@ namespace prjMusicBetter.Controllers
                                   FPassword = m.FPassword,
                                   FPhotoPath = m.FPhotoPath,
                               }).FirstOrDefault();
+            ViewBag.MemberId = member.FMemberId; // 將會員ID添加到ViewBag
+
             return PartialView(mem);
         }
         public IActionResult MemberInfoEdit(int id)
@@ -350,7 +358,9 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-       
+      
+
+
         public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10, string sortBy = "newest")
         {
            
@@ -444,6 +454,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }  
+      
     }
 }
 

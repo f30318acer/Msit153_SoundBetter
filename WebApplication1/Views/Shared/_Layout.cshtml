@@ -71,16 +71,16 @@
                             <a class="nav-link text-white nav-text" asp-area="" asp-controller="Place" asp-action="Place">找場地</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Article" asp-action="List">音樂文章</a>
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Article" asp-action="List">找文章</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="MusicShare" asp-action="Details">音樂分享</a>
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="MusicShare" asp-action="Details">找音樂</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Home" asp-action="CouponList">找優惠</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white nav-text" asp-area="" asp-controller="Members" asp-action="Index">會員資訊</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Home" asp-action="CouponList">優惠券資訊</a>
                         </li>
 
                     </ul>
@@ -120,6 +120,19 @@
                                                 <a class="dropdown-item fs-12px" asp-action="Login" asp-controller="Home">登入/註冊</a>
                                             }
                                         </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--========訊息======-->
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown" id="memberIcon">
+                                    <button class="btn btn-dark" data-bs-toggle="dropdown">
+                                        <img src="~/img/header/icons8-chat.png" class="circle-size-35" width="30" />
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark" id="notiList">
+                                        <!--通知顯示-->
                                     </ul>
                                 </li>
                             </ul>
@@ -267,6 +280,8 @@
                     console.error('Failed to retrieve shopping cart information.', error);
                 });
         }
+
+        
     </script>
 
     <script>
@@ -371,6 +386,8 @@
                 }
             }
         }
+
+        
     </script>
 
     @if (TempData["AlertLogin"] != null)
@@ -400,6 +417,40 @@
   
     @*  CheckLogin() *@
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        //=====通知欄顯示=======
+        $(document).ready(function () {
+            console.log('before')
+            function LoadNotifi() {
+                console.log('inLoad')
+                const notiList = $('#notiList');
+                $.getJSON(`/MemberPage/LoadNotifi`, function (datas) {
+                    const docFrag = $(document.createDocumentFragment())
+                    console.log('inAjex');
+                    $.each(datas, function (index, item) {
+                        if (item.fProjectId != 0) {
+                            const card = $(`
+                                        <li class="d-flex align-items-center mx-2">
+                                            <a class="dropdown-item fs-12px" href="/Project/Details/${item.fProjectId}" target="_blank">${item.fNotification}</a>
+                                        </li>
+                                    `);
+                            docFrag.append(card);
+                        }
+                        if (item.fClassId != 0) {
+                            const card = $(`
+                                        <li class="d-flex align-items-center mx-2">
+                                            <a class="dropdown-item fs-12px" href="/Class/Viewclass?id=${item.fClassId}" target="_blank">${item.fNotification}</a>
+                                        </li>
+                                    `);
+                            docFrag.append(card);
+                        }
+                    });
+                    notiList.html(docFrag);
+                });
+            }
+            LoadNotifi();
+        });
+    </script>
 
 </body>
 

@@ -146,9 +146,11 @@
             <div class="row wave-player-info">
                 <div class="col-10">
                     <h2>@Model.FUsername</h2>
-                    <div class="mb-3"></div>
+                    <div class="mb-2"></div>
                     <h5 id="txtskill" style="color:gray;"></h5>
-                    <h4 style="color:gray;"></h4>
+                    
+                    <div class="mb-2"></div>
+                    <button id="btnFavCount" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">追蹤數0人</button>
                     <div class="mb-3"></div>
                     <p>@Html.DisplayFor(model => model.FIntroduction)</p>
                 </div> 
@@ -179,6 +181,10 @@
                 <h3 class="detail-title">教學課程</h3>
                 <div id ="divClassList" class="row playlist-area"><!--課程List--></div>
             </div>
+            <div class="detail-block">
+                <h3 class="detail-title">製作專案</h3>
+                <div id="divPrjList" class="row playlist-area"><!--專案List--></div>
+            </div>
         </div>
     </div>
 
@@ -202,12 +208,45 @@
     <input type="hidden" name="fRelationMemberId" value="@Html.DisplayFor(model => model.FMemberId)">
 </form>
 
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">追蹤的會員 <span></span></h5>
+                @*      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>*@
+                @*<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">取消</button>*@
+            </div>
+            <div class="modal-body">
+                <form id="createForm">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table id="memFavTable" class="table table-bordered">
+                                <tbody><!--資料位置--></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <script>
 
         const divClassList = $('#divClassList')
         const divWorkList = $('#divWorkList')
+        const divPrjList = $('#divPrjList')
         const divArticleList = $('#divArticleList')
         const memberId = $('#memberId').val();
         const memID = $('#memID').val();
@@ -235,12 +274,17 @@
 
         function loadInfo(){
             $.getJSON(`/MemberPage/GetMemberSkill/${memberId}`, function (datas) {
-                $.each(datas, function (index, item) {
-                    console.log(item);
-                    skillName = skillName + `${item.fName}${item.fYearExp}年經驗 / `;
-                })
-                console.log(skillName);
-                $('#txtskill').html(`技能 : ${skillName}`)
+                if(datas.length != 0){
+                    $.each(datas, function (index, item) {
+                        console.log(item);
+                        skillName = skillName + `${item.fName}${item.fYearExp}年經驗 / `;
+                    })
+                    console.log(skillName);
+                    $('#txtskill').html(`技能 : ${skillName}`)
+                }else{
+                    $('#txtskill').html(`專業音樂鑑賞家`)
+                }
+                
             })            
         }
         loadInfo();
@@ -250,63 +294,114 @@
             $.getJSON(`/MemberPage/GetMemberClass/${memberId}`,function(datas){
                 console.log(datas);
                 const docFrag = $(document.createDocumentFragment())
-                $.each(datas, function (index, item){
-                    const nameSub = item.fClassName.length > 10 ? item.fClassName.substring(0, 8) + '...' : item.fClassName;
-                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                    const card = $(
-                        `<a class="mix col-12" href="/Class/ViewClass/${item.fClassId}" style="background-color:#F0F0F0;border-radius: 20px;">
-                            <div class="mb-2"></div>
-                                <div class="row playlist-item" style="margin: 0;">
-                                    <div class="col-3">
-                                         <img src="/img/classimg/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="mb-3"></div>
-                                        <h5>${nameSub}</h5>
-                                        <p>${descriSub}</p>
-                                    </div>
-                                </div>
-                            <div class="mb-2"></div>
-                        </a>
-                        <div class="col-12 mb-3"></div>
-                        `);
+                if(datas.length != 0)
+                {
+                    $.each(datas, function (index, item) {
+                        const nameSub = item.fClassName.length > 10 ? item.fClassName.substring(0, 8) + '...' : item.fClassName;
+                        const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(
+                            `<a class="mix col-12" href="/Class/ViewClass/${item.fClassId}" style="background-color:#F0F0F0;border-radius: 20px;">
+                                    <div class="mb-2"></div>
+                                        <div class="row playlist-item" style="margin: 0;">
+                                            <div class="col-3">
+                                                 <img src="/img/classimg/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
+                                            </div>
+                                            <div class="col-9">
+                                                <div class="mb-3"></div>
+                                                <h5>${nameSub}</h5>
+                                                <p>${descriSub}</p>
+                                            </div>
+                                        </div>
+                                    <div class="mb-2"></div>
+                                </a>
+                                <div class="col-12 mb-3"></div>
+                                `);
+                        docFrag.append(card);
+                    })
+                }else{
+                    const card = $(`<div class="col-12" style="text-center;"><div class="mb-3"></div><h4 style="color:gray;">未發表任何課程</h4></div>`)
                     docFrag.append(card);
-                })
+                }
+                
                 divClassList.html(docFrag)
             })
         }
         classList();
 
+        //取得專案資訊
+        function PrjList() {
+            $.getJSON(`/MemberPage/GetMemberPrj/${memberId}`, function (datas) {
+                console.log(datas);
+                const docFrag = $(document.createDocumentFragment())
+                if (datas.length != 0) {
+                    $.each(datas, function (index, item) {
+                        const nameSub = item.fName.length > 10 ? item.fName.substring(0, 8) + '...' : item.fName;
+                        const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(
+                            `<a class="mix col-12" href="/Project/Detials/${item.fProjectId}" style="background-color:#F0F0F0;border-radius: 20px;">
+                                            <div class="mb-2"></div>
+                                                <div class="row playlist-item" style="margin: 0;">
+                                                    <div class="col-3">
+                                                        <img src="/img/project/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <div class="mb-3"></div>
+                                                        <h5>${nameSub}</h5>
+                                                        <p>${descriSub}</p>
+                                                    </div>
+                                                </div>
+                                            <div class="mb-2"></div>
+                                        </a>
+                                        <div class="col-12 mb-3"></div>
+                                        `);
+                        docFrag.append(card);
+                    })
+                } else {
+                    const card = $(`<div class="col-12" style="text-center;"><div class="mb-3"></div><h4 style="color:gray;">未發表任何製作</h4></div>`)
+                    docFrag.append(card);
+                }
+
+                divPrjList.html(docFrag)
+            })
+        }
+        PrjList();
+
         //取得作品
         function workList() {
             $.getJSON(`/MemberPage/GetMemberWorks/${memberId}`, function (datas) {
                 const docFrag = $(document.createDocumentFragment())
-                $.each(datas, function (index, item) {
-                    const descriSub = item.fDescription.length > 20 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                    const card = $(`
-                        <div class="col-12 song-item" style="margin: 0;">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="song-info-box">
-                                        <div class="song-info ">
-                                            <h4>${item.fWorkName}</h4>
-                                             <p>${descriSub}</p>
+                if(datas.length != 0){
+                    $.each(datas, function (index, item) {
+                        const descriSub = item.fDescription.length > 20 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(`
+                                <div class="col-12 song-item" style="margin: 0;">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="song-info-box">
+                                                <div class="song-info ">
+                                                    <h4>${item.fWorkName}</h4>
+                                                     <p>${descriSub}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                             <div class="single_player_container" style="margin: 0;">
+                                                <audio id="myAudio" controls style="width: 100%;">
+                                                    <source src="/WorkFile/${item.fFilePath}" type="audio/mp3">
+                                                    Your browser does not support the audio element.
+                                                </audio>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                     <div class="single_player_container" style="margin: 0;">
-                                        <audio id="myAudio" controls style="width: 100%;">
-                                            <source src="/WorkFile/${item.fFilePath}" type="audio/mp3">
-                                            Your browser does not support the audio element.
-                                        </audio>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `);
+                            `);
+                        docFrag.append(card);
+                    })
+                }else{
+                    const card = $(`<div class="col-12" style="text-center;"><div class="mb-3"></div><h4 style="color:gray;">未發表任何作品</h4></div>`)
                     docFrag.append(card);
-                })
+                }
+                
                 divWorkList.html(docFrag);
             })
         }
@@ -348,6 +443,38 @@
             })
         }
         ArtiList();
+
+        //載入追蹤本會員的會員清單
+        function LoadMemFav() {
+            const memFavTable = $('#memFavTable>tbody')
+
+            $.getJSON(`/MemberPage/GetFallower/${memberId}`, function (datas) {
+                console.log(datas);
+                const docFrag = $(document.createDocumentFragment())
+                const count = datas.length;
+                $('#btnFavCount').text(`追蹤數${count}人`)
+                if(datas.length != 0){
+                    $.each(datas, function (index, item) {
+                        console.log(item);
+                        const nameSub = item.fUsername.length > 12 ? item.fUsername.substring(0, 12) + '...' : item.fUsername
+                        const descriSub = item.fIntroduction.length > 15 ? item.fIntroduction.substring(0, 15) + '...' : item.fIntroduction;
+                        const cell1 = $('<td></td>').html(`<h5>${nameSub}</h5>`);
+                        const cell3 = $('<td></td>').text(descriSub);
+                        const cell4 = $('<td></td>').html(`<a class="btn btn-primary btn-sm m-1" href="/MemberPage/Details/${item.fMemberId}" target="_blank">詳細</a>`);
+
+                        const row = $('<tr></tr>').append([cell1, cell3, cell4])
+                        docFrag.append(row)
+                    })
+                }else{
+                    const cell = $('<td></td>').text(`可憐邊緣人沒人追蹤QQ`);
+                    docFrag.append(cell)
+                }
+                
+                memFavTable.html(docFrag)
+            })
+        }
+        LoadMemFav();
+
         //判斷是否登入
         async function CheckLoginAndNavigate(btnID) {
             const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);

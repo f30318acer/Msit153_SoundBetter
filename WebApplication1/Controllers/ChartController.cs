@@ -22,6 +22,14 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+        public IActionResult MemberIndex()
+        {
+            return View();
+        }
+        public IActionResult PowerBI()
+        {
+            return View();
+        }
         public IActionResult classclick()
         {
             return View();
