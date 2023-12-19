@@ -132,6 +132,8 @@
                     <span class="text-muted">． @comment.FCommentTime</span>
                 </p>
                 <p>@comment.FCommentContent</p>
+
+               @*使用者自刪評論留言*@
                 @if (comment.FMemberId == Convert.ToInt32(ViewData["UserId"]))
                 {
                     <div>
