@@ -150,5 +150,18 @@ namespace prjMusicBetter.Controllers
             }
             return Content("錯誤");
         }
+        //幫layout讀取通知
+        public IActionResult LoadNotifi()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member != null)
+            {
+                List<TNotification> notis = _context.TNotifications.Where(n => n.FMemberId == member.FMemberId && n.FNotifiStatus == 1).ToList();
+                if (notis.Count > 0) {
+                    return Json(notis);
+                }                
+            }
+            return Json(new List<TNotification> { new TNotification { FNotification = "沒有通知" } });
+        }
     }
 }

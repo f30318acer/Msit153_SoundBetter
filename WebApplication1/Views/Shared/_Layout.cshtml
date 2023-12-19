@@ -124,6 +124,19 @@
                                 </li>
                             </ul>
                         </div>
+                        <!--========訊息======-->
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown" id="memberIcon">
+                                    <button class="btn btn-dark" data-bs-toggle="dropdown">
+                                        <img src="~/img/header/user.png" class="circle-size-35" width="30" />
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark" id="notiList">
+                                        <!--通知顯示-->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="nav-icon mx-3">
                             @*   <a class="position-relative" id="collectItems" href="@Url.Content("~/fmember/index?display=MemberMyKeep")">
                             <img src="~/img/header/like.png" width="15"/>
@@ -267,6 +280,8 @@
                     console.error('Failed to retrieve shopping cart information.', error);
                 });
         }
+
+        
     </script>
 
     <script>
@@ -371,6 +386,8 @@
                 }
             }
         }
+
+        
     </script>
 
     @if (TempData["AlertLogin"] != null)
@@ -400,6 +417,33 @@
   
     @*  CheckLogin() *@
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        //=====通知欄顯示=======
+        $(document).ready(function () {
+            console.log('before')
+            // 或者使用 $(function() {
+            function LoadNotifi() {
+                console.log('inLoad')
+                const notiList = $('#notiList');
+                $.getJSON(`/MemberPage/LoadNotifi`, function (datas) {
+                    const docFrag = $(document.createDocumentFragment())
+                    console.log('inAjex');
+                    $.each(datas, function (index, item) {
+                        if (item.fProjectId != 0) {
+                            const card = $(`
+                                        <li class="d-flex align-items-center mx-2">
+                                            <a class="dropdown-item fs-12px" href="">${item.fNotification}</a>
+                                        </li>
+                                    `);
+                            docFrag.append(card);
+                        }
+                    });
+                    notiList.html(docFrag);
+                });
+            }
+            LoadNotifi();
+        });
+    </script>
 
 </body>
 

@@ -15,5 +15,9 @@ public partial class TNotification
 
     public int? FNotifiStatus { get; set; }
 
+    public int? FProjectId { get; set; }
+
+    public int? FClassId { get; set; }
+
     public virtual TMember FMember { get; set; }
 }
