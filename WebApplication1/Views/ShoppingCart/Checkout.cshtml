@@ -73,23 +73,40 @@
 </div>
 
 
- 
-    
-
     <footer class="my-5 pt-5 text-body-secondary text-center text-small">
         <p class="mb-1">&copy; 2017–2023 SoundBetter</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
     </footer>
 
     @section Scripts{
 <script>
-   
 
-  
+    //優惠券
+    function validateCoupon() {
+
+
+            var couponCode = $("#couponCode").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/ShoppingCart/ValidateCoupon",
+                data: { couponCode: couponCode },
+                success: function (response) {
+                    if (response.valid) {
+                        // 優惠券驗證成功，更新 UI 顯示折扣等信息
+                        alert("優惠券驗證成功，折扣：" + response.discount + "%off");
+                        updateTotalPrice(response.discount);
+
+                    } else {
+                        // 優惠券驗證失敗，顯示錯誤訊息
+                        alert("優惠券驗證失敗：" + response.message);
+                    }
+                },
+                error: function (error) {
+                    // 處理錯誤
+                    alert("發生錯誤：" + error.responseText);
+                }
+            });
+        }
 
     function checkoutAndClear() {
          // 遍歷每一筆資料，呼叫 Currentplus 函數
@@ -126,6 +143,7 @@
             }
         });
     }
+
     //清除購物車內容
     function clearShoppingCart() {
         $.ajax({
@@ -134,36 +152,6 @@
             success: function () {
             },
             error: function () {
-            }
-        });
-    }
-
-
-    //優惠券驗證
-   
-    function validateCoupon() {
-
-
-        var couponCode = $("#couponCode").val();
-
-        $.ajax({
-            type: "POST",
-            url: "/ShoppingCart/ValidateCoupon",
-            data: { couponCode: couponCode },
-            success: function (response) {
-                if (response.valid) {
-                    // 優惠券驗證成功，更新 UI 顯示折扣等信息
-                    alert("優惠券驗證成功，折扣：" + response.discount + "%off");
-                    updateTotalPrice(response.discount);
-                  
-                } else {
-                    // 優惠券驗證失敗，顯示錯誤訊息
-                    alert("優惠券驗證失敗：" + response.message);
-                }
-            },
-            error: function (error) {
-                // 處理錯誤
-                alert("發生錯誤：" + error.responseText);
             }
         });
     }
