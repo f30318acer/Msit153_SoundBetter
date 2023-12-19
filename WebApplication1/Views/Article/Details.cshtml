@@ -18,7 +18,7 @@
 
 <input type="hidden" value="@Html.DisplayFor(model => model.FArticleId)" id="articleId" />
 <!-- Blog section -->
-<section class="blog-section spad" style="background-image: url('/img/Article/musicbg.jpg'); background-size: cover;">
+<section class="blog-section spad" style="background-image: linear-gradient(to bottom right, #a3bded, #6991c7); background-size: cover;">
     <div class="container">
         <div class="player-box">
             <div class="tarck-thumb-warp">
@@ -29,7 +29,7 @@
             <div class="wave-player-warp">
                 <div class="wave-player-info">
                     <h2 style="margin-bottom: 10px;">@Model.FTitle</h2>
-                    <h4 style="color:#fc0254; margin-bottom: 10px;">類型：@ViewBag.StyleId</h4>
+                    <h4 style="color:#FF6F61; margin-bottom: 10px;">類型：@ViewBag.StyleId</h4>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
     <!-- Songs details section -->
     <section class="songs-details-section">
         <div class="detail-block">
-            <span class="detail-wrapper" style="text-align: left;">
+            <span class="detail-wrapper" style="text-align: left; font-size: 25px">
                 @Html.Raw(Model.FContent)
             </span>
         </div>
