@@ -95,9 +95,6 @@
                         <button type="button" onclick="CheckLoginAndNavigate()" id="btnCreate" class="btn btn-info mr-2" style="background-color: #fc0254;">建立作品</button>
                     </div>
                 </div>
-                <a href="" class="active">Genres</a>
-                <a href="">Artists</a>
-                <a href="">All Playlist</a>
             </div>
         </div>
 
@@ -134,8 +131,8 @@
     
     <div id="scrollToTopBtn" class="scroll-to-top-btn ">
         <div class="row">
-            <div id="player" class="rcol-12" style="display:none;">
-                <div id="divPlayList" class="row col-8"></div>
+            <div id="player" class="col-12" style="display:none;">
+                <div id="divPlayList" class="col-8"></div>
                 <!-- 使用動態ID來設置音頻元素 -->
                 <audio controls id="audioPlayer" onclick="handlePlay(this)"  style="width: 100%">
                   
@@ -545,7 +542,8 @@
                     .then(response => {
 
                         if (response.ok) {
-                            alert("加入成功");
+                            alert("加入成功"); 
+                            PlayListFirstLoad();
                         }
                         else {
                         }
@@ -641,12 +639,13 @@
                 $.each(datas, function (index, item) {
                     const card = $(`
                 <div class="mix col-7" style="background-color:#F0F0F0;border-radius: 20px;" onclick="playSongOnClick(${index})" data-index="${index}">
-                    <div class="row playlist-item" style="margin: 0;">
+                            <div class="row playlist-item col-12" style="margin: 0;">
+                    <div class="col-10">
                                             <h6>${item.fWorkName}</h6>
-                    </div>
+                    </div><div class="col-2"> <button class="btn btn-secondary " onclick="RemovePlayList(${item.fWorkId})">移除</button></div>
                 </div>
-                        <div class="col-5"> <button class="btn btn-secondary " onclick="RemovePlayList(${item.fWorkId})">移除</button></div>
-                        <div class="row col-12">
+                        
+                        <div class="col-12">
                         <div class="mb-2"/>
                         </div>
                                 `
