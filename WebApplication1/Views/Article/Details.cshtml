@@ -13,7 +13,7 @@
         overflow: hidden;
     }
 
-    .container{
+    .container {
         margin: 50px auto 20px auto;
     }
 
@@ -50,12 +50,7 @@
 
         <!-- Blog post -->
 
-        <div class="site-pagination">
-            <a href="#" class="active">01.</a>
-            <a href="#">02.</a>
-            <a href="#">03.</a>
-            <a href="#">04.</a>
-        </div>
+
     </div>
 </section>
 <!-- Blog section end -->
@@ -76,7 +71,7 @@
     <div class="container-fluid">
         <h3>你可能會想看的其他文章</h3>
         @{
-            if (@Model.FArticleId< (ViewBag.AllArticle - 2))
+            if (@Model.FArticleId < (ViewBag.AllArticle - 2))
             {
                 <div class="row playlist-area">
                     <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
@@ -149,7 +144,7 @@
                     @if (comment.FMember != null)
                     {
                         <span class="font-weight-bold">@ViewData["UserName"]</span>
-                        
+
                     }
                     else
                     {
@@ -179,14 +174,14 @@
 
 
 
-@section Scripts{
+@section Scripts {
     <script>
         const articleID = $("#articleId").val();
 
         $.getJSON(`/apiTArticle/QueryPicById/${articleID}`, function (datas) {
             console.log(datas);
             //$('#pic2').attr('src', `~/img/Article /${datas}`)
-            
+
             for (let i = 0; i < datas.length; i++) {
                 const x = datas[i]['fPicturePath']
                 console.log(x);
