@@ -1,4 +1,6 @@
-﻿@model prjMusicBetter.Models.Dtos.FMemberDto
+﻿@model prjMusicBetter.Models.Dtos.FMemberDto;
+
+
 
 @{
     ViewData["Title"] = "Index";
@@ -8,6 +10,7 @@
     {
         display = ViewBag.Display;
     }
+   
 }
 
 
@@ -68,6 +71,7 @@
                 <div class=" border-bottom align-items-center d-flex">
                     <div class="btnOptions d-flex p-2 gap-3" id="myWorks">
                         <img class="d-flex w-25-h-25" src="@Url.Content("/img/MyMemberphoto/mymusic.JPG")" alt="">
+                        
                         我的作品
                     </div>
                 </div>
