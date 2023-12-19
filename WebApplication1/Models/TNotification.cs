@@ -13,5 +13,7 @@ public partial class TNotification
 
     public string FNotification { get; set; }
 
+    public int? FNotifiStatus { get; set; }
+
     public virtual TMember FMember { get; set; }
 }

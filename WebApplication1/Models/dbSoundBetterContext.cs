@@ -715,6 +715,7 @@ public partial class dbSoundBetterContext : DbContext
 
             entity.Property(e => e.FNotificationId).HasColumnName("fNotificationID");
             entity.Property(e => e.FMemberId).HasColumnName("fMemberID");
+            entity.Property(e => e.FNotifiStatus).HasColumnName("fNotifiStatus");
             entity.Property(e => e.FNotification).HasColumnName("fNotification");
 
             entity.HasOne(d => d.FMember).WithMany(p => p.TNotifications)
