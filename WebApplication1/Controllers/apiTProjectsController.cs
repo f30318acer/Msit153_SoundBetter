@@ -254,6 +254,15 @@ namespace prjSoundBetterApi.Controllers
                 appli.FProjectId = id;
                 appli.FApplicationStatusId = 1;
                 _context.Add(appli);
+
+                //通知===
+                TNotification noti = new TNotification();
+                var prj = _context.TProjects.FirstOrDefault(p => p.FProjectId == appli.FProjectId);
+                noti.FNotifiStatus = 1;
+                noti.FMemberId = prj.FMemberId;
+                noti.FNotification = $"專案{prj.FProjectId}有新應徵";
+                _context.Add(noti);
+                //======
                 _context.SaveChanges();
                 return Content("應徵成功");
             }
