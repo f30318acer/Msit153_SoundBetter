@@ -146,9 +146,11 @@
             <div class="row wave-player-info">
                 <div class="col-10">
                     <h2>@Model.FUsername</h2>
-                    <div class="mb-3"></div>
+                    <div class="mb-2"></div>
                     <h5 id="txtskill" style="color:gray;"></h5>
-                    <h4 style="color:gray;"></h4>
+                    
+                    <div class="mb-2"></div>
+                    <button id="btnFavCount" class="btn btn-primary btn-sm">追蹤人數25</button>
                     <div class="mb-3"></div>
                     <p>@Html.DisplayFor(model => model.FIntroduction)</p>
                 </div> 
@@ -179,6 +181,10 @@
                 <h3 class="detail-title">教學課程</h3>
                 <div id ="divClassList" class="row playlist-area"><!--課程List--></div>
             </div>
+            <div class="detail-block">
+                <h3 class="detail-title">製作專案</h3>
+                <div id="divPrjList" class="row playlist-area"><!--專案List--></div>
+            </div>
         </div>
     </div>
 
@@ -208,6 +214,7 @@
 
         const divClassList = $('#divClassList')
         const divWorkList = $('#divWorkList')
+        const divPrjList = $('#divPrjList')
         const divArticleList = $('#divArticleList')
         const memberId = $('#memberId').val();
         const memID = $('#memID').val();
@@ -235,12 +242,17 @@
 
         function loadInfo(){
             $.getJSON(`/MemberPage/GetMemberSkill/${memberId}`, function (datas) {
-                $.each(datas, function (index, item) {
-                    console.log(item);
-                    skillName = skillName + `${item.fName}${item.fYearExp}年經驗 / `;
-                })
-                console.log(skillName);
-                $('#txtskill').html(`技能 : ${skillName}`)
+                if(datas.length != 0){
+                    $.each(datas, function (index, item) {
+                        console.log(item);
+                        skillName = skillName + `${item.fName}${item.fYearExp}年經驗 / `;
+                    })
+                    console.log(skillName);
+                    $('#txtskill').html(`技能 : ${skillName}`)
+                }else{
+                    $('#txtskill').html(`專業音樂鑑賞家`)
+                }
+                
             })            
         }
         loadInfo();
@@ -250,63 +262,114 @@
             $.getJSON(`/MemberPage/GetMemberClass/${memberId}`,function(datas){
                 console.log(datas);
                 const docFrag = $(document.createDocumentFragment())
-                $.each(datas, function (index, item){
-                    const nameSub = item.fClassName.length > 10 ? item.fClassName.substring(0, 8) + '...' : item.fClassName;
-                    const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                    const card = $(
-                        `<a class="mix col-12" href="/Class/ViewClass/${item.fClassId}" style="background-color:#F0F0F0;border-radius: 20px;">
-                            <div class="mb-2"></div>
-                                <div class="row playlist-item" style="margin: 0;">
-                                    <div class="col-3">
-                                         <img src="/img/classimg/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="mb-3"></div>
-                                        <h5>${nameSub}</h5>
-                                        <p>${descriSub}</p>
-                                    </div>
-                                </div>
-                            <div class="mb-2"></div>
-                        </a>
-                        <div class="col-12 mb-3"></div>
-                        `);
+                if(datas.length != 0)
+                {
+                    $.each(datas, function (index, item) {
+                        const nameSub = item.fClassName.length > 10 ? item.fClassName.substring(0, 8) + '...' : item.fClassName;
+                        const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(
+                            `<a class="mix col-12" href="/Class/ViewClass/${item.fClassId}" style="background-color:#F0F0F0;border-radius: 20px;">
+                                    <div class="mb-2"></div>
+                                        <div class="row playlist-item" style="margin: 0;">
+                                            <div class="col-3">
+                                                 <img src="/img/classimg/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
+                                            </div>
+                                            <div class="col-9">
+                                                <div class="mb-3"></div>
+                                                <h5>${nameSub}</h5>
+                                                <p>${descriSub}</p>
+                                            </div>
+                                        </div>
+                                    <div class="mb-2"></div>
+                                </a>
+                                <div class="col-12 mb-3"></div>
+                                `);
+                        docFrag.append(card);
+                    })
+                }else{
+                    const card = $(`<div class="col-12" style="text-center;"><div class="mb-3"></div><h4 style="color:gray;">未發表任何課程</h4></div>`)
                     docFrag.append(card);
-                })
+                }
+                
                 divClassList.html(docFrag)
             })
         }
         classList();
 
+        //取得專案資訊
+        function PrjList() {
+            $.getJSON(`/MemberPage/GetMemberPrj/${memberId}`, function (datas) {
+                console.log(datas);
+                const docFrag = $(document.createDocumentFragment())
+                if (datas.length != 0) {
+                    $.each(datas, function (index, item) {
+                        const nameSub = item.fName.length > 10 ? item.fName.substring(0, 8) + '...' : item.fName;
+                        const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(
+                            `<a class="mix col-12" href="/Project/Detials/${item.fProjectId}" style="background-color:#F0F0F0;border-radius: 20px;">
+                                            <div class="mb-2"></div>
+                                                <div class="row playlist-item" style="margin: 0;">
+                                                    <div class="col-3">
+                                                        <img src="/img/project/${item.fThumbnailPath}" alt = "" width="80px" height="80px" style="margin: 0;border-radius: 20px;">
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <div class="mb-3"></div>
+                                                        <h5>${nameSub}</h5>
+                                                        <p>${descriSub}</p>
+                                                    </div>
+                                                </div>
+                                            <div class="mb-2"></div>
+                                        </a>
+                                        <div class="col-12 mb-3"></div>
+                                        `);
+                        docFrag.append(card);
+                    })
+                } else {
+                    const card = $(`<div class="col-12" style="text-center;"><div class="mb-3"></div><h4 style="color:gray;">未發表任何製作</h4></div>`)
+                    docFrag.append(card);
+                }
+
+                divPrjList.html(docFrag)
+            })
+        }
+        PrjList();
+
         //取得作品
         function workList() {
             $.getJSON(`/MemberPage/GetMemberWorks/${memberId}`, function (datas) {
                 const docFrag = $(document.createDocumentFragment())
-                $.each(datas, function (index, item) {
-                    const descriSub = item.fDescription.length > 20 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-                    const card = $(`
-                        <div class="col-12 song-item" style="margin: 0;">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="song-info-box">
-                                        <div class="song-info ">
-                                            <h4>${item.fWorkName}</h4>
-                                             <p>${descriSub}</p>
+                if(datas.length != 0){
+                    $.each(datas, function (index, item) {
+                        const descriSub = item.fDescription.length > 20 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
+                        const card = $(`
+                                <div class="col-12 song-item" style="margin: 0;">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="song-info-box">
+                                                <div class="song-info ">
+                                                    <h4>${item.fWorkName}</h4>
+                                                     <p>${descriSub}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                             <div class="single_player_container" style="margin: 0;">
+                                                <audio id="myAudio" controls style="width: 100%;">
+                                                    <source src="/WorkFile/${item.fFilePath}" type="audio/mp3">
+                                                    Your browser does not support the audio element.
+                                                </audio>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                     <div class="single_player_container" style="margin: 0;">
-                                        <audio id="myAudio" controls style="width: 100%;">
-                                            <source src="/WorkFile/${item.fFilePath}" type="audio/mp3">
-                                            Your browser does not support the audio element.
-                                        </audio>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `);
+                            `);
+                        docFrag.append(card);
+                    })
+                }else{
+                    const card = $(`<div class="col-12" style="text-center;"><div class="mb-3"></div><h4 style="color:gray;">未發表任何作品</h4></div>`)
                     docFrag.append(card);
-                })
+                }
+                
                 divWorkList.html(docFrag);
             })
         }
