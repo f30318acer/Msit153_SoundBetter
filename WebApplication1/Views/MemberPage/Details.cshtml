@@ -150,7 +150,7 @@
                     <h5 id="txtskill" style="color:gray;"></h5>
                     
                     <div class="mb-2"></div>
-                    <button id="btnFavCount" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">追蹤人數25</button>
+                    <button id="btnFavCount" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">追蹤數0人</button>
                     <div class="mb-3"></div>
                     <p>@Html.DisplayFor(model => model.FIntroduction)</p>
                 </div> 
@@ -451,6 +451,8 @@
             $.getJSON(`/MemberPage/GetFallower/${memberId}`, function (datas) {
                 console.log(datas);
                 const docFrag = $(document.createDocumentFragment())
+                const count = datas.length;
+                $('#btnFavCount').text(`追蹤數${count}人`)
                 if(datas.length != 0){
                     $.each(datas, function (index, item) {
                         console.log(item);
