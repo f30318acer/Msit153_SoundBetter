@@ -474,6 +474,18 @@
             })
         }
         LoadMemFav();
+
+        $(document).ready(function () {
+            console.log('before')
+            // 或者使用 $(function() {
+            function LoadNotifi() {
+                console.log('inLoad')
+                $.getJSON(`/MemberPage/LoadNotifi`, function (datas) {
+                    console.log(datas);                    
+                });
+            }
+            LoadNotifi();
+        });
         //判斷是否登入
         async function CheckLoginAndNavigate(btnID) {
             const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);
