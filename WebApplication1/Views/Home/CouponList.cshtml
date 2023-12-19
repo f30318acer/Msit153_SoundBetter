@@ -27,8 +27,14 @@
                         <div>
                             <p class="text-4xl font-bold mr-4 mb-2 md:mb-0"><@coupon.FDescription></p>
                             <h3 class="text-lg font-bold mb-1">使用代碼: @coupon.FCouponCode</h3>
-                            <p class="mb-1">起始日: @coupon.FStartdate</p>
-                            <p>結束日: @coupon.FEnddate</p>
+                            @{
+                                DateTime startDate = Convert.ToDateTime(coupon.FStartdate);
+                            }
+                            @{
+                                DateTime endDate = Convert.ToDateTime(coupon.FEnddate);
+                            }
+                            <p class="mb-1">起始日：@startDate.ToString("yyyy/MM/dd")</p>
+                            <p>結束日：@endDate.ToString("yyyy/MM/dd")</p>
                         </div>
                     </div>
                     <div class="flex-shrink-0">
