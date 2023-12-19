@@ -8,6 +8,7 @@ using prjMusicBetter.Models.Daos;
 using prjMusicBetter.Models.Dtos;
 using prjMusicBetter.Models.Dtos.Comment;
 using prjMusicBetter.Models.infra;
+using System.Formats.Asn1;
 using System.Linq.Expressions;
 using System.Security.Claims;
 
@@ -117,7 +118,7 @@ namespace prjMusicBetter.Controllers
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
             ViewData["UserName"] = _userInfoService.GetMemberInfo().FName;
             ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
-            
+
 
 
             //          var commenterName = await _context.TComments
@@ -134,6 +135,8 @@ namespace prjMusicBetter.Controllers
             //ViewData["CommenterPhoto"] = commenterPhoto; 
             //留言部分
 
+            var StyleId = _context.TStyles.Where(t => t.FStyleId == tArticle.FStyleId).Select(t => t.FName).SingleOrDefault();
+            ViewBag.StyleId = StyleId;//類型
 
             return View(tArticle);
           

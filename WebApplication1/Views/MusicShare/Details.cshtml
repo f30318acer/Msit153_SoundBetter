@@ -132,23 +132,23 @@
     </div>
 
     
-    <div id="scrollToTopBtn" class="scroll-to-top-btn">
+    <div id="scrollToTopBtn" class="scroll-to-top-btn ">
         <div class="row">
-            <div id="player" class="col-12" style="display:none;">
-                <div id="divPlayList" class="row"></div>
+            <div id="player" class="rcol-12" style="display:none;">
+                <div id="divPlayList" class="row col-8"></div>
                 <!-- 使用動態ID來設置音頻元素 -->
                 <audio controls id="audioPlayer" onclick="handlePlay(this)"  style="width: 100%">
                   
                 </audio>
                 <div id="workNameDisplay"></div>
                 <div>
-                    <button class="btn-hover color-8 buttons11" onclick="playPrevious()">上一首</button>
-                    <button class="btn-hover color-8 buttons11" onclick="playNext()">下一首</button>
-                    <button id="btnCloseList" class="btn-hover color-8 buttons11 " onclick="closePlayer()">關閉撥放器</button>
+                    <button class="btn btn-secondary " onclick="playPrevious()">上一首</button>
+                    <button class="btn btn-secondary " onclick="playNext()">下一首</button>
+                    <button id="btnCloseList" class="btn btn-secondary  " onclick="closePlayer()">關閉撥放器</button>
                 </div>
             </div>
             <div class="">
-                <button id="btnShowList" class="btn-hover color-8 buttons11 " onclick="openPlayer()">顯示撥放器</button>
+                <button id="btnShowList" class="btn btn-secondary  " onclick="openPlayer()">顯示撥放器</button>
             </div>
         </div>
        
@@ -642,20 +642,14 @@
                     const card = $(`
                 <div class="mix col-7" style="background-color:#F0F0F0;border-radius: 20px;" onclick="playSongOnClick(${index})" data-index="${index}">
                     <div class="row playlist-item" style="margin: 0;">
-                        <div class="col-12" style="margin:0px">
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <h5>${item.fWorkName}</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                            <h6>${item.fWorkName}</h6>
                     </div>
                 </div>
-                        <div class="col-5"> <button class="btn-hover color-8 buttons11" onclick="RemovePlayList(${item.fWorkId})">移除清單</button></div>`
+                        <div class="col-5"> <button class="btn btn-secondary " onclick="RemovePlayList(${item.fWorkId})">移除</button></div>
+                        <div class="row col-12">
+                        <div class="mb-2"/>
+                        </div>
+                                `
                     );
                     docFrag.append(card);
                 });
