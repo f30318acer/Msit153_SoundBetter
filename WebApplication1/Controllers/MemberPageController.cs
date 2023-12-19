@@ -97,6 +97,16 @@ namespace prjMusicBetter.Controllers
             var dbSoundBetterContext = _context.TWorks.Where(c => c.FMemberId == id);
             return Json(dbSoundBetterContext);
         }
+        //===GetFallower===
+        public IActionResult GetFallower(int id)
+        {
+            var fallower = from f in _context.TMemberRelations
+                           join m in _context.TMembers
+                           on f.FMemberId equals m.FMemberId
+                           where f.FRelationMemberId == id && f.FMemberRelationStatusId == 1
+                           select m;
+            return Json(fallower);
+        }
         //===GetMemberArticle===
         public IActionResult GetMemberArticle(int id)
         {
