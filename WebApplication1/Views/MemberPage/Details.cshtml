@@ -475,12 +475,13 @@
         }
         LoadMemFav();
 
+        //==========================================================================================
         $(document).ready(function () {
             console.log('before')
             // 或者使用 $(function() {
             function LoadNotifi() {
                 console.log('inLoad')
-                $.getJSON(`/MemberPage/LoadNotifi`, function (datas) {
+                $.getJSON(`/MemberPage/LoadNotifi/`, function (datas) {
                     console.log(datas);                    
                 });
             }
