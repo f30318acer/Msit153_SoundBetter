@@ -449,7 +449,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 取消</button>
-                <button type="button" class="btn btn-primary" id="btnAppliSend"><i class="bi bi-send-check-fill"></i> 應徵 </button>
             </div>
         </div>
     </div>
@@ -774,6 +773,7 @@
                             <h5>Email : ${data.fEmail}</h5>
                             <div class="mb-2"></div>
                             <h5>Phone : ${data.fPhone}</h5>
+                            <a class="btn btn-primary m-1" href="/MemberPage/Details/${data.fMemberId}" target="_blank">會員詳細資訊</a>
                         </div>
                         <div class="col-6">
                             <h5>${data.fIntroduction}<h5>
