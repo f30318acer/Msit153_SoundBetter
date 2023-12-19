@@ -4,6 +4,26 @@
 @{
     ViewData["Title"] = "Details";
 }
+
+
+<style>
+    .course-container {
+        width: 80%;
+        margin: 50px auto 20px auto;
+        overflow: hidden;
+    }
+
+    .container{
+        margin: 50px auto 20px auto;
+    }
+
+    iframe {
+        width: 1px;
+        min-width: 100%;
+    }
+</style>
+<script src="/js/iframeResizer.min.js"></script>
+
 <input type="hidden" value="@Html.DisplayFor(model => model.FArticleId)" id="articleId" />
 <!-- Blog section -->
 <section class="blog-section spad">
@@ -40,10 +60,17 @@
 </section>
 <!-- Blog section end -->
 
+<div id="bodydiv" class="container body-container">
+    <!-- Songs details section -->
+    <section class="songs-details-section">
+        <div class="detail-block">
+            <span class="detail-wrapper" style="text-align: left;">
+                @Html.Raw(Model.FContent)
+                @*@Html.Raw("<p>" + Model.FContent + "</p>")*@
+            </span>
+        </div>
+    </section>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FArticleId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>
 <section class="similar-songs-section">
     <div class="container-fluid">

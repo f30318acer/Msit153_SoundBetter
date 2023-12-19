@@ -83,7 +83,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             ClassicEditor
-                .create(document.querySelector('#fContent'))
+                .create(document.querySelector('#fContent'), {
+                    extraAllowedContent: 'iframe[*]'
+                })
                 .then(editor => {
                     editorInstance = editor; // 賦值 CKEditor 實例給全局變數
                 })
@@ -121,10 +123,6 @@
         $('#buttonSend').click(function () {
             // 獲取 CKEditor 5 的內容
             if (editorInstance) {
-            const editor = document.querySelector('#fContent');
-            
-            editor.value = editorInstance.getData();
-
             // 將 CKEditor 5 的內容設定為 textarea 的值
             document.querySelector('#fContent').value = editorInstance.getData();
 
