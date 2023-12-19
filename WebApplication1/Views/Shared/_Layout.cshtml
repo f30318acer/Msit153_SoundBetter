@@ -281,31 +281,7 @@
                 });
         }
 
-        //=====通知欄顯示=======
-        $(document).ready(function () {
-            console.log('before')
-            // 或者使用 $(function() {
-            function LoadNotifi() {
-                console.log('inLoad')
-                const notiList = $('#notiList');
-                $.getJSON(`/MemberPage/LoadNotifi`, function (datas) {                    
-                    const docFrag = $(document.createDocumentFragment())
-                    console.log('inAjex');
-                    $.each(datas, function (index, item) {
-                        if (item.fProjectId != 0) {
-                            const card = $(`
-                                <li class="d-flex align-items-center mx-2">
-                                    <a class="dropdown-item fs-12px" href="">${item.fNotification}</a>
-                                </li>
-                            `);
-                            docFrag.append(card);
-                        }
-                    });
-                    notiList.html(docFrag);
-                });
-            }
-            LoadNotifi();
-        });
+        
     </script>
 
     <script>
@@ -410,6 +386,8 @@
                 }
             }
         }
+
+        
     </script>
 
     @if (TempData["AlertLogin"] != null)
@@ -439,6 +417,33 @@
   
     @*  CheckLogin() *@
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        //=====通知欄顯示=======
+        $(document).ready(function () {
+            console.log('before')
+            // 或者使用 $(function() {
+            function LoadNotifi() {
+                console.log('inLoad')
+                const notiList = $('#notiList');
+                $.getJSON(`/MemberPage/LoadNotifi`, function (datas) {
+                    const docFrag = $(document.createDocumentFragment())
+                    console.log('inAjex');
+                    $.each(datas, function (index, item) {
+                        if (item.fProjectId != 0) {
+                            const card = $(`
+                                        <li class="d-flex align-items-center mx-2">
+                                            <a class="dropdown-item fs-12px" href="">${item.fNotification}</a>
+                                        </li>
+                                    `);
+                            docFrag.append(card);
+                        }
+                    });
+                    notiList.html(docFrag);
+                });
+            }
+            LoadNotifi();
+        });
+    </script>
 
 </body>
 
