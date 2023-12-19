@@ -61,8 +61,6 @@ public partial class TMember
 
     public virtual ICollection<TMemberSkill> TMemberSkills { get; set; } = new List<TMemberSkill>();
 
-    public virtual ICollection<TNotification> TNotifications { get; set; } = new List<TNotification>();
-
     public virtual ICollection<TProjectFav> TProjectFavs { get; set; } = new List<TProjectFav>();
 
     public virtual ICollection<TProject> TProjects { get; set; } = new List<TProject>();

@@ -142,11 +142,12 @@
 
 				const docFrag = $(document.createDocumentFragment())
 				$.each(limitdatas, function (index, item) {
+					console.log(item);
 					const descriSub = item.fContent.length > 15 ? item.fContent.substring(0, 15) + '...' : item.fContent;
 					const card = $(
 						`<a  href="/Article/Details/${item.fArticleId}" class="mix col-lg-3 col-md-4 col-sm-6" >
 							<div class="playlist-item">
-														   <img src="/img/Article/${item.fPhotoPath}" >
+								<img src="/img/Article/${item.fPhotoPath}" >
 								<h5>${item.fTitle}</h5>
 								<p>${descriSub}</p>
 							</div>

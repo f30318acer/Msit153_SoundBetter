@@ -4,105 +4,113 @@
 @{
     ViewData["Title"] = "Details";
 }
+<style>
+    .course-container {
+        width: 80%;
+        margin: 50px auto 20px auto;
+        overflow: hidden;
+    }
+
+    .container{
+        margin: 50px auto 20px auto;
+    }
+</style>
+
 <input type="hidden" value="@Html.DisplayFor(model => model.FArticleId)" id="articleId" />
 <!-- Blog section -->
-<section class="blog-section spad">
+<section class="blog-section spad" style="background-image: linear-gradient(to bottom right, #a3bded, #6991c7); background-size: cover;">
     <div class="container">
-        <!-- Blog post -->
-        <div class="blog-item">
-            <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="" width="1200" height="600">
-            <div class="blog-date"></div>
-            <h3>@Html.DisplayFor(model => model.FTitle)</h3>
+        <div class="player-box">
+            <div class="tarck-thumb-warp">
+                <div class="tarck-thumb">
+                    <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)">
+                </div>
+            </div>
+            <div class="wave-player-warp">
+                <div class="wave-player-info">
+                    <h2 style="margin-bottom: 10px;">@Model.FTitle</h2>
+                    <h4 style="color:#FF6F61; margin-bottom: 10px;">類型：@ViewBag.StyleId</h4>
+                </div>
+            </div>
         </div>
-
-        <!-- Blog post -->
-        <div class="blog-item">
-            <img id="pic2" alt="" width="1200" height="600">
-            <p class=" ">
-                @Html.DisplayFor(model => model.FContent)
-            </p>
-        </div>
-
-        <div class="blog-item">
-            <img id="pic3" alt="" width="1200" height="600">
-
-        </div>
-
-        <!-- Blog post -->
-
-@*         <div class="site-pagination">
-            <a href="#" class="active">01.</a>
-            <a href="#">02.</a>
-            <a href="#">03.</a>
-            <a href="#">04.</a>
-        </div> *@
     </div>
 </section>
 <!-- Blog section end -->
-
-
-@* <div>
-    <a asp-action="Edit" asp-route-id="@Model?.FArticleId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div> *@
+<div id="bodydiv" class="container body-container">
+    <!-- Songs details section -->
+    <section class="songs-details-section">
+        <div class="detail-block">
+            <span class="detail-wrapper" style="text-align: left; font-size: 25px">
+                @Html.Raw(Model.FContent)
+            </span>
+        </div>
+    </section>
+</div>
+<div id="order" class="course-container">
 <section class="similar-songs-section">
     <div class="container-fluid">
         <h3>你可能會想看的其他文章</h3>
-        @{
-            if (@Model.FArticleId< (ViewBag.AllArticle - 2))
-            {
-                <div class="row playlist-area">
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 1)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.PrArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 2)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.SenArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="row playlist-area">
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 1)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.PrArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 2)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.SenArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
-        }
+        <div id="divList" class="row playlist-area">
+            <!--List內容-->
+        </div>
     </div>
 </section>
+</div>
 <!-- Similar Songs section end -->
 
-<form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FArticleId">
+@*<form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FArticleId">
     <textarea class="form-control" type="text"
               placeholder="請先登入再留言" name="FCommentContent"></textarea>
     <input class="btn btn-sm btn-primary" type="submit" value="送出" />
-</form>
+</form>*@
+<div class="container">
+    <div class="row justify-content-center">
+        <div>
+            <form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FArticleId">
+                <textarea class="form-control" type="text" placeholder="請先登入再留言" name="FCommentContent"></textarea>
+                <input class="btn btn-sm btn-primary mt-2" type="submit" value="送出" />
+            </form>
+            <p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
+            <div>
+                @foreach (var comment in Model.TComments)
+                {
+                    <div class="row m-3">
+                        <div class="col-1">
+                            @if (comment.FMember != null)
+                            {
+                                <img src="@Url.Content($"~/img/Member/{@ViewData["UserPhoto"]}")" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content($"~/img/Member/default.jpg")" />
+                            }
+                        </div>
+                        <div class="col-11" style="background-color: #f8f9fa">
+                            <p>
+                                @if (comment.FMember != null)
+                                {
+                                    <span class="font-weight-bold">@ViewData["UserName"]</span>
 
-<p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
+                                }
+                                else
+                                {
+                                    <span class="font-weight-bold">匿名會員</span>
+                                }
+
+                                <span class="text-muted">． @comment.FCommentTime</span>
+                            </p>
+                            <p>@comment.FCommentContent</p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
 <div>
     @foreach (var comment in Model.TComments)
     {
@@ -136,7 +144,7 @@
         </div>
     }
 
-</div>
+</div>*@
 
 
 
@@ -157,5 +165,39 @@
                 $(`#pic${i + 2}`).attr('src', `/img/Article/ArticlePicture/${x}`);
             }
         })
+
+        function firstLoad(pageNumber) {
+            const divList = $('#divList')
+            //讀取Json資料
+            const SkillId = @Model.FStyleId
+                console.log(SkillId);
+            $.getJSON(`/apiTArticle/QueryByStylesID?id=${SkillId}`, function (datas) {
+                console.log(datas);
+
+                //獲得限定頁面資料
+                //slice(a,b) 陣列datas第a項到第b項的所有資料
+                //這裡是第0項到第4項
+                const limitdatas = datas.slice(0, 4);
+
+                //做出一個空的容器來存放div
+                const docFrag = $(document.createDocumentFragment())
+
+                //讀出每個Json物件
+                $.each(limitdatas, function (index, item) {
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                            <a href="/Article/Details?id=${item.fArticleID}">
+                                <div class="playlist-item">
+                                    <img src="/img/Article/${item.fPhotoPath}" alt="">
+                                    <h5>${item.fTitle}</h5>
+                                </div>
+                            </a>
+                        </div>`);
+                    docFrag.append(card);//.append()將一筆div放入容器中
+                })
+                divList.html(docFrag)//.html()一次將全部的資料都上傳
+            })
+        }
+        firstLoad(1);
     </script>
 }

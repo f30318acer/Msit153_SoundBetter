@@ -432,7 +432,7 @@
                         if (item.fProjectId != 0) {
                             const card = $(`
                                         <li class="d-flex align-items-center mx-2">
-                                            <a class="dropdown-item fs-12px" href="">${item.fNotification}</a>
+                                            <a class="dropdown-item fs-12px" href="/Project/Details/${item.fProjectId}" target="_blank">${item.fNotification}</a>
                                         </li>
                                     `);
                             docFrag.append(card);

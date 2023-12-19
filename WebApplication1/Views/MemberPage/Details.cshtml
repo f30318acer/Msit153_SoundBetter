@@ -474,6 +474,7 @@
             })
         }
         LoadMemFav();
+
         //判斷是否登入
         async function CheckLoginAndNavigate(btnID) {
             const response = await fetch(`@Url.Content("~/apiHome/IsLogin")`);

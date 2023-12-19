@@ -486,6 +486,9 @@
                 btnAppli.setAttribute('data-bs-toggle', 'modal');
                 btnAppli.setAttribute('data-bs-target', '#addModa2');
             }
+            if (prjStatusID == 2){
+                btnAppli.style.display = 'none';
+            }
             if (loginID == memberId) {
                 btnEdit.style.display = 'block';              
                 if (prjStatusID == 1)
@@ -494,7 +497,7 @@
                     btnAppliCheck.style.display = 'block';
                 }
                 if (prjStatusID == 2)
-                {
+                { 
                     btnDelete.style.display = 'block';
                     btnAppliCheck2.style.display = 'block';
                 }

@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Create";
 }
+<!-- 在<body>標籤內引入CKEditor 5腳本 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 <input type="hidden" id="loginId" class="form-control" name="fMemberId" value="@ViewBag.MemberId" />
 <section class="intro-section spad">
     <div class="container h-100">
@@ -43,11 +45,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
+                                    @*<div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example3c">文章內容</label>
                                             <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fContent" name="fContent" style="height: 100px"></textarea>
 
+                                        </div>
+                                    </div>*@
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label" for="fContent">文章內容</label>
+                                            <textarea class="form-control mb-3" placeholder="Leave a comment here" id="fContent" name="fContent" style="height: 100px"></textarea>
                                         </div>
                                     </div>
 
@@ -72,6 +81,17 @@
 
 @section Scripts{
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            ClassicEditor
+                .create(document.querySelector('#fContent'))
+                .then(editor => {
+                    editorInstance = editor; // 賦值 CKEditor 實例給全局變數
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+        
         const selStyle = document.querySelector('#selectStyle');
         //圖片預覽
         var arrayBuffer;
@@ -99,6 +119,16 @@
         });
         //送出創建資料
         $('#buttonSend').click(function () {
+            // 獲取 CKEditor 5 的內容
+            if (editorInstance) {
+            const editor = document.querySelector('#fContent');
+            
+            editor.value = editorInstance.getData();
+
+            // 將 CKEditor 5 的內容設定為 textarea 的值
+            document.querySelector('#fContent').value = editorInstance.getData();
+
+
             const formData = new FormData(document.querySelector('#createForm'));
             fetch('@Url.Content("~/apiTArticle/Create")', {
                 method: 'POST',
@@ -112,7 +142,10 @@
                     else {
                         alert("連線失敗");
                     }
-                })
+                });
+            } else {
+                console.error('CKEditor 實例未成功初始化');
+            }
         })
         //Style選擇器
         async function loadStyle() {
