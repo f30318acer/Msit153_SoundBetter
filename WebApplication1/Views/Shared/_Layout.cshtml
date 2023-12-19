@@ -71,16 +71,16 @@
                             <a class="nav-link text-white nav-text" asp-area="" asp-controller="Place" asp-action="Place">找場地</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Article" asp-action="List">音樂文章</a>
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Article" asp-action="List">找文章</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="MusicShare" asp-action="Details">音樂分享</a>
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="MusicShare" asp-action="Details">找音樂</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Home" asp-action="CouponList">找優惠</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white nav-text" asp-area="" asp-controller="Members" asp-action="Index">會員資訊</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white nav-text" asp-area="" asp-controller="Home" asp-action="CouponList">優惠券資訊</a>
                         </li>
 
                     </ul>
@@ -129,7 +129,7 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown" id="memberIcon">
                                     <button class="btn btn-dark" data-bs-toggle="dropdown">
-                                        <img src="~/img/header/user.png" class="circle-size-35" width="30" />
+                                        <img src="~/img/header/icons8-chat.png" class="circle-size-35" width="30" />
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark" id="notiList">
                                         <!--通知顯示-->
@@ -421,7 +421,6 @@
         //=====通知欄顯示=======
         $(document).ready(function () {
             console.log('before')
-            // 或者使用 $(function() {
             function LoadNotifi() {
                 console.log('inLoad')
                 const notiList = $('#notiList');
@@ -433,6 +432,14 @@
                             const card = $(`
                                         <li class="d-flex align-items-center mx-2">
                                             <a class="dropdown-item fs-12px" href="/Project/Details/${item.fProjectId}" target="_blank">${item.fNotification}</a>
+                                        </li>
+                                    `);
+                            docFrag.append(card);
+                        }
+                        if (item.fClassId != 0) {
+                            const card = $(`
+                                        <li class="d-flex align-items-center mx-2">
+                                            <a class="dropdown-item fs-12px" href="/Class/Viewclass?id=${item.fClassId}" target="_blank">${item.fNotification}</a>
                                         </li>
                                     `);
                             docFrag.append(card);

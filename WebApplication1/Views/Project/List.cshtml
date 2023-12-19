@@ -537,7 +537,7 @@
 						await LoadAppliNumber(item.fProjectId);
 						console.log(item.fDescription); // 在這裡處理 memberName
 						const descriSub = item.fDescription.length > 15 ? item.fDescription.substring(0, 15) + '...' : item.fDescription;
-						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}" style="height:280px;">
+						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}" style="height:300px;">
 								<div class="playlist-item">
 									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
 									<h5>${item.fName}</h5>
@@ -588,7 +588,7 @@
 						await LoadAppliNumber(item.fProjectId);
 						// 在這裡處理 memberName
 						const descriSub = item.fDescription.length > 30 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
-						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}" style="height:280px;">
+						const card = $(`<a class="mix col-lg-3 col-md-4 col-sm-6" href="/Project/Details/${item.fProjectId}" style="height:300px;">
 								<div class="playlist-item">
 									<img src="/img/project/${item.fThumbnailPath}" alt = "" >
 									<h5>${item.fName}</h5>
