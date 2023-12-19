@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "PowerBI";
+    Layout = "_Layout2";
+
+}
+@section Styles {
+    <style>
+        .powerbi-iframe-container {
+            width: 100%; /* 使 iframe 占滿容器的全部寬度 */
+            height: 95vh; /* 根據您的頁面設計，您可能需要調整這個值 */
+            padding-top: 35px;
+            padding-left:250px;
+            border: none;
+            overflow: hidden; /* 添加此屬性以防止滾動條出現 */
+        }
+
+            .powerbi-iframe-container iframe {
+                width: 100%; /* 使 iframe 占滿容器的全部寬度 */
+                height: 100%; /* 使 iframe 占滿容器的全部高度 */
+                border: none; /* 移除 iframe 的邊框 */
+            }
+    </style>
+}
+
+
+<<div class="powerbi-iframe-container">
+    <iframe title="Powerbi_SoundBetter"  src="https://app.powerbi.com/view?r=eyJrIjoiNzkyNjg3YTAtOWY2ZS00OTM4LWFkNjItNjBhYjY3MGY2MmM1IiwidCI6ImE0M2Y2Y2QzLTU0MTItNGIxZi1hMTM0LTJjMjc3MzY0Y2FmNiIsImMiOjEwfQ%3D%3D"
+frameborder="0" allowFullScreen="true"></iframe>
+</div>
