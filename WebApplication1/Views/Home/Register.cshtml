@@ -177,6 +177,20 @@
 
 @section Scripts {
     <script>
+        //demo 測試
+        $(document).ready(function () {
+            $('#Demo').on('click', function () {
+                $('#fUsername').val("Shiao");
+                $("#fName").val("Shiao");
+                $('#fEmail').val("shiao1124@gmail.com");
+                $('#fPhone').val("0932456789");
+                $('#fBirthday').val("1998-11-05");
+
+                // 如果需要可以取消註釋這行，設置密碼
+                // $('#fPassword').val("123");
+            });
+        });
+
         const photo = document.querySelector('#photo')
 
         photo.addEventListener('change', () => {
@@ -205,21 +219,5 @@
         //         }
         //     })
         // })
-
-        //demo 測試
-        // $('#Demo').on('click', () =>{
-        //     let fUsername = "Shiao"
-        //     $('#inputfUsername').val(fUsername)
-        //     let fName ="Shiao"
-        //             $("#inputfName").val(fName)
-        //     let fEmail ="shiao1124@gmail.com"
-        //             $('#inputfEmail').val(fEmail)
-        //     let fPhone = "0932456789"
-        //             $('#inputfPhone').val(fPhone)
-        //     let fBirthday = "1998-11-05"
-        //             $('#inputfBirthday').val(fBirthday)
-        //             $('#inputfPassword').val("123")
-        // })
     </script>
-
 }
