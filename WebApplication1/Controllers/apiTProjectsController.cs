@@ -327,13 +327,33 @@ namespace prjSoundBetterApi.Controllers
             var prjFav = from f in _context.TProjectFavs
                          join p in _context.TProjects
                          on f.FProjectId equals p.FProjectId
-                         where f.FMemberId == id && p.FProjectStatusId == 1
+                         where f.FMemberId == id
                          select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
 			return Json(prjFav);
 		}
 
-        //===取得應徵資料===
-        public IActionResult GetAppliInfo(int? id)
+		//===取得被錄取專案===
+
+		public IActionResult GetPrjAcceptByID(int? id)
+		{
+			if (id == null || _context.TApplicationRecords == null)
+			{
+				return NotFound();
+			}
+			var prjAcc = from f in _context.TApplicationRecords
+						 join p in _context.TProjects
+						 on f.FProjectId equals p.FProjectId
+						 where f.FMemberId == id && f.FApplicationStatusId == 4
+						 select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
+            if (prjAcc != null) 
+            {
+				return Json(prjAcc);
+			}
+			return NotFound();
+		}
+
+		//===取得應徵資料===
+		public IActionResult GetAppliInfo(int? id)
         {
             if (id == null || _context.TApplicationRecords == null)
             {
@@ -386,13 +406,21 @@ namespace prjSoundBetterApi.Controllers
                 TProject prj = _context.TProjects.FirstOrDefault(a => a.FProjectId == prjID);
                 prj.FProjectStatusId = 2;
                 //通知===
-                TNotification noti = new TNotification();
-                noti.FNotifiStatus = 1;
-                noti.FMemberId = record.FMemberId;
-                noti.FProjectId = prjID;
-                noti.FClassId = 0;
-                noti.FNotification = $"您被專案{prj.FProjectId}錄取了";
-                _context.Add(noti);
+                var notiDb = _context.TNotifications.FirstOrDefault(n => n.FProjectId == prjID && n.FMemberId == record.FMemberId);
+                if (notiDb != null)
+                {
+                    notiDb.FNotifiStatus = 1;
+                }
+                else 
+                {
+                    TNotification noti = new TNotification();
+                    noti.FNotifiStatus = 1;
+                    noti.FMemberId = record.FMemberId;
+                    noti.FProjectId = prjID;
+                    noti.FClassId = 0;
+                    noti.FNotification = $"您被專案{prj.FProjectId}錄取了";
+                    _context.Add(noti);
+                }
                 //======
                 _context.SaveChanges();
                 return Content("錄取成功");
