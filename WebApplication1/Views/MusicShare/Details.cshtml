@@ -132,7 +132,7 @@
     <div id="scrollToTopBtn" class="scroll-to-top-btn ">
         <div class="row">
             <div id="player" class="col-12" style="display:none;">
-                <div id="divPlayList" class="col-8"></div>
+                <div id="divPlayList" class="row col-8"></div>
                 <!-- 使用動態ID來設置音頻元素 -->
                 <audio controls id="audioPlayer" onclick="handlePlay(this)"  style="width: 100%">
                   
@@ -639,12 +639,11 @@
                 $.each(datas, function (index, item) {
                     const card = $(`
                 <div class="mix col-7" style="background-color:#F0F0F0;border-radius: 20px;" onclick="playSongOnClick(${index})" data-index="${index}">
-                            <div class="row playlist-item col-12" style="margin: 0;">
-                    <div class="col-10">
+                    <div class="row playlist-item" style="margin: 0;">
                                             <h6>${item.fWorkName}</h6>
-                    </div><div class="col-2"> <button class="btn btn-secondary " onclick="RemovePlayList(${item.fWorkId})">移除</button></div>
+                    </div>
                 </div>
-                        
+                        <div class="col-5"> <button class="btn btn-secondary " onclick="RemovePlayList(${item.fWorkId})">移除</button></div>
                         <div class="col-12">
                         <div class="mb-2"/>
                         </div>
