@@ -86,11 +86,26 @@ namespace prjMusicBetter.Controllers
             var dbSoundBetterContext = _context.TClasses.Where(c => c.FTeacherId == id);
             return Json(dbSoundBetterContext);
         }
+        public IActionResult GetMemberPrj(int id)
+        {
+            var dbSoundBetterContext = _context.TProjects.Where(c => c.FMemberId == id && c.FProjectStatusId == 1);
+            return Json(dbSoundBetterContext);
+        }
         //===GetMemberWorks===
         public IActionResult GetMemberWorks(int id)
         {
             var dbSoundBetterContext = _context.TWorks.Where(c => c.FMemberId == id);
             return Json(dbSoundBetterContext);
+        }
+        //===GetFallower===
+        public IActionResult GetFallower(int id)
+        {
+            var fallower = from f in _context.TMemberRelations
+                           join m in _context.TMembers
+                           on f.FMemberId equals m.FMemberId
+                           where f.FRelationMemberId == id && f.FMemberRelationStatusId == 1
+                           select m;
+            return Json(fallower);
         }
         //===GetMemberArticle===
         public IActionResult GetMemberArticle(int id)
@@ -134,6 +149,19 @@ namespace prjMusicBetter.Controllers
                 return Content("取消追蹤");
             }
             return Content("錯誤");
+        }
+        //幫layout讀取通知
+        public IActionResult LoadNotifi()
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member != null)
+            {
+                List<TNotification> notis = _context.TNotifications.Where(n => n.FMemberId == member.FMemberId && n.FNotifiStatus == 1).ToList();
+                if (notis.Count > 0) {
+                    return Json(notis);
+                }                
+            }
+            return Json(new List<TNotification> { new TNotification { FNotification = "沒有通知" } });
         }
     }
 }

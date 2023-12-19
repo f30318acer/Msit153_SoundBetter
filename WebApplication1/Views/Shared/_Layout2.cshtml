@@ -320,6 +320,9 @@
                         <a href="@Url.Content("~/TSites/Index")">
                             <i class="bi bi-circle"></i><span>場地管理</span>
                         </a>
+                        <a href="@Url.Content("~/Place/Index")">
+                            <i class="bi bi-circle"></i><span>場地分析</span>
+                        </a>
                     </li>
                 </ul>
             </li>
@@ -360,15 +363,18 @@
                 </ul>
             </li>
 
-        <li class="nav-heading">Pages</li>
             <li class="nav-item">
-                <a class="nav-link " href="https://app.powerbi.com/view?r=eyJrIjoiNzkyNjg3YTAtOWY2ZS00OTM4LWFkNjItNjBhYjY3MGY2MmM1IiwidCI6ImE0M2Y2Y2QzLTU0MTItNGIxZi1hMTM0LTJjMjc3MzY0Y2FmNiIsImMiOjEwfQ%3D%3D">
-               <i class="bi bi-person"></i>
-                   <span>PowerBI</span>
-               </a>
-            </li>      
-        </ul>
-
+                <a class="nav-link collapsed" data-bs-target="#analy-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>PowerBI</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="analy-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="@Url.Content("~/Chart/PowerBI")">
+                            <i class="bi bi-circle"></i><span>PowerBI</span>
+                        </a>
+                    </li>                
+                </ul>
+            </li>
     </aside><!-- End Sidebar-->
     <div>
         <script src="~/js/jquery-3.2.1.min.js"></script>
