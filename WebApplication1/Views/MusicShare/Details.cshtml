@@ -6,6 +6,8 @@
 @section Styles
     {
     <style>
+    
+
         .aaa {
             padding-bottom: 0;
             padding-top: 0;
@@ -133,18 +135,19 @@
     <div id="scrollToTopBtn" class="scroll-to-top-btn">
         <div class="row">
             <div id="player" class="col-12" style="display:none;">
-                <div id="divPlayList"></div>
+                <div id="divPlayList" class="row"></div>
                 <!-- 使用動態ID來設置音頻元素 -->
-                <audio controls id="audioPlayer" onclick="handlePlay(this)" onended="handlePlayEnded(${item.fWorkId})" style="width: 100%">
-                    <source src="/WorkFile/${item.fFilePath}.mp3" type="audio/mpeg">
+                <audio controls id="audioPlayer" onclick="handlePlay(this)"  style="width: 100%">
+                  
                 </audio>
+                <div id="workNameDisplay"></div>
                 <div>
                     <button class="btn-hover color-8 buttons11" onclick="playPrevious()">上一首</button>
                     <button class="btn-hover color-8 buttons11" onclick="playNext()">下一首</button>
                     <button id="btnCloseList" class="btn-hover color-8 buttons11 " onclick="closePlayer()">關閉撥放器</button>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="">
                 <button id="btnShowList" class="btn-hover color-8 buttons11 " onclick="openPlayer()">顯示撥放器</button>
             </div>
         </div>
@@ -618,37 +621,41 @@
         let datas; // 儲存歌曲數據
         let currentSongIndex = 0;
         let currentItem; // 新增全局變數
-
         function PlayListFirstLoad() {
             const divPlayList = $('#divPlayList');
-            $.getJSON('/apiTWork/GetPlayList', function (playlistData) {
-                datas = playlistData; // 儲存歌曲數據
+
+            // 返回一個 Promise 對象
+            function loadPlaylistData() {
+                return new Promise(resolve => {
+                    $.getJSON('/apiTWork/GetPlayList', function (playlistData) {
+                        datas = playlistData;
+                        resolve();
+                    });
+                });
+            }
+
+            // 當 Promise 完成時執行相應操作
+            loadPlaylistData().then(() => {
                 const docFrag = $(document.createDocumentFragment());
 
-                $.each(playlistData, function (index, item) {
-                    const card = $(
-                        `<div class="mix col-12" style="background-color:#F0F0F0;border-radius: 20px;" onclick="playSongOnClick(${index})">
-                            <div class="row playlist-item" style="margin: 0;">
-                                <div class="col-4" style="margin:0px">
-                                    <img alt="" src="/img/Works/${item.fThumbnail}" style="margin: 0;border-radius: 20px; width: 1px;">
-                                </div>
-                                <div class="col-8" style="margin:0px">
+                $.each(datas, function (index, item) {
+                    const card = $(`
+                <div class="mix col-7" style="background-color:#F0F0F0;border-radius: 20px;" onclick="playSongOnClick(${index})" data-index="${index}">
+                    <div class="row playlist-item" style="margin: 0;">
+                        <div class="col-12" style="margin:0px">
+                            <div class="row">
+                                <div class="col-12 text-center">
                                     <div class="row">
-                                        <div class="col-12 text-center">
-                                            <div class="row">
-                                                <div class="col-10">
-                                                    <h5>${item.fWorkName}</h5>
-                                                </div>
-                                                <div class="col-2"></div>
-                                            </div>
+                                        <div class="col-10">
+                                            <h5>${item.fWorkName}</h5>
                                         </div>
-                                    </div>
-                                    <div class="col-2" style="margin:0px">
-                                        <button class="btn-hover color-8 buttons11" onclick="">移除清單</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>`
+                        </div>
+                    </div>
+                </div>
+                        <div class="col-5"> <button class="btn-hover color-8 buttons11" onclick="RemovePlayList(${item.fWorkId})">移除清單</button></div>`
                     );
                     docFrag.append(card);
                 });
@@ -662,6 +669,7 @@
         }
 
         // 新增的點擊事件處理函數
+   
         function playSongOnClick(index) {
             // 使用點擊的索引來播放相應的歌曲
             currentSongIndex = index;
@@ -682,13 +690,15 @@
             currentItem = datas[currentSongIndex];
             playSong(currentSongIndex);
         }
-
         function playSong(index) {
             const audio = document.getElementById('audioPlayer');
+            const workNameDisplay = document.getElementById('workNameDisplay'); // 請替換成實際的顯示元素
+
+            console.log("gay");
 
             // 檢查 currentItem 是否存在
             if (!currentItem) {
-                console.error(`Invalid index or currentItem not found at index ${index}`);
+                console.error(`Invalid index or currentItem not found at index ${index}` + "123");
                 return;
             }
 
@@ -705,10 +715,26 @@
                 handlePlayEnded(currentItem.fWorkId);
             });
 
+            // 在播放前更新工作名稱顯示
+            workNameDisplay.textContent = currentItem.fWorkName;
+
             // 其他播放相關邏輯，例如 audio.play()，根據你的實際需求添加
-            audio.play();  // 如果需要自動播放
-        }
+            audio.play();
 
-
+          }
+        function RemovePlayList(workId) {
+            console.log("GGYYD")
+            $.ajax({
+                url: `/apiTWork/RemovePlayList/?id=${workId}`,  // 請根據你的實際路由進行修改
+                type: 'POST',  // 你的 PlusOne 方法可能是 POST 方法，請根據實際情況進行修改
+                success: function (response) {
+                    console.log('Remove successful');
+                    PlayListFirstLoad();
+                },
+                error: function (error) {
+                    console.error('Error calling Remove:', error);
+                }
+            });
+         }
     </script>
 }

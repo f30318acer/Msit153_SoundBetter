@@ -203,5 +203,28 @@ namespace prjSoundBetterApi.Controllers
 
             return NotFound();
         }
+
+
+        public IActionResult RemovePlayList(int? id)
+        {
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member != null)
+            {
+                if (_context.TPlaylists == null)
+                {
+                    return Problem("連線錯誤");
+                }
+                var playlist = _context.TPlaylists.Where(c => c.FWorkId == id).FirstOrDefault(m => m.FMemberId==member.FMemberId);
+                if (playlist != null)
+                {
+                    // 刪除 TClassClick 中符合條件的資料
+                    _context.TPlaylists.Remove(playlist);
+                    _context.SaveChanges();
+                    return Content("刪除成功");
+                }
+            }
+            
+            return Content("刪除失敗");
+        }
     }
 }

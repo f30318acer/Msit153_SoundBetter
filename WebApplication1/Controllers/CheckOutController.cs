@@ -3,6 +3,7 @@ using prjMusicBetter.Helpers;
 using prjMusicBetter.Models;
 using prjMusicBetter.Models.infra;
 using prjMusicBetter.Models.ViewModels;
+using Stripe;
 using Stripe.Checkout;
 using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -13,6 +14,7 @@ namespace prjMusicBetter.Controllers
 
     public class CheckOutController : Controller
     {
+        private static decimal _discountRate = 0;
         private readonly dbSoundBetterContext _context;
         private readonly IWebHostEnvironment _host;
         private readonly UserInfoService _userInfoService;
@@ -64,6 +66,15 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+        public IActionResult ApplyDiscount(int discount)
+        {
+            // 根據需要在這處理折扣值
+            // 更新折扣變數
+            _discountRate = (decimal)discount / 100;
+
+            
+            return Json(new { success = true, message = "Discount applied successfully." });
+        }
         public IActionResult Login()
         {
             return View();
@@ -97,11 +108,15 @@ namespace prjMusicBetter.Controllers
             };
             foreach (var item in productList)
             {
+                //var a = ((item.Rate * item.Quantity * 100) / item.Quantity)
+                var a = ((item.Rate * item.Quantity * (1 - _discountRate)) * 100) / item.Quantity;
+
                 var sessionListItem = new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions()
                     {
-                        UnitAmount = (long)(item.Rate * item.Quantity * 100),
+                        
+                        UnitAmount = (long)a,
                         Currency = "TWD",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {

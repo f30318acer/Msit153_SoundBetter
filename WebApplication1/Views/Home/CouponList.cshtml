@@ -5,71 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+<title>優惠券列表</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-
     body {
         font-family: 'Roboto', sans-serif;
     }
-
 </style>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <body class="bg-gray-100">
     <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-bold text-red-600 my-4">優惠券列表</h1>
-        <div class="bg-white shadow-md rounded my-6">
-            <table class="text-left w-full border-collapse">
-                <thead>
-                    <tr class="text-sm font-medium text-gray-700 bg-gray-200">
-                       
-                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">優惠代碼</th>
-                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">優惠描述</th>
-                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">開始日期</th>
-                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">結束日期</th>
-                        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">優惠種類</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
+        @foreach (var coupon in Model)
+        {
+            <div class="flex flex-col md:flex-row justify-between items-center bg-gray-800 text-white my-4 p-6  rounded-lg">
+                <div class="flex flex-1 flex-col md:flex-row items-start md:items-center">
+                    <div class="text-4xl font-bold mr-4 mb-2 md:mb-0">@coupon.FDescription </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-1">使用代碼: @coupon.FCouponCode</h3>
+                        <p class="mb-1">起始日: @coupon.FStartdate</p>
+                        <p>結束日: @coupon.FEnddate</p>
+                    </div>
+                </div>
+                <div class="flex-shrink-0 mt-4 md:mt-0">
+                    @if (!string.IsNullOrEmpty(coupon.FPicture))
                     {
-                        <tr>
-                          
-                            <td class="py-4 px-6 border-b border-grey-light">
-                                @Html.DisplayFor(modelItem => item.FCouponCode)
-                            </td>
-                            <td class="py-4 px-6 border-b border-grey-light">
-                                <div class="truncate-text">
-                                    @Html.DisplayFor(modelItem => item.FDescription)
-                                </div>
-                            </td>
-                            <td class="py-4 px-6 border-b border-grey-light">
-                                @Html.DisplayFor(modelItem => item.FStartdate)
-                            </td>
-                            <td class="py-4 px-6 border-b border-grey-light">
-                                @Html.DisplayFor(modelItem => item.FEnddate)
-                            </td>
-                            <td class="py-4 px-6 border-b border-grey-light">
-                                <div class="truncate-text">
-                                    @if (!string.IsNullOrEmpty(item.FPicture))
-                                    {
-                                        <img src="@Url.Content("~/img/Coolpon/" + item.FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
-
-                                    }
-                                    else
-                                    {
-                                        @:No Image
-                                    }
-                                </div>
-                            </td>
-                        </tr>
+                        <img src="@Url.Content("~/img/CoolPon/"+coupon.FPicture)" alt="Coupon Image" style="width:100px;height=auto; " />
                     }
-                </tbody>
-            </table>
-        </div>
+                    else
+                    {
+                        @:No Image
+                    }
+                </div>
+            </div>
+        }
     </div>
 </body>

@@ -4,6 +4,22 @@
     ViewData["Title"] = "Index";
     Layout = "_Layout2";
 }
+@section Styles{
+    <style>
+        /* 添加这段CSS来指定图片的固定宽度和高度 */
+        #img1 {
+            width: 100px; /* 设置图片宽度 */
+            height: 100px; /* 设置图片高度 */
+        }
+
+        /* 如果您希望图片居中显示，您可以添加以下CSS */
+        #img1 {
+            display: block;
+            margin: 0 auto;
+        }
+
+    </style>
+}
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -99,7 +115,7 @@
                     <td class="text-base p-4">
                         @if (!string.IsNullOrEmpty(item.FPhotoPath))
                         {
-                            <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" style="width:100px; height:auto;" />
+                            <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" style="width:100px; height:auto;" id="img1"/>
 
                         }
                         else

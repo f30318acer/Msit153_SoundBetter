@@ -3,10 +3,15 @@
     ViewData["Title"] = "workclick";
     Layout = "~/Views/Shared/ChartLayout.cshtml";
 }
-
+<style>
+    input[type="button"] {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+</style>
 <p>
     <div class="row">
-        <div class="col-2">
+        <div class="col-4">
             <select id="ChartType1" class="form-control" style="150px">
                 <option selected>-Select Chart Type-</option>
                 <option>bar</option>
