@@ -95,9 +95,6 @@
                         <button type="button" onclick="CheckLoginAndNavigate()" id="btnCreate" class="btn btn-info mr-2" style="background-color: #fc0254;">建立作品</button>
                     </div>
                 </div>
-                <a href="" class="active">Genres</a>
-                <a href="">Artists</a>
-                <a href="">All Playlist</a>
             </div>
         </div>
 
@@ -134,7 +131,7 @@
     
     <div id="scrollToTopBtn" class="scroll-to-top-btn ">
         <div class="row">
-            <div id="player" class="rcol-12" style="display:none;">
+            <div id="player" class="col-12" style="display:none;">
                 <div id="divPlayList" class="row col-8"></div>
                 <!-- 使用動態ID來設置音頻元素 -->
                 <audio controls id="audioPlayer" onclick="handlePlay(this)"  style="width: 100%">
@@ -545,7 +542,8 @@
                     .then(response => {
 
                         if (response.ok) {
-                            alert("加入成功");
+                            alert("加入成功"); 
+                            PlayListFirstLoad();
                         }
                         else {
                         }
@@ -646,7 +644,7 @@
                     </div>
                 </div>
                         <div class="col-5"> <button class="btn btn-secondary " onclick="RemovePlayList(${item.fWorkId})">移除</button></div>
-                        <div class="row col-12">
+                        <div class="col-12">
                         <div class="mb-2"/>
                         </div>
                                 `

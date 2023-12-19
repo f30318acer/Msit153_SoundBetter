@@ -8,9 +8,11 @@ using prjMusicBetter.Models.Daos;
 using prjMusicBetter.Models.Dtos;
 using prjMusicBetter.Models.Dtos.Comment;
 using prjMusicBetter.Models.infra;
+using System.ComponentModel.Design;
 using System.Formats.Asn1;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace prjMusicBetter.Controllers
 {
@@ -116,23 +118,32 @@ namespace prjMusicBetter.Controllers
 
             //留言部分
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
-            ViewData["UserName"] = _userInfoService.GetMemberInfo().FName;
+            ViewData["UserName"] = _userInfoService.GetMemberInfo().FUsername;
             ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
+            ViewData["UserId"] = _userInfoService.GetMemberInfo().FMemberId;
 
 
 
-            //          var commenterName = await _context.TComments
-            //                          .Where(c => c.FMemberId == id)
-            //                          .Include(c => c.FMember)
-            //                          .ThenInclude(c => c.FName)
-            //                          .SingleOrDefaultAsync();
-            //ViewData["CommenterName"] = commenterName;
-            //       var commenterPhoto = await _context.TComments
-            //                          .Where(c => c.FMemberId == id)
-            //                          .Include(c => c.FMember)
-            //                          .ThenInclude (c => c.FPhotoPath)
-            //                          .SingleOrDefaultAsync();
-            //ViewData["CommenterPhoto"] = commenterPhoto; 
+
+
+            var query = from comment in _context.TComments
+                        join member in _context.TMembers on comment.FMemberId equals member.FMemberId
+                        select new
+                        {
+                            MemberUserName = member.FUsername,
+                            MemberPhotoPath = member.FPhotoPath
+                        };
+
+            var result = await query.ToListAsync();
+
+            foreach (var commentermemberInfo in result)
+            {
+                var commenterUserName = commentermemberInfo.MemberUserName;
+                ViewData["CommenterUserName"] = commenterUserName;
+                var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
+                ViewData["CommenterPhoto"] = commenterPhotoPath;
+            }
+             
             //留言部分
 
             var StyleId = _context.TStyles.Where(t => t.FStyleId == tArticle.FStyleId).Select(t => t.FName).SingleOrDefault();
@@ -141,6 +152,8 @@ namespace prjMusicBetter.Controllers
             return View(tArticle);
           
         }
+
+
         public async Task<IActionResult> ViewArticle(int? id)
         {
             if (id == null || _context.TArticles == null)
@@ -189,10 +202,10 @@ namespace prjMusicBetter.Controllers
         {
             try
             {
-                // 获取当前用户的成员ID
+                // 目前使用者ID
                 cdto.FMemberId = _userInfoService.GetMemberInfo().FMemberId;
 
-                // 获取文章的成员ID
+                // 文章ID
                 var article = await _context.TArticles
                     .Include(t => t.FMember)
                     .Include(t => t.FStyle)
@@ -201,9 +214,9 @@ namespace prjMusicBetter.Controllers
 
                 if (article != null)
                 {
-                    cdto.FArticleId = article.FMember.FMemberId;
+                    cdto.FArticleId = article.FArticleId;
 
-                    // 添加评论
+                    // 加入留言
                     _context.TComments.Add(new TComment()
                     {
                         FCommentId = cdto.FCommentId,
@@ -213,22 +226,35 @@ namespace prjMusicBetter.Controllers
                         FCommentTime = DateTime.Now,
                     });
 
-                    // 保存更改
+                    // 儲存
                     await _context.SaveChangesAsync();
 
                     return RedirectToAction("Details", new { id = id });
                 }
                 else
                 {
-                    // 处理文章未找到的情况
+                    // 文章未找到
                     return NotFound("Article not found");
                 }
             }
             catch (Exception ex)
             {
-                // 处理其他异常情况
+                // 異常狀況
                 return StatusCode(500, "An error occurred while adding the comment.");
             }
+        }
+
+        //自刪評論留言
+        public IActionResult DeleteComment(int? id,int? commentId, int? articleId)
+        {
+            TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == commentId);
+            TComment article = _context.TComments.FirstOrDefault(q => q.FArticleId ==  articleId);
+            if (comment != null)
+            {
+                _context.TComments.Remove(comment);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Details", new { id = articleId });
         }
 
 
