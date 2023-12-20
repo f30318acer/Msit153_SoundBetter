@@ -244,7 +244,7 @@ namespace prjMusicBetter.Controllers
             }
         }
 
-        //自刪評論留言
+        //使用者自刪評論留言
         public IActionResult DeleteComment(int? id,int? commentId, int? articleId)
         {
             TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == commentId);
