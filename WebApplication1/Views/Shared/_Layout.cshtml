@@ -444,6 +444,14 @@
                                     `);
                             docFrag.append(card);
                         }
+                        if (item.fClassId == 0 && item.fProjectId == 0) {
+                            const card = $(`
+                                                <li class="d-flex align-items-center mx-2">
+                                                    <a class="dropdown-item fs-12px" target="_blank">${item.fNotification}</a>
+                                                </li>
+                                            `);
+                            docFrag.append(card);
+                        }
                     });
                     notiList.html(docFrag);
                 });

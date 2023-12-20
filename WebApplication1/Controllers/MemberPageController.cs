@@ -161,7 +161,7 @@ namespace prjMusicBetter.Controllers
                     return Json(notis);
                 }                
             }
-            return Json(new List<TNotification> { new TNotification { FNotification = "沒有通知" } });
+            return Json(new List<TNotification> { new TNotification { FNotification = "沒有通知", FProjectId = 0, FClassId = 0 } });
         }
     }
 }
