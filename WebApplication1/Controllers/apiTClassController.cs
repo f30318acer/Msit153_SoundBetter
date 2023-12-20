@@ -50,7 +50,7 @@ namespace prjMusicBetter.Controllers
                                            fSkillId = s.FSkillId,
                                            fDescription = ReplaceHtmlTag(s.FDescription),
                                            fClick = c.FClick,
-                                           fTeacherNmae = m.FName,
+                                           fTeacherNmae = m.FUsername,
                                            fSiteName = t.FSiteName,
                                        };
 
@@ -82,7 +82,7 @@ namespace prjMusicBetter.Controllers
                                            fDescription = ReplaceHtmlTag(s.FDescription),
                                            fOnLine = s.FOnLine,
                                            fClick = c.FClick,
-                                           fTeacherNmae = m.FName,
+                                           fTeacherNmae = m.FUsername,
                                            fEnddate = s.FEnddate,
                                        };
             if (dbSoundBetterContext == null)
@@ -296,7 +296,7 @@ namespace prjMusicBetter.Controllers
                              fDescription = ReplaceHtmlTag(s.FDescription),
                              fOnLine = s.FOnLine,
                              fClick = c.FClick,
-                             fTeacherNmae = m.FName,
+                             fTeacherNmae = m.FUsername,
                              fEnddate = s.FEnddate,
                          };
             return Json(result.ToList());
@@ -353,7 +353,7 @@ namespace prjMusicBetter.Controllers
                              fDescription = ReplaceHtmlTag(s.FDescription),
                              fOnLine = s.FOnLine,
                              fClick = c.FClick,
-                             fTeacherNmae = m.FName,
+                             fTeacherNmae = m.FUsername,
                              fEnddate = s.FEnddate,
                          };
             return Json(result.ToList());
@@ -427,7 +427,7 @@ namespace prjMusicBetter.Controllers
                     Class.FCurrentStudent++;//現在學生數+1
 
                     var studentID = Class.FTeacherId;
-                    var studentName = _context.TMembers.FirstOrDefault(m => m.FMemberId == memberId).FName;
+                    var studentName = _context.TMembers.FirstOrDefault(m => m.FMemberId == memberId).FUsername;
                     var ClassName = Class.FClassName;
                     var Notifi = "有一名學生：" + studentName + "，加入了你的課程：" + ClassName;
 
