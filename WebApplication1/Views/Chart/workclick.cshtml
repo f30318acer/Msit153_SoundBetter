@@ -1,50 +1,53 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "workclick";
     Layout = "~/Views/Shared/ChartLayout.cshtml";
 }
+<!-- 確保加入 jQuery 的引用 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
 <style>
     input[type="button"] {
-        background-color: #f0f0f0;
-        color: #333;
+        border: none; /* 移除按鈕邊框 */
+        padding: 10px 15px; /* 設定內邊距 */
+        cursor: pointer; /* 讓滑鼠指針在按鈕上顯示為手型 */
     }
 </style>
 <p>
     <div class="row">
         <div class="col-4">
-            <select id="ChartType1" class="form-control" style="150px">
+            <select id="ChartType1" class="form-control" style="width: 150px;">
                 <option selected>-選擇圖表-</option>
                 <option>bar</option>
                 <option>line</option>
                 <option>pie</option>
                 <option>doughnut</option>
-                <input id="ID1" value="顯示圖表" type="button" />
             </select>
+            <input id="ID1" value="顯示圖表" type="button" style="background-color:#fc0254; color:#fff; border-radius: 5px;" />
         </div>
     </div>
 </p>
 
 <br />
 <canvas id="myChart1" style="max-width:600px;max-height:400px"></canvas>
-<!-- 確保加入 jQuery 的引用 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script type="text/javascript">
     $(function () {
         $("#ID1").click(function () {
 
             var chartType = $("#ChartType1").val();
 
-            $.ajax({
-                type: "POST",
-                url: "/Chart/GetWorksClicksData",
-                data: "",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: OnSuccessResult,
-                error: Onerror
-            });
-
+            if (chartType !== "-選擇圖表-") {
+                $.ajax({
+                    type: "POST",
+                    url: "/Chart/GetWorksClicksData",
+                    data: "",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccessResult,
+                    error: Onerror
+                });
+           
             function OnSuccessResult(data) {
                 var _data = data;
                 var _chartLabels = _data[0];
@@ -71,6 +74,65 @@
             function Onerror(err) {
                 console.error(err); // 增加錯誤日誌
             }
+            }
+        });
+
+        // 在選擇圖表下拉列表改變時，檢查選項值並禁用/啟用按鈕
+        $("#ChartType1").change(function () {
+            var chartType = $("#ChartType1").val();
+            $("#ID1").prop("disabled", chartType === "-選擇圖表-");
         });
     });
+        //$(function () {
+        //    // 初始加載圖表
+        //    loadChartData('bar'); // 假設 'bar' 是預設圖表類型
+
+        //    $("#ID1").click(function () {
+        //        var chartType = $("#ChartType1").val() || 'bar'; // 如果沒有選擇，則默認為 'bar'
+        //        if (chartType !== "-選擇圖表-") {
+        //            loadChartData(chartType);
+        //        }
+        //    });
+
+        //    function loadChartData(chartType) {
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/Chart/GetWorksClicksData",
+        //            data: "",
+        //            contentType: "application/json;charset=utf-8",
+        //            dataType: "json",
+        //            success: function (data) {
+        //                renderChart(chartType, data);
+        //            },
+        //            error: Onerror
+        //        });
+        //    }
+
+        //    function renderChart(chartType, data) {
+        //        var _data = data;
+        //        var _chartLabels = _data[0];
+        //        var _chartData = _data[1];
+        //        var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+
+        //        // 檢查是否已經有圖表實例存在，如果有，則先銷毀
+        //        if (window.myChartInstance) {
+        //            window.myChartInstance.destroy();
+        //        }
+
+        //        window.myChartInstance = new Chart("myChart1", {
+        //            type: chartType,
+        //            data: {
+        //                labels: _chartLabels,
+        //                datasets: [{
+        //                    backgroundColor: barColor,
+        //                    data: _chartData
+        //                }]
+        //            },
+        //        });
+        //    }
+
+        //    function Onerror(err) {
+        //        console.error(err); // 或者展示一個用戶友好的錯誤信息
+        //    }
+        //});
 </script>
