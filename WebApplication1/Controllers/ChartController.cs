@@ -193,23 +193,35 @@ namespace prjMusicBetter.Controllers
 
         }
         [HttpPost]
-        public IActionResult GetApplicationStatusCounts()
+        public IActionResult GetStatusCounts()
         {
-            // 獲取每個狀態的數量
-            var statusCounts = _context.TApplicationRecords
-                .Include(ar => ar.FApplicationStatus) // 如果有導航屬性
+            // 獲取應用狀態和對應的描述
+            var applicationStatus = _context.TApplicationRecords
                 .GroupBy(ar => ar.FApplicationStatusId)
                 .Select(group => new
                 {
                     StatusId = group.Key,
-                    Count = group.Count(),
-                    Description = _context.TProjectStatuses
-                        .Where(ps => ps.FProjectStatusId == group.Key)
-                        .Select(ps => ps.FDescription)
-                        .FirstOrDefault() // 假設每個StatusId只會對應一個Description
+                    Description = _context.TApplicationStatuses
+                        .FirstOrDefault(ps => ps.FApplicationStatus == group.Key).FDescription,
+                    Count = group.Count()
                 })
                 .ToList();
-            return Json(statusCounts);
+            // 合併應用狀態和項目狀態
+            var combinedStatus = applicationStatus             
+                .GroupBy(cs => cs.Description)
+                .Select(group => new
+                {
+                    Description = group.Key,
+                    TotalCount = group.Sum(g => g.Count)
+                })
+                .ToList();
+
+            // 返回給前端的數據結構
+            var result = combinedStatus.Select(cs => new { label = cs.Description, value = cs.TotalCount }).ToList();
+
+            return Json(result);
+
         }
+
     }
 }
