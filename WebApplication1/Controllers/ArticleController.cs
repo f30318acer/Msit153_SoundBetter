@@ -122,31 +122,33 @@ namespace prjMusicBetter.Controllers
 
             //留言部分
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
-            ViewData["UserName"] = _userInfoService.GetMemberInfo().FUsername;
-            ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
+            //ViewData["UserName"] = _userInfoService.GetMemberInfo().FUsername;
+            //ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
+
+            //自刪部分需要抓UserId
             ViewData["UserId"] = _userInfoService.GetMemberInfo().FMemberId;
 
 
 
 
 
-            var query = from comment in _context.TComments
-                        join member in _context.TMembers on comment.FMemberId equals member.FMemberId
-                        select new
-                        {   
-                            MemberUserName = member.FUsername,
-                            MemberPhotoPath = member.FPhotoPath
-                        };
+            //var query = from comment in _context.TComments
+            //            join member in _context.TMembers on comment.FMemberId equals member.FMemberId
+            //            select new
+            //            {   
+            //                MemberUserName = member.FUsername,
+            //                MemberPhotoPath = member.FPhotoPath
+            //            };
 
-            var result = await query.ToListAsync();
+            //var result = await query.ToListAsync();
 
-            foreach (var commentermemberInfo in result)
-            {
-                var commenterUserName = commentermemberInfo.MemberUserName;
-                TempData["CommenterUserName"] = commenterUserName;
-                var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
-                TempData["CommenterPhoto"] = commenterPhotoPath;
-            }
+            //foreach (var commentermemberInfo in result)
+            //{
+            //    var commenterUserName = commentermemberInfo.MemberUserName;
+            //    TempData["CommenterUserName"] = commenterUserName;
+            //    var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
+            //    TempData["CommenterPhoto"] = commenterPhotoPath;
+            //}
              
             //留言部分
 
