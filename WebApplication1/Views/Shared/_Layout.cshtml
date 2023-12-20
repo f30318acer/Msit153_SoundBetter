@@ -444,7 +444,7 @@
                         if (item.fProjectId != 0) {
                             const card = $(`
                                         <li class="d-flex align-items-center mx-2">
-                                            <a class="dropdown-item fs-12px" href="/Project/Details/${item.fProjectId}" target="_blank">${item.fNotification}</a>
+                                                    <a class="dropdown-item fs-12px" href="/Project/Details/${item.fProjectId}" target="_blank" onclick="NotiStatueChange(${item.fNotificationId})">${item.fNotification}</a>
                                         </li>
                                     `);
                             docFrag.append(card);
@@ -452,7 +452,7 @@
                         if (item.fClassId != 0) {
                             const card = $(`
                                         <li class="d-flex align-items-center mx-2">
-                                            <a class="dropdown-item fs-12px" href="/Class/Viewclass?id=${item.fClassId}" target="_blank">${item.fNotification}</a>
+                                            <a class="dropdown-item fs-12px" href="/Class/Viewclass?id=${item.fClassId}" target="_blank" onclick="NotiStatueChange(${item.fNotificationId})">${item.fNotification}</a>
                                         </li>
                                     `);
                             docFrag.append(card);
@@ -479,6 +479,12 @@
             }
             LoadNotifi();
         });
+
+        function NotiStatueChange(notiID){
+            fetch(`/MemberPage/NotiStatueChange/${notiID}`, {
+                method: 'POST',
+            })
+        }
     </script>
 
 </body>

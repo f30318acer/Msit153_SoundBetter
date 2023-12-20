@@ -164,5 +164,20 @@ namespace prjMusicBetter.Controllers
             }
             return Json(new List<TNotification> { new TNotification { FNotification = "沒有通知" ,FProjectId = 0,FClassId = 0} });
         }
+        //===已讀======
+        public IActionResult NotiStatueChange(int? id)
+        {
+            if (id != null)
+            {
+                var notiDb = _context.TNotifications.FirstOrDefault(n => n.FNotificationId == id);
+                if (notiDb != null) 
+                {
+                    notiDb.FNotifiStatus = 2;
+                    _context.SaveChanges();
+                    return Content("已讀成功");
+                }
+            }
+            return Content("讀取失敗");
+        }
     }
 }
