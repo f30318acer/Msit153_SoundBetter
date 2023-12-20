@@ -1,7 +1,10 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "siteclick";
 }
+<!-- 確保加入 jQuery 的引用 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
 <style>
     input[type="button"] {
         background-color: #f0f0f0;
@@ -11,65 +14,70 @@
 <p>
     <div class="row">
         <div class="col-4">
-            <select id="ChartType4" class="form-control" style="150px">
+            <select id="ChartType4" class="form-control" style="width: 150px;">
                 <option selected>-選擇圖表-</option>
                 <option>bar</option>
                 <option>line</option>
                 <option>pie</option>
                 <option>doughnut</option>
-                <input id="ID4" value="顯示圖表" type="button" />
             </select>
-        </div>     
+            <input id="ID4" value="顯示圖表" type="button" style="background-color:#fc0254; color:#fff; border-radius: 5px;" />
+        </div>
     </div>
 </p>
 
 <br />
 <canvas id="myChart4" style="max-width:600px;max-height:400px"></canvas>
-<!-- 確保加入 jQuery 的引用 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script type="text/javascript">
     $(function () {
         $("#ID4").click(function () {
-
             var chartType = $("#ChartType4").val();
 
-            $.ajax({
-                type: "POST",
-                url: "/Chart/GetSitesStatusData",
-                data: "",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: OnSuccessResult,
-                error: Onerror
-            });
+            if (chartType !== "-選擇圖表-") {
+                $.ajax({
+                    type: "POST",
+                    url: "/Chart/GetSitesStatusData",
+                    data: "",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccessResult,
+                    error: Onerror
+                });
 
-            function OnSuccessResult(data) {
-                var _data = data;
-                var _chartLabels = _data[0];
-                var _chartData = _data[1];
-                var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+                function OnSuccessResult(data) {
+                    var _data = data;
+                    var _chartLabels = _data[0];
+                    var _chartData = _data[1];
+                    var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
 
-                // 檢查是否已經有圖表實例存在，如果有，則先銷毀
-                if (window.myChartInstance) {
-                    window.myChartInstance.destroy();
+                    // 檢查是否已經有圖表實例存在，如果有，則先銷毀
+                    if (window.myChartInstance) {
+                        window.myChartInstance.destroy();
+                    }
+
+                    window.myChartInstance = new Chart("myChart4", {
+                        type: chartType,
+                        data: {
+                            labels: _chartLabels,
+                            datasets: [{  // datasets 的設置應根據圖表類型可能需要調整
+                                backgroundColor: barColor,
+                                data: _chartData
+                            }]
+                        },
+                    });
                 }
 
-                window.myChartInstance = new Chart("myChart4", {
-                    type: chartType,
-                    data: {
-                        labels: _chartLabels,
-                        datasets: [{  // datasets 的設置應根據圖表類型可能需要調整
-                            backgroundColor: barColor,
-                            data: _chartData
-                        }]
-                    },
-                });
+                function Onerror(err) {
+                    console.error(err); // 增加錯誤日誌
+                }
             }
+        });
 
-            function Onerror(err) {
-                console.error(err); // 增加錯誤日誌
-            }
+        // 在選擇圖表下拉列表改變時，檢查選項值並禁用/啟用按鈕
+        $("#ChartType4").change(function () {
+            var chartType = $("#ChartType4").val();
+            $("#ID4").prop("disabled", chartType === "-選擇圖表-");
         });
     });
 </script>
