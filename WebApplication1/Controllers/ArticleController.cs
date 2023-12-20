@@ -78,6 +78,10 @@ namespace prjMusicBetter.Controllers
             //    .Include(t => t.FStyle)
             //    .FirstOrDefaultAsync(m => m.FArticleId == id);
 
+            //強制Load資料庫 不然會出現匿名會員項目
+            _context.TComments.Load();
+            _context.TMembers.Load();
+
             var tArticle = await _context.TArticles
               .Include(t => t.FMember)
               .Include(t => t.FStyle)
@@ -120,6 +124,8 @@ namespace prjMusicBetter.Controllers
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
             ViewData["UserName"] = _userInfoService.GetMemberInfo().FUsername;
             ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
+
+            //自刪留言需要抓使用者ID確認身分
             ViewData["UserId"] = _userInfoService.GetMemberInfo().FMemberId;
 
 
@@ -202,6 +208,14 @@ namespace prjMusicBetter.Controllers
         {
             try
             {
+
+                // 檢查 FCommentContent 是否為 null 或空字符串
+                if (string.IsNullOrEmpty(cdto.FCommentContent))
+                {
+                    //return BadRequest("請輸入評價留言");
+
+                    return RedirectToAction("Details", new { id = id });
+                }
                 // 目前使用者ID
                 cdto.FMemberId = _userInfoService.GetMemberInfo().FMemberId;
 
