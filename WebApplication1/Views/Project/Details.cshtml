@@ -226,6 +226,7 @@
 			                    <div class="col-lg-3">
 				                    <h3>製作專長需求</h3>
 			                    </div>
+                                <div class="col-12 mb-3"></div>
 			                    <div class="col-lg-12">
 				                    <p>
 					                    @Html.DisplayFor(model => model.FDescription2)
@@ -716,7 +717,7 @@
                     const cell4 = $('<td></td>').html(`<a class="btn btn-primary m-1" href="/MemberPage/Details/${item.fMemberId}" target="_blank" onclick="ChangeAppliStatus(${item.fApplicationRecordId})">會員資訊</a>`)
                     const cell5 = $('<td></td>').html(`<button class="btn btn-danger m-1" onclick="AcceptAppli(${item.fApplicationRecordId})">錄取應徵會員</button>`);
 
-                    const row = $('<tr></tr>').append([cell1, cell2, cell22])
+                    const row = $('<tr></tr>').append([cell1, cell2])
                     const row2 = $('<tr></tr>').append([cell3, cell4, cell5])
                     docFrag.append([row, row2])
                 })

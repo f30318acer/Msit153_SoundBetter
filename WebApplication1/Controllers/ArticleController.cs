@@ -129,7 +129,7 @@ namespace prjMusicBetter.Controllers
             var query = from comment in _context.TComments
                         join member in _context.TMembers on comment.FMemberId equals member.FMemberId
                         select new
-                        {
+                        {   
                             MemberUserName = member.FUsername,
                             MemberPhotoPath = member.FPhotoPath
                         };
@@ -139,9 +139,9 @@ namespace prjMusicBetter.Controllers
             foreach (var commentermemberInfo in result)
             {
                 var commenterUserName = commentermemberInfo.MemberUserName;
-                ViewData["CommenterUserName"] = commenterUserName;
+                TempData["CommenterUserName"] = commenterUserName;
                 var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
-                ViewData["CommenterPhoto"] = commenterPhotoPath;
+                TempData["CommenterPhoto"] = commenterPhotoPath;
             }
              
             //留言部分
@@ -195,7 +195,7 @@ namespace prjMusicBetter.Controllers
         }
 
 
-        ///留言功能
+        ///評論留言功能
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> AddComment(int id, CommentDto cdto)
