@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "application";
+    Layout = "~/Views/Shared/ChartLayout.cshtml";
+
+}
+<style>
+    input[type="button"] {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+</style>
+<p>
+    <div class="row">
+        <div class="col-4">
+            <select id="ChartType5" class="form-control" style="150px">
+                <option selected>-選擇圖表-</option>
+                <option>pie</option>
+                <input id="ID5" value="顯示圖表" type="button" />
+            </select>
+        </div>
+    </div>
+</p>
+
+<br />
+<canvas id="myChart5" style="max-width:600px;max-height:400px"></canvas>
+<!-- 確保加入 jQuery 的引用 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#ID5").click(function () {
+
+            var chartType = $("#ChartType5").val();
+
+            if (chartType === '-選擇圖表-') {
+                alert("請選擇一種圖表類型。");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Chart/GetApplicationStatusCounts",
+                success: OnSuccessResult,
+                error: Onerror
+            });
+
+            function OnSuccessResult(data) {
+                var _chartLabels = data.map(d => d.label);
+                var _chartData = data.map(d => d.value);
+                var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+
+                // 檢查是否已經有圖表實例存在，如果有，則先銷毀
+                if (window.myChartInstance) {
+                    window.myChartInstance.destroy();
+                }
+
+                window.myChartInstance = new Chart("myChart5", {
+                    type: chartType.toLowerCase(),
+                    data: {
+                        labels: _chartLabels,
+                        datasets: [{  // datasets 的設置應根據圖表類型可能需要調整
+                            backgroundColor: barColor.slice(0, _chartData.length), // 確保顏色數量與數據點匹配
+                            data: _chartData
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: '圖表'
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true
+                        }
+                    }
+                });
+            }
+
+            function Onerror(err) {
+                console.error(err); // 增加錯誤日誌
+                alert("發生錯誤，請檢查控制台。");
+            }
+        });
+    });
+
+</script>
