@@ -29,12 +29,12 @@
                             <h3 class="text-lg font-bold mb-1">使用代碼：<span style="color: #FF4500">@coupon.FCouponCode</span></h3>
                             @{
                                 DateTime startDate = Convert.ToDateTime(coupon.FStartdate);
-                            }
-                            @{
                                 DateTime endDate = Convert.ToDateTime(coupon.FEnddate);
+                                int remainingDays = (endDate - DateTime.Now).Days;
                             }
                             <p class="mb-1">開始日期：@startDate.ToString("yyyy/MM/dd")</p>
-                            <p>結束日期：@endDate.ToString("yyyy/MM/dd")</p>
+                            <p class="mb-1">結束日期：@endDate.ToString("yyyy/MM/dd")</p>
+                            <p class="mb-1">剩餘天數：@remainingDays 天</p>
                         </div>
                     </div>
                     <div class="flex-shrink-0">
