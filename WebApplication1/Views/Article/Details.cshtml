@@ -26,7 +26,7 @@
 
 <input type="hidden" value="@Html.DisplayFor(model => model.FArticleId)" id="articleId" />
 <!-- Blog section -->
-<section class="blog-section spad" style="background-image: url('/img/Article/musicbg.jpg'); background-size: cover;">
+<section class="blog-section spad" style="background-image: linear-gradient(to right, #64b3f4, #c2e59c);">
     <div class="container">
         <div class="player-box">
             <div class="tarck-thumb-warp">
@@ -49,7 +49,7 @@
     <!-- Songs details section -->
     <section class="songs-details-section">
         <div class="detail-block">
-            <span class="detail-wrapper" style="text-align: left;">
+            <span class="detail-wrapper" style="text-align: left; font-size: 25px;">
                 @Html.Raw(Model.FContent)
             </span>
         </div>

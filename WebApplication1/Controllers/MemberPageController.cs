@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using prjMusicBetter.Models;
@@ -162,7 +161,7 @@ namespace prjMusicBetter.Controllers
                     return Json(notis);
                 }                
             }
-            return Json(new List<TNotification> { new TNotification { FNotification = "沒有通知" ,FProjectId = 0,FClassId = 0} });
+            return Json(new List<TNotification> { new TNotification { FNotification = "沒有通知", FProjectId = 0, FClassId = 0 } });
         }
     }
 }
