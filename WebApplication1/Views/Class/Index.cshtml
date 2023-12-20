@@ -253,7 +253,7 @@
                                      </div>
                                      <div>
                                          <h5>導師：${item.fTeacherNmae}</h5>
-                                         <h6>地點：${item.fSiteName}</h6>
+                                         <h6>地點：${item.fOnLine === 0 ? item.fSiteName : '線上'}</h6>
                                          <p>點閱數：${item.fClick}</p>
                                      </div>
                                  </a>
@@ -368,7 +368,7 @@
                                     </div>
                                     <div>
                                         <h5>導師：${item.fTeacherNmae}</h5>
-                                        <h6>地點：${item.fSiteName}</h6>
+                                        <h6>地點：${item.fOnLine === 0 ? item.fSiteName : '線上'}</h6>
                                         <p>點閱數：${item.fClick}</p>
                                     </div>
                                 </a>

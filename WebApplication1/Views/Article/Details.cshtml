@@ -17,40 +17,30 @@
         margin: 50px auto 20px auto;
     }
 
-    iframe {
-        width: 1px;
-        min-width: 100%;
-    }
+    /*iframe {
+            width: 1px;
+            min-width: 100%;
+        }*/
 </style>
 <script src="/js/iframeResizer.min.js"></script>
 
 <input type="hidden" value="@Html.DisplayFor(model => model.FArticleId)" id="articleId" />
 <!-- Blog section -->
-<section class="blog-section spad">
+<section class="blog-section spad" style="background-image: url('/img/Article/musicbg.jpg'); background-size: cover;">
     <div class="container">
-        <!-- Blog post -->
-        <div class="blog-item">
-            <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="" width="1200" height="600">
-            <div class="blog-date"></div>
-            <h3>@Html.DisplayFor(model => model.FTitle)</h3>
+        <div class="player-box">
+            <div class="tarck-thumb-warp">
+                <div class="tarck-thumb">
+                    <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)">
+                </div>
+            </div>
+            <div class="wave-player-warp">
+                <div class="wave-player-info">
+                    <h2 style="margin-bottom: 10px;">@Model.FTitle</h2>
+                    <h4 style="color:#fc0254; margin-bottom: 10px;">類型：@ViewBag.StyleId</h4>
+                </div>
+            </div>
         </div>
-
-        <!-- Blog post -->
-        <div class="blog-item">
-            <img id="pic2" alt="" width="1200" height="600">
-            <p class=" ">
-                @Html.DisplayFor(model => model.FContent)
-            </p>
-        </div>
-
-        <div class="blog-item">
-            <img id="pic3" alt="" width="1200" height="600">
-
-        </div>
-
-        <!-- Blog post -->
-
-
     </div>
 </section>
 <!-- Blog section end -->
@@ -61,119 +51,81 @@
         <div class="detail-block">
             <span class="detail-wrapper" style="text-align: left;">
                 @Html.Raw(Model.FContent)
-                @*@Html.Raw("<p>" + Model.FContent + "</p>")*@
             </span>
         </div>
     </section>
-
 </div>
-<section class="similar-songs-section">
-    <div class="container-fluid">
-        <h3>你可能會想看的其他文章</h3>
-        @{
-            if (@Model.FArticleId < (ViewBag.AllArticle - 2))
-            {
-                <div class="row playlist-area">
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 1)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.PrArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId + 2)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.SenArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="row playlist-area">
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 1)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.PrArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="mix col-lg-3 col-md-4 col-sm-6 movies">
-                        <a asp-area="" asp-controller="Article" asp-action="Details" asp-route-id="@(Model.FArticleId - 2)">
-                            <div class="playlist-item">
-                                <img src="~/img/Article/@Html.DisplayFor(model => model.FPhotoPath)" alt="">
-                                <h5>@ViewBag.SenArticle</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
-        }
-    </div>
-</section>
+<div id="order" class="course-container">
+    <section class="similar-songs-section">
+        <div class="container-fluid">
+            <h3>你可能會想看的其他文章</h3>
+            <div id="divList" class="row playlist-area">
+                <!--List內容-->
+            </div>
+        </div>
+    </section>
+</div>
 <!-- Similar Songs section end -->
-
-<form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FArticleId">
+@*<form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FArticleId">
     <textarea class="form-control" type="text"
               placeholder="請先登入再留言" name="FCommentContent"></textarea>
     <input class="btn btn-sm btn-primary" type="submit" value="送出" onclick="return confirm('確定要送出留言嗎? ')" />
-</form>
-
-<p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
-<div>
-    @foreach (var comment in Model.TComments)
-    {
-        <div class="row m-3">
-            <div class="col-1">
-                @if (comment.FMember != null)
-                {
-                    <img src="@Url.Content($"~/img/Member/{@ViewData["UserPhoto"]}")" />
-                }
-                else
-                {
-                    <img src="@Url.Content($"~/img/Member/default.jpg")" />
-                }
-            </div>
-            <div class="col-11" style="background-color: #f8f9fa">
-                <p>
-                    @if (comment.FMember != null)
-                    {
-                        <span class="font-weight-bold">@ViewData["UserName"]</span>
-
-                    }
-                    else
-                    {
-                        <span class="font-weight-bold">匿名會員</span>
-                    }
-
-                    <span class="text-muted">． @comment.FCommentTime</span>
-                </p>
-                <p>@comment.FCommentContent</p>
-
-               @*使用者自刪評論留言*@
-                @if (comment.FMemberId == Convert.ToInt32(ViewData["UserId"]))
-                {
-                    <div>
-                        @{
-                            var deleteUrl = Url.Action("DeleteComment", "Article", new { commentId = comment.FCommentId, articleId = comment.FArticleId });
+</form>*@
+<div class="container">
+    <div class="row justify-content-center">
+        <form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FArticleId">
+            <textarea class="form-control" type="text"
+                      placeholder="請先登入再留言" name="FCommentContent"></textarea>
+            <input class="btn btn-sm btn-primary" type="submit" value="送出" onclick="return confirm('確定要送出留言嗎? ')" />
+        </form>
+        <p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
+        <div>
+            @foreach (var comment in Model.TComments)
+            {
+                <div class="row m-3">
+                    <div class="col-1">
+                        @if (comment.FMember != null)
+                        {
+                            <img src="@Url.Content($"~/img/Member/{@ViewData["UserPhoto"]}")" />
                         }
-
-                        <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除</button>
+                        else
+                        {
+                            <img src="@Url.Content($"~/img/Member/default.jpg")" />
+                        }
                     </div>
-                }
-            </div>
+                    <div class="col-11" style="background-color: #f8f9fa">
+                        <p>
+                            @if (comment.FMember != null)
+                            {
+                                <span class="font-weight-bold">@ViewData["UserName"]</span>
+
+                            }
+                            else
+                            {
+                                <span class="font-weight-bold">匿名會員</span>
+                            }
+
+                            <span class="text-muted">． @comment.FCommentTime</span>
+                        </p>
+                        <p>@comment.FCommentContent</p>
+
+                        @*使用者自刪評論留言*@
+                        @if (comment.FMemberId == Convert.ToInt32(ViewData["UserId"]))
+                        {
+                            <div>
+                                @{
+                                    var deleteUrl = Url.Action("DeleteComment", "Article", new { commentId = comment.FCommentId, articleId = comment.FArticleId });
+                                }
+
+                                <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
         </div>
-    }
-
+    </div>
 </div>
-
-
-
 
 
 @section Scripts {
@@ -198,5 +150,39 @@
             }
         }
 
+        function firstLoad(pageNumber) {
+            const divList = $('#divList')
+            //讀取Json資料
+            const SkillId = @Model.FStyleId
+                //console.log(SkillId);
+            $.getJSON(`/apiTArticle/QueryByStylesID?id=${SkillId}`, function (datas) {
+                //console.log(datas);
+
+                //獲得限定頁面資料
+                //slice(a,b) 陣列datas第a項到第b項的所有資料
+                //這裡是第0項到第4項
+                const limitdatas = datas.slice(0, 4);
+
+                //做出一個空的容器來存放div
+                const docFrag = $(document.createDocumentFragment())
+
+                //讀出每個Json物件
+                $.each(limitdatas, function (index, item) {
+                        console.log(item.fArticleId);
+                    const card = $(
+                        `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                            <a href="/Article/Details?id=${item.fArticleId}">
+                                <div class="playlist-item">
+                                    <img src="/img/Article/${item.fPhotoPath}" alt="">
+                                    <h5>${item.fTitle}</h5>
+                                </div>
+                            </a>
+                        </div>`);
+                    docFrag.append(card);//.append()將一筆div放入容器中
+                })
+                divList.html(docFrag)//.html()一次將全部的資料都上傳
+            })
+        }
+        firstLoad(1);
     </script>
 }
