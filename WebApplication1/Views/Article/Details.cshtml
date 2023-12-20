@@ -49,9 +49,30 @@
     <!-- Songs details section -->
     <section class="songs-details-section">
         <div class="detail-block">
-            <span class="detail-wrapper" style="text-align: left; font-size: 25px;">
+            @{
+                // 找到第一個空格的索引
+                int spaceIndex = Model.FContent.IndexOf(' ');
+
+                // 將文章內容分為兩個部分
+                string firstPart = spaceIndex != -1 ? Model.FContent.Substring(0, spaceIndex) : Model.FContent;
+                string secondPart = spaceIndex != -1 ? Model.FContent.Substring(spaceIndex + 1) : "";
+            }
+@*             <span class="detail-wrapper" style="text-align: left; font-size: 25px;">
                 @Html.Raw(Model.FContent)
-            </span>
+            </span> *@
+            <!-- 第一個部分 -->
+            <div class="first-part">
+                <span class="detail-wrapper" style="text-align: left; font-size: 25px;">
+                    @Html.Raw(firstPart)
+                </span>
+            </div>
+            <br />
+            <!-- 第二個部分 -->
+            <div class="second-part">
+                <span class="detail-wrapper" style="text-align: left; font-size: 25px;">
+                    @Html.Raw(secondPart)
+                </span>
+            </div>
         </div>
     </section>
 </div>
