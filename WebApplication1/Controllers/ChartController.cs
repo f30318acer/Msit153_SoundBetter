@@ -46,6 +46,10 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+        public IActionResult application()
+        {
+            return View();
+        }
         public IActionResult CombinedClicks()
         {
             return View("CombinedClicks");
@@ -222,6 +226,36 @@ namespace prjMusicBetter.Controllers
 
             return Json(data); // 將數據包裝成 JSON 格式返回
 
+
+        }
+        [HttpPost]
+        public IActionResult GetStatusCounts()
+        {
+            // 獲取應用狀態和對應的描述
+            var applicationStatus = _context.TApplicationRecords
+                .GroupBy(ar => ar.FApplicationStatusId)
+                .Select(group => new
+                {
+                    StatusId = group.Key,
+                    Description = _context.TApplicationStatuses
+                        .FirstOrDefault(ps => ps.FApplicationStatus == group.Key).FDescription,
+                    Count = group.Count()
+                })
+                .ToList();
+            // 合併應用狀態和項目狀態
+            var combinedStatus = applicationStatus             
+                .GroupBy(cs => cs.Description)
+                .Select(group => new
+                {
+                    Description = group.Key,
+                    TotalCount = group.Sum(g => g.Count)
+                })
+                .ToList();
+
+            // 返回給前端的數據結構
+            var result = combinedStatus.Select(cs => new { label = cs.Description, value = cs.TotalCount }).ToList();
+
+            return Json(result);
 
         }
 
