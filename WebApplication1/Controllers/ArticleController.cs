@@ -85,6 +85,10 @@ namespace prjMusicBetter.Controllers
               .FirstOrDefaultAsync(m => m.FArticleId == id);
             //
 
+            //強制Load資料庫 不然留言會出現匿名會員項目
+            _context.TComments.Load();
+            _context.TMembers.Load();
+
 
             if (tArticle == null)
             {
