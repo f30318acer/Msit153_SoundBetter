@@ -20,4 +20,6 @@ public partial class TComment
     public virtual TArticle FArticle { get; set; }
 
     public virtual TMember FMember { get; set; }
+
+    public virtual TComment FComment { get;}
 }

@@ -139,7 +139,6 @@
 
 				//獲得限定頁面資料
 				const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
-
 				const docFrag = $(document.createDocumentFragment())
 				$.each(limitdatas, function (index, item) {
 					console.log(item);

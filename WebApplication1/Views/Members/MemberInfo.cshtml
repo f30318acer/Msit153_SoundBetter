@@ -7,6 +7,8 @@
 
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
+        <a href="@Url.Action("Details", "MemberPage", new { id = ViewBag.MemberId })" class="btn btn-primary">我的頁面</a>
+
         <div class="bg-white shadow-lg rounded-lg p-6">
             <h2 class="text-3xl font-bold text-gray-900 border-b-2 border-gray-100 pb-4">個人資料</h2>
             <form method="post" class="space-y-4">

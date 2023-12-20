@@ -39,12 +39,49 @@ namespace prjMusicBetter.Controllers
         }
         public IActionResult Index(string display)
         {
+
             ViewBag.Display = display;
+
+
+            // 调用MemberWorks方法来获取总数
             TMember member = _userInfoService.GetMemberInfo();
-            //if (member == null)
-            //{
-            //    return RedirectToAction("error");
-            //}
+            var memberworkIds = _context.TWorks
+                .Where(x => x.FMemberId == member.FMemberId)
+                .Select(x => x.FWorkId);
+            var totalItems = _context.TWorks.Count(c => memberworkIds.Contains(c.FWorkId));
+
+            // 将总数存储到ViewBag中
+            ViewBag.TotalWorks = totalItems;
+
+            // 调用MemberProject方法来获取总数
+            TMember member1 = _userInfoService.GetMemberInfo();
+            var projectIds = _context.TProjects
+                .Where(p => p.FMemberId == member1.FMemberId)
+                .Select(p => p.FProjectId);
+
+            var totalItemsProjects = _context.TProjects.Count(p=>projectIds.Contains(p.FProjectId));
+            // 将总数存储到ViewBag中
+            ViewBag.TotalProjects = totalItemsProjects;
+
+            //追隨
+            TMember member2 = _userInfoService.GetMemberInfo();
+            var friendsIds = _context.TMemberRelations
+                .Where(x => x.FMemberId == member2.FMemberId && x.FMemberRelationStatusId == 1)
+                .Select(x => x.FRelationMemberId);
+            var totalItemFriends = _context.TMemberRelations.Count(p=>friendsIds.Contains(p.FRelationMemberId));
+            ViewBag.TotalFriends = totalItemFriends;
+
+            //黑名單
+            TMember member3 = _userInfoService.GetMemberInfo();
+            var blackListIds = _context.TMemberRelations
+                 .Where(x => x.FMemberId == member3.FMemberId && x.FMemberRelationStatusId == 2)
+                 .Select(x => x.FRelationMemberId);
+            var totalItemBlackList = _context.TMemberRelations.Count(p => blackListIds.Contains(p.FRelationMemberId));
+            ViewBag.TotalBlackList = totalItemBlackList;
+
+
+
+
             var photo = (from m in _context.TMembers
                          where m.FMemberId == member.FMemberId
                          select new FMemberDto
@@ -54,11 +91,17 @@ namespace prjMusicBetter.Controllers
                          }).FirstOrDefault();
             return View(photo);
 
-
         }
         public IActionResult MemberInfo()
         {
+          
+
             TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Login", "Account");
+
+            }
             FMemberDto mem = (from m in _context.TMembers
                               where m.FMemberId == member.FMemberId
                               select new FMemberDto
@@ -72,6 +115,8 @@ namespace prjMusicBetter.Controllers
                                   FPassword = m.FPassword,
                                   FPhotoPath = m.FPhotoPath,
                               }).FirstOrDefault();
+            ViewBag.MemberId = member.FMemberId; // 將會員ID添加到ViewBag
+
             return PartialView(mem);
         }
         public IActionResult MemberInfoEdit(int id)
@@ -350,7 +395,9 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }
-       
+      
+
+
         public async Task<IActionResult> MemberWorks(string search ,int page = 1, int pageSize = 10, string sortBy = "newest")
         {
            
@@ -444,6 +491,7 @@ namespace prjMusicBetter.Controllers
             };
             return PartialView(viewModel);
         }  
+      
     }
 }
 

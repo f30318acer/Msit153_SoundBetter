@@ -58,13 +58,12 @@ namespace prjMusicBetter.Controllers
 
         public IActionResult List(int? articleId)
         {
-
+            //帳號登入確認
                TMember member = _userInfoService.GetMemberInfo();
                if (member == null) { return RedirectToAction("Login", "Home"); }
             //// ...
             if (articleId==null)
                 {
-                // 如果articleId未提供，您可以採取適當的措施，例如返回錯誤信息或默認值。
                 // 預設頁面articleId=20;
                 articleId = 20;
                  }
@@ -151,7 +150,7 @@ namespace prjMusicBetter.Controllers
 
 
         public IActionResult Delete(int? id, int? articleId)
-        {
+        {   
             TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == id);
             if (comment != null)
             {

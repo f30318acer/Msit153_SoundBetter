@@ -29,6 +29,7 @@
         <div>
             <h3>總共有 @Model.TotalItems 位好友</h3>
         </div>
+
         <!-- 分頁控制 -->
         <div class="pagination">
             <a href="#" onclick="loadPage(@Model.CurrentPage - 1)">上一頁</a>
@@ -59,6 +60,7 @@
                 <tbody>
                     @foreach (var item in Model.Friends)
                     {
+
                         <tr class="hover:bg-gray-100 hover:color-coral">
                             <td class="py-2 px-4 rounded-td">
                                 @if (!string.IsNullOrEmpty(item.FPhotoPath))
@@ -94,6 +96,7 @@
                 </tbody>
             </table>
         </div>
+      
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
