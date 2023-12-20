@@ -79,7 +79,17 @@ namespace prjMusicBetter.Controllers
             var totalItemBlackList = _context.TMemberRelations.Count(p => blackListIds.Contains(p.FRelationMemberId));
             ViewBag.TotalBlackList = totalItemBlackList;
 
+            //場地數量
+            TMember member4 = _userInfoService.GetMemberInfo();
+            var sitesIds = _context.TSites.Where(x => x.FMemberId == member4.FMemberId).Select(x => x.FSiteId);
+            var totalItemSites = _context.TSites.Count(p=>sitesIds.Contains(p.FSiteId));
+            ViewBag.TotalSites = totalItemSites;
 
+            //優惠券
+            TMember member5 = _userInfoService.GetMemberInfo();
+            var couponIds = _context.TMemberCoupons.Where(x => x.FMemberId == member5.FMemberId).Select(x => x.FMemberCouponId);
+            var totalItemCoupons =_context.TMemberCoupons.Count(p=>couponIds.Contains(p.FMemberCouponId));
+            ViewBag.TotalCoupons  = totalItemCoupons;
 
 
             var photo = (from m in _context.TMembers
