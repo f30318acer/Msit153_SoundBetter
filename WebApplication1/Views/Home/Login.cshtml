@@ -133,26 +133,26 @@
             $('#inputEmail').val(email)
             $('#inputPassword').val("123")
         })
-        window.onload = function () {
-            var image = document.getElementById('rainy');
-            if (image) {
-                // 創建一個新的圖片對象，用於雨滴效果
-                var img = new Image();
-                img.onload = function () {
-                    var engine = new RainyDay({
-                        image: this
-                    });
-                    engine.rain([[3, 3, 0.1], [5, 5, 0.2]], 100);
-                };
-                img.crossOrigin = 'anonymous';
-                img.src = '@Url.Content("~/assets/img/background/Rain.jpg")'; // 使用 ASP.NET Core 的 Url.Content 方法
+        // window.onload = function () {
+        //     var image = document.getElementById('rainy');
+        //     if (image) {
+        //         // 創建一個新的圖片對象，用於雨滴效果
+        //         var img = new Image();
+        //         img.onload = function () {
+        //             var engine = new RainyDay({
+        //                 image: this
+        //             });
+        //             engine.rain([[3, 3, 0.1], [5, 5, 0.2]], 100);
+        //         };
+        //         img.crossOrigin = 'anonymous';
+        //         img.src = '@Url.Content("~/assets/img/background/Rain.jpg")'; // 使用 ASP.NET Core 的 Url.Content 方法
 
-                img.style.width = '100%';
-                img.style.height = '100%';
+        //         img.style.width = '100%';
+        //         img.style.height = '100%';
 
-                // 將圖片加入到 #rainy 容器中
-                image.appendChild(img);
-            }
-        };
+        //         // 將圖片加入到 #rainy 容器中
+        //         image.appendChild(img);
+        //     }
+        // };
     </script>
 }
