@@ -72,14 +72,27 @@ namespace CoreMVC_SignalR_Chat.Hubs
 
         public async Task SaveMessageToDatabase(string senderId, string receiverId, string message)
         {
-            // 這裡假設您有一個服務或存儲庫來處理數據庫操作
+            // 首先檢查 senderId 和 receiverId 是否可以轉換為 int
+            if (!int.TryParse(senderId, out int senderIdInt))
+            {
+                Console.WriteLine("無效的 senderId: " + senderId);
+                return; // 可以考慮拋出一個自定義例外或返回錯誤訊息
+            }
+
+            if (!int.TryParse(receiverId, out int receiverIdInt))
+            {
+                Console.WriteLine("無效的 receiverId: " + receiverId);
+                return; // 可以考慮拋出一個自定義例外或返回錯誤訊息
+            }
+
             var chatMessage = new TChatMessage
             {
-                FSendMemberId = int.Parse(senderId),
-                FReceiveMemberId = int.Parse(receiverId),
+                FSendMemberId = senderIdInt,
+                FReceiveMemberId = receiverIdInt,
                 FContent = message,
-                FTime = DateTime.UtcNow // 請使用適當的時間戳
+                FTime = DateTime.UtcNow // 使用 UTC 時間
             };
+
             try
             {
                 _context.TChatMessages.Add(chatMessage);
@@ -87,12 +100,13 @@ namespace CoreMVC_SignalR_Chat.Hubs
             }
             catch (Exception ex)
             {
-                // 處理錯誤，例如記錄到日誌檔
-                Console.WriteLine(ex.Message);
-                throw; // 或者處理例外情況，不要再拋出
+                // 記錄錯誤到日誌檔
+                Console.WriteLine($"保存消息時出錯: {ex.Message}");
+                // 可以考慮回傳錯誤訊息而不是拋出例外
+                // throw;
             }
-
         }
+
 
 
 
@@ -137,8 +151,7 @@ namespace CoreMVC_SignalR_Chat.Hubs
                 {
                     await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "無法找到用戶: " + sendToID);
                 }
-                //var sendToConnectionId = memberToConnectionMap[sendToID];
-                // 儲存訊息到資料庫
+               
              
             }
 
