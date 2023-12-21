@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.ViewModels;
 
 namespace prjMusicBetter.Controllers
 {
@@ -30,7 +31,7 @@ namespace prjMusicBetter.Controllers
         //}
         // GET: TCoupons
         //====================================================================================
-        public async Task<IActionResult> Index(string search)
+        public async Task<IActionResult> Index(string search, int? pageNumber, int pageSize = 10)
         {
             ViewData["CurrentFilter"] = search;
 
@@ -48,9 +49,25 @@ namespace prjMusicBetter.Controllers
                     // 可選：如果輸入不是數字，處理其他邏輯，或返回全部數據
                 }
             }
-            return View(await coupons.ToListAsync());
+            int count = await coupons.CountAsync();
+            int currentPage = pageNumber ?? 1; // If no page number is specified, default to the first page
+            var items = await coupons.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
+            return View(new PaginatedList<TCoupon>(items, count, currentPage, pageSize));
         }
-//====================================================================================
+        //public async Task<IActionResult> Index(int? pageIndex)
+        //{
+        //    int pageSize = 10; // 每頁顯示的項目數
+        //    var query = _context.TCoupons.AsQueryable(); // 或是您要分頁的數據集
+
+        //    var count = await query.CountAsync();
+        //    var items = await query.Skip((pageIndex - 1 ?? 0) * pageSize)
+        //                           .Take(pageSize)
+        //                           .ToListAsync();
+
+        //    return View(new PaginatedList<TCoupon>(items, count, pageIndex ?? 1, pageSize));
+        //}
+
+        //====================================================================================
         // GET: TCoupons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
