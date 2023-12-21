@@ -696,7 +696,8 @@
         })
         //套用預設自我介紹
         $('#btnDefault').click(function () {
-            $.getJSON(`/apiTProjects/QueryMemberById/${memberId}`, function (datas) {
+            $.getJSON(`/apiTProjects/QueryMemberById/${loginID}`, function (datas) {
+                console.log(datas.fIntroduction);
                 $('#txtIntro').val(datas.fIntroduction);
             })
         })
