@@ -61,10 +61,10 @@
         }
 
         .mix span {
-            background-color: white;
+            /*background-color: white;*/
             color: black;
             padding: 5px;
-            border: 1px solid #fc0254; /* 粉框 */
+            /*border: 1px solid #fc0254;  粉框 */
             border-radius: 5px; /* 添加圓角效果，根據需要調整 */
         }
 
@@ -118,12 +118,21 @@
         }
 
             .gss[data-course-type="offline"] {
-                background-color: #FFCBB3; /* 實體課程的背景顏色 */
+            background-color: #FF9797; /* 實體課程的背景顏色 */
             }
 
             .gss[data-course-type="online"] {
                 background-color: #A6FFFF; /* 線上課程的背景顏色 */
             }
+
+    .price-tag{
+        position: absolute; /* 設置絕對定位 */
+        bottom: 0; /* 距離底部的距離 */
+        left: 0; /* 距離右邊的距離 */
+        background-color: #FFD306;
+        color: black;
+        padding: 5px;
+    }
 
         /* 調整其他樣式以避免重疊 */
         .genres h5, .genres p, .genres span {
@@ -184,6 +193,11 @@
             <div class="container col-lg-12 ddd">
                 <div class="text-right ">
                     <select id="selectSkill" class="form-select mr-2"></select>
+                    <select id="selectSort" class="form-select mr-2">
+                        <option value="latest">依最新排列</option>
+                        <option value="price">依價錢排列</option>
+                        <option value="clicks">依點閱數排列</option>
+                    </select>
                     <div class="btn-group" role="group" aria-label="Course Type">
                         <button type="button" id="btnOffline" class="btn btn-secondary active mr-2">實體課程</button>
                         <button type="button" id="btnOnline" class="btn btn-secondary active mr-2">線上課程</button>
@@ -232,7 +246,7 @@
                         const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
 
                         const Description = item.fDescription.length > 30 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
-                        console.log(item);
+                        //console.log(item);
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                  <a href="/Class/Viewclass?id=${item.fClassId}">
@@ -244,6 +258,7 @@
                                          <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
                                             ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
                                          </span>
+                                         <span class="price-tag">$ ${item.fPrice} / 一堂</span>
                                      </div>
                                      <div>
                                          <div class="ClassName">
@@ -326,9 +341,9 @@
                     if (offlineEnabled && onlineEnabled) {
                         return true; // 顯示所有
                     } else if (offlineEnabled) {
-                        return item.fOnLine == 0;
+                        return item.fOnLine == 0;// 只顯示 fOnLine == 0 的資料
                     } else if (onlineEnabled) {
-                        return item.fOnLine == 1;
+                        return item.fOnLine == 1;// 只顯示 fOnLine == 1 的資料
                     } else {
                         return false; // 兩個按鈕都關閉，不顯示任何數據
                     }
@@ -338,6 +353,7 @@
 
                 //獲得限定頁面資料
                 const limitdatas = filteredDatas.slice((pageNumber - 1) * onePage, ((pageNumber - 1) * onePage) + onePage);
+
 
                 // 這裡每次回傳的卡片順序都是亂的，只能先排好順序
                 // 建立 Promise 數組，每個 Promise 對應一個非同步請求
@@ -352,13 +368,14 @@
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                 <a href="/Class/Viewclass?id=${item.fClassId}">
                                     <div>
-                                                <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
-                                                    ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
+                                        <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
+                                            ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
                                         </span>
                                         <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                         <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
                                             ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
                                         </span>
+                                        <span class="price-tag">${item.fPrice} / 一堂</span>
                                     </div>
                                     <div>
                                         <div class="ClassName">
@@ -380,25 +397,24 @@
                         resolve(card);
                     });
                 }));
-
                 // 使用 Promise.all 確保所有非同步請求都完成後再進行排序和渲染
                 Promise.all(promises)
                     .then(cards => {
                         console.log(cards);
                         // 如果資料為空，顯示提示訊息
-                        if (cards['length'] === 0) {
+                        if (cards.length === 0) {
                             const docFrag = $(document.createDocumentFragment());
                             const card = $(
                                 `<div class="col-lg-6">
-                                    <div class="section-title mb-0 pb-4 container-fluid">
-                                        <h3>找不到合適的課程嗎？ </h3>
-                                    </div>
-                                    <p>
-                                        想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
-                                        我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
-                                        線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
-                                    </p>
-                                </div>`
+                                            <div class="section-title mb-0 pb-4 container-fluid">
+                                                <h3>找不到合適的課程嗎？ </h3>
+                                            </div>
+                                            <p>
+                                                想學音樂卻總是不知該如何選擇？有音樂之夢卻總是踏不出去？
+                                                我們透過多元音樂課程介紹與老師影片讓你輕鬆找到學習目標
+                                                線上預購、面對面教學的模式，讓你即刻輕鬆體驗音樂的美好。
+                                            </p>
+                                        </div>`
                             );
                             console.log("沒資料");
                             docFrag.append(card);

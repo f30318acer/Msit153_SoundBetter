@@ -43,6 +43,7 @@ namespace prjMusicBetter.Controllers
                                        {
                                            fClassId = s.FClassId,
                                            fClassName = s.FClassName,
+                                           fPrice = s.FPrice,
                                            fThumbnailPath = s.FThumbnailPath,
                                            fCurrentStudent = s.FCurrentStudent,
                                            fMaxStudent = s.FMaxStudent,
