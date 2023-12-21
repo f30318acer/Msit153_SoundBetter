@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FSiteName" class="control-label">場地名稱</label>
-                <input asp-for="FSiteName" class="form-control" />
+                <input asp-for="FSiteName" class="form-control" id="siteName" />
                 <span asp-validation-for="FSiteName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FPhone" class="control-label">連絡電話</label>
-                <input asp-for="FPhone" class="form-control" />
+                <input asp-for="FPhone" class="form-control" id="sitePhone" />
                 <span asp-validation-for="FPhone" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FAddress" class="control-label">地址</label>
-                <input asp-for="FAddress" class="form-control" />
+                <input asp-for="FAddress" class="form-control" id="siteAddress"/>
                 <span asp-validation-for="FAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -56,6 +56,7 @@
             <div class="form-group">
 @*                 <input type="submit" value="新增場地" class="btn btn-primary" /> *@
                 <button type="button" class="btn btn-success" id="buttonSend">新增場地</button>
+                <button type="button" class="btn btn-secondary" id="btnFillDefaults">場地Demo</button>
             </div>
         </form>
     </div>
@@ -156,5 +157,15 @@
                     }
                 })
         })
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const btnFillDefaults = document.getElementById('btnFillDefaults');
+
+            btnFillDefaults.addEventListener('click', function () {
+                document.getElementById('siteName').value = "存在音樂 Being Music";
+                document.getElementById('sitePhone').value = "0227582845";
+                document.getElementById('siteAddress').value = "110台北市信義區莊敬路391巷12號";
+            });
+        });
     </script>
 }
