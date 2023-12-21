@@ -44,6 +44,9 @@ namespace prjMusicBetter.Controllers
         public IActionResult Detail2()
         {
             return View();
+
+            //留言部分
+			//await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == Id);
 		}
         public IActionResult Create()
         {
@@ -74,10 +77,6 @@ namespace prjMusicBetter.Controllers
             //    .Include(t => t.FMember)
             //    .Include(t => t.FStyle)
             //    .FirstOrDefaultAsync(m => m.FArticleId == id);
-
-            //強制Load資料庫 不然留言會出現匿名會員項目
-            _context.TComments.Load();
-            _context.TMembers.Load();
 
             var tArticle = await _context.TArticles
               .Include(t => t.FMember)
@@ -119,33 +118,31 @@ namespace prjMusicBetter.Controllers
 
             //留言部分
             //await _context.TArticles.Include(c => c.TComments).FirstOrDefaultAsync(m => m.FArticleId == id);
-            //ViewData["UserName"] = _userInfoService.GetMemberInfo().FUsername;
-            //ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
-
-            //自刪留言需要抓使用者ID確認身分
+            ViewData["UserName"] = _userInfoService.GetMemberInfo().FUsername;
+            ViewData["UserPhoto"] = _userInfoService.GetMemberInfo().FPhotoPath;
             ViewData["UserId"] = _userInfoService.GetMemberInfo().FMemberId;
 
 
 
 
 
-            //var query = from comment in _context.TComments
-            //            join member in _context.TMembers on comment.FMemberId equals member.FMemberId
-            //            select new
-            //            {   
-            //                MemberUserName = member.FUsername,
-            //                MemberPhotoPath = member.FPhotoPath
-            //            };
+            var query = from comment in _context.TComments
+                        join member in _context.TMembers on comment.FMemberId equals member.FMemberId
+                        select new
+                        {   
+                            MemberUserName = member.FUsername,
+                            MemberPhotoPath = member.FPhotoPath
+                        };
 
-            //var result = await query.ToListAsync();
+            var result = await query.ToListAsync();
 
-            //foreach (var commentermemberInfo in result)
-            //{
-            //    var commenterUserName = commentermemberInfo.MemberUserName;
-            //    TempData["CommenterUserName"] = commenterUserName;
-            //    var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
-            //    TempData["CommenterPhoto"] = commenterPhotoPath;
-            //}
+            foreach (var commentermemberInfo in result)
+            {
+                var commenterUserName = commentermemberInfo.MemberUserName;
+                TempData["CommenterUserName"] = commenterUserName;
+                var commenterPhotoPath = commentermemberInfo.MemberPhotoPath;
+                TempData["CommenterPhoto"] = commenterPhotoPath;
+            }
              
             //留言部分
 
@@ -194,17 +191,18 @@ namespace prjMusicBetter.Controllers
 
             
 
-            return View(tArticle);
+            return View(tArticle);    
         }
 
-        //評論留言功能
+
+        ///評論留言功能
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> AddComment(int id, CommentDto cdto)
         {
             try
             {
-
+                // 目前使用者ID
                 cdto.FMemberId = _userInfoService.GetMemberInfo().FMemberId;
 
                 // 文章ID
@@ -245,9 +243,6 @@ namespace prjMusicBetter.Controllers
                 return StatusCode(500, "An error occurred while adding the comment.");
             }
         }
-
-
-
 
         //使用者自刪評論留言
         public IActionResult DeleteComment(int? id,int? commentId, int? articleId)

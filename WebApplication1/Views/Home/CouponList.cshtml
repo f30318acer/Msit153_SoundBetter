@@ -16,9 +16,40 @@
         object-fit: cover;
     }
 </style>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1863745416585706"
+        crossorigin="anonymous"></script>
+<!-- Coupon -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1863745416585706"
+     data-ad-slot="1213851618"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
 <body class="text-white" style="background-image: linear-gradient(to right, #64b3f4, #c2e59c);">
+
     <div class="container mx-auto px-4 mt-5 mb-5">
-        
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3854479679974593"
+                crossorigin="anonymous"></script>
+        <!-- ad -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3854479679974593"
+             data-ad-slot="4356425246"
+             data-ad-format="auto"
+             data-adtest="on"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
         <div class="grid gap-8">
             @foreach (var coupon in Model)
             {
@@ -29,12 +60,12 @@
                             <h3 class="text-lg font-bold mb-1">使用代碼：<span style="color: #FF4500">@coupon.FCouponCode</span></h3>
                             @{
                                 DateTime startDate = Convert.ToDateTime(coupon.FStartdate);
-                            }
-                            @{
                                 DateTime endDate = Convert.ToDateTime(coupon.FEnddate);
+                                int remainingDays = (endDate - DateTime.Now).Days;
                             }
                             <p class="mb-1">開始日期：@startDate.ToString("yyyy/MM/dd")</p>
-                            <p>結束日期：@endDate.ToString("yyyy/MM/dd")</p>
+                            <p class="mb-1">結束日期：@endDate.ToString("yyyy/MM/dd")</p>
+                            <p class="mb-1">剩餘天數：@remainingDays 天</p>
                         </div>
                     </div>
                     <div class="flex-shrink-0">

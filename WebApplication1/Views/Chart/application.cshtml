@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/ChartLayout.cshtml";
 
 }
+<!-- 確保加入 jQuery 的引用 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
+
 <style>
     input[type="button"] {
         background-color: #f0f0f0;
@@ -13,10 +18,10 @@
 <p>
     <div class="row">
         <div class="col-4">
-            <select id="ChartType5" class="form-control" style="150px">
+            <select id="ChartType5" class="form-control" style="width: 150px;">
                 <option selected>-選擇圖表-</option>
                 <option>pie</option>
-                <input id="ID5" value="顯示圖表" type="button" />
+                <input id="ID5" value="顯示圖表" type="button" style="background-color:#fc0254; color:#fff; border-radius: 5px;" />
             </select>
         </div>
     </div>
@@ -40,7 +45,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Chart/GetApplicationStatusCounts",
+                url: "/Chart/GetStatusCounts",
                 success: OnSuccessResult,
                 error: Onerror
             });

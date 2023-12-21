@@ -252,15 +252,19 @@
 							</div>
 							<div class="form-group">
 								<label for="fName">製作名稱</label>
-								<input type="text" class="form-control" id="fName" name="fName" required>
+								<input type="text" class="form-control" id="demofName" name="fName" required>
 							</div>
 							<div class="form-group">
 								<label for="FBudget">預算</label>
-								<input type="text" class="form-control" id="fBudget" name="fBudget" required>
+								<input type="text" class="form-control" id="demofBudget" name="fBudget" required>
+							</div>
+							<div class="form-group">
+								<label for="FBudget">技能</label>
+								<select id="selectSkill2" class="form-select" name="demofSkillId" required></select>
 							</div>
 							<div class="form-group">
 								<label for="FBudget">風格</label>
-								<select id="selectStyle2" class="form-select" name="fStyleId" required></select>
+								<select id="selectStyle2" class="form-select" name="demofStyleId" required></select>
 							</div>
 							<div class="form-group">
 								<label for="FBudget">製作期限</label>
@@ -271,11 +275,11 @@
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label for="FBudget">製作描述</label>
-								<textarea class="form-control" id="fDescription" name="fDescription" style="height: 200px;" required></textarea>
+								<textarea class="form-control" id="demofDescription" name="fDescription" style="height: 200px;" required></textarea>
 							</div>
 							<div class="form-group">
 								<label for="FBudget">專長需求</label>
-								<textarea class="form-control" id="fDescription2" name="fDescription2" style="height: 200px;" required></textarea>
+								<textarea class="form-control" id="demofDescription2" name="fDescription2" style="height: 200px;" required></textarea>
 							</div>
 							<div class="form-group">
 								<label for="FBudget">上傳Demo</label>
@@ -288,6 +292,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" onclick="DemoCreate()">DEMO</button>
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-file-x-fill"></i> 關閉</button>
 				<button type="button" class="btn btn-primary" id="buttonSend"><i class="bi bi-send-check-fill"></i> 送出 </button>
 			</div>
@@ -334,6 +339,7 @@
 	<script>
 		const selStyle = document.querySelector('#selectStyle');
 		const selStyle2 = document.querySelector('#selectStyle2');
+		const selSkill2 = document.querySelector('#selectSkill2');
 		const skillList = document.querySelector('#SkillList');
 		const pageButtonsContainer = $('#pageButtons');
 		const onePage = 12;
@@ -411,6 +417,16 @@
 			selStyle2.innerHTML = styleOptions.join("");
 		}
 		loadStyle();
+		//Skill選擇器
+		async function loadSkill2() {
+			const response = await fetch('@Url.Content("~/apiTProjects/SkillsList")');
+			const data = await response.json();
+			const defaultOption = '<option value="100">請選擇技能</option>';
+			const skillOptions = data.map(s => `<option value="${s.fSkillId}">${s.fName}</option>`);
+			skillOptions.unshift(defaultOption);
+				selSkill2.innerHTML = skillOptions.join("");
+		}
+		loadSkill2();
 		//Skill按鈕
 		async function loadSkill() {
 			const response = await fetch('@Url.Content("~/apiTProjects/SkillsList")');
@@ -715,5 +731,13 @@
             isAlertShown = false;
             return isValid;
         }
+		function DemoCreate(){
+			document.getElementById("demofName").value = '!!!超多錢製作找超強吉他手!!!';
+			document.getElementById("demofBudget").value = 150000;			
+			var dis1 = document.getElementById("demofDescription");
+			dis1.value = "在這個音樂的世界裡，我們是一個獨立製作的夥伴團隊，深深熱愛著音樂的力量。現在，我們正渴望找到一位超強的吉他手，成為我們音樂旅程中的不可或缺的一員。我們相信音樂是一種語言，能夠跨越文化、打破界限，並帶給人們共鳴和感動。因此，我們正在尋找一位與我們分享這種信念的吉他手，一位對音樂充滿激情，並願意用他的音樂故事來豐富我們的製作。這不僅僅是一個音樂計畫，而是一場探索聲音、突破極限的冒險。我們希望找到一位不僅擁有卓越吉他技術的音樂家，更是一個敢於嘗試、創新的夥伴。你的音樂將與我們共同編織成一幅豐富多彩的畫面，帶領聽眾進入一場音樂的夢境。";
+			var dis2 = document.getElementById("demofDescription2");
+			dis2.value = "我們需要你的音樂故事能夠在吉他弦上跳躍，以動人的旋律傳遞情感。我們期待你具有靈活的演奏技巧，能夠自如地遊走在不同音樂風格之間。你的音樂應該是一種語言，能夠打動人心，讓聽眾感受到音樂的力量。除了卓越的吉他技巧外，我們也希望找到一位積極參與音樂創作的夥伴。你將有機會參與樂曲的編曲，展現你的音樂創意，共同打破音樂的框架。你應該是一個敢於挑戰、勇於嘗試新事物的音樂家。";
+		}
 	</script>
 }

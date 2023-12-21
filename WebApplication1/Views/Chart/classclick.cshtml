@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/ChartLayout.cshtml";
 
 }
+<!-- 確保加入 jQuery 的引用 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
 <style>
     input[type="button"] {
         background-color: #f0f0f0;
@@ -13,23 +17,21 @@
 <p>
     <div class="row">  
         <div class="col-4">
-            <select id="ChartType2" class="form-control" style="100px">
+            <select id="ChartType2" class="form-control" style="width: 150px;">
                 <option selected>-選擇圖表-</option>
                 <option>bar</option>
                 <option>line</option>
                 <option>pie</option>
                 <option>doughnut</option>
             </select>
-            <input id="ID2" value="顯示圖表" type="button" />
+            <input id="ID2" value="顯示圖表" type="button" style="background-color:#fc0254; color:#fff; border-radius: 5px;" />
         </div>     
     </div>
 </p>
 
 <br />
 <canvas id="myChart2" style="max-width:600px;max-height:400px" ></canvas>
-<!-- 確保加入 jQuery 的引用 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script type="text/javascript"></script>
 <script>
     $(function () {
@@ -38,7 +40,9 @@
 
         $("#ID2").click(function () {
             var chartType = $("#ChartType2").val() || 'bar'; // 如果沒有選擇，則默認為 'bar'
-            loadChartData(chartType);
+            if (chartType !== "-選擇圖表-") {
+                loadChartData(chartType);
+            }
         });
 
         function loadChartData(chartType) {
