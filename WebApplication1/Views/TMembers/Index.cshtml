@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "_Layout2";
 }
-@section Styles{
+@section Styles {
     <style>
         /* 添加这段CSS来指定图片的固定宽度和高度 */
         #img1 {
@@ -26,7 +26,6 @@
 
 <main id="main" class="main">
     <h1 class="text-3xl font-bold text-center my-4">會員管理</h1>
-
     <div class="d-flex align-items-center gap-2">
         @Html.ActionLink("新增會員", "create", "TMembers", "", new { @class = "btn btn-dark" })
     </div>
@@ -45,37 +44,43 @@
     <table class="table">
         <thead>
             <tr>
-                <th  class="py-3 px-6 text-center" >
-                    使用者姓名
-                </th>
-                <th class="py-3 px-6 text-center">
-                    姓名
-                </th>
-                <th class="py-3 px-6 text-center">
-                    密碼
-                </th>
-                <th class="py-3 px-6 text-center">
-                    電話號碼
-                </th>
-                <th class="py-3 px-6 text-center">
-                    信箱
-                </th>
-                <th hidden class="py-3 px-6 text-center">
-                    性別
-                </th>
-                <th hidden class="py-3 px-6 text-center ">
-                    生日
-                </th>
-                <th hidden class="py-3 px-6 text-cente ">
-                    建立時間
-                </th>
-                <th hidden class="py-3 px-6 text-center" >
-                    自我介紹
-                </th>
-                 <th class="py-3 px-6 text-center">
+
+                @*   <th  class="py-3 px-6 text-center" >
+                使用者姓名
+                </th> *@
+                <th class="pb-4">
                     照片
                 </th>
-                <th class="py-3 px-6 text-center font-bold">
+
+                <th class="pb-4">
+                    姓名
+                </th>
+                <th class="pb-4">
+                    密碼
+                </th>
+                <th class="pb-4">
+                    電話號碼
+                </th>
+                <th class="pb-4">
+                    信箱
+                </th>
+                <th class="pb-4">
+                    權限
+                </th>
+                <th hidden class="pb-4">
+                    性別
+                </th>
+                <th hidden class="pb-4">
+                    生日
+                </th>
+                <th hidden class="pb-4">
+                    建立時間
+                </th>
+                <th hidden class="pb-4">
+                    自我介紹
+                </th>
+
+                <th class="pb-4">
                     操作
                 </th>
             </tr>
@@ -84,22 +89,42 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td >
-                        @Html.DisplayFor(modelItem => item.FUsername)
+                    @*   <td >
+                @Html.DisplayFor(modelItem => item.FUsername)
+                </td> *@
+                    <td class="text-base p-4">
+                        @if (!string.IsNullOrEmpty(item.FPhotoPath))
+                        {
+                            <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" class="rounded-full mx-auto" id="img1" />
+                        }
+                        else
+                        {
+                            @:No Image
+                        }
                     </td>
-                    <td>
+                    <td class="pt-4 pb-4 align-middle">
                         @Html.DisplayFor(modelItem => item.FName)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FPassword)                    
+                    <td class="pt-4 pb-4 align-middle">
+                        @Html.DisplayFor(modelItem => item.FPassword)
                     </td>
-                    <td>
+                    <td class="pt-4 pb-4 align-middle">
                         @Html.DisplayFor(modelItem => item.FPhone)
                     </td>
-                    <td>
+                    <td class="pt-4 pb-4 align-middle">
                         @Html.DisplayFor(modelItem => item.FEmail)
                     </td>
-                    <td hidden>
+                    <td class="pt-4 pb-4 align-middle">
+                        @if (item.FPermissionId == 2)
+                        {
+                            @:一般會員
+                        }
+                        else if (item.FPermissionId ==1)
+                        {
+                            @:管理員
+                        }
+                    </td>
+                    <td hidden class="pt-4 pb-4 align-middle">
                         @Html.DisplayFor(modelItem => item.FGender)
                     </td>
                     <td hidden>
@@ -108,26 +133,14 @@
                     <td hidden>
                         @Html.DisplayFor(modelItem => item.FCreationTime)
                     </td>
-                    <td hidden >
+                    <td hidden>
                         @Html.DisplayFor(modelItem => item.FIntroduction)
                     </td>
-
-                    <td class="text-base p-4">
-                        @if (!string.IsNullOrEmpty(item.FPhotoPath))
-                        {
-                            <img src="@Url.Content("~/img/Member/" + item.FPhotoPath)" alt="Member Image" style="width:100px; height:auto;" id="img1"/>
-
-                        }
-                        else
-                        {
-                            @:No Image
-                        }
-                    </td>
                     <td class="text-center font-bold">
-                                <a asp-action="Edit" asp-route-id="@item.FMemberId" class="text-lg bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">修改</a>
-                                @* <a asp-action="Details" asp-route-id="@item.FMemberId">細節</a> | *@
-                                <a asp-action="Delete" asp-route-id="@item.FMemberId" class="text-lg bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700 ml-2">刪除</a>
-                            </td>
+                        <a asp-action="Edit" asp-route-id="@item.FMemberId" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">修改</a>
+                        @* <a asp-action="Details" asp-route-id="@item.FMemberId">細節</a> | *@
+                        <a asp-action="Delete" asp-route-id="@item.FMemberId" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">刪除</a>
+                    </td>
                 </tr>
             }
         </tbody>
