@@ -65,18 +65,20 @@ namespace prjMusicBetter.Controllers
 
             //追隨
             TMember member2 = _userInfoService.GetMemberInfo();
+
             var friendsIds = _context.TMemberRelations
                 .Where(x => x.FMemberId == member2.FMemberId && x.FMemberRelationStatusId == 1)
                 .Select(x => x.FRelationMemberId);
-            var totalItemFriends = _context.TMemberRelations.Count(p=>friendsIds.Contains(p.FRelationMemberId));
+
+            var totalItemFriends = _context.TMembers.Count(p=>friendsIds.Contains(p.FMemberId));
             ViewBag.TotalFriends = totalItemFriends;
 
             //黑名單
             TMember member3 = _userInfoService.GetMemberInfo();
             var blackListIds = _context.TMemberRelations
                  .Where(x => x.FMemberId == member3.FMemberId && x.FMemberRelationStatusId == 2)
-                 .Select(x => x.FRelationMemberId);
-            var totalItemBlackList = _context.TMemberRelations.Count(p => blackListIds.Contains(p.FRelationMemberId));
+                 .Select(x => x.FMemberRelationStatusId);
+            var totalItemBlackList = _context.TMembers.Count(p => blackListIds.Contains(p.FMemberId));
             ViewBag.TotalBlackList = totalItemBlackList;
 
             //場地數量
