@@ -86,7 +86,8 @@
                                             </div>
 
                                             <div class=" p-2">
-                                                <input type="button" class="btn btn-outline-dark" value="一般會員Demo" id="DemoMember" />
+                                                <input type="button" class="btn btn-outline-dark" value="舊會員Demo" id="DemoMember" />
+                                                <input type="button" class="btn btn-outline-dark" value="新會員Demo" id="NEWDemoMember" />
                                                 <div class="mb-2"></div>
                                                 <input type="button" class="btn btn-outline-dark" value="管理員Demo" id="DemoAdministrator" />
                                             </div>
@@ -127,6 +128,15 @@
             $('#inputEmail').val(email)
             $('#inputPassword').val("123")
         })
+        //一般會員登入
+        $('#NEWDemoMember').on('click', function () {
+            let email = "Shiao@gmail.com"
+            $('#inputEmail').val(email)
+            $('#inputPassword').val("123")
+        })
+
+
+
         //管理員登入
         $('#DemoAdministrator').on('click', function () {
             let email = "kevin@gmail.com"
