@@ -275,7 +275,7 @@ namespace prjSoundBetterApi.Controllers
 
 					var prj = _context.TProjects.FirstOrDefault(p => p.FProjectId == id);
 					//通知===
-					var noti = _context.TNotifications.FirstOrDefault(a => a.FProjectId == id && a.FMemberId == prj.FMemberId);
+					var noti = _context.TNotifications.FirstOrDefault(a => a.FProjectId == appliDb.FProjectId && a.FMemberId == prj.FMemberId);
 					if (noti != null)
 					{
 						noti.FNotifiStatus = 1;

@@ -1,19 +1,11 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
-using prjMusicBetter.Models;
 
 namespace CoreMVC_SignalR_Chat.Hubs
 {
     
     public class ChatHub : Hub
     {
-        private readonly dbSoundBetterContext _context;
-
-        public ChatHub(dbSoundBetterContext context)
-        {
-            _context = context;
-        }
-
         public static Dictionary<string, string> memberToConnectionMap = new Dictionary<string, string>();
 
         // 用戶連線 ID 列表
@@ -70,48 +62,6 @@ namespace CoreMVC_SignalR_Chat.Hubs
             await base.OnDisconnectedAsync(ex);
         }
 
-        public async Task SaveMessageToDatabase(string senderId, string receiverId, string message)
-        {
-            // 首先檢查 senderId 和 receiverId 是否可以轉換為 int
-            if (!int.TryParse(senderId, out int senderIdInt))
-            {
-                Console.WriteLine("無效的 senderId: " + senderId);
-                return; // 可以考慮拋出一個自定義例外或返回錯誤訊息
-            }
-
-            if (!int.TryParse(receiverId, out int receiverIdInt))
-            {
-                Console.WriteLine("無效的 receiverId: " + receiverId);
-                return; // 可以考慮拋出一個自定義例外或返回錯誤訊息
-            }
-
-            var chatMessage = new TChatMessage
-            {
-                FSendMemberId = senderIdInt,
-                FReceiveMemberId = receiverIdInt,
-                FContent = message,
-                FTime = DateTime.UtcNow // 使用 UTC 時間
-            };
-
-            try
-            {
-                _context.TChatMessages.Add(chatMessage);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                // 記錄錯誤到日誌檔
-                Console.WriteLine($"保存消息時出錯: {ex.Message}");
-                // 可以考慮回傳錯誤訊息而不是拋出例外
-                // throw;
-            }
-        }
-
-
-
-
-
-
         /// <summary>
         /// 傳遞訊息
         /// </summary>
@@ -127,13 +77,12 @@ namespace CoreMVC_SignalR_Chat.Hubs
                 return;
             }
 
-            // 如果 sendToID 為空，發送給所有連線的客戶端
+
             if (string.IsNullOrEmpty(sendToID))
             {
                 await Clients.All.SendAsync("UpdContent", selfID + " 說: " + message);
             }
-
-            else // 否則是私訊
+            else
             {
                 if(memberToConnectionMap.TryGetValue(sendToID, out var sendToConnectionId))
                 {               
@@ -143,20 +92,16 @@ namespace CoreMVC_SignalR_Chat.Hubs
                   // 發送人
                   await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
 
-                    // 儲存訊息到資料庫
-                   await SaveMessageToDatabase(selfID, sendToID, message);
-
                 }
                 else
                 {
                     await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "無法找到用戶: " + sendToID);
                 }
-               
+                //var sendToConnectionId = memberToConnectionMap[sendToID];
+                // 儲存訊息到資料庫
              
             }
-
         }
-
         public async Task<string> GetMemberId()
         {
             // 假設會員 ID 存儲在用戶的認證中
