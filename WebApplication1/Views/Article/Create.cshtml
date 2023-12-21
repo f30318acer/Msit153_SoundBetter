@@ -64,6 +64,7 @@
                                     <div class="text-right">
                                         <a href="~/Article/List" type="button" class="btn btn-secondary">取消</a>
                                         <button type="button" class="btn btn-success" id="buttonSend">確認建立</button>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="DemoCreate()">DEMO</button>
                                     </div>
                                 </form>
                             </div>
@@ -153,5 +154,9 @@
             selStyle.innerHTML = style.join("");
         }
         loadStyle();
+        function DemoCreate() {
+            document.getElementById("fTitle").value = "電子音樂的起源";
+            document.getElementById("fContent").value = "1953年歐洲在Einert和Beyer首次出現了純粹的電子音樂作品發表會。 電腦的發展大大提高了非器樂音樂的創作及創作技巧。 電腦不光能夠處理音樂會中的現場音效，也就是所謂的即時音樂，還能生成樂曲的素材。 1970年，音樂合成與研究學院在巴黎成立，並成為電子音樂、電腦生成音樂和聲音分析、合成等方面的重要研究中心。";
+        }
     </script>
 }
