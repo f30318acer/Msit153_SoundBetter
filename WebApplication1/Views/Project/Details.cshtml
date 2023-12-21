@@ -714,11 +714,11 @@
                     const cell2 = $('<td></td>').text(descriSub);
                     const cell22 = $('<td></td>').html(`<button class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#addModa4" onclick="LoadSelfIntro(${item.fUsername},${item.fSelfIntroduction})")">查看自我介紹</button>`);
                     const cell3 = $('<td></td>').text(`Email : ${item.fEmail}`);
-                    const cell4 = $('<td></td>').html(`<a class="btn btn-primary m-1" href="/MemberPage/Details/${item.fMemberId}" target="_blank" onclick="ChangeAppliStatus(${item.fApplicationRecordId})">會員資訊</a>`)
-                    const cell5 = $('<td></td>').html(`<button class="btn btn-danger m-1" onclick="AcceptAppli(${item.fApplicationRecordId})">錄取應徵會員</button>`);
+                    const cell4 = $('<td class="text-right"></td>').html(`<a class="btn btn-primary m-1" href="/MemberPage/Details/${item.fMemberId}" target="_blank" onclick="ChangeAppliStatus(${item.fApplicationRecordId})">會員資訊</a><button class="btn btn-danger m-1" onclick="AcceptAppli(${item.fApplicationRecordId})">錄取應徵會員</button>`)
+                    const cell5 = $('<td></td>').html(``);
 
                     const row = $('<tr></tr>').append([cell1, cell2])
-                    const row2 = $('<tr></tr>').append([cell3, cell4, cell5])
+                    const row2 = $('<tr></tr>').append([cell3, cell4])
                     docFrag.append([row, row2])
                 })
                 appliTable.html(docFrag)
