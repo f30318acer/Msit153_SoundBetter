@@ -92,6 +92,7 @@ namespace prjMusicBetter.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(tCoupon);
         }
 
@@ -187,35 +188,35 @@ namespace prjMusicBetter.Controllers
                 try
                 {
                     var couponToUpdate = await _context.TCoupons.FirstOrDefaultAsync(c => c.FCouponId == id);
-
                     if (couponToUpdate == null)
                     {
                         return NotFound();
                     }
 
+                    // 檢查是否有新的圖片上傳
                     if (FPicture != null && FPicture.Length > 0)
                     {
+                        // Process the new image here
                         var fileName = Path.GetFileName(FPicture.FileName);
-                        var filePath = Path.Combine(_environment.WebRootPath, "img/CoolPon/", fileName);
-
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        var filePath = Path.Combine(_environment.WebRootPath, "img/CoolPon", fileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            await FPicture.CopyToAsync(fileStream);
+                            await FPicture.CopyToAsync(stream);
                         }
-
-                        // 只有在上傳新圖片時才更新圖片路徑
-                        couponToUpdate.FPicture = fileName;
+                        couponToUpdate.FPicture = fileName; // Only update the picture if a new one is uploaded
                     }
 
-                    // 更新除圖片以外的其他屬性
-                    if (await TryUpdateModelAsync<TCoupon>(
-                        couponToUpdate,
-                        "",
-                        c => c.FCouponContent, c => c.FCouponCode, c => c.FDescription, c => c.FStartdate, c => c.FEnddate))
-                    {
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction(nameof(Index));
-                    }
+                    // Map other properties
+                    couponToUpdate.FCouponContent = tCoupon.FCouponContent;
+                    couponToUpdate.FCouponCode = tCoupon.FCouponCode;
+                    couponToUpdate.FDescription = tCoupon.FDescription;
+                    couponToUpdate.FStartdate = tCoupon.FStartdate;
+                    couponToUpdate.FEnddate = tCoupon.FEnddate;
+
+                    // Update the database
+                    _context.Update(couponToUpdate);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -231,7 +232,18 @@ namespace prjMusicBetter.Controllers
             }
             return View(tCoupon);
         }
+        private async Task UpdateCouponImage(IFormFile FPicture, TCoupon couponToUpdate)
+        {
+            var fileName = Path.GetFileName(FPicture.FileName);
+            var filePath = Path.Combine(_environment.WebRootPath, "img/CoolPon/", fileName);
 
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await FPicture.CopyToAsync(fileStream);
+            }
+
+            couponToUpdate.FPicture = fileName;
+        }
 
         // GET: TCoupons/Delete/5
         public async Task<IActionResult> Delete(int? id)
