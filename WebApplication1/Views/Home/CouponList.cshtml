@@ -73,7 +73,9 @@
                             }
                             <p class="mb-1">開始日期：@startDate.ToString("yyyy/MM/dd")</p>
                             <p class="mb-1">結束日期：@endDate.ToString("yyyy/MM/dd")</p>
-                            <p class="mb-1">剩餘天數：@remainingDays 天</p>
+@*                             <p class="mb-1">剩餘天數：@remainingDays 天</p> *@
+                            <input type="hidden" value="@endDate.ToString("yyyy-MM-ddTHH:mm:ss")" class="endDate" />
+                            <p class="countdown-timer mb-1"></p>
                         </div>
                     </div>
                     <div class="flex-shrink-0">
@@ -112,5 +114,43 @@
         adContainer.addEventListener('mouseout', function () {
             adOverlay.style.opacity = 0;
         });
+
+        // 選擇所有包含 class="endDate" 的元素
+        var endDateElements = document.querySelectorAll('.endDate');
+
+        // 遍歷所有 endDate 元素，為每個元素添加倒數計時器
+        endDateElements.forEach(function (endDateElement) {
+            var endDateString = endDateElement.value;
+            var endDate = new Date(endDateString);
+            var remainingSeconds = Math.floor((endDate - new Date()) / 1000);
+            var countdownElement = endDateElement.nextElementSibling; // 找到相鄰的倒數計時元素
+            updateCountdown(countdownElement, remainingSeconds);
+        });
+
+        // 顯示倒數計時
+        function updateCountdown(countdownElement, remainingSeconds) {
+            var days = Math.floor(remainingSeconds / (24 * 60 * 60));
+            var hours = Math.floor((remainingSeconds % (24 * 60 * 60)) / 3600);
+            var minutes = Math.floor((remainingSeconds % 3600) / 60);
+            var seconds = remainingSeconds % 60;
+
+            // 格式化時間，例如：3天 05:30:15
+            var formattedTime = days + '天' +
+                ('0' + hours).slice(-2) + '時' +
+                ('0' + minutes).slice(-2) + '分' +
+                ('0' + seconds).slice(-2) + '秒';
+
+            countdownElement.innerHTML = '優惠倒數：' + formattedTime;
+
+            // 減少剩餘秒數
+            remainingSeconds--;
+
+            // 更新倒數計時每秒一次
+            if (remainingSeconds >= 0) {
+                setTimeout(function () {
+                    updateCountdown(countdownElement, remainingSeconds);
+                }, 1000);
+            }
+        }
     </script>
 }
