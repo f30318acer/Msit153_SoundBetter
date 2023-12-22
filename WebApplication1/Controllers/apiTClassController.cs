@@ -245,7 +245,8 @@ namespace prjMusicBetter.Controllers
                 // 刪除 TClassClick 中符合條件的資料
                 var relatedClicks = _context.TClassClicks.Where(click => click.FClassId == project.FClassId).ToList();
                 _context.TClassClicks.RemoveRange(relatedClicks);
-                // 刪除 TClassClick 中符合條件的資料
+
+                // 刪除 TDealClassDetails 中符合條件的資料
                 var relatedDeals = _context.TDealClassDetails.Where(click => click.FClassId == project.FClassId).ToList();
                 _context.TDealClassDetails.RemoveRange(relatedDeals);
 

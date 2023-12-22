@@ -81,7 +81,7 @@
                     </div>
                 <div class="form-group col-md-6">
                     <label asp-for="FMaxStudent" class="control-label">課程人數:</label>
-                    <input asp-for="FMaxStudent" class="form-control" />
+                        <input asp-for="FMaxStudent" id="FMaxStudentInput" class="form-control" />
                     <span asp-validation-for="FMaxStudent" class="text-danger"></span>
                 </div>
                 <input type="hidden" asp-for="FCurrentStudent" />
@@ -122,6 +122,17 @@
             if (thumbnailPath) {
                 document.getElementById('imgPreview').src = `@Url.Content("~/img/classimg")/${thumbnailPath}`;
             }
+
+            const maxStudentInput = document.getElementById('FMaxStudentInput');
+            const currentStudentValue = @Model.FCurrentStudent; // 使用 Razor 語法獲取 FCurrentStudent 的值
+
+            maxStudentInput.addEventListener('change', function () {
+                // 檢查輸入值是否低於 FCurrentStudent
+                if (parseInt(maxStudentInput.value) < currentStudentValue) {
+                    alert('課程人數不能低於當前學生人數（' + currentStudentValue + '）');
+                    maxStudentInput.value = currentStudentValue; // 將值重置為 FCurrentStudent 的值
+                }
+            });
         });
 
         //讓上課地點選項顯示fSiteName
