@@ -14,6 +14,8 @@
                     <div class="form-group">
                         <label for="inputEmail">請輸入您註冊時的Email</label>
                         <input type="text" class="form-control" placeholder="請輸入Email" id="inputEmail" name="Email">
+                            <input type="button" class="btn btn-outline-dark" value="小明Demo" id="DemoMember" />
+
                     </div>
                     <button type="button" class="btn btn-primary btn-block" onclick="compareEmail()">寄送密碼</button>
                 </div>
@@ -67,6 +69,10 @@
                 }
             });
         }
-
+        //一般會員登入
+        $('#DemoMember').on('click', function () {
+            let email = "jonson50815@yahoo.com.tw"
+            $('#inputEmail').val(email)
+        })
     </script>
 }
