@@ -632,22 +632,52 @@
             // 添加点击事件处理程序
             btnFillDefaults.addEventListener('click', function () {
                 // 填充默认数据
-                document.getElementById('fClassName').value = "古典/流行小提琴";
-                document.getElementById('fPrice').value = 1000;
+                document.getElementById('fClassName').value = "輕鬆學作曲！";
+                document.getElementById('fPrice').value = 1200;
                 // ... 填充其他字段的默认值
 
                 // 更新 CKEditor 内容
                 if (editorInstance) {
                     const defaultDescription = `
-                        初階/高階 古典或流行音樂
-                        一對一教學
-                        可依您想學的風格客製化專屬課程.曲目
+                                您是否曾哼過歌，
+                                但下一秒，
+                                又忘記那條美好旋律了呢？
 
-                        課程說明
-                        1. 為您打好基礎
-                        2. 想學會耳熟能響的古典音樂或流行歌曲都能教會你！
-                        3. 若想參加檢定或比賽也沒有問題
-                        4. 會依程度選好樂譜給學生
+                                您是否腦中有好多聲響，
+                                卻始終存留腦海裡，
+                                說不出口呢？
+
+                                現在，
+                                那些作曲家能做的事，
+                                您也可以！
+
+                                ・
+
+                                Photo by Dayne Topkin on Unsplash
+                                課程說明
+                                本課程適合什麼人？
+                                有基本音樂能力，懂得操作電腦，對各種音樂創作（歌曲、音樂劇歌曲、鋼琴曲、器樂曲或管弦樂曲等等）有興趣之無基礎初學者、進階學習者、興趣培養者與升學考試者（若有短期衝刺班計畫，費用則會視情況另計）。
+
+                                老師有什麼特色？
+                                可視情況中、英語授課，且老師很有耐心！因為我堅信：音樂是美好的！任何令人討厭音樂的理由，都是人為因素。我希望，學生可以討厭老師，但不要因此討厭音樂 QQ
+
+                                我會學習到什麼？
+                                DAW的建立及軟體使用、基礎音樂能力（樂理、聽音、基本和聲進行與和弦概念）、基礎樂器學、樂曲及歌曲創作技巧與分析、各類樂曲及風格之仿作與實作、音樂製作產業之作業流程、各類音樂賞析及作曲家小知識等等。可依學生期許及學習目標客製化，彈性調整上課進度。
+
+                                我要帶什麼去上課？
+                                第一堂課將重點放在了解學生的程度，以及學生期許之學習目標。無基礎者，將由老師協助，從建立自己簡單的音樂工作站開始。有基礎者，可先將自己的筆電與作品帶來，讓老師了解學生的情況和特色。本課程建議要準備自己的DAW （Digital Audio Workstation），用以練習實作與創作，不限於PC或MAC。但若從軟體操作開始學習的話，建議使用Mac搭配Logic。
+
+                                我需要注意什麼？
+                                一顆熱愛音樂、不畏艱難的心很重要！奠定良好的基礎，是日後進階學習高深、複雜技巧的基石。每位學生的學習狀況與進度各不相同，關鍵還是在耐心與恆心地學習。因此我會建議，穩穩地踏著自己的步伐前進，腳踏實地克服自己學習的障礙，才是進步的正確道路。
+
+                                一期一堂、四堂和八堂課，有什麼不一樣呢？
+                                基本上從零基礎，到至少能完成製作音樂的階段，需要一段時間。若按部就班、照表操課的話，大約需要十二堂課、三個月左右的時間。但每個人的學習狀況不同，因此老師也會視學生的情況，做課綱的調整。故在此提供的堂數選擇，都有其基本的功用及進度：《一堂課》屬體驗課程，引領學生入門，並建立觀念；《四堂課》則由架設音樂工作站，至實際軟體操作為主；《八堂課》則延伸四堂課的進度，開始進入琢磨基礎音樂能力、基礎樂器學，及樂曲風格分析、實作、仿作的階段；《十二堂課》則延續八堂課的進度，進入個人創作及實戰演練的階段（因系統限制，此進度需自行再購買四堂課）。不過再次強調，每個人的進度不同；有基礎者經評估後，也可直接跳至進階學習階段。因此第一堂課，老師需要先了解學生學習的狀況和程度，才能量身訂製屬於學生個人的進度表。
+
+                                我還有問題想問——
+                                若想更瞭解老師的話，請上官網：shuoanchen.com
+                                若不確定自己應該上哪堂課，想尋求建議的話，也歡迎來信洽詢：chensa0207@gmail.com
+
+                                期待與您一同創造美好的音樂！^^
                     `;
                     editorInstance.setData(defaultDescription);
                 }
@@ -656,8 +686,8 @@
                 document.getElementById('fStartdate').value = "2023-10-17T11:10";
                 document.getElementById('fEnddate').value = "2024-11-01T16:30";
                 document.getElementById('fSiteName').value = 3;
-                document.getElementById('fifOnLine').value = 1;
-                document.getElementById('fName').value = 10;
+                document.getElementById('fifOnLine').value = 0;
+                document.getElementById('fName').value = 31;
                 document.getElementById('fMaxStudent').value = 5;
 
                 // 觸發 change 事件，以便更新隱藏的 fSiteID 和 fSkillID

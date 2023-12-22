@@ -403,6 +403,7 @@ namespace prjMusicBetter.Controllers
         {
             if (tSite != null)
             {
+                tSite.FPicture = "NoImage.jpg";
                 _context.Add(tSite);
                 _context.SaveChanges();
                 return Json(new { fSiteId = tSite.FSiteId, fSiteName = tSite.FSiteName });
