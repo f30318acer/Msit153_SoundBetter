@@ -93,12 +93,21 @@
     <input class="btn btn-sm btn-primary" type="submit" value="送出" onclick="return confirm('確定要送出留言嗎? ')" />
 </form>*@
 @*oooo*@
-<div class="container">
+<div class="container shadow-lg rounded" style="padding: 30px;">
+    <h4 class="text-2xl font-bold mb-5 text-gray-800">留言板</h4>
     <div class="row justify-content-center">
         <form class="input-group" asp-action="AddComment" asp-route-Id="@Model.FArticleId">
+            <div class="col-1" style="height:100px; display: flex; align-items: center;">
+                <img src="@Url.Content("~/img/Member/")@ViewBag.PhotoPath" style="max-width: 100%;" />
+            </div>
+            <div class="col-11" style="height:100px; display: flex;">
             <textarea class="form-control" type="text"
-                      placeholder="請先登入再留言" name="FCommentContent"></textarea>
-            <input class="btn btn-sm btn-primary" type="submit" value="送出" onclick="return confirm('確定要送出留言嗎? ')" />
+                      placeholder="請留言..." name="FCommentContent"></textarea>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-11 mt-3">
+                <input class="btn btn-sm btn-primary py-2 px-3" type="submit" value="送出" onclick="return confirm('確定要送出留言嗎? ')" />
+            </div>
         </form>
         <p class="alert-light m-0">共 @Model.TComments.Count 則留言</p>
         <div>
