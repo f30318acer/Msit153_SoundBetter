@@ -165,6 +165,18 @@
             position: fixed;
             z-index: 1000; /* 將 <i> 元素置於最上層 */
         }
+
+    .favorite-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60px;
+        height: 50px;
+        background-size: cover; /* 調整圖片大小以填滿按鈕 */
+        border: none;
+        background-color: transparent; /* 移除按鈕背景色 */
+        cursor: pointer;
+    }
 </style>
 <section id="title" class="player-section" style="background-image: url('/img/classimg/class_bg.jpg');">
     <div class="player-box">
@@ -187,7 +199,9 @@
                     {
                     <h4 style="color:gray; margin-bottom: 10px;">場地：線上課程</h4>
                     }
-                
+                <button class="favorite-button" data-classid="@Model.FClassId">
+                    <img src="" class="favorite-icon" style="width: 32px; height: 30px;" />
+                </button>
             </div>
         </div>
     </div>
@@ -196,15 +210,15 @@
     <div class="row">
         <div class="col-md-6">
             <div class="detail-block">
+                <h3 class="detail-title">授課導師</h3>
+                <div class="profile-wrapper">
+                    <img src="~/img/Member/@(ViewBag.teacherimg)">
+                </div>
+                <h2 class="teacher-name">@(ViewBag.Name)</h2>
+                <div class="teacher-info">
+                    <p>@ViewBag.teacher</p>
+                </div>
                 <a href="@Url.Content("~/MemberPage/Details")/@Model.FTeacherId">
-                    <h3 class="detail-title">授課導師</h3>
-                    <div class="profile-wrapper">
-                        <img src="~/img/Member/@(ViewBag.teacherimg)">
-                    </div>
-                    <h2 class="teacher-name">@(ViewBag.Name)</h2>
-                    <div class="teacher-info">
-                        <p>@ViewBag.teacher</p>
-                    </div>
                     <span class="teacher-seemore"><span class="glyphicon glyphicon-triangle-right"></span>點此看更多老師資訊</span>
                 </a>
             </div>
@@ -265,6 +279,90 @@
 </div>
 @section Scripts {
     <script>
+        const MemberId = @ViewBag.Id;
+        const loveImgSrc = checkIfFavorite(MemberId) ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
+        // 設置愛心圖示的初始值
+        $('.favorite-icon').attr('src', loveImgSrc);
+
+        //function checkIfFavorite(classId, callback) {
+        //    //接收classId，回傳callback
+        //    $.getJSON(`/apiTClass/classFav/${classId}`, function (datas2) {
+        //        //取得這堂課有誰喜歡
+        //        let isFavorite = false;
+        //        $.each(datas2, function (index, item) {
+        //            if (MemberId == item) {
+        //                isFavorite = true;//如果登入者喜歡就為true
+        //            }
+        //        });
+        //        callback(isFavorite);
+        //    });
+        //}
+        function checkIfFavorite(classId) {
+            return new Promise(function (resolve, reject) {
+                // 接收 classId，回傳 Promise
+                $.getJSON(`/apiTClass/classFav/${classId}`, function (datas2) {
+                    // 取得這堂課有誰喜歡
+                    let isFavorite = false;
+                    $.each(datas2, function (index, item) {
+                        if (MemberId == item) {
+                            isFavorite = true; // 如果登入者喜歡就為 true
+                        }
+                    });
+                    resolve(isFavorite); // 使用 resolve 回傳結果
+                });
+            });
+        }
+
+        //愛心按鈕
+        $(document).on('click', '.favorite-button', function () {
+            // 獲取點擊的按鈕的 data-classid
+            const button = $(this);
+            const classId = button.data('classid');
+
+            // 獲取按鈕內的圖片元素
+            const img = button.find('.favorite-icon');
+            const src = img.attr('src');
+
+            // 根據 src 的不同調用不同的 API
+            if (src === '/img/classimg/notlove.PNG') {
+                console.log("新增");
+                createFavorite(classId, img);
+            } else if (src === '/img/classimg/love.PNG') {
+                console.log("刪除");
+                deleteFavorite(classId, img);
+            }
+        });
+        // 新增 createFavorite 函數
+        function createFavorite(classId, img) {
+            // 呼叫 apiTClassFavs/Create 方法新增一筆 TClassFav 資料
+            $.ajax({
+                url: `/apiTClass/CreateFav?classId=${classId}`,
+                method: 'POST',
+                success: function () {
+                    // 成功後更新圖片的 src
+                    img.attr('src', '/img/classimg/love.PNG');
+                },
+                error: function () {
+                    console.error('Error creating favorite.');
+                }
+            });
+        }
+        // 新增 deleteFavorite 函數
+        function deleteFavorite(classId, img) {
+            // 呼叫 apiTClassFavs/Delete 方法刪除一筆 TClassFav 資料
+            $.ajax({
+                url: `/apiTClass/DeleteFav?classId=${classId}`,
+                method: 'POST',
+                success: function () {
+                    // 成功後更新圖片的 src
+                    img.attr('src', '/img/classimg/notlove.PNG');
+                },
+                error: function () {
+                    console.error('Error deleting favorite.');
+                }
+            });
+        }
+
         var dealClass = @((ViewBag.DealClass).ToString().ToLower());//把ViewBag.DealClass轉小寫
         function checkQuota() {
             // 檢查是否符合課程名額條件
@@ -312,9 +410,9 @@
                 const divList = $('#divList')
                 //讀取Json資料
                 const SkillId = @Model.FSkillId
-                console.log(SkillId);
+                //console.log(SkillId);
                 $.getJSON(`/apiTClass/QueryBySkillID?id=${SkillId}`, function (datas) {
-                    console.log(datas);
+                    //console.log(datas);
 
                     //獲得限定頁面資料
                     //slice(a,b) 陣列datas第a項到第b項的所有資料

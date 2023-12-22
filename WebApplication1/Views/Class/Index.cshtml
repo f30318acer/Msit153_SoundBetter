@@ -193,11 +193,11 @@
             <div class="container col-lg-12 ddd">
                 <div class="text-right ">
                     <select id="selectSkill" class="form-select mr-2"></select>
-                    <select id="selectSort" class="form-select mr-2">
+                    @*<select id="selectSort" class="form-select mr-2">
                         <option value="latest">依最新排列</option>
                         <option value="price">依價錢排列</option>
                         <option value="clicks">依點閱數排列</option>
-                    </select>
+                    </select>*@
                     <div class="btn-group" role="group" aria-label="Course Type">
                         <button type="button" id="btnOffline" class="btn btn-secondary active mr-2">實體課程</button>
                         <button type="button" id="btnOnline" class="btn btn-secondary active mr-2">線上課程</button>
@@ -251,8 +251,8 @@
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                                  <a href="/Class/Viewclass?id=${item.fClassId}">
                                      <div style="position: relative;">
-                                                 <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
-                                                     ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
+                                         <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
+                                             ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
                                          </span>
                                          <img src="/img/classimg/${item.fThumbnailPath}" alt="">
                                          <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">

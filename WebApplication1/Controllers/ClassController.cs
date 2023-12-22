@@ -39,6 +39,7 @@ namespace prjMusicBetter.Controllers
 
         public async Task<IActionResult> Viewclass(int? id)
         {
+            ViewBag.Id = id;
             TMember member = _userInfoService.GetMemberInfo();
             if (member == null)
             {
