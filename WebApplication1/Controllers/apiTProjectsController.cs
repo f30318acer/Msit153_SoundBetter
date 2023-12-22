@@ -263,7 +263,8 @@ namespace prjSoundBetterApi.Controllers
                         noti2.FMemberId = prj.FMemberId;
                         noti2.FProjectId = id;
                         noti2.FClassId = 0;
-                        noti2.FNotification = $"專案{prj.FProjectId}有新應徵";
+						string notiString = prj.FName.Substring(0, 10) + "...";
+						noti2.FNotification = $"您的專案[{notiString}]有新應徵";
                         _context.Add(noti2);
                         //======
                     }
@@ -289,7 +290,8 @@ namespace prjSoundBetterApi.Controllers
 						noti2.FMemberId = prj.FMemberId;
 						noti2.FProjectId = id;
 						noti2.FClassId = 0;
-						noti2.FNotification = $"專案{prj.FProjectId}有新應徵";
+						string notiString = prj.FName.Substring(0, 10) + "...";
+						noti2.FNotification = $"您的專案[{notiString}]有新應徵";
 						_context.Add(noti2);
 					}
 					//======
@@ -447,7 +449,8 @@ namespace prjSoundBetterApi.Controllers
                     noti.FMemberId = record.FMemberId;
                     noti.FProjectId = prjID;
                     noti.FClassId = 0;
-                    noti.FNotification = $"您被專案{prj.FProjectId}錄取了";
+                    string notiString = prj.FName.Substring(0, 10) + "...";
+                    noti.FNotification = $"您被專案[{notiString}]錄取了";
                     _context.Add(noti);
                 }
                 //======
