@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prjMusicBetter.Models;
+using prjMusicBetter.Models.ViewModels;
+using Stripe;
 
 namespace prjMusicBetter.Controllers
 {
@@ -29,21 +31,31 @@ namespace prjMusicBetter.Controllers
 
         // GET: TMembers
         //===========================================================================
-        public async Task<IActionResult> Index(string search)
+        public async Task<IActionResult> Index(string search, string permission, int? pageNumber, int pageSize = 10)
         {
             ViewData["CurrentFilter"] = search;
 
-            var members = from m in _context.TMembers
-                          select m;
+            var membersQuery = _context.TMembers.AsQueryable();
 
-            if (!String.IsNullOrEmpty(search))
+
+            if (!string.IsNullOrEmpty(permission))
             {
-                members = members.Where(s => s.FName.Contains(search));
+                int permValue = int.Parse(permission);
+                membersQuery = membersQuery.Where(m => m.FPermissionId == permValue);
+            }
+            else
+            {
+
             }
 
-            return View(await members.ToListAsync());
+            int count = await membersQuery.CountAsync();
+            int currentPage = pageNumber ?? 1; // If no page number is specified, default to the first page
+            var items = await membersQuery.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
+            return View(new PaginatedList<TMember>(items, count, currentPage, pageSize));
+
         }
-      
+
+
 
         //===========================================================================
         // GET: TMembers/Details/5

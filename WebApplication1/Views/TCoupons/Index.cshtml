@@ -40,22 +40,17 @@
             </div>
         </form>
     </div>
-    <nav aria-label="Page navigation">
+    <div class="text-center">
         <ul class="pagination">
-            <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex - 1, search = ViewData["CurrentFilter"] })">上一頁</a>
-            </li>
-            @for (int i = 1; i <= Model.TotalPages; i++)
+            @for (var i = 1; i <= Model.TotalPages; i++)
             {
                 <li class="page-item @(i == Model.PageIndex ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, search = ViewData["CurrentFilter"] })">@i</a>
+                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.CurrentFilter, pageNumber = i })">@i</a>
                 </li>
             }
-            <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex + 1, search = ViewData["CurrentFilter"] })">下一頁</a>
-            </li>
         </ul>
-    </nav>
+    </div>
+
     <table class="table">
         <thead>
             <tr>

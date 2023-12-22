@@ -1,4 +1,5 @@
-﻿@model IEnumerable<prjMusicBetter.Models.TMember>
+﻿@model PaginatedList<prjMusicBetter.Models.TMember>
+@using prjMusicBetter.Models.ViewModels
 
 @{
     ViewData["Title"] = "Index";
@@ -18,16 +19,7 @@
         #img1 {
             display: block;
             margin: 0 auto;
-        }
-
-        .table-full {
-            width: 100%;
-        }
-
-        .table-cell {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
+        }  
     </style>
 }
 
@@ -40,13 +32,48 @@
     </div>
     <div class="flex justify-end items-center">
         <form asp-action="Index" method="get">
-            <div class="form-group">
+            <div class="form-group d-flex align-items-center">
                 <label for="search" class="mb-0 mx-3">搜尋關鍵字:</label>
                 <input type="text" class="form-control" id="search" name="search" placeholder="請輸入關鍵字" value="@ViewData["CurrentFilter"]" />
                 <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">搜尋</button>
             </div>
         </form>
     </div>
+    <div class="flex justify-end items-center">
+        <form asp-action="Index" method="get">
+            <div class="form-group d-flex align-items-center">
+                <!-- 現有的搜索框... -->
+                <div class="mx-3">
+                    <label>
+                        <input type="radio" name="permission" value="" checked>
+                        所有權限
+                    </label>
+                    <label>
+                        <input type="radio" name="permission" value="1">
+                        管理員
+                    </label>
+                    <label>
+                        <input type="radio" name="permission" value="2">
+                        一般會員
+                    </label>
+                </div>
+                <!-- 搜索按鈕 -->
+                <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">搜尋</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="text-center">
+        <ul class="pagination">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { search = ViewBag.CurrentFilter, pageNumber = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -54,9 +81,8 @@
                 使用者姓名
                 </th> *@
                 <th class="py-3 px-6 text-center">
-
+                    圖片名稱
                 </th>
-
                 <th class="py-3 px-6 text-center">
                     姓名
                 </th>
@@ -84,7 +110,6 @@
                 <th hidden class="pb-4">
                     自我介紹
                 </th>
-
                 <th class="py-3 px-6 text-center">
                     操作
                 </th>
@@ -107,13 +132,13 @@
                             @:No Image
                         }
                     </td>
-                    <td >
+                    <td>
                         @Html.DisplayFor(modelItem => item.FName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FPassword)
                     </td>
-                    <td >
+                    <td>
                         @Html.DisplayFor(modelItem => item.FPhone)
                     </td>
                     <td>
