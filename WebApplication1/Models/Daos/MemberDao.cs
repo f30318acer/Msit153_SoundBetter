@@ -75,7 +75,7 @@ namespace prjMusicBetter.Models.Daos
                                       fBirthday = Convert.ToDateTime(m.FBirthday).ToString("yyyy-MM-dd"),
                                       fEmail = m.FEmail,
                                       fPhone = m.FPhone,
-                                      fGender = m.FGender? "女":"男",
+                                      fGender = m.FGender? "男":"女",
                                       fUsername = m.FUsername,
                                   }).FirstOrDefault();
             return mem;
