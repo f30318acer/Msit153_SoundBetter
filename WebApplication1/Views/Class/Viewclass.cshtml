@@ -236,9 +236,18 @@
                 <h3 style="text-align: center; margin-bottom: 10px;">@Model.FCurrentStudent/@Model.FMaxStudent</h3>
                 @if (Model.FCurrentStudent != 0)
                 {
-                    <a href="@Url.Action("student", "Class", new { id = Model.FClassId })" class="btn btn-secondary">
-                        查看已購買學生
-                    </a>
+                    if (ViewBag.MemberId == Model.FTeacherId)
+                    {
+                        <a href="@Url.Action("studentEdit", "Class", new { id = Model.FClassId })" class="btn btn-secondary">
+                            查看已購買學生
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("student", "Class", new { id = Model.FClassId })" class="btn btn-secondary">
+                            查看已購買學生
+                        </a>
+                    }
                 }
                 <div style="margin: 10px;">
                     <button name="createClass" onclick="@(Model.FCurrentStudent >= Model.FMaxStudent ? "fullstudent()" : ViewBag.DealClass == true ? "alreadybuy()":"checkQuota()")"
@@ -284,19 +293,7 @@
         // 設置愛心圖示的初始值
         $('.favorite-icon').attr('src', loveImgSrc);
 
-        //function checkIfFavorite(classId, callback) {
-        //    //接收classId，回傳callback
-        //    $.getJSON(`/apiTClass/classFav/${classId}`, function (datas2) {
-        //        //取得這堂課有誰喜歡
-        //        let isFavorite = false;
-        //        $.each(datas2, function (index, item) {
-        //            if (MemberId == item) {
-        //                isFavorite = true;//如果登入者喜歡就為true
-        //            }
-        //        });
-        //        callback(isFavorite);
-        //    });
-        //}
+        // 檢查是否為最愛课程
         function checkIfFavorite(classId) {
             return new Promise(function (resolve, reject) {
                 // 接收 classId，回傳 Promise
