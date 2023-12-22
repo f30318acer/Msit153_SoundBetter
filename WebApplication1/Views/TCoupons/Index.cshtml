@@ -1,4 +1,5 @@
-﻿@model IEnumerable<prjMusicBetter.Models.TCoupon>
+﻿@model PaginatedList<prjMusicBetter.Models.TCoupon>
+@using prjMusicBetter.Models.ViewModels
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +8,13 @@
 
 
 <style>
-  
+    /* 添加这段CSS来指定图片的固定宽度和高度 */
+    #img1 {
+        width: 100px; /* 设置图片宽度 */
+        height: 100px; /* 设置图片高度 */
+        display: block;
+        margin: 0 auto;
+    }
     /* 为整个内容区域添加左边距 */
     .main-content {
         padding-left: 30rem; /* 根据侧边栏宽度调整 */
@@ -20,7 +27,7 @@
 
 
 <main id="main" class="main">
-   
+    <h1 class="text-3xl font-bold text-center my-4">優惠券管理</h1>
     <div class="d-flex align-items-center gap-2">
         @Html.ActionLink("新增優惠券", "create", "TCoupons", "", new { @class = "btn btn-dark" })
     </div>
@@ -33,12 +40,32 @@
             </div>
         </form>
     </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex - 1, search = ViewData["CurrentFilter"] })">上一頁</a>
+            </li>
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, search = ViewData["CurrentFilter"] })">@i</a>
+                </li>
+            }
+            <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex + 1, search = ViewData["CurrentFilter"] })">下一頁</a>
+            </li>
+        </ul>
+    </nav>
     <table class="table">
         <thead>
             <tr>
                 <th class="py-3 px-6 text-center">
+                    圖片名稱
+                </th>
+                <th class="py-3 px-6 text-center">
                     優惠內容
                 </th>
+
                 <th class="py-3 px-6 text-center">
                     優惠代碼
                 </th>
@@ -51,9 +78,6 @@
                 <th class="py-3 px-6 text-center">
                     結束日期
                 </th>
-                <th class="py-3 px-6 text-center">
-                    圖片名稱
-                </th>
                 <th class="py-3 px-6 text-center font-bold">
                     操作
                 </th>
@@ -63,6 +87,19 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        <div class="truncate-text">
+                            @if (!string.IsNullOrEmpty(item.FPicture))
+                            {
+                                <img src="@Url.Content("~/img/Coolpon/" + item.FPicture)" alt="Coupon Image" class="rounded-full mx-auto" id="img1" />
+
+                            }
+                            else
+                            {
+                                @:No Image
+                            }
+                        </div>
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FCouponContent)
                     </td>
@@ -80,19 +117,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.FEnddate)
                     </td>
-                    <td>
-                        <div class="truncate-text">
-                            @if (!string.IsNullOrEmpty(item.FPicture))
-                            {
-                                <img src="@Url.Content("~/img/Coolpon/" + item.FPicture)" alt="Coupon Image" style="width:100px; height:auto;" />
-
-                            }
-                            else
-                            {
-                                @:No Image
-                            }
-                        </div>
-                    </td>
+                    
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.FCouponId" class="text-lg bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">修改</a>
                         @* <a asp-action="Details" asp-route-id="@item.FMemberId">細節</a> | *@

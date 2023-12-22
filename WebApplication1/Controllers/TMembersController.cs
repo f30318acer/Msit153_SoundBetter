@@ -68,7 +68,13 @@ namespace prjMusicBetter.Controllers
         // GET: TMembers/Create
         public IActionResult Create()
         {
-            ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId");
+            var permissionOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "1", Text = "一般會員" },
+        new SelectListItem { Value = "2", Text = "管理員" }
+    };
+
+            ViewBag.FPermissionId = permissionOptions;
             return View();
         }
 
@@ -77,14 +83,28 @@ namespace prjMusicBetter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FMemberId,FUserame,FName,FPassword,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember)
+        public async Task<IActionResult> Create([Bind("FMemberId,FUserame,FName,FPassword,FPhone,FEmail,FGender,FBirthday,FCreationTime,FIntroduction,FPermissionId,FPhotoPath")] TMember tMember, IFormFile uploadedFile)
         {
             if (ModelState.IsValid)
             {
+                if (uploadedFile != null && uploadedFile.Length > 0)
+                {
+                    var fileName = Path.GetFileName(uploadedFile.FileName);
+                    var filePath = Path.Combine(_environment.WebRootPath, "img", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await uploadedFile.CopyToAsync(fileStream);
+                    }
+
+                    tMember.FPhotoPath = fileName; // 儲存檔案名
+                }
+
                 _context.Add(tMember);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["FPermissionId"] = new SelectList(_context.TMemberPromissions, "FPromissionId", "FPromissionId", tMember.FPermissionId);
             return View(tMember);
         }
