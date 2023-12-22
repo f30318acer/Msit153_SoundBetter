@@ -250,6 +250,10 @@ namespace prjMusicBetter.Controllers
                 var relatedDeals = _context.TDealClassDetails.Where(click => click.FClassId == project.FClassId).ToList();
                 _context.TDealClassDetails.RemoveRange(relatedDeals);
 
+                // 刪除 TClassFavs 中符合條件的資料
+                var relatedFavs = _context.TClassFavs.Where(click => click.FClassId == project.FClassId).ToList();
+                _context.TClassFavs.RemoveRange(relatedFavs);
+
                 _context.TClasses.Remove(project);
                 _context.SaveChanges();
                 return Content("刪除成功");
