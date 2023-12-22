@@ -896,6 +896,7 @@
 
   <ItemGroup>
     <Folder Include="db\" />
+    <Folder Include="Views\TSites\NewFolder\" />
     <Folder Include="wwwroot\img\Article\ArticlePicture\" />
     <Folder Include="wwwroot\img\Works\" />
     <Folder Include="wwwroot\img\Place\" />

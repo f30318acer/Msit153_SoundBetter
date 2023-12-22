@@ -76,8 +76,13 @@ namespace prjMusicBetter.Controllers
                     _context.SaveChanges();
                     return Content("新增成功");
                 }
+                else
+                {
+                    tSite.FPicture = "NoImage.jpg";
+                }
                 _context.Add(tSite);
                 _context.SaveChanges();
+                return Content("新增成功");
             }
             return Content("錯誤");
         }

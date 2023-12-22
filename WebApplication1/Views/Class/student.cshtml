@@ -42,22 +42,29 @@
                                 @count
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.FUsername)
+                                @*@Html.DisplayFor(modelItem => item.FUsername)*@
+                                @(item?.FUsername)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.FPhone)
+                                @*@Html.DisplayFor(modelItem => item.FPhone)*@
+                                @(item?.FPhone)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.FEmail)
+                                @*@Html.DisplayFor(modelItem => item.FEmail)*@
+                                @(item?.FEmail)
                             </td>
                             <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                @Html.Raw(item.FIntroduction.Length > 30 ? $"{item.FIntroduction.Substring(0, 30)}..." : item.FIntroduction)
+                                @*@Html.Raw(item.FIntroduction.Length > 30 ? $"{item.FIntroduction.Substring(0, 30)}..." : item.FIntroduction)*@
+                                @(item?.FIntroduction?.Length > 30 ? $"{item.FIntroduction.Substring(0, 30)}..." : item?.FIntroduction)
                             </td>
                             <td>
-                                <img src="~/img/Member/@item.FPhotoPath" width="100" height="100">
+                                @if (item?.FPhotoPath != null)
+                                {
+                                    <img src="~/img/Member/@item.FPhotoPath" width="100" height="100">
+                                }
                             </td>
                             <td>
-                                @Html.ActionLink("查看個人檔案", "Details", "MemberPage", new { id = item.FMemberId }, new { @class = "btn btn-success" })
+                                @Html.ActionLink("查看個人檔案", "Details", "MemberPage", new { id = item?.FMemberId }, new { @class = "btn btn-success" })
                             </td>
                             @*<td>
                     @Html.ActionLink("修改", "Edit", "Product", new { id = item.FId }, null) |
