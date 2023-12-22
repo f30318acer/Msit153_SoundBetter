@@ -30,6 +30,10 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+        public IActionResult DealClass()
+        {
+            return View();
+        }
         public IActionResult classclick()
         {
             return View();
@@ -243,7 +247,7 @@ namespace prjMusicBetter.Controllers
                 })
                 .ToList();
             // 合併應用狀態和項目狀態
-            var combinedStatus = applicationStatus             
+            var combinedStatus = applicationStatus
                 .GroupBy(cs => cs.Description)
                 .Select(group => new
                 {
@@ -258,6 +262,5 @@ namespace prjMusicBetter.Controllers
             return Json(result);
 
         }
-
     }
 }
