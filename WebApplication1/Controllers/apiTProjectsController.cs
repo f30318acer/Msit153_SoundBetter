@@ -341,6 +341,25 @@ namespace prjSoundBetterApi.Controllers
                          select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
 			return Json(prjFav);
 		}
+		//===取得應徵中專案===
+
+		public IActionResult GetPrjAppliByID(int? id)
+		{
+			if (id == null || _context.TApplicationRecords == null)
+			{
+				return NotFound();
+			}
+			var prjAcc = from f in _context.TApplicationRecords
+						 join p in _context.TProjects
+						 on f.FProjectId equals p.FProjectId
+						 where f.FMemberId == id && f.FApplicationStatusId == 1
+						 select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
+			if (prjAcc != null)
+			{
+				return Json(prjAcc);
+			}
+			return NotFound();
+		}
 
 		//===取得被錄取專案===
 
