@@ -24,7 +24,7 @@
                                             <div class="photo-button mb-3">
                                                 <div class="flex justify-center">
                                                     <div class="w-24 h-24 mb-1 border rounded-full">
-                                                        <img src="~/img/Member/default.jpg" class="w-full h-full" id="imgMember" width="96" height="96">
+                                                        <img src="~/img/Member/default.jpg" class="w-full h-full" id="photo" width="96" height="96">
                                                         <input type="file" name="Photo" id="form-control" placeholder="Upload your profile picture" />
                                                     </div>
                                                 </div>
@@ -106,13 +106,13 @@
                                                             <div class="form-check form-check-inline">
                                                                 <input class="mr-2" type="radio" name="fGender" id="genderFalse" value="False" checked>
                                                                 <label class="text-sm font-medium text-gray-700 mr-4" for="genderFalse">
-                                                                    男
+                                                                    女
                                                                 </label>
                                                             </div>
                                                             <div class="form-check form-check-inline">
                                                                 <input class="mr-2" type="radio" name="fGender" id="genderTrue" value="True">
                                                                 <label class="text-sm font-medium text-gray-700" for="genderTrue">
-                                                                    女
+                                                                    男
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -180,10 +180,10 @@
                 const file = this.files;
                 if (file.length === 0) {
                     let imgDefault = '@Url.Content("~/img/Member/default.jpg")';
-                    $('#imgMember').attr('src', imgDefault);
+                    $('#photo').attr('src', imgDefault);
                 } else {
                     const url = URL.createObjectURL(file[0]);
-                    $('#imgMember').attr('src', url);
+                    $('#photo').attr('src', url);
                 }
             });
         });
@@ -194,11 +194,11 @@
             const file = photo.files
             if (file.length == 0) {
                 let imgDefault = '@Url.Content("~/img/Member/default.jpg")'
-                $('#imgMember').attr('src', imgDefault)
+                $('#photo').attr('src', imgDefault)
             }
             else {
                 const url = URL.createObjectURL(file[0]);
-                $('#imgMember').attr('src', url)
+                $('#photo').attr('src', url)
             }
         })
         function togglePassword() {
