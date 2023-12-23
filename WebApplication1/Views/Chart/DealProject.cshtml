@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "DealProject";
+    Layout = "_Layout2";
+
+}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<div class="highcharts-figure">
+    <div id="container3"></div>
+</div>
+
+@section Scripts{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/networkgraph.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pieData = [
+                { name: '2022', y: 100000 },
+                { name: '2023', y: 120000 },
+                { name: '2024', y: 110000 },
+                // ...其他年份
+            ];
+
+            Highcharts.chart('container3', {
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: '年度專案總價格'
+                },
+                subtitle: {
+                    text: '3D 圓餅圖'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45
+                    }
+                },
+                series: [{
+                    name: '總價格',
+                    data: pieData
+                }]
+            });
+        });
+
+
+    </script>           
+}
+
