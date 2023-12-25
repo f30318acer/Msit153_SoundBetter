@@ -1,9 +1,10 @@
 ﻿
 @model prjMusicBetter.Models.ViewModels.CommentListViewModel
 
-
-
 <!DOCTYPE html>
+<title>文章評論留言管理</title>
+<main id="main" class="main">
+
 
 @{
     ViewData["Title"] = "List";
@@ -23,14 +24,14 @@
     }
 </style>
 
-<html>
 
 
-<head>
+
+
     <meta name="viewport" content="width=device-width" />
-    <title>文章評論留言管理</title>
-</head>
-<main id="main" class="main">
+    
+
+
 
     <h2>管理留言介面</h2>
     @using (Html.BeginForm("List", "Comment", FormMethod.Get))
@@ -93,25 +94,13 @@
         </tbody>
     </table>
     @* <a href="@Url.Action("Create","Comment")"><button class="btn btn-primary" type="button">加入留言</button></a> *@
+
+@*                     @Html.ActionLink("修改", "Edit", "Comment", new { id = Model.Comments[index].FCommentId }, null) | *@
+
 </main>
-
-
-
-
-
-
-
 <script>
 
 
 
 
 </script>
-
-@*                     @Html.ActionLink("修改", "Edit", "Comment", new { id = Model.Comments[index].FCommentId }, null) | *@
-</html>
-
-
-
-
-
