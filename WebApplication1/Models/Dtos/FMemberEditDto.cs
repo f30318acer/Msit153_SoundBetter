@@ -12,5 +12,6 @@
         public string fEmail { get; set; }
         public string? fGender { get; set; }
         public string? fBirthday { get; set; }
+        public string fIntroduction {  get; set; }
     }
 }

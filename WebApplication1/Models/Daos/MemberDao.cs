@@ -77,6 +77,7 @@ namespace prjMusicBetter.Models.Daos
                                       fPhone = m.FPhone,
                                       fGender = m.FGender? "男":"女",
                                       fUsername = m.FUsername,
+                                      fIntroduction=m.FIntroduction,
                                   }).FirstOrDefault();
             return mem;
         }
@@ -98,7 +99,8 @@ namespace prjMusicBetter.Models.Daos
             member.FName = vm.FName;
             member.FPassword = vm.FPassword;
             member.FEmail = vm.FEmail;
-            member.FPhone = vm.FPhone;
+            member.FPhone = vm.FPhone;       
+            member.FIntroduction = vm.FIntroduction;
             _context.SaveChanges();
 
         }
