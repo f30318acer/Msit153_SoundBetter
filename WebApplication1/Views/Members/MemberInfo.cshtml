@@ -34,6 +34,12 @@
                         <label class="block text-right w-24 font-bold mr-2">性別:</label>
                         <div class="flex-grow">@Model.FGender</div>
                     </div>
+                    <div class="flex items-center col-span-1 md:col-span-2">
+                        <label for="FIntroduction" class="block text-right w-24 font-bold mr-2">自我介紹:</label>
+                        <textarea id="FIntroduction" name="FIntroduction" rows="3" class="flex-grow shadow border rounded-lg p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="請輸入您的自我介紹">@Model.FIntroduction</textarea>
+                    </div>
+
+
                 </div>
                 <div class="flex justify-center mt-6">
                     <input type="submit" value="修改個人資料" class="btn btn-dark btnEdit" data-id="@Model.FMemberID">

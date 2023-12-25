@@ -13,7 +13,7 @@
         public string FGender { get; set; }
         public string? FBirthday { get; set; }
         //public DateTime? FCreationTime { get; set; }
-        //public string FIntroduction { get; set; }
+        public string FIntroduction { get; set; }
 
 
     }

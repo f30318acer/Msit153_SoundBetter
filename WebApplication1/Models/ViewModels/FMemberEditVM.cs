@@ -30,5 +30,6 @@ namespace prjMusicBetter.Models.ViewModels
         public string FEmail { get; set; }
         public string? FGender { get; set; }
         public string? FBirthday { get; set; }
+        public string  FIntroduction {  get; set; }
     }
 }

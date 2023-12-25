@@ -126,6 +126,7 @@ namespace prjMusicBetter.Controllers
                                   FGender = m.FGender ? "男" : "女",
                                   FPassword = m.FPassword,
                                   FPhotoPath = m.FPhotoPath,
+                                  FIntroduction = m.FIntroduction
                               }).FirstOrDefault();
             ViewBag.MemberId = member.FMemberId; // 將會員ID添加到ViewBag
 
@@ -144,7 +145,8 @@ namespace prjMusicBetter.Controllers
                     FBirthday = dto.fBirthday,
                     FEmail = dto.fEmail,
                     FGender = dto.fGender,
-                    FPhone = dto.fPhone
+                    FPhone = dto.fPhone,
+                    FIntroduction=dto.fIntroduction,                   
                 };
                 return PartialView(vm);
             }
