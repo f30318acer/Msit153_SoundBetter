@@ -132,14 +132,25 @@
                         <p>@comment.FCommentContent</p>
 
                         @*使用者自刪評論留言*@
-                        @if (comment.FMemberId == Convert.ToInt32(ViewData["UserId"]))
+                        @if (comment.FMemberId == Convert.ToInt32(ViewData["UserId"] ))
                         {
                             <div>
                                 @{
                                     var deleteUrl = Url.Action("DeleteComment", "Article", new { commentId = comment.FCommentId, articleId = comment.FArticleId });
                                 }
 
-                                <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="confirmAndDelete('@deleteUrl')">刪除</button>
+                            </div>
+                        }
+                        @*管理員刪除留言*@
+                        @if (Convert.ToInt32(ViewData["UserId"])==1)
+                        {
+                            <div>
+                                @{
+                                    var deleteUrl = Url.Action("DeleteComment", "Article", new { commentId = comment.FCommentId, articleId = comment.FArticleId });
+                                }
+
+                                <button type="button" class="btn btn-outline-danger" onclick="confirmAndDelete('@deleteUrl')">管理刪除</button>
                             </div>
                         }
                     </div>

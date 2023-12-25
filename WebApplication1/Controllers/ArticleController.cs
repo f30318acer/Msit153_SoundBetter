@@ -89,7 +89,6 @@ namespace prjMusicBetter.Controllers
             _context.TComments.Load();
             _context.TMembers.Load();
 
-
             if (tArticle == null)
             {
                 return NotFound();

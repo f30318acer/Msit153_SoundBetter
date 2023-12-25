@@ -64,8 +64,8 @@ namespace prjMusicBetter.Controllers
             //// ...
             if (articleId==null)
                 {
-                // 預設頁面articleId=20;
-                articleId = 20;
+                // 預設頁面articleId=1;
+                articleId = 1;
                  }
             else 
                 { 
@@ -149,15 +149,16 @@ namespace prjMusicBetter.Controllers
 
 
 
-        public IActionResult Delete(int? id, int? articleId)
+        public IActionResult Delete(int? id, int? commentId, int? articleId)
         {   
-            TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == id);
+            TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == commentId);
+            TComment article = _context.TComments.FirstOrDefault(q => q.FCommentId == articleId);
             if (comment != null)
             {
                 _context.TComments.Remove(comment);
                 _context.SaveChanges();
             }
-            return RedirectToAction("List", new { articleId = articleId });
+            return RedirectToAction("List", new { id = articleId });
         }
 
 

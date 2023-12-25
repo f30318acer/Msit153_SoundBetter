@@ -84,7 +84,7 @@
                             @Model.Comments[index].FCommentTime.Value.ToString("yyyy/MM/dd HH:mm")
                         </td>
                         <td>
-                            @Html.ActionLink("刪除", "Delete", "Comment", new { id = Model.Comments[index].FCommentId },
+                            @Html.ActionLink("刪除", "Delete", "Comment", new { commentId = Model.Comments[index].FCommentId, articleId = Model.Comments[index].FArticleId },
                                  new { onclick = "return confirm('確定要刪除嗎?')" })
                         </td>
                     </tr>
