@@ -316,17 +316,22 @@
 				<form id="createForm">
 					<div class="row">
 						<div class="col-lg-12">
-							<h5>已錄取</h5>
+							<h5 id="prjMyTableTitle">已發布</h5>
 							<div class="mb-2"></div>
-							<table id="prjAcceptTable" class="table table-bordered">
+							<table id="prjMyTable" class="table table-bordered">
 								<tbody><!--資料位置--></tbody>
 							</table>
-							<h5>已應徵</h5>
+							<h5 id="prjAppliTableTitle">已應徵</h5>
 							<div class="mb-2"></div>
 							<table id="prjAppliTable" class="table table-bordered">
 								<tbody><!--資料位置--></tbody>
 							</table>
-							<h5>已追蹤</h5>
+							<h5 id="prjAcceptTableTitle">已錄取</h5>
+							<div class="mb-2"></div>
+							<table id="prjAcceptTable" class="table table-bordered">
+								<tbody><!--資料位置--></tbody>
+							</table>							
+							<h5 id="prjFavTableTitle">已追蹤</h5>
 							<div class="mb-2"></div>
 							<table id="prjFavTable" class="table table-bordered">
 								<tbody><!--資料位置--></tbody>
@@ -661,6 +666,8 @@
 				const docFrag = $(document.createDocumentFragment())
 				if(datas.length != 0)
 				{
+					const dataCount = datas.length;
+					$('#prjAcceptTableTitle').text(`已錄取(${dataCount})`)
 					$.each(datas, function (index, item) {
 						console.log(item);
 						const nameSub = item.fName.length > 12 ? item.fName.substring(0, 12) + '...' : item.fName
@@ -692,6 +699,8 @@
 				console.log(datas);
 				const docFrag = $(document.createDocumentFragment())
 				if (datas.length != 0) {
+					const dataCount = datas.length;
+					$('#prjAppliTableTitle').text(`已應徵(${dataCount})`)
 					$.each(datas, function (index, item) {
 						console.log(item);
 						const nameSub = item.fName.length > 12 ? item.fName.substring(0, 12) + '...' : item.fName
@@ -714,6 +723,39 @@
 			})
 		}
 		LoadPrjAppli();
+
+		//載入我的發布清單
+		function LoadMyPrj() {
+			const prjMyTable = $('#prjMyTable>tbody')
+
+			$.getJSON(`/apiTProjects/GetMyPrjByID/${loginID}`, function (datas) {
+				console.log(datas);
+				const docFrag = $(document.createDocumentFragment())
+				if (datas.length != 0) {
+					const dataCount = datas.length;
+					$('#prjMyTableTitle').text(`已發布(${dataCount})`)
+					$.each(datas, function (index, item) {
+						console.log(item);
+						const nameSub = item.fName.length > 12 ? item.fName.substring(0, 12) + '...' : item.fName
+						const descriSub = item.fDescription.length > 10 ? item.fDescription.substring(0, 10) + '...' : item.fDescription;
+						const cell1 = $('<td></td>').html(`<h5>[${item.fProjectStatus}]${nameSub}</h5>`);
+						const cell2 = $('<td></td>').text(`技能 : [${item.fSkill.fName}]`);
+						const cell3 = $('<td></td>').text(descriSub);
+						const cell4 = $('<td></td>').html(`<a class="btn btn-primary btn-sm m-1" href="/Project/Details/${item.fProjectId}" target="_blank" onclick="ChangeAppliStatus(${item.fApplicationRecordId})">詳細</a>`);
+
+						const row = $('<tr></tr>').append([cell1, cell2, cell3, cell4])
+						docFrag.append(row)
+					})
+				} else {
+					const cell1 = $('<td></td>').html(`<h5 style="color:gray;">未有發布專案</h5>`);
+					const row = $('<tr></tr>').append([cell1])
+					docFrag.append(row)
+				}
+
+				prjMyTable.html(docFrag)
+			})
+		}
+		LoadMyPrj();
 		//載入我的追蹤清單
 		function LoadPrjFav() {
 			const prjFavTable = $('#prjFavTable>tbody')
@@ -722,6 +764,8 @@
 				console.log(datas);
 				const docFrag = $(document.createDocumentFragment())
 				if (datas.length != 0) {
+					const dataCount = datas.length;
+					$('#prjFavTableTitle').text(`已追蹤(${dataCount})`)
 					$.each(datas, function (index, item) {
 						console.log(item);
 						const nameSub = item.fName.length > 12 ? item.fName.substring(0, 12) + '...' : item.fName
