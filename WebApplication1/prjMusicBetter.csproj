@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Views\error\**" />
+    <Compile Remove="Views\TSites\NewFolder\**" />
     <Content Remove="Views\error\**" />
+    <Content Remove="Views\TSites\NewFolder\**" />
     <EmbeddedResource Remove="Views\error\**" />
+    <EmbeddedResource Remove="Views\TSites\NewFolder\**" />
     <None Remove="Views\error\**" />
+    <None Remove="Views\TSites\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -896,7 +900,6 @@
 
   <ItemGroup>
     <Folder Include="db\" />
-    <Folder Include="Views\TSites\NewFolder\" />
     <Folder Include="wwwroot\img\Article\ArticlePicture\" />
     <Folder Include="wwwroot\img\Works\" />
     <Folder Include="wwwroot\img\Place\" />
