@@ -68,7 +68,7 @@ namespace prjMusicBetter.Controllers
             if (articleId == null)
             {
                 // 預設頁面articleId=20;
-                articleId = 20;
+                articleId = 1;
             }
             else
             {
