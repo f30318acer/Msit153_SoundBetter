@@ -316,7 +316,7 @@
 				<form id="createForm">
 					<div class="row">
 						<div class="col-lg-12">
-							<h5 id="prjMyTableTitle">已發布</h5>
+							<h5 id="prjMyTableTitle">我的專案</h5>
 							<div class="mb-2"></div>
 							<table id="prjMyTable" class="table table-bordered">
 								<tbody><!--資料位置--></tbody>
@@ -733,7 +733,7 @@
 				const docFrag = $(document.createDocumentFragment())
 				if (datas.length != 0) {
 					const dataCount = datas.length;
-					$('#prjMyTableTitle').text(`已發布(${dataCount})`)
+					$('#prjMyTableTitle').text(`我的專案(${dataCount})`)
 					$.each(datas, function (index, item) {
 						console.log(item);
 						const nameSub = item.fName.length > 12 ? item.fName.substring(0, 12) + '...' : item.fName

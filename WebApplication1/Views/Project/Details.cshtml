@@ -742,7 +742,7 @@
                 })
                 .then(data => {
                     alert("錄取成功");
-                    window.location.href = "/Members/Index";
+                    location.href = '@Url.Content("~/Project/List/")';
                 })
                 .catch(error => {
                     console.error('錄取失敗', error);
