@@ -59,31 +59,34 @@ namespace prjMusicBetter.Controllers
         public IActionResult List(int? articleId)
         {
             //帳號登入確認
-               TMember member = _userInfoService.GetMemberInfo();
-               if (member == null) { return RedirectToAction("Login", "Home"); }
+            TMember member = _userInfoService.GetMemberInfo();
+            if (member == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             //// ...
-            if (articleId==null)
-                {
+            if (articleId == null)
+            {
                 // 預設頁面articleId=20;
                 articleId = 20;
-                 }
-            else 
-                { 
-                articleId = articleId.Value; 
-                 }
-                
-                // 使用articleId進行相應的處理
-                var comments = _context.TComments
-                    .Include(e => e.FMember)
-                    .Where(e => e.FArticleId == articleId.Value)
-                    .ToList();
+            }
+            else
+            {
+                articleId = articleId.Value;
+            }
 
-                var viewModel = new CommentListViewModel()
-                {
-                    Comments = comments,
-                };
+            // 使用articleId進行相應的處理
+            var comments = _context.TComments
+                .Include(e => e.FMember)
+                .Where(e => e.FArticleId == articleId.Value)
+                .ToList();
 
-                return View(viewModel);
+            var viewModel = new CommentListViewModel()
+            {
+                Comments = comments,
+            };
+
+            return View(viewModel);
 
         }
 
@@ -121,7 +124,7 @@ namespace prjMusicBetter.Controllers
 
             return Ok();
         }
-  
+
 
         public IActionResult Edit(int? id)
         {
@@ -150,7 +153,7 @@ namespace prjMusicBetter.Controllers
 
 
         public IActionResult Delete(int? id, int? articleId)
-        {   
+        {
             TComment comment = _context.TComments.FirstOrDefault(p => p.FCommentId == id);
             if (comment != null)
             {
