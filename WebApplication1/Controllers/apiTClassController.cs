@@ -268,6 +268,7 @@ namespace prjMusicBetter.Controllers
         public IActionResult classFav(int? id)
         {
             var classfav = _context.TClassFavs.Where(m => m.FClassId == id).Select(t => t.FMemberId);
+            Console.WriteLine($"ClassId: {id}, Favorites: {string.Join(", ", classfav)}");
             return Json(classfav);//這堂課有誰喜歡
         }
 

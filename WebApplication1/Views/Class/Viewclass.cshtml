@@ -200,7 +200,7 @@
                     <h4 style="color:gray; margin-bottom: 10px;">場地：線上課程</h4>
                     }
                 <button class="favorite-button" data-classid="@Model.FClassId">
-                    <img src="" class="favorite-icon" style="width: 32px; height: 30px;" />
+                    <img src="~/img/classimg/notlove.PNG" class="favorite-icon" style="width: 32px; height: 30px;" />
                 </button>
             </div>
         </div>
@@ -288,27 +288,40 @@
 </div>
 @section Scripts {
     <script>
-        const MemberId = @ViewBag.Id;
-        const loveImgSrc = checkIfFavorite(MemberId) ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
-        // 設置愛心圖示的初始值
-        $('.favorite-icon').attr('src', loveImgSrc);
-
+        const MemberId = @ViewBag.MemberId;
         // 檢查是否為最愛课程
         function checkIfFavorite(classId) {
             return new Promise(function (resolve, reject) {
                 // 接收 classId，回傳 Promise
-                $.getJSON(`/apiTClass/classFav/${classId}`, function (datas2) {
+                $.getJSON(`/apiTClass/classFav?id=${classId}`, function (datas2) {
                     // 取得這堂課有誰喜歡
                     let isFavorite = false;
+                    console.log(datas2);
                     $.each(datas2, function (index, item) {
                         if (MemberId == item) {
                             isFavorite = true; // 如果登入者喜歡就為 true
                         }
                     });
+                    console.log(isFavorite);
                     resolve(isFavorite); // 使用 resolve 回傳結果
                 });
             });
         }
+        // 設置愛心圖示的初始值
+        $(document).ready(function () {
+            //const MemberId = @ViewBag.Id;
+
+            // 使用 checkIfFavorite 函數來判斷是否為最愛課程
+            checkIfFavorite(@Model.FClassId)
+                .then(function (isFavorite) {
+                    const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
+                    $('.favorite-icon').attr('src', loveImgSrc);
+                })
+                .catch(function (error) {
+                    console.error('Error checking favorite:', error);
+                });
+        });
+
 
         //愛心按鈕
         $(document).on('click', '.favorite-button', function () {
