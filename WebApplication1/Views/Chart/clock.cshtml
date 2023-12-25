@@ -9,6 +9,7 @@
 <style>
     #container {
         height: 400px;
+        opacity: 0.6; /* 80% opaque */
     }
 
     .highcharts-figure,
@@ -53,6 +54,25 @@
     .highcharts-data-table tr:hover {
         background: #f1f7ff;
     }
+
+    .highcharts-background {
+        fill: rgba(255, 255, 255, 0.5); /* white background with 50% opacity */
+    }
+
+    backgroundColor: Highcharts.svg ? {
+        radialGradient:
+
+    {
+        cx: 0.5, cy: -0.4, r: 1.9
+    }
+
+    ,
+    stops: [
+    [0.5, 'rgba(255, 255, 255, 0.5)'], // 50% opacity
+    [0.5, 'rgba(200, 200, 200, 0.5)'] // 50% opacity
+    ]
+    }
+    : null
 </style>
 <body class="antialiased bg-gray-100 text-gray-900 flex items-center justify-center h-screen">
 
@@ -99,7 +119,7 @@
             },
 
             title: {
-                text: 'The Highcharts clock'
+                text: ''
             },
 
             pane: {
