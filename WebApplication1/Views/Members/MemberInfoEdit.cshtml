@@ -58,6 +58,7 @@
                         <input type="submit" value="確定修改" class="btnEditConfirm btn btn-dark p-2 px-4 btnSubmit">
                         @* <a href="@Url.Action("Index", "Members")" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">取消</a> *@
                         <input type="button" value="取消" class="btnEditCancel btn btn-light p-2 px-4 ">
+                        <input type="button" id="btnSetDemoData" value="Set Demo Data" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     </div>
                 </div>
             </form>
@@ -100,4 +101,9 @@
             }, 1500)
         }
     })
+    document.getElementById('btnSetDemoData').addEventListener('click', function () {
+        document.getElementById('FIntroduction').value = "這是一段示範文本，說明了用戶的個人簡介可能包含的內容。";
+        document.getElementById('FPassword'). value = "123";
+    });
+
 </script>
