@@ -125,15 +125,15 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown" id="memberIcon">
                                     <button class="btn btn-dark" data-bs-toggle="dropdown">
-                                        <img src="~/img/header/user.png" class="circle-size-35" width="30" />
+                                        <img src="~/img/header/user.png" class="rounded-full" width="30" />
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark" id="empList">
                                         <li class="d-flex align-items-center mx-2">
-                                            <img src="/img/icons/question.png" class="width-16px" width="30" />
+                                            <img src="/img/icons/question.png" class="rounded-full width-16px" width="30" />
                                             <a class="dropdown-item fs-12px" href="#">幫助中心</a>
                                         </li>
                                         <li class="d-flex align-items-center mx-2">
-                                            <img src="/img/icons/user.png" class="width-16px" width="30" />
+                                            <img src="/img/icons/user.png" class="rounded-full width-16px" width="30" />
                                             @if (User.Identity.IsAuthenticated)
                                             {
                                                 <a class="dropdown-item" asp-action="Loginout" asp-controller="Home">登出</a>
@@ -254,20 +254,21 @@
                     官方社群
                 </div>
                 <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-facebook-square"></i></a>
+                    <i class="fa fa-facebook-square"></i>
                     Facebook
                 </div>
                 <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-instagram"></i></a>
+                    <i class="fa fa-instagram"></i>
                     Instagram
                 </div>
                 <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-youtube-play"></i></a>
+                    <i class="fa fa-youtube-play"></i>
                     Youtube
                 </div>
                 <div class="lh-1 my-3 fs-12px">
-                    <a href=""><i class="fa fa-github"></i></a>
-                    GitHub
+                    <a href="https://github.com/f30318acer/Msit153_SoundBetter"><i class="fa fa-github"></i>
+                        GitHub
+                    </a>
                 </div>
             </div>
         </div>

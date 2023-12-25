@@ -11,9 +11,9 @@ public partial class TDealClass
 
     public int FMemberId { get; set; }
 
-    public DateTime? FDealdate { get; set; }
+    public DateTime FDealdate { get; set; }
 
-    public decimal? FPrice { get; set; }
+    public decimal FPrice { get; set; }
 
     public virtual TMember FMember { get; set; }
 

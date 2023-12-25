@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "ProjectSkills";
+    Layout = "_Layout2";
+}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+@section Scripts{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/networkgraph.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const processData = (rawData) => {
+                const nodes = [], links = [];
+                const nodeSet = new Set();
+
+                rawData.forEach(item => {
+                    // 假設每個項目和技能有一個唯一標識符
+                    if (!nodeSet.has(item.projectName)) {
+                        nodes.push({
+                            id: item.projectName,
+                            marker: { radius: 5 }, // 重要的項目有更大的節點
+                            color: "#007bff" // 項目節點為深藍色
+                        });
+                        nodeSet.add(item.projectName);
+                    }
+                    if (!nodeSet.has(item.skillName)) {
+                        nodes.push({
+                            id: item.skillName,
+                            marker: { radius: 5 }, // 技能節點較小
+                            color: "#28a745" // 技能節點為淺綠色
+                        });
+                        nodeSet.add(item.skillName);
+                    }
+                    links.push([item.projectName, item.skillName]);
+                });
+
+                return { nodes, links };
+            };
+
+            // 模擬AJAX請求獲取數據
+            fetch('@Url.Action("GetProjectSkills", "Chart")')
+                .then(response => response.json())
+                .then(rawData => {
+                    const { nodes, links } = processData(rawData);
+
+                    Highcharts.chart('container1', {
+                        chart: {
+                            type: 'networkgraph',
+                            height: '600px'
+                        },
+                        title: {
+                            text: '專案技能關聯圖'
+                        },
+                        series: [{
+                            dataLabels: {
+                                enabled: true,
+                                linkFormat: '' // 只顯示節點的名稱
+                            },
+                            nodes: nodes,
+                            data: links
+                        }],
+                        plotOptions: {
+                            networkgraph: {
+                                keys: ['from', 'to'],
+                                layoutAlgorithm: {
+                                    enableSimulation: true,
+                                    friction: -0.9
+                                }
+                            }
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return `<b>${this.key}</b>`;
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+
+    </script>
+}
+
+<div class="highcharts-figure">
+    <div id="container1"></div>
+</div>
+

@@ -30,6 +30,18 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+        public IActionResult DealClass()
+        {
+            return View();
+        }
+        public IActionResult ProjectSkills()
+        {
+            return View();
+        }
+        public IActionResult DealProject()
+        {
+            return View();
+        }
         public IActionResult classclick()
         {
             return View();
@@ -109,7 +121,6 @@ namespace prjMusicBetter.Controllers
 
 
         [HttpPost]
-        //public List<object> GetWorksClicksData()
         public IActionResult GetWorksClicksData()
         {
             //List<object> data = new List<object>();
@@ -243,7 +254,7 @@ namespace prjMusicBetter.Controllers
                 })
                 .ToList();
             // 合併應用狀態和項目狀態
-            var combinedStatus = applicationStatus             
+            var combinedStatus = applicationStatus
                 .GroupBy(cs => cs.Description)
                 .Select(group => new
                 {
@@ -258,6 +269,42 @@ namespace prjMusicBetter.Controllers
             return Json(result);
 
         }
+        [HttpGet]
+        public async Task<IActionResult> GetMonthlyDealData()
+        {
+            var monthlyData = await _context.TDealClasses
+                .GroupBy(d => new
+                {
+                    Year = d.FDealdate.Year,
+                    Month = d.FDealdate.Month
+                })
+                .Select(group => new
+                {
+                    Year = group.Key.Year,
+                    Month = group.Key.Month,
+                    TotalPrice = group.Sum(d => d.FPrice)
+                })
+                .OrderBy(result => result.Year)
+                .ThenBy(result => result.Month)
+                .ToListAsync();
+
+            return Json(monthlyData);
+        }
+        public async Task<IActionResult> GetProjectSkills()
+        {
+            var projectSkills = await _context.TProjects
+                .Join(
+                    _context.TSkills,
+                    project => project.FSkillId,
+                    skill => skill.FSkillId,
+                    (project, skill) => new { ProjectName = project.FName, SkillName = skill.FName }
+                )
+                .ToListAsync();
+
+            return Json(projectSkills);
+        }
+
+
 
     }
 }

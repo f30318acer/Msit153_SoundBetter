@@ -1,0 +1,180 @@
+﻿@{
+    ViewData["Title"] = "DealClass";
+    Layout = "_Layout2";
+}
+
+<style>
+    #container {
+        height: 400px;
+    }
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    #datatable {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+        #datatable caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        #datatable th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        #datatable td,
+        #datatable th,
+        #datatable caption {
+            padding: 0.5em;
+        }
+
+        #datatable thead tr,
+        #datatable tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        #datatable tr:hover {
+            background: #f1f7ff;
+        }
+
+</style>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    <table id="datatable">
+        <thead>
+            <tr>
+                <th>年份</th>
+                <th style="text-align">總金額</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>2021</th>
+                <td>32 600</td>
+            </tr>
+            <tr>
+                <th>2022</th>
+                <td>32 600</td>
+            </tr>
+            <tr>
+                <th>2023</th>
+                <td>76 870</td>
+            </tr>
+        </tbody>
+    </table>
+</figure>
+
+@section Scripts{
+    <script>
+        $(function () {
+            // 從後端獲取數據
+            $.ajax({
+                url: '@Url.Action("GetMonthlyDealData", "Chart")', // 確保這是指向您的後端方法的正確路徑
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data && data.length > 0) {
+                        // 成功獲取數據後使用 Highcharts 生成圖表
+                        Highcharts.chart('container', {
+                            chart: {
+                                type: 'column',
+                                style: {
+                                    fontFamily: 'Arial' // 您可以選擇任何喜歡的字體
+                                },
+                                backgroundColor: '#f4f4f4', // 背景色
+                                plotBackgroundColor: '#ffffff', // 繪圖區背景色
+                                plotShadow: true, // 繪圖區陰影效果
+                                plotBorderWidth: 1 // 繪圖區邊框寬度
+                            },
+
+                            title: {
+                                text: '每月交易總額',
+                                style: {
+                                    color: '#333333',
+                                    fontWeight: 'bold'
+                                }
+
+                            },
+
+                            xAxis: {
+                                categories: data.map(item => item.year + '-' + String(item.month).padStart(2, '0')),// 格式化月份
+                                labels: {
+                                    style: {
+                                        color: '#333333'
+                                    }
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '價格',
+                                    style: {
+                                        color: '#333333'
+                                    }
+                                },
+                                allowDecimals: false,
+                                labels: {
+                                    format: '${value}', // 格式化標籤為貨幣格式
+                                    style: {
+                                        color: '#333333'
+                                    }
+                                }
+                            },
+                            legend: {
+                                layout: 'horizontal', // 水平排列圖例
+                                align: 'center', // 居中對齊圖例
+                                verticalAlign: 'bottom', // 將圖例置於底部
+                                borderWidth: 0 // 圖例邊框寬度
+                            },
+                            plotOptions: {
+                                series: {
+                                    borderWidth: 0, // 序列邊框寬度
+                                    dataLabels: {
+                                        enabled: true, // 啟用數據標籤
+                                        format: '${point.y:.2f}' // 數據標籤格式
+                                    },
+                                    shadow: true // 序列陰影效果
+                                }
+                            },
+                            series: [{
+                                name: '價格',
+                                data: data.map(item => item.totalPrice), // 使用 totalPrice
+                            }]
+                        });
+                    } else {
+                        console.log("Returned data is empty or not defined.");
+                    }
+                },
+                error: function (error) {
+                    // 處理錯誤
+                    console.error("載入數據時出錯: ", error);
+                },
+                credits: {
+                    enabled: false // 不顯示 Highcharts 標誌
+                },
+                exporting: {
+                    enabled: true // 啟用導出按鈕
+                }
+            });
+        });
+    </script>
+}
+
