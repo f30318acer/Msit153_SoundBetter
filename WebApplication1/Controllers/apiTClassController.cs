@@ -198,10 +198,11 @@ namespace prjMusicBetter.Controllers
                     //圖片有改就存下並修改
                     if (formFile != null)
                     {
+                        //原本的圖片
                         string photoName = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
                         if (photoName != "class_bg.jpg")
                         {
-                            project.FThumbnailPath = photoName;
+                            photoName = formFile.FileName;
                             formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
                         }
                         photoName = Guid.NewGuid().ToString() + ".jpg";
