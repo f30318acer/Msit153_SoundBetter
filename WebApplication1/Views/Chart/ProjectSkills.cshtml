@@ -52,7 +52,8 @@
                     Highcharts.chart('container1', {
                         chart: {
                             type: 'networkgraph',
-                            height: '600px'
+                            height: '600px',
+                           
                         },
                         title: {
                             text: '專案技能關聯圖'
@@ -60,7 +61,11 @@
                         series: [{
                             dataLabels: {
                                 enabled: true,
-                                linkFormat: '' // 只顯示節點的名稱
+                                linkFormat: '', // 只顯示節點的名稱
+                                         style: {
+                                    fontSize: '15px', // 設定文字大小為15px
+                                    color: '#606060'  // 這裡也可以設定文字顏色等其他樣式
+                                }
                             },
                             nodes: nodes,
                             data: links
