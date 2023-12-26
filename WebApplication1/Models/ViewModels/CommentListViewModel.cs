@@ -11,5 +11,6 @@ namespace prjMusicBetter.Models.ViewModels
         public int SelectedFArticleId { get; set; }
 
         public SelectList FArticleIdOptions { get; set; }
+
     }
 }

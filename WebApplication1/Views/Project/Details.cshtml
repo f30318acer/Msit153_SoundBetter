@@ -630,7 +630,7 @@
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('刪除失敗');
+                        throw new Error('取消失敗');
                     }
                     return response.text();
                 })
@@ -638,10 +638,10 @@
                     console.log(data); // 這裡的 data 是從後端返回的內容，這裡假設後端返回的是文字
                     // 在這裡處理刪除成功後的操作
                     alert("取消成功");
-                    window.location.href = "/Members/Index";
+                        location.href = '@Url.Content("~/Project/Details/")' + projectID;
                 })
                 .catch(error => {
-                    console.error('刪除失敗', error);
+                    console.error('取消失敗', error);
                     // 在這裡處理刪除失敗後的操作
                 });
             }else{}           
@@ -664,7 +664,7 @@
                     console.log(data); // 這裡的 data 是從後端返回的內容，這裡假設後端返回的是文字
                     // 在這裡處理刪除成功後的操作
                     alert("重啟成功");
-                    window.location.href = "/Members/Index";
+                    location.href = '@Url.Content("~/Project/Details/")' + projectID;
                 })
                 .catch(error => {
                     console.error('重啟失敗', error);
@@ -742,7 +742,7 @@
                 })
                 .then(data => {
                     alert("錄取成功");
-                    window.location.href = "/Members/Index";
+                    location.href = '@Url.Content("~/Project/List/")';
                 })
                 .catch(error => {
                     console.error('錄取失敗', error);

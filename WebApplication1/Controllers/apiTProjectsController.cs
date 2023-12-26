@@ -344,7 +344,6 @@ namespace prjSoundBetterApi.Controllers
 			return Json(prjFav);
 		}
 		//===取得應徵中專案===
-
 		public IActionResult GetPrjAppliByID(int? id)
 		{
 			if (id == null || _context.TApplicationRecords == null)
@@ -356,6 +355,24 @@ namespace prjSoundBetterApi.Controllers
 						 on f.FProjectId equals p.FProjectId
 						 where f.FMemberId == id && f.FApplicationStatusId == 1
 						 select new { f.FProjectId, p.FName, p.FDescription, p.FSkill };
+			if (prjAcc != null)
+			{
+				return Json(prjAcc);
+			}
+			return NotFound();
+		}
+		//===取得我的專案===
+		public IActionResult GetMyPrjByID(int? id)
+		{
+			if (id == null || _context.TProjects == null)
+			{
+				return NotFound();
+			}
+			var prjAcc = from p in _context.TProjects
+                         join s in _context.TProjectStatuses
+						 on p.FProjectStatusId equals s.FProjectStatusId
+						 where p.FMemberId == id
+						 select new { p.FProjectId, p.FName, p.FDescription, p.FSkill, fProjectStatus = s.FDescription };
 			if (prjAcc != null)
 			{
 				return Json(prjAcc);
