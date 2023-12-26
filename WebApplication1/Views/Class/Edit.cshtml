@@ -88,7 +88,7 @@
                     <div class="form-group col-md-12">
                         <label asp-for="FThumbnailPath" class="control-label">圖片:</label>
                         @*<input asp-for="FThumbnailPath" type="file" class="form-control" />*@
-                        <input type="file" id="formFile" name="formFile" accept="image/*" />
+                        <input type="file" id="FThumbnailPath" name="formFile" accept="image/*" />
                         <img id="imgPreview" src="~/img/classimg/class_bg.jpg" style="border-radius:10px; max-width: 400px; max-height: 400px;">
                         <span asp-validation-for="FThumbnailPath" class="text-danger"></span>
                     </div>
@@ -294,7 +294,7 @@
 
             var arrayBuffer;
 
-            $("#formFile").bind("change", function () {
+        $("#FThumbnailPath").bind("change", function () {
                 var file = this.files[0];
                 var allowType = "image.*";
                 if (file.type.match(allowType)) {
