@@ -357,7 +357,9 @@
                     else {
                         str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" width="30px" />`
                     }
-                    str += `</button>
+                    str += `
+                    <span>${datas.fUsername}</span>
+                    </button>
                                             <ul class="dropdown-menu dropdown-menu-dark" id="empList">
                                         <li class="d-flex align-items-center mx-2">
                                                        <img src="@Url.Content("~/img/icons/user.png")" class="width-16px" width="30"/>
