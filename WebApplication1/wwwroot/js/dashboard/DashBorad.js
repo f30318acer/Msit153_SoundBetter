@@ -8,13 +8,23 @@
             // 使用數據建立餅圖
             Highcharts.chart('container', {
                 chart: {
-                    type: 'pie'
+                    type: 'pie',
+                     style: {
+                        fontSize: '20px' // 更改為所需的文字大小
+                    }
                 },
                 title: {
-                    text: '會員性別比例'
+                    text: '會員性別比例',
+                    style: {
+                        fontSize: '20px' // 更改為所需的文字大小
+                    }
                 },
+
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+                    style: {
+                        fontSize: '15px'
+                    },
                 },
                 accessibility: {
                     point: {
@@ -27,7 +37,10 @@
                         cursor: 'pointer',
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                fontSize: '600px' // 將這個值改為你想要的大小
+                            }
                         }
                     }
                 },
