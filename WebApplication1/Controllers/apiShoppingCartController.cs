@@ -67,7 +67,7 @@ namespace prjMusicBetter.Controllers
                 // 將商品加入購物車
                 HttpContext.Session.Set($"ShoppingCart_{memberId}", cart);
 
-                return Json(new { success = true, message = "加入成功" , data = cart});
+                return Json(new { success = true, message = "課程已加入購物車" , data = cart});
             }
             catch (Exception ex)
             {
