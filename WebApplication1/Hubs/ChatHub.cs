@@ -42,7 +42,7 @@ namespace CoreMVC_SignalR_Chat.Hubs
             await Clients.Client(Context.ConnectionId).SendAsync("UpdSelfID",memberId);
 
             // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", "新連線 ID: " +memberId);
+            await Clients.All.SendAsync("UpdContent", "新連線 ID：" + memberId);
 
             await base.OnConnectedAsync();
         }
@@ -65,7 +65,7 @@ namespace CoreMVC_SignalR_Chat.Hubs
             await Clients.All.SendAsync("UpdList", jsonString);
 
             // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", "已離線 ID: " +memberId);
+            await Clients.All.SendAsync("UpdContent", "已離線 ID：" + memberId);
 
             await base.OnDisconnectedAsync(ex);
         }
@@ -75,13 +75,13 @@ namespace CoreMVC_SignalR_Chat.Hubs
             // 首先檢查 senderId 和 receiverId 是否可以轉換為 int
             if (!int.TryParse(senderId, out int senderIdInt))
             {
-                Console.WriteLine("無效的 senderId: " + senderId);
+                Console.WriteLine("無效的 senderId：" + senderId);
                 return; // 可以考慮拋出一個自定義例外或返回錯誤訊息
             }
 
             if (!int.TryParse(receiverId, out int receiverIdInt))
             {
-                Console.WriteLine("無效的 receiverId: " + receiverId);
+                Console.WriteLine("無效的 receiverId：" + receiverId);
                 return; // 可以考慮拋出一個自定義例外或返回錯誤訊息
             }
 
@@ -101,7 +101,7 @@ namespace CoreMVC_SignalR_Chat.Hubs
             catch (Exception ex)
             {
                 // 記錄錯誤到日誌檔
-                Console.WriteLine($"保存消息時出錯: {ex.Message}");
+                Console.WriteLine($"保存消息時出錯：{ex.Message}");
                 // 可以考慮回傳錯誤訊息而不是拋出例外
                 // throw;
             }
@@ -130,7 +130,7 @@ namespace CoreMVC_SignalR_Chat.Hubs
             // 如果 sendToID 為空，發送給所有連線的客戶端
             if (string.IsNullOrEmpty(sendToID))
             {
-                await Clients.All.SendAsync("UpdContent", selfID + " 說: " + message);
+                await Clients.All.SendAsync("UpdContent", selfID + " 說：" + message);
             }
 
             else // 否則是私訊
@@ -138,10 +138,10 @@ namespace CoreMVC_SignalR_Chat.Hubs
                 if(memberToConnectionMap.TryGetValue(sendToID, out var sendToConnectionId))
                 {               
                   // 接收人
-                  await Clients.Client(sendToConnectionId).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
+                  await Clients.Client(sendToConnectionId).SendAsync("UpdContent", selfID + " 私訊向你說：" + message);
 
                   // 發送人
-                  await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
+                  await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說：" + message);
 
                     // 儲存訊息到資料庫
                    await SaveMessageToDatabase(selfID, sendToID, message);
@@ -149,7 +149,7 @@ namespace CoreMVC_SignalR_Chat.Hubs
                 }
                 else
                 {
-                    await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "無法找到用戶: " + sendToID);
+                    await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "無法找到用戶：" + sendToID);
                 }
                
              

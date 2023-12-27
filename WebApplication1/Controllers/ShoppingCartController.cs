@@ -63,39 +63,48 @@ namespace prjMusicBetter.Controllers
         {
 
             // 取得Session
-            int memberId = _userInfoService.GetMemberId();
-            var cart = HttpContext.Session.Get<List<ShoppingCartVM>>($"ShoppingCart_{memberId}") ?? new List<ShoppingCartVM>();
+            //int memberId = _userInfoService.GetMemberId();
+            //var cart = HttpContext.Session.Get<List<ShoppingCartVM>>($"ShoppingCart_{memberId}") ?? new List<ShoppingCartVM>();
 
-            cart = checkShoppingCart(cart);
+            //cart = checkShoppingCart(cart);
 
             // 算總價
             var totalPrice = 0;
-            foreach (var item in cart)
-            {
-                totalPrice += Convert.ToInt32(item.ProductPrice * item.ProductCount);
-            }
+            //foreach (var item in cart)
+            //{
+            //    totalPrice += Convert.ToInt32(item.ProductPrice * item.ProductCount);
+            //}
             // 儲存至資料表DealClass
             TDealClass dealClass = new TDealClass();
-            dealClass.FMemberId = memberId;
+            dealClass.FMemberId = 2;
             dealClass.FDealdate = DateTime.Now;
-            dealClass.FPrice = totalPrice;
+            dealClass.FPrice = 6500;
 
             _context.Add(dealClass);
-            _context.SaveChanges();
+            //_context.SaveChanges();
 
             //儲存至資料表DealClassDetail
-            foreach (var item in cart)
-            {
+            //foreach (var item in cart)
+            //{
                 TDealClassDetail dealClassDetail = new TDealClassDetail();
-                dealClassDetail.FMemberId = memberId;
-                dealClassDetail.FDealClassId = dealClass.FDealClassId;
-                dealClassDetail.FClassId = item.ProductId;
-                dealClassDetail.FStartDate = item.ProductStartDate;
-                dealClassDetail.FEndDate = item.ProductEndDate;
+                dealClassDetail.FMemberId = 2;
+                dealClassDetail.FDealClassId = 4102;
+                dealClassDetail.FClassId = 3;
+                dealClassDetail.FStartDate = DateTime.Now;
+                dealClassDetail.FEndDate = DateTime.Now;
 
                 _context.Add(dealClassDetail);
-                _context.SaveChanges();
-            }
+
+            TDealClassDetail dealClassDetail2 = new TDealClassDetail();
+            dealClassDetail2.FMemberId = 2;
+            dealClassDetail2.FDealClassId = 4102;
+            dealClassDetail2.FClassId = 5036;
+            dealClassDetail2.FStartDate = DateTime.Now;
+            dealClassDetail2.FEndDate = DateTime.Now;
+
+            _context.Add(dealClassDetail2);
+            _context.SaveChanges();
+            //}
 
 
             return Json(new { success = true, message = "購買成功" });
