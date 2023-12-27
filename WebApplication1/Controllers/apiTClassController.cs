@@ -291,6 +291,7 @@ namespace prjMusicBetter.Controllers
                          join f in _context.TClassFavs on s.FClassId equals f.FClassId
                          join c in _context.TClassClicks on s.FClassId equals c.FClassId
                          join m in _context.TMembers on s.FTeacherId equals m.FMemberId
+                         join t in _context.TSites on s.FSiteId equals t.FSiteId
                          where f.FMemberId == id
                          orderby s.FClassId descending
                          select new
@@ -306,6 +307,7 @@ namespace prjMusicBetter.Controllers
                              fClick = c.FClick,
                              fTeacherNmae = m.FUsername,
                              fEnddate = s.FEnddate,
+                             fSiteName = t.FSiteName,
                          };
             return Json(result.ToList());
         }
