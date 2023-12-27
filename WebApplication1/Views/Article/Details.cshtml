@@ -151,6 +151,18 @@
                                 <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除</button>
                             </div>
                         }
+                        @*使用者自刪評論留言*@
+                        @if (Convert.ToInt32(ViewData["UserId"])==1)
+                        {
+                            <div>
+                                @{
+                                    var deleteUrl = Url.Action("DeleteComment", "Article", new { commentId = comment.FCommentId, articleId = comment.FArticleId });
+                                }
+
+                                <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除管理</button>
+                            </div>
+                        }
+
                     </div>
                 </div>
             }
