@@ -163,19 +163,20 @@ namespace prjMusicBetter.Controllers
             return Json(pic);
         }
         //===找同類型文章===
-        public IActionResult QueryByStylesID(int? id)
+        public IActionResult QueryByStylesID(int? id )
         {
             if (id == null || _context.TArticles == null)
             {
                 return NotFound();
             }
 
-            var tProject = _context.TArticles.Where(m => m.FStyleId == id);
-            if (tProject == null)
+            var tProject = _context.TArticles.FirstOrDefault(m => m.FArticleId == id);
+            var tArticleDB = _context.TArticles.Where(m => m.FStyleId == tProject.FStyleId&&m.FArticleId!=id);
+            if (tArticleDB == null)
             {
                 return NotFound();
             }
-            return Json(tProject);
+            return Json(tArticleDB);
         }
     }
 }

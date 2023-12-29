@@ -198,10 +198,11 @@ namespace prjMusicBetter.Controllers
                     //圖片有改就存下並修改
                     if (formFile != null)
                     {
+                        //原本的圖片
                         string photoName = _context.TClasses.Where(m => m.FClassId == project.FClassId).Select(t => t.FThumbnailPath).SingleOrDefault();
                         if (photoName != "class_bg.jpg")
                         {
-                            project.FThumbnailPath = photoName;
+                            photoName = formFile.FileName;
                             formFile.CopyTo(new FileStream(_host.WebRootPath + "/img/classimg/" + photoName, FileMode.Create));
                         }
                         photoName = Guid.NewGuid().ToString() + ".jpg";
@@ -250,6 +251,10 @@ namespace prjMusicBetter.Controllers
                 var relatedDeals = _context.TDealClassDetails.Where(click => click.FClassId == project.FClassId).ToList();
                 _context.TDealClassDetails.RemoveRange(relatedDeals);
 
+                // 刪除 TClassFavs 中符合條件的資料
+                var relatedFavs = _context.TClassFavs.Where(click => click.FClassId == project.FClassId).ToList();
+                _context.TClassFavs.RemoveRange(relatedFavs);
+
                 _context.TClasses.Remove(project);
                 _context.SaveChanges();
                 return Content("刪除成功");
@@ -264,6 +269,7 @@ namespace prjMusicBetter.Controllers
         public IActionResult classFav(int? id)
         {
             var classfav = _context.TClassFavs.Where(m => m.FClassId == id).Select(t => t.FMemberId);
+            Console.WriteLine($"ClassId: {id}, Favorites: {string.Join(", ", classfav)}");
             return Json(classfav);//這堂課有誰喜歡
         }
 
@@ -285,6 +291,7 @@ namespace prjMusicBetter.Controllers
                          join f in _context.TClassFavs on s.FClassId equals f.FClassId
                          join c in _context.TClassClicks on s.FClassId equals c.FClassId
                          join m in _context.TMembers on s.FTeacherId equals m.FMemberId
+                         join t in _context.TSites on s.FSiteId equals t.FSiteId
                          where f.FMemberId == id
                          orderby s.FClassId descending
                          select new
@@ -300,6 +307,7 @@ namespace prjMusicBetter.Controllers
                              fClick = c.FClick,
                              fTeacherNmae = m.FUsername,
                              fEnddate = s.FEnddate,
+                             fSiteName = t.FSiteName,
                          };
             return Json(result.ToList());
         }

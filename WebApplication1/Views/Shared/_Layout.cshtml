@@ -357,7 +357,9 @@
                     else {
                         str += `<img src="@Url.Content("~/img/header/user.png")" class="circle-size-35" width="30px" />`
                     }
-                    str += `</button>
+                    str += `
+                    <span>${datas.fUsername}</span>
+                    </button>
                                             <ul class="dropdown-menu dropdown-menu-dark" id="empList">
                                         <li class="d-flex align-items-center mx-2">
                                                        <img src="@Url.Content("~/img/icons/user.png")" class="width-16px" width="30"/>
@@ -380,19 +382,19 @@
                                 <li class="nav-item dropdown" id="memberIcon">
                                 <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">`;
                     if (datas.fPhotoPath != null) {
-                        str += `<img src="@Url.Content("~/images/uploads/Employee/")${datas.fPhotoPath}" class="circle-size-35"  width="30px"/>`
+                        str += `<img src="@Url.Content("~/img/Member/")${datas.fPhotoPath}" class="circle-size-35"  width="30px"/>`
                     }
                     else {
-                        str += `<img src="@Url.Content("~/images/header/user.png")" class="circle-size-35"  width="30px"/>`
+                        str += `<img src="@Url.Content("~/img/Member/men1.jpg")" class="circle-size-35"  width="30px"/>`
                     }
                     str += `</button>
                                             <ul class="dropdown-menu dropdown-menu-dark" id="empList">
                                         <li class="d-flex align-items-center mx-2">
-                                                   <img src="@Url.Content("~/images/header/user.png")" class="width-16px" width="30"/>
+                                                                   <img src="@Url.Content("~/img/icons/user.png")" class="width-16px" width="30"/>
                                                <a class="dropdown-item fs-12px" href="@Url.Content("~/Bghome/index")">後臺管理</a>
                                         </li>
                                         <li class="d-flex align-items-center mx-2">
-                                                           <img src="@Url.Content("~/images/icon/rejected.png")" class="width-16px" width="30"/>
+                                                                           <img src="@Url.Content("~/img/icons/rejected.png")" class="width-16px" width="30"/>
                                                <a class="dropdown-item fs-12px" href="@Url.Content("~/Home/Loginout")">會員登出</a>
                                         </li>
                                     </ul>

@@ -151,6 +151,18 @@
                                 <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除</button>
                             </div>
                         }
+                        @*使用者自刪評論留言*@
+                        @if (Convert.ToInt32(ViewData["UserId"])==1)
+                        {
+                            <div>
+                                @{
+                                    var deleteUrl = Url.Action("DeleteComment", "Article", new { commentId = comment.FCommentId, articleId = comment.FArticleId });
+                                }
+
+                                <button type="button" class="btn btn-danger" onclick="confirmAndDelete('@deleteUrl')">刪除管理</button>
+                            </div>
+                        }
+
                     </div>
                 </div>
             }
@@ -185,8 +197,9 @@
             const divList = $('#divList')
             //讀取Json資料
             const SkillId = @Model.FStyleId
+            const ArticleId =@Model.FArticleId
                 //console.log(SkillId);
-            $.getJSON(`/apiTArticle/QueryByStylesID?id=${SkillId}`, function (datas) {
+                $.getJSON(`/apiTArticle/QueryByStylesID?id=${ArticleId}`, function (datas) {
                 //console.log(datas);
 
                 //獲得限定頁面資料
@@ -204,7 +217,7 @@
                         `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
                             <a href="/Article/Details?id=${item.fArticleId}">
                                 <div class="playlist-item">
-                                    <img src="/img/Article/${item.fPhotoPath}" alt="">
+                                            <img src="/img/Article/${item.fPhotoPath}" alt="">
                                     <h5>${item.fTitle}</h5>
                                 </div>
                             </a>

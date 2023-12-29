@@ -22,6 +22,10 @@ namespace prjMusicBetter.Controllers
         {
             return View();
         }
+        public IActionResult clock()
+        {
+            return View();
+        }
         public IActionResult MemberIndex()
         {
             return View();

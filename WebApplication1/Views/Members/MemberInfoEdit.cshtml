@@ -17,10 +17,10 @@
             <form method="post" action="MemberInfoEdit" name="EditForm" class="space-y-6">
                 <input type="hidden" class="form-control" name="FMemberID" value="@Model.FMemberID" />
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
+                    <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="FUsername">使用者姓名</label>
                         <input type="text" id="FUsername" name="FUsername" value="@Model.FUsername" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-                  </div>
+                    </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="FName">姓名</label>
                         <input type="text" id="FName" name="FName" value="@Model.FName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
@@ -43,56 +43,67 @@
                     </div>
                     <div class="md:col-span-3">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="FGender">性別</label>
-@*                         <input type="gender" id="FGender" name="FGender" value="@Model.FGender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
- *@
-                         <div id="FGender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">@Model.FGender</div>
-                     </div>
-                </div>
-                    <div class="row justify-content-around p-5">
-                        <div class="text-center">
-                            <input type="submit" value="確定修改" class="btnEditConfirm btn btn-dark p-2 px-4 btnSubmit">
-                            @* <a href="@Url.Action("Index", "Members")" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">取消</a> *@
-                            <input type="button" value="取消" class="btnEditCancel btn btn-light p-2 px-4 ">
-                        </div>
+                        @*                         <input type="gender" id="FGender" name="FGender" value="@Model.FGender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                        *@
+                        <div id="FGender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">@Model.FGender</div>
                     </div>
+
+                    <div class="md:col-span-3">
+                        <label for="FIntroduction" class="block text-gray-700 text-sm font-bold mb-2">自傳</label>
+                        <textarea id="FIntroduction" name="FIntroduction" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="請輸入您的個人簡介">@Model.FIntroduction</textarea>
+                    </div>
+                </div>
+                <div class="row justify-content-around p-5">
+                    <div class="text-center">
+                        <input type="submit" value="確定修改" class="btnEditConfirm btn btn-dark p-2 px-4 btnSubmit">
+                        @* <a href="@Url.Action("Index", "Members")" class="btn btn-dark p-2 px-4 btnEdit" data-id="4">取消</a> *@
+                        <input type="button" value="取消" class="btnEditCancel btn btn-light p-2 px-4 ">
+                        <input type="button" id="btnSetDemoData" value="Set Demo Data" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    </div>
+                </div>
             </form>
-        </div> 
-    </div>  
+        </div>
+    </div>
 </body>
 
 
-    <script>
-        $(".btnSubmit").on('click', async function (event) {
-            event.preventDefault();
+<script>
+    $(".btnSubmit").on('click', async function (event) {
+        event.preventDefault();
 
-            const formData = new FormData(document.EditForm);
+        const formData = new FormData(document.EditForm);
 
-            const response = await fetch('@Url.Content("~/Members/MemberInfoEdit")',
+        const response = await fetch('@Url.Content("~/Members/MemberInfoEdit")',
             {
                 body: formData,
                 method: 'POST'
             })
 
-            const data = await response.json();
-            if (data.statusCode == 500) {
-                Swal.fire({
+        const data = await response.json();
+        if (data.statusCode == 500) {
+            Swal.fire({
+                title: data.statusMessage,
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+        else {
+            Swal.fire(
+                {
                     title: data.statusMessage,
-                    icon: 'error',
+                    icon: 'success',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500,
                 })
-            }
-            else {
-                Swal.fire(
-                    {
-                        title: data.statusMessage,
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 1500,
-                    })
-                setTimeout(() => {
-                    $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
-                }, 1500)
-            }
-        })
-    </script>
+            setTimeout(() => {
+                $('#divPartial').load('@Url.Content("~/Members/MemberInfo")')
+            }, 1500)
+        }
+    })
+    document.getElementById('btnSetDemoData').addEventListener('click', function () {
+        document.getElementById('FIntroduction').value = "這是一段示範文本，說明了用戶的個人簡介可能包含的內容。";
+        document.getElementById('FPassword'). value = "123";
+    });
+
+</script>

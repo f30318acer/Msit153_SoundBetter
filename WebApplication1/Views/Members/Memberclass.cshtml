@@ -680,35 +680,35 @@
                         const loveImgSrc = isFavorite ? '/img/classimg/love.PNG' : '/img/classimg/notlove.PNG';
 
                         const Description = item.fDescription.length > 30 ? item.fDescription.substring(0, 30) + '...' : item.fDescription;
-                        //console.log(item);
+                        console.log(item);
                         const card = $(
                             `<div class="mix col-lg-3 col-md-4 col-sm-6 genres">
-                                         <a href="/Class/Viewclass?id=${item.fClassId}">
-                                             <div style="position: relative;">
-                                                         <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
-                                                             ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
-                                                 </span>
-                                                 <img src="/img/classimg/${item.fThumbnailPath}" alt="">
-                                                         <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
-                                                    ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
-                                                 </span>
-                                             </div>
-                                             <div>
-                                                 <div class="ClassName">
-                                                     <h5>${item.fClassName}</h5>
-                                                 </div>
-                                                 <p>${Description}</p>
-                                             </div>
-                                             <div>
-                                                 <h5>導師：${item.fTeacherNmae}</h5>
-                                                 <h6>地點：${item.fSiteName}</h6>
-                                                 <p>點閱數：${item.fClick}</p>
-                                             </div>
-                                         </a>
-                                         <button class="favorite-button" data-classid="${item.fClassId}">
-                                             <img src="${loveImgSrc}" class="favorite-icon" style="width: 32px; height: 30px;" />
-                                         </button>
-                                     </div>`
+                                 <a href="/Class/Viewclass?id=${item.fClassId}">
+                                     <div style="position: relative;">
+                                         <span style="position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px; margin: 5px; ${item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '' : 'display: none;'}">
+                                             ${item.fCurrentStudent >= item.fMaxStudent ? '已額滿' : (item.fCurrentStudent >= (item.fMaxStudent * 2 / 3) ? '即將額滿' : '')}
+                                         </span>
+                                         <img src="/img/classimg/${item.fThumbnailPath}" alt="">
+                                                 <span class="gss" data-course-type="${item.fOnLine === 0 ? 'offline' : 'online'}">
+                                            ${item.fOnLine === 0 ? '實體課程' : '線上課程'}
+                                         </span>
+                                     </div>
+                                     <div>
+                                         <div class="ClassName">
+                                             <h5>${item.fClassName}</h5>
+                                         </div>
+                                         <p>${Description}</p>
+                                     </div>
+                                     <div>
+                                         <h5>導師：${item.fTeacherNmae}</h5>
+                                         <h6>地點：${item.fSiteName}</h6>
+                                         <p>點閱數：${item.fClick}</p>
+                                     </div>
+                                 </a>
+                                 <button class="favorite-button" data-classid="${item.fClassId}">
+                                     <img src="${loveImgSrc}" class="favorite-icon" style="width: 32px; height: 30px;" />
+                                 </button>
+                             </div>`
                         );
                         resolve(card);
                     });

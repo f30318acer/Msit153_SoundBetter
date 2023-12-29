@@ -35,6 +35,7 @@
                                     <input type="text" name="OrderItems[@i].ProductName" value="@item.ProductName" readonly />
                                 </td>
                                 <td>
+                                    
                                     <input type="number" name="OrderItems[@i].ProductPrice" value="@Convert.ToInt32(item.ProductPrice)" readonly />
                                 </td>
                                 <td>
@@ -109,52 +110,57 @@
         }
 
     function checkoutAndClear() {
+            
+            let productIds = [];
          // 遍歷每一筆資料，呼叫 Currentplus 函數
         @for (int i = 0; i < Model.Count; i++)
     {
         <text>
-        let productId = @Model[i].ProductId; // 取得每筆資料的ProductId
-        Currentplus(productId); // 將ProductId傳遞給Currentplus函數
+                let productId_@i = @Model[i].ProductId; // 取得每筆資料的ProductId
+                productIds.push(productId_@i);
+                Currentplus(productId_@i); // 將ProductId傳遞給Currentplus函數
         </text>
     }
-                $.when(checkOut(), clearShoppingCart()).done(function () {
-                    // 當異步操作完成后提交表單
-                    document.getElementById("orderForm").submit();
+                checkOut(function () {
+                    clearShoppingCart(function () {
+                        document.getElementById("orderForm").submit();
+                    });
                 });
-    }
+        }
 
-    function checkOut() {
-       
-        $.ajax({
-            type: "POST",
-            url: "/ShoppingCart/CheckOut_Rst", // 修改成你的 API 端點
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
+        function checkOut(callback) {
+            $.ajax({
+                type: "POST",
+                url: "/ShoppingCart/CheckOut_Rst",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response.message);
+                    UpdateShoppingCartIcon();
+                    if (callback) {
+                        callback();
+                    }
+                },
+                error: function (error) {
+                    alert(response.message);
+                }
+            });
+        }
 
-            success: function (response) {
-                // 處理成功的回應
-                alert(response.message);
-                // 刷新購物車Icon
-                UpdateShoppingCartIcon();
-            },
-            error: function (error) {
-                // 處理錯誤
-                alert(response.message);
-            }
-        });
-    }
-
-    //清除購物車內容
-    function clearShoppingCart() {
-        $.ajax({
-            type: "POST",
-            url: "/ShoppingCart/ClearCart",
-            success: function () {
-            },
-            error: function () {
-            }
-        });
-    }
+        function clearShoppingCart(callback) {
+            $.ajax({
+                type: "POST",
+                url: "/ShoppingCart/ClearCart",
+                success: function () {
+                    if (callback) {
+                        callback();
+                    }
+                },
+                error: function () {
+                    // 处理错误
+                }
+            });
+        }
 
     //更新使用優惠券後的總價
     function updateTotalPrice(discount) {

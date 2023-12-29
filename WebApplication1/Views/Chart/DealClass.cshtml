@@ -98,8 +98,10 @@
                             chart: {
                                 type: 'column',
                                 style: {
-                                    fontFamily: 'Arial' // 您可以選擇任何喜歡的字體
+                                    fontFamily: 'Arial' ,// 您可以選擇任何喜歡的字體
+                                    fontSize: '15px'
                                 },
+                                
                                 backgroundColor: '#f4f4f4', // 背景色
                                 plotBackgroundColor: '#ffffff', // 繪圖區背景色
                                 plotShadow: true, // 繪圖區陰影效果
@@ -110,7 +112,9 @@
                                 text: '每月交易總額',
                                 style: {
                                     color: '#333333',
-                                    fontWeight: 'bold'
+                                    fontWeight: 'bold',
+                                    fontSize: '20px' // 調整為希望的大小
+
                                 }
 
                             },
@@ -119,7 +123,9 @@
                                 categories: data.map(item => item.year + '-' + String(item.month).padStart(2, '0')),// 格式化月份
                                 labels: {
                                     style: {
-                                        color: '#333333'
+                                        color: '#333333',
+                                        fontSize:'15px'
+
                                     }
                                 }
                             },
@@ -127,7 +133,8 @@
                                 title: {
                                     text: '價格',
                                     style: {
-                                        color: '#333333'
+                                        color: '#333333',
+                                        fontSize: '15px'
                                     }
                                 },
                                 allowDecimals: false,
@@ -156,7 +163,7 @@
                             },
                             series: [{
                                 name: '價格',
-                                data: data.map(item => item.totalPrice), // 使用 totalPrice
+                                data: data.map(item => item.totalPrice), // 使用 totalPrice                               
                             }]
                         });
                     } else {
